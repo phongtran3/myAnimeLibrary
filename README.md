@@ -1,2 +1,2 @@
 # myAnimeLibrary
-A personal library of anime I've seen.
+A personal library of animes I've seen.

@@ -8,13 +8,8 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const session = require('express-session');
-const flash = require('express-flash');
-const authUtils = require('./utils/auth');
-const initPassport = require('./utils/passport-config');
-// initPassport(passport, (email) => {
+//const authUtils = require('./utils/auth');
 
-// });
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
@@ -26,15 +21,6 @@ app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout');
 app.use(expressLayouts);
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: false }));
-app.use(flash());
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-}));
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 //ROUTES
@@ -53,7 +39,7 @@ db.once('open', () => console.log('connected to mongoose'));
 const User = require('./models/user.js');
 //app.locals.users = userDB;
 console.log(User);
-
-
+// User.deleteMany({ name: 'w' });
+// User.count({ name: 'w' });
 
 app.listen(process.env.PORT || 3000);

@@ -1,20 +1,41 @@
+const User = require('../models/user');
+
 const express = require('express');
 const router = express.Router();
-const authUtils = require('../utils/auth');
 const passport = require('passport');
-const flash = require('connect-flash');
+const flash = require('express-flash');
 const bcrypt = require('bcrypt')
-const User = require('../models/user');
+const session = require('express-session');
+
+
+
+const initPassport = require('../utils/passport-config');
+initPassport(passport,
+    email => User.find({ email: email }),
+    id => User.find({ id: id })
+);
+
+
+router.use(express.urlencoded({ extended: false }));
+router.use(flash());
+router.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}));
+router.use(passport.initialize());
+router.use(passport.session());
+
 
 
 //GET LOGIN PAGE
-router.get('/login', (req, res, next) => {
+router.get('/login', checkNotAuthenticated, (req, res, next) => {
     //const message = req.flash();
-    res.render('login');
+    res.render('login.ejs');
 });
 
 //HANDLE LOGIN REQUEST
-router.post('/login', passport.authenticate('local', {
+router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/auth/login',
     failureFlash: true
@@ -22,13 +43,13 @@ router.post('/login', passport.authenticate('local', {
 
 
 //Get REGISTER PAGE
-router.get('/register', (req, res, next) => {
+router.get('/register', checkNotAuthenticated, (req, res, next) => {
     //const message = req.flash();
     res.render('register');
 })
 
 //HANDLE REGISTER REQUEST
-router.post('/register', async(req, res, next) => {
+router.post('/register', checkNotAuthenticated, async(req, res, next) => {
     console.log(req.body.name);
     console.log(req.body.email);
     console.log(req.body.password);
@@ -58,6 +79,13 @@ router.post('/register', async(req, res, next) => {
         console.log(newUser);
 
         console.log("try block");
+        //User.deleteMany({ name: 'w' });
+        User.count({ name: 'w' }, (err, res) => {
+            if (err)
+                console.log(err);
+            else
+                console.log("num: " + res);
+        });
         res.redirect('/auth/login');
     } catch (err) {
         res.redirect('/auth/register');
@@ -66,11 +94,19 @@ router.post('/register', async(req, res, next) => {
     }
 })
 
-//LOGOUT PAGE
-router.get('/logout', (req, res, next) => {
-    req.session.destroy();
-    res.redirect('/');
-})
+// //LOGOUT PAGE
+// router.get('/logout', (req, res, next) => {
+//     req.session.destroy();
+//     res.redirect('/');
+// })
+
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/')
+    }
+    next()
+}
 
 
 module.exports = router;

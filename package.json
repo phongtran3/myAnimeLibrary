@@ -4,7 +4,7 @@
     "description": "A personal library of animes I've seen.",
     "main": "index.js",
     "scripts": {
-        "start": "node sever.js",
+        "start": "node server.js",
         "devStart": "nodemon server.js"
     },
     "repository": {

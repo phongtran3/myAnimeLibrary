@@ -12,9 +12,9 @@ const session = require('express-session');
 const flash = require('express-flash');
 const authUtils = require('./utils/auth');
 const initPassport = require('./utils/passport-config');
-initPassport(passport, (email) => {
+// initPassport(passport, (email) => {
 
-});
+// });
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
@@ -50,9 +50,9 @@ const db = mongoose.connection;
 db.on('error', error => console.log(error));
 db.once('open', () => console.log('connected to mongoose'));
 //const userDB = require('./models/user.js');
-const user = require('./models/user.js');
+const User = require('./models/user.js');
 //app.locals.users = userDB;
-console.log(user);
+console.log(User);
 
 
 

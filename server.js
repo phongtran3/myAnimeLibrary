@@ -6,14 +6,15 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
-const bcrypt = require('bcrypt');
-const passport = require('passport');
+//const bcrypt = require('bcrypt');
+//const passport = require('passport');
+const bodyParser = require('body-parser');
 //const authUtils = require('./utils/auth');
 
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
-
+const animeRouter = require('./routes/anime');
 
 //SET && USE
 app.set('view engine', 'ejs');
@@ -21,11 +22,12 @@ app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout');
 app.use(expressLayouts);
 app.use(express.static('public'));
-
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 
 //ROUTES
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/anime', animeRouter);
 
 
 //CONNECT TO MONGODB DATABASE

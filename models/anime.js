@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
+
 const animeSchema = new mongoose.Schema({
-    userId: mongoose.SchemaType.ObjectId,
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     name: {
         type: String,
         required: true
@@ -12,11 +16,10 @@ const animeSchema = new mongoose.Schema({
     },
     theme: String,
     createdAt: {
-        type: Data,
+        type: Date,
         immutable: true,
         default: () => Date.now()
     }
-
 })
 
-module.exports = mongoose.model('Anime', authorSchema)
+module.exports = mongoose.model('Anime', animeSchema)

@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 const User = require('../models/user');
 
 const express = require('express');
@@ -6,8 +9,6 @@ const passport = require('passport');
 const flash = require('express-flash');
 const bcrypt = require('bcrypt')
 const session = require('express-session');
-
-
 
 const initPassport = require('../utils/passport-config');
 initPassport(passport,

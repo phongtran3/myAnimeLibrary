@@ -43,3 +43,4 @@ console.log(User);
 // User.count({ name: 'w' });
 
 app.listen(process.env.PORT || 3000);
+console.log("Listened")

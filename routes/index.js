@@ -21,17 +21,29 @@ router.use(methodOverride('_method'))
 
 //checkAuthenticated
 router.get('/', async(req, res) => {
-    let users;
-    try {
-        users = await User.find();
-        //console.log("try block");
-    } catch {
-        users = [];
+    // let users;
+    let query = Anime.find();
+    if (req.query.title != null && req.query.title != "") {
+        query = query.regex('title', new RegExp(req.query.title, 'i'));
     }
-    res.render('index.ejs', { users: users[0] });
+
+    try {
+        const anime = await query.exec();
+        console.log(anime[0]);
+        //users = await User.find();
+        //console.log("try block");
+        res.render('index.ejs', {
+            // users: users[0],
+            anime: anime,
+            searchOpt: req.query
+        });
+    } catch {
+        //users = [];
+        console.log("index catch");
+        res.redirect('/');
+    }
     //console.log("user: " + users[0]);
 })
-
 
 
 

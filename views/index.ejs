@@ -1,4 +1,27 @@
 <h1>HELLO WORLD</h1>
+<h2>Search Anime</h2>
+<form action="/" method="GET">
+    <div>
+        <label>Title</label>
+        <input type="text" name="title" value="<% searchOpt.title %>">
+    </div>
+    <div>
+        <label>Genre</label>
+        <input type="text" name="genrePrime" value="<% searchOpt.genrePrime || searchOpt.genreSec %>">
+    </div>
+    <div>
+        <label>Theme</label>
+        <input type="text" name="theme" value="<% searchOpt.theme %>">
+    </div>
+    <button type="submit">Search</button>
+</form>
+<br>
+<div>
+    <% anime.forEach(anime => { %>
+        <img height="150" width="100" src="<%= anime.coverImagePath %>">
+        <% }) %>
+</div>
+
 <form action="/logout?_method=DELETE" method="POST">
     <button type="submit">Log Out</button>
 </form>

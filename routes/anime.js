@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Anime = require('../models/anime');
-const imageMineTypes = ['image/jpeg', 'image/png', 'image/gif'];
+const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
-// router.get('/', (req, res) => {
+// router.get('/', async(req, res) => {
 //     res.send("All Anime");
 //     //console.log("test");
-
+//     // let query = await Anime.find();
+//     // console.log(JSON.stringify(query[0]));
 // });
 
 //New Anime Route
@@ -33,6 +34,7 @@ router.post('/', async(req, res) => {
     })
     console.log("test");
     console.log(req.body.title);
+    console.log(anime.title);
     console.log(req.body.genrePrime);
     console.log(req.body.genreSec);
 
@@ -69,15 +71,23 @@ async function renderNewPage(res, anime, hasError = false) {
 
 }
 
+// function saveCover(anime, coverEncoded) {
+//     if (coverEncoded == null) return;
+//     const cover = JSON.parse(coverEncoded);
+//     if (cover != null && imageMimeTypes.includes(cover.type)) {
+//         anime.coverImage = new Buffer.from(cover.data, 'base64');
+//         anime.coverImageType = cover.type;
+//         console.log("saveCover");
+//     }
+// }
 function saveCover(anime, coverEncoded) {
-    if (coverEncoded == null) return;
-    const cover = JSON.parse(coverEncoded);
-    if (cover != null && imageMineTypes.includes(cover.type)) {
-        anime.coverImage = new Buffer.from(cover.data, 'base64');
-        anime.coverImageType = cover.type;
+    if (coverEncoded == null) return
+    const cover = JSON.parse(coverEncoded)
+    if (cover != null && imageMimeTypes.includes(cover.type)) {
+        anime.coverImage = new Buffer.from(cover.data, 'base64')
+        anime.coverImageType = cover.type
     }
-
-
 }
+
 
 module.exports = router;

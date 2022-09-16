@@ -1,0 +1,17 @@
+<h2>
+    <%= anime.title %>
+</h2>
+<img width="100" height="150" src="<%= anime.coverImagePath %>">
+<div>Genre:
+    <%= anime.genrePrime%>,
+        <%= anime.genreSec%>
+</div>
+<!-- if theme != "" -->
+<div>Theme:
+    <%= anime.theme %>
+</div>
+
+<a href="/anime/<%= anime.id %>/edit">Edit</a>
+<form method="POST" action="/anime/<%=anime.id%>?_method=DELETE">
+    <button class="btn btn-danger" type="submit">Delete</button>
+</form>

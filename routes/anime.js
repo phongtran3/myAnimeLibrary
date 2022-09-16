@@ -52,7 +52,14 @@ router.post('/', async(req, res) => {
     }
 })
 
-
+router.get('/:id', async(req, res) => {
+    try {
+        const anime = await Anime.findById(req.params.id).populate('title').exec();
+        res.render('animes/show', { anime: anime });
+    } catch {
+        res.redirect('/');
+    }
+})
 
 async function renderNewPage(res, anime, hasError = false) {
     try {
@@ -71,15 +78,7 @@ async function renderNewPage(res, anime, hasError = false) {
 
 }
 
-// function saveCover(anime, coverEncoded) {
-//     if (coverEncoded == null) return;
-//     const cover = JSON.parse(coverEncoded);
-//     if (cover != null && imageMimeTypes.includes(cover.type)) {
-//         anime.coverImage = new Buffer.from(cover.data, 'base64');
-//         anime.coverImageType = cover.type;
-//         console.log("saveCover");
-//     }
-// }
+
 function saveCover(anime, coverEncoded) {
     if (coverEncoded == null) return
     const cover = JSON.parse(coverEncoded)

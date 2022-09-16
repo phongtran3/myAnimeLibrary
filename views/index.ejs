@@ -18,8 +18,10 @@
 <br>
 <div>
     <% anime.forEach(anime => { %>
+        <a href="/anime/<%= anime.id%>">
         <img height="150" width="100" src="<%= anime.coverImagePath %>">
         <% }) %>
+        </a>
 </div>
 
 <form action="/logout?_method=DELETE" method="POST">

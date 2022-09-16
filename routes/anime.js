@@ -36,6 +36,8 @@ router.post('/', async(req, res) => {
     console.log(req.body.genrePrime);
     console.log(req.body.genreSec);
 
+    saveCover(anime, req.body.cover);
+
     try {
         const newAnime = await anime.save();
         //res.redirect(`animes/${newAnime.id}`);
@@ -64,6 +66,17 @@ async function renderNewPage(res, anime, hasError = false) {
         console.log("Rcatch");
         res.redirect("/");
     }
+
+}
+
+function saveCover(anime, coverEncoded) {
+    if (coverEncoded == null) return;
+    const cover = JSON.parse(coverEncoded);
+    if (cover != null && imageMineTypes.includes(cover.type)) {
+        anime.coverImage = new Buffer.from(cover.data, 'base64');
+        anime.coverImageType = cover.type;
+    }
+
 
 }
 

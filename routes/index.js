@@ -8,6 +8,7 @@ const passport = require('passport');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const User = require('../models/user');
+const Anime = require('../models/anime');
 
 router.use(session({
     secret: process.env.SESSION_SECRET,
@@ -18,8 +19,8 @@ router.use(passport.initialize());
 router.use(passport.session());
 router.use(methodOverride('_method'))
 
-
-router.get('/', checkAuthenticated, async(req, res) => {
+//checkAuthenticated
+router.get('/', async(req, res) => {
     let users;
     try {
         users = await User.find();

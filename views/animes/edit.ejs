@@ -1,0 +1,20 @@
+<h2>Edit Anime</h2>
+<% if (locals.errorMessage != null) { %>
+    <div class="error-message">
+        <%= errorMessage %>
+    </div>
+    <% } %>
+        <form action="/animes/<%= anime.id %>?_method=PUT" method="POST">
+            <label>Title</label>
+            <input type="text " name="title " value="<%= anime.title %>">
+            <label>Primary Genre</label>
+            <input type="text" name="genrePrime" value="<%= anime.genrePrime %>">
+            <label>Secondary Genre</label>
+            <input type="text" name="genreSec" value="<%= anime.genreSec %>">
+            <label>Theme</label>
+            <input type="text" name="theme" value="<%= anime.theme %>">
+            <label>Cover</label>
+            <input type="file" name="cover" class="filepond">
+            <a href="/">Cancel</a>
+            <button type="submit">Update</button>
+        </form>

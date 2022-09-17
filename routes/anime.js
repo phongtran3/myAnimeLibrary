@@ -52,23 +52,44 @@ router.post('/', async(req, res) => {
     }
 })
 
+//SHOW BOOK ROUTE
 router.get('/:id', async(req, res) => {
     try {
-        const anime = await Anime.findById(req.params.id).populate('title').exec();
+        const anime = await Anime.findById(req.params.id);
         res.render('animes/show', { anime: anime });
+
     } catch {
         res.redirect('/');
     }
 })
 
+//EDIT BOOK ROUTE
+router.get('/:id/edit', async(req, res) => {
+    try {
+        const anime = await Anime.findById(req.params.id);
+        renderEditPage(res, anime);
+    } catch {
+        res.redirect('/');
+    }
+})
+
+
 async function renderNewPage(res, anime, hasError = false) {
+    renderFormPage(res, anime, 'new', hasError);
+}
+
+async function renderEditPage(res, anime, hasError = false) {
+    renderFormPage(res, anime, 'edit', hasError);
+}
+
+async function renderFormPage(res, anime, form, hasError = false, ) {
     try {
         //const animes = await Anime.find({});
         const params = {
             anime: anime
         }
         if (hasError) params.errorMessage = 'Error Creating Anime';
-        res.render("animes/new", params);
+        res.render(`animes/edit`, params);
         //res.render("/");
         console.log("Rtry");
     } catch {
@@ -77,7 +98,6 @@ async function renderNewPage(res, anime, hasError = false) {
     }
 
 }
-
 
 function saveCover(anime, coverEncoded) {
     if (coverEncoded == null) return

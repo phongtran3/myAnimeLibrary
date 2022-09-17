@@ -4,9 +4,9 @@
         <%= errorMessage %>
     </div>
     <% } %>
-        <form action="/animes/<%= anime.id %>?_method=PUT" method="POST">
+        <form action="/anime/<%= anime.id %>?_method=PUT" method="POST">
             <label>Title</label>
-            <input type="text " name="title " value="<%= anime.title %>">
+            <input type="text " name="title" value="<%= anime.title %>">
             <label>Primary Genre</label>
             <input type="text" name="genrePrime" value="<%= anime.genrePrime %>">
             <label>Secondary Genre</label>

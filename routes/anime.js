@@ -25,6 +25,7 @@ router.get('/new', async(req, res, next) => {
 
 //Create Aninme Route
 router.post('/', async(req, res) => {
+    console.log("post");
     const anime = new Anime({
         title: req.body.title,
         genrePrime: req.body.genrePrime,
@@ -42,9 +43,9 @@ router.post('/', async(req, res) => {
 
     try {
         const newAnime = await anime.save();
-        //res.redirect(`animes/${newAnime.id}`);
+        res.redirect(`anime/${newAnime.id}`);
         console.log("try");
-        res.redirect("/");
+        //res.redirect("/");
     } catch {
         console.log("catch");
         renderNewPage(res, anime, true);
@@ -54,6 +55,7 @@ router.post('/', async(req, res) => {
 
 //SHOW BOOK ROUTE
 router.get('/:id', async(req, res) => {
+    console.log("show");
     try {
         const anime = await Anime.findById(req.params.id);
         res.render('animes/show', { anime: anime });
@@ -65,6 +67,7 @@ router.get('/:id', async(req, res) => {
 
 //EDIT BOOK ROUTE
 router.get('/:id/edit', async(req, res) => {
+    console.log("edit");
     try {
         const anime = await Anime.findById(req.params.id);
         renderEditPage(res, anime);
@@ -73,7 +76,53 @@ router.get('/:id/edit', async(req, res) => {
     }
 })
 
+//UPDATE Aninme Route
+router.put('/:id', async(req, res) => {
+    let anime;
+    console.log("put");
+    console.log("title: " + req.body.title);
+    try {
+        anime = await Anime.findById(req.params.id);
+        anime.title = req.body.title;
+        anime.genrePrime = req.body.genrePrime;
+        anime.genreSec = req.body.genreSec;
+        anime.theme = req.body.theme;
+        if (req.body.cover != null && req.body.cover !== '') {
+            saveCover(anime, req.body.cover);
+        }
+        await anime.save();
+        res.redirect(`/anime/${anime.id}`);
+        console.log("try");
+        //res.redirect("/");
+    } catch (err) {
+        console.log("catch");
+        console.log(err);
+        if (anime != null) {
+            renderEditPage(res, anime, true);
+        } else
+            res.redirect('/');
+    }
+})
 
+//DELETE ANIME PAGE
+router.delete('/:id', async(req, res) => {
+    let anime;
+    try {
+        anime = await Anime.findById(req.params.id);
+        await anime.remove();
+        res.redirect('/');
+    } catch (err) {
+        if (anime != null) {
+            res.render('anime/show', {
+                anime: anime,
+                errorMessage: 'Could not remove book'
+            })
+        } else {
+            res.redirect('/');
+        }
+
+    }
+})
 async function renderNewPage(res, anime, hasError = false) {
     renderFormPage(res, anime, 'new', hasError);
 }
@@ -88,8 +137,13 @@ async function renderFormPage(res, anime, form, hasError = false, ) {
         const params = {
             anime: anime
         }
-        if (hasError) params.errorMessage = 'Error Creating Anime';
-        res.render(`animes/edit`, params);
+        if (hasError) {
+            if (form === 'edit')
+                params.errorMessage = 'Error Editing Anime';
+            else
+                params.errorMessage = 'Error Creating Anime';
+        }
+        res.render(`animes/${form}`, params);
         //res.render("/");
         console.log("Rtry");
     } catch {

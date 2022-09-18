@@ -6,19 +6,24 @@ const animeSchema = new mongoose.Schema({
     //     required: true,
     //     ref: 'User'
     // },
+
     title: {
         type: String,
         required: true
     },
-    genrePrime: {
-        type: String,
+    genre: {
+        type: [],
         required: true
     },
-    genreSec: {
-        type: String,
-        required: true
-    },
-    theme: String,
+    // genrePrime: {
+    //     type: String,
+    //     required: true
+    // },
+    // genreSec: {
+    //     type: String,
+    //     required: true
+    // },
+    theme: [],
     createdAt: {
         type: Date,
         immutable: true,

@@ -3,12 +3,25 @@
 </h2>
 <img width="100" height="150" src="<%= anime.coverImagePath %>">
 <div>Genre:
-    <%= anime.genrePrime%>,
-        <%= anime.genreSec%>
+    <% for(let i = 0; i < anime.genre.length; i++ ) { %>
+        <%if (i != anime.genre.length - 1){%>
+            <%= anime.genre[i] %>,
+                <%}else {%>
+                    <%= anime.genre[i] %>
+                        <% }}%>
 </div>
 <!-- if theme != "" -->
-<div>Theme:
-    <%= anime.theme %>
+<div>
+    <% if (anime.theme !== "") {%>
+        Theme:
+        <% for(let i =0; i <anime.theme.length; i++){ %>
+            <%if (i != anime.theme.length - 1){%>
+                <%= anime.theme[i] %>,
+                    <%}else{%>
+                        <%= anime.theme[i] %>
+                            <%}   %>
+                                <%}  %>
+                                    <% } %>
 </div>
 
 <a href="/anime/<%= anime.id %>/edit">Edit</a>

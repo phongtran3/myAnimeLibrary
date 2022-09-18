@@ -29,7 +29,7 @@ router.get('/', async(req, res) => {
 
     try {
         const anime = await query.exec();
-        console.log(anime[0]);
+        //console.log(anime[0]);
         //users = await User.find();
         //console.log("try block");
         res.render('index.ejs', {

@@ -28,26 +28,24 @@ router.post('/', async(req, res) => {
     console.log("post");
     const anime = new Anime({
         title: req.body.title,
-        genrePrime: req.body.genrePrime,
-        genreSec: req.body.genreSec,
+        //genrePrime: req.body.genrePrime,
+        //genreSec: req.body.genreSec,
+        genre: req.body['genre'],
         theme: req.body.theme,
+        //test: req.body.test,
         //createdAt: Date.now()
     })
-    console.log("test");
-    console.log(req.body.title);
-    console.log(anime.title);
-    console.log(req.body.genrePrime);
-    console.log(req.body.genreSec);
-
     saveCover(anime, req.body.cover);
-
+    //console.log(req.body['genre']);
+    console.log(anime.genre);
     try {
         const newAnime = await anime.save();
         res.redirect(`anime/${newAnime.id}`);
-        console.log("try");
+        console.log("create try");
         //res.redirect("/");
-    } catch {
-        console.log("catch");
+    } catch (err) {
+        console.log(err);
+        console.log("create catch");
         renderNewPage(res, anime, true);
 
     }
@@ -58,6 +56,8 @@ router.get('/:id', async(req, res) => {
     console.log("show");
     try {
         const anime = await Anime.findById(req.params.id);
+        console.log(anime.genre);
+        console.log("theme:" + anime.theme);
         res.render('animes/show', { anime: anime });
 
     } catch {

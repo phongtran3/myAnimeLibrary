@@ -31,10 +31,11 @@ router.post('/', async(req, res) => {
         //genrePrime: req.body.genrePrime,
         //genreSec: req.body.genreSec,
         genre: req.body['genre'],
-        theme: req.body.theme,
+        theme: req.body['theme'],
         //test: req.body.test,
         //createdAt: Date.now()
     })
+    console.log("cover: " + req.body.cover);
     saveCover(anime, req.body.cover);
     //console.log(req.body['genre']);
     console.log(anime.genre);
@@ -154,11 +155,14 @@ async function renderFormPage(res, anime, form, hasError = false, ) {
 }
 
 function saveCover(anime, coverEncoded) {
-    if (coverEncoded == null) return
-    const cover = JSON.parse(coverEncoded)
+    console.log("save cover");
+    console.log("encoded: " + coverEncoded);
+    if (coverEncoded == null || coverEncoded == "") 
+        return
+    const cover = JSON.parse(coverEncoded);
     if (cover != null && imageMimeTypes.includes(cover.type)) {
-        anime.coverImage = new Buffer.from(cover.data, 'base64')
-        anime.coverImageType = cover.type
+        anime.coverImage = new Buffer.from(cover.data, 'base64');
+        anime.coverImageType = cover.type;
     }
 }
 

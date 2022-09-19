@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
     animeTable: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Anime'
+    },
+    role: {
+        type: String,
+        default: 'viewer',
     }
 })
 

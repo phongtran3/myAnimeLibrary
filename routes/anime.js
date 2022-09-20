@@ -28,6 +28,7 @@ router.post('/', async(req, res) => {
     console.log("post");
     const anime = new Anime({
         title: req.body.title,
+        type: req.body.type,
         //genrePrime: req.body.genrePrime,
         //genreSec: req.body.genreSec,
         genre: req.body['genre'],
@@ -35,7 +36,9 @@ router.post('/', async(req, res) => {
         //test: req.body.test,
         //createdAt: Date.now()
     })
-    console.log("cover: " + req.body.cover);
+
+    console.log("type: " + req.body.type);
+
     saveCover(anime, req.body.cover);
     //console.log(req.body['genre']);
     console.log(anime.genre);
@@ -85,9 +88,8 @@ router.put('/:id', async(req, res) => {
     try {
         anime = await Anime.findById(req.params.id);
         anime.title = req.body.title;
-        anime.genrePrime = req.body.genrePrime;
-        anime.genreSec = req.body.genreSec;
-        anime.theme = req.body.theme;
+        anime.genre = req.body['genre'];
+        anime.theme = req.body['theme'];
         if (req.body.cover != null && req.body.cover !== '') {
             saveCover(anime, req.body.cover);
         }
@@ -156,8 +158,7 @@ async function renderFormPage(res, anime, form, hasError = false, ) {
 
 function saveCover(anime, coverEncoded) {
     console.log("save cover");
-    console.log("encoded: " + coverEncoded);
-    if (coverEncoded == null || coverEncoded == "") 
+    if (coverEncoded == null || coverEncoded == "")
         return
     const cover = JSON.parse(coverEncoded);
     if (cover != null && imageMimeTypes.includes(cover.type)) {

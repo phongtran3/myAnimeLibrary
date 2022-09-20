@@ -21,11 +21,20 @@ router.use(methodOverride('_method'))
 
 //checkAuthenticated
 router.get('/', async(req, res) => {
+    console.log("search anime");
     // let users;
     let query = Anime.find();
     if (req.query.title != null && req.query.title != "") {
         query = query.regex('title', new RegExp(req.query.title, 'i'));
     }
+    if (req.query.genre != null) {
+        query = query.find({ "genre": { "$in": req.query.genre } });
+    }
+    if (req.query.theme != null) {
+        query = query.find({ "theme": { "$in": req.query.theme } });
+    }
+    console.log(req.query.genre);
+    console.log(req.query.theme);
 
     try {
         const anime = await query.exec();

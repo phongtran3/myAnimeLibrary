@@ -2,6 +2,10 @@
     <%= anime.title %>
 </h2>
 <img width="100" height="150" src="<%= anime.coverImagePath %>">
+<div>
+    Type:
+    <%= anime.type %>
+</div>
 <div>Genre:
     <% for(let i = 0; i < anime.genre.length; i++ ) { %>
         <%if (i != anime.genre.length - 1){%>

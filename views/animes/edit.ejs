@@ -5,7 +5,7 @@
     </div>
     <% } %>
         <form action="/anime/<%= anime.id %>?_method=PUT" method="POST">
-            <%- include('_form_fields'), {anime: anime}%>
+            <%- include('_form_fields')%>
                 <a href="/">Cancel</a>
                 <button type="submit">Update</button>
         </form>

@@ -144,7 +144,8 @@ async function renderFormPage(res, anime, form, hasError = false, ) {
     try {
         //const animes = await Anime.find({});
         const params = {
-            anime: anime
+            anime: anime,
+            form: form
         }
         if (hasError) {
             if (form === 'edit')

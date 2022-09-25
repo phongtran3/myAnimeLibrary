@@ -74,6 +74,11 @@ router.get('/:id/edit', async(req, res) => {
     console.log("edit");
     try {
         const anime = await Anime.findById(req.params.id);
+        console.log(anime.genre);
+        console.log(anime.theme);
+        if (anime.genre.includes('Action'))
+            console.log("true");
+
         renderEditPage(res, anime);
     } catch {
         res.redirect('/');
@@ -131,6 +136,7 @@ async function renderNewPage(res, anime, hasError = false) {
 }
 
 async function renderEditPage(res, anime, hasError = false) {
+
     renderFormPage(res, anime, 'edit', hasError);
 }
 

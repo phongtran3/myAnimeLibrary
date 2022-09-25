@@ -23,7 +23,7 @@ router.use(methodOverride('_method'))
 router.get('/', async(req, res) => {
     console.log("search anime");
     // let users;
-    let query = Anime.find();
+    let query = Anime.find().sort({ title: 'asc' }); //Sort in alphabetical order
     if (req.query.title != null && req.query.title != "") {
         query = query.regex('title', new RegExp(req.query.title, 'i'));
     }
@@ -33,8 +33,8 @@ router.get('/', async(req, res) => {
     if (req.query.theme != null) {
         query = query.find({ "theme": { "$in": req.query.theme } });
     }
-    console.log(req.query.genre);
-    console.log(req.query.theme);
+    //console.log(req.query.genre);
+    //console.log(req.query.theme);
 
     try {
         const anime = await query.exec();

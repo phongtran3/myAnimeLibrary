@@ -1,67 +1,105 @@
-<% if (anime.genre) { %>
-    <div>
-        Test
-        <input type="checkbox" name="genre" value="Action" <% if (anime.genre.includes( 'Action')) { %> checked
-        <%} %> >
-            <label>Action</label>
-    </div>
-
-    <%}%>
-
-        <div>
-            <legend>Type: </legend>
-            <input type="radio" name="type" value="Movie"><label>Movie</label>
-            <input type="radio" name="type" value="TV Series"><label>TV Series</label>
-        </div>
-        <div>
-            <legend>Genre: </legend>
-            <input type="checkbox" name="genre" value="Action"><label>Action</label>
-            <input type="checkbox" name="genre" value="Adventure"><label>Adventure</label>
-            <input type="checkbox" name="genre" value="Comedy"><label>Comedy</label>
-            <input type="checkbox" name="genre" value="Drama"><label>Drama</label>
-            <input type="checkbox" name="genre" value="Fantasy"><label>Fantasy</label>
-            <input type="checkbox" name="genre" value="Gourmet "><label>Gourmet</label>
-            <input type="checkbox" name="genre" value="Horror"><label>Horror</label>
-            <input type="checkbox" name="genre" value="Mystery"><label>Mystery</label>
-            <input type="checkbox" name="genre" value="Romance"><label>Romance</label>
-            <input type="checkbox" name="genre" value="Sci-f"><label>Sci-fi</label>
-            <input type="checkbox" name="genre" value="Slice of Life"><label>Slice of Life</label>
-            <input type="checkbox" name="genre" value="Sport"><label>Sport</label>
-            <input type="checkbox" name="genre" value="Supernatural"><label>Supernatural</label>
-            <input type="checkbox" name="genre" value="Suspense"><label>Suspense</label>
-        </div>
-        <div>
-            <legend>Theme: </legend>
-            <input type="checkbox" name="theme" value="Action"><label>Adult Cast</label>
-            <input type="checkbox" name="theme" value="CGDCT"><label>CGDCT</label>
-            <input type="checkbox" name="theme" value="Childcare"><label>Childcare</label>
-            <input type="checkbox" name="theme" value="Detective"><label>Detective</label>
-            <input type="checkbox" name="theme" value="Gore"><label>Gore</label>
-            <input type="checkbox" name="theme" value="High Stakes Game"><label>High Stakes Game</label>
-            <input type="checkbox" name="theme" value="Historical"><label>Historical</label>
-            <input type="checkbox" name="theme" value="Isekai"><label>Isekai</label>
-            <input type="checkbox" name="theme" value="Iyashikei"><label>Iyashikei</label>
-            <input type="checkbox" name="theme" value="Love Polygon"><label>Love Polygon</label>
-            <input type="checkbox" name="theme" value="Martial Arts"><label>Martial Arts</label>
-            <input type="checkbox" name="theme" value="Mecha"><label>Mecha</label>
-            <input type="checkbox" name="theme" value="Military"><label>Military</label>
-            <input type="checkbox" name="theme" value="Music"><label>Music</label>
-            <input type="checkbox" name="theme" value="Mythology"><label>Mythology</label>
-            <input type="checkbox" name="theme" value="Organized Crime"><label>Organized Crime</label>
-            <input type="checkbox" name="theme" value="Otaku Culture"><label>Otaku Culture</label>
-            <input type="checkbox" name="theme" value="Psychological "><label>Psychological </label>
-            <input type="checkbox" name="theme" value="Reincarnation"><label>Reincarnation</label>
-            <input type="checkbox" name="theme" value="Romantic Subtext"><label>Romantic Subtext</label>
-            <input type="checkbox" name="theme" value="Samurai"><label>Samurai</label>
-            <input type="checkbox" name="theme" value="School"><label>School</label>
-            <input type="checkbox" name="theme" value="Space"><label>Space</label>
-            <input type="checkbox" name="theme" value="Strategy Game"><label>Strategy Game</label>
-            <input type="checkbox" name="theme" value="Super Power"><label>Super Power</label>
-            <input type="checkbox" name="theme" value="Survival"><label>Survival</label>
-            <input type="checkbox" name="theme" value="Team Sports"><label>Team Sports</label>
-            <input type="checkbox" name="theme" value="Time Travel"><label>Time Travel</label>
-            <input type="checkbox" name="theme" value="Vampire"><label>Vampire</label>
-            <input type="checkbox" name="theme" value="Video Game"><label>Video Game</label>
-            <input type="checkbox" name="theme" value="Visual Arts"><label>Visual Arts</label>
-            <input type="checkbox" name="theme" value="Workplace"><label>Workplace</label>
-        </div>
+<div>
+    <legend>Type: </legend>
+    <input type="radio" name="type" value="Movie" <% if (anime.type=='Movie' ) {%> checked
+    <%} %> ><label>Movie</label>
+        <input type="radio" name="type" value="TV Series" <% if (anime.type='TV Series' ){%> checked
+        <%}%>><label>TV Series</label>
+</div>
+<div>
+    <legend>Genre: </legend>
+    <input type="checkbox" name="genre" value="Action" <% if (anime.genre.includes( 'Action')) { %> checked
+    <%} %>><label>Action</label>
+        <input type="checkbox" name="genre" value="Adventure" <% if (anime.genre.includes( 'Adventure')) { %> checked
+        <%} %>><label>Adventure</label>
+            <input type="checkbox" name="genre" value="Comedy" <% if (anime.genre.includes( 'Comedy')) { %> checked
+            <%} %>><label>Comedy</label>
+                <input type="checkbox" name="genre" value="Drama" <% if (anime.genre.includes( 'Drama')) { %> checked
+                <%} %>><label>Drama</label>
+                    <input type="checkbox" name="genre" value="Fantasy" <% if (anime.genre.includes( 'Fantasy')) { %> checked
+                    <%} %>><label>Fantasy</label>
+                        <input type="checkbox" name="genre" value="Gourmet" <% if (anime.genre.includes( 'Gourmet')) { %> checked
+                        <%} %>><label>Gourmet</label>
+                            <input type="checkbox" name="genre" value="Horror" <% if (anime.genre.includes( 'Horror')) { %> checked
+                            <%} %>><label>Horror</label>
+                                <input type="checkbox" name="genre" value="Mystery" <% if (anime.genre.includes( 'Mystery')) { %> checked
+                                <%} %>><label>Mystery</label>
+                                    <input type="checkbox" name="genre" value="Romance" <% if (anime.genre.includes( 'Romance')) { %> checked
+                                    <%} %>><label>Romance</label>
+                                        <input type="checkbox" name="genre" value="Sci-fi" <% if (anime.genre.includes( 'Sci-fi')) { %> checked
+                                        <%} %>><label>Sci-fi</label>
+                                            <input type="checkbox" name="genre" value="Slice of Life" <% if (anime.genre.includes( 'Slice of Life')) { %> checked
+                                            <%} %>><label>Slice of Life</label>
+                                                <input type="checkbox" name="genre" value="Sport" <% if (anime.genre.includes( 'Sport')) { %> checked
+                                                <%} %>><label>Sport</label>
+                                                    <input type="checkbox" name="genre" value="Supernatural" <% if (anime.genre.includes( 'Supernatural')) { %> checked
+                                                    <%} %>><label>Supernatural</label>
+                                                        <input type="checkbox" name="genre" value="Suspense" <% if (anime.genre.includes( 'Suspense')) { %> checked
+                                                        <%} %>><label>Suspense</label>
+</div>
+<div>
+    <legend>Theme: </legend>
+    <input type="checkbox" name="theme" value="Action" <% if (anime.theme.includes( 'Action')) { %> checked
+    <%} %>><label>Adult Cast</label>
+        <input type="checkbox" name="theme" value="CGDCT" <% if (anime.theme.includes( 'CGDCT')) { %> checked
+        <%} %>><label>CGDCT</label>
+            <input type="checkbox" name="theme" value="Childcare" <% if (anime.theme.includes( 'Childcare')) { %> checked
+            <%} %>><label>Childcare</label>
+                <input type="checkbox" name="theme" value="Detective" <% if (anime.theme.includes( 'Detective')) { %> checked
+                <%} %>><label>Detective</label>
+                    <input type="checkbox" name="theme" value="Gore" <% if (anime.theme.includes( 'Gore')) { %> checked
+                    <%} %>><label>Gore</label>
+                        <input type="checkbox" name="theme" value="High Stakes Game" <% if (anime.theme.includes( 'High Stakes Game')) { %> checked
+                        <%} %>><label>High Stakes Game</label>
+                            <input type="checkbox" name="theme" value="Historical" <% if (anime.theme.includes( 'Historical')) { %> checked
+                            <%} %>><label>Historical</label>
+                                <input type="checkbox" name="theme" value="Isekai" <% if (anime.theme.includes( 'Isekai')) { %> checked
+                                <%} %>><label>Isekai</label>
+                                    <input type="checkbox" name="theme" value="Iyashikei" <% if (anime.theme.includes( 'Iyashikei')) { %> checked
+                                    <%} %>><label>Iyashikei</label>
+                                        <input type="checkbox" name="theme" value="Love Polygon" <% if (anime.theme.includes( 'Love Polygon')) { %> checked
+                                        <%} %>><label>Love Polygon</label>
+                                            <input type="checkbox" name="theme" value="Martial Arts" <% if (anime.theme.includes( 'Martial Arts')) { %> checked
+                                            <%} %>><label>Martial Arts</label>
+                                                <input type="checkbox" name="theme" value="Mecha" <% if (anime.theme.includes( 'Mecha')) { %> checked
+                                                <%} %>><label>Mecha</label>
+                                                    <input type="checkbox" name="theme" value="Military" <% if (anime.theme.includes( 'Military')) { %> checked
+                                                    <%} %>><label>Military</label>
+                                                        <input type="checkbox" name="theme" value="Music" <% if (anime.theme.includes( 'Music')) { %> checked
+                                                        <%} %>><label>Music</label>
+                                                            <input type="checkbox" name="theme" value="Mythology" <% if (anime.theme.includes( 'Mythology')) { %> checked
+                                                            <%} %>><label>Mythology</label>
+                                                                <input type="checkbox" name="theme" value="Organized Crime" <% if (anime.theme.includes( 'Organized Crime')) { %> checked
+                                                                <%} %>><label>Organized Crime</label>
+                                                                    <input type="checkbox" name="theme" value="Otaku Culture" <% if (anime.theme.includes( 'Otaku Culture')) { %> checked
+                                                                    <%} %>><label>Otaku Culture</label>
+                                                                        <input type="checkbox" name="theme" value="Psychological" <% if (anime.theme.includes( 'Psychological')) { %> checked
+                                                                        <%} %>><label>Psychological </label>
+                                                                            <input type="checkbox" name="theme" value="Reincarnation" <% if (anime.theme.includes( 'Reincarnation')) { %> checked
+                                                                            <%} %>><label>Reincarnation</label>
+                                                                                <input type="checkbox" name="theme" value="Romantic Subtext" <% if (anime.theme.includes( 'Romantic Subtext')) { %> checked
+                                                                                <%} %>><label>Romantic Subtext</label>
+                                                                                    <input type="checkbox" name="theme" value="Samurai" <% if (anime.theme.includes( 'Samurai')) { %> checked
+                                                                                    <%} %>><label>Samurai</label>
+                                                                                        <input type="checkbox" name="theme" value="School" <% if (anime.theme.includes( 'School')) { %> checked
+                                                                                        <%} %>><label>School</label>
+                                                                                            <input type="checkbox" name="theme" value="Space" <% if (anime.theme.includes( 'Space')) { %> checked
+                                                                                            <%} %>><label>Space</label>
+                                                                                                <input type="checkbox" name="theme" value="Strategy Game" <% if (anime.theme.includes( 'Strategy Game')) { %> checked
+                                                                                                <%} %>><label>Strategy Game</label>
+                                                                                                    <input type="checkbox" name="theme" value="Super Power" <% if (anime.theme.includes( 'Super Power')) { %> checked
+                                                                                                    <%} %>><label>Super Power</label>
+                                                                                                        <input type="checkbox" name="theme" value="Survival" <% if (anime.theme.includes( 'Survival')) { %> checked
+                                                                                                        <%} %>><label>Survival</label>
+                                                                                                            <input type="checkbox" name="theme" value="Team Sports" <% if (anime.theme.includes( 'Team Sports')) { %> checked
+                                                                                                            <%} %>><label>Team Sports</label>
+                                                                                                                <input type="checkbox" name="theme" value="Time Travel" <% if (anime.theme.includes( 'Time Travel')) { %> checked
+                                                                                                                <%} %>><label>Time Travel</label>
+                                                                                                                    <input type="checkbox" name="theme" value="Vampire" <% if (anime.theme.includes( 'Vampire')) { %> checked
+                                                                                                                    <%} %>><label>Vampire</label>
+                                                                                                                        <input type="checkbox" name="theme" value="Video Game" <% if (anime.theme.includes( 'Video Game')) { %> checked
+                                                                                                                        <%} %>><label>Video Game</label>
+                                                                                                                            <input type="checkbox" name="theme" value="Visual Arts" <% if (anime.theme.includes( 'Visual Arts')) { %> checked
+                                                                                                                            <%} %>><label>Visual Arts</label>
+                                                                                                                                <input type="checkbox" name="theme" value="Workplace" <% if (anime.theme.includes( 'Workplace')) { %> checked
+                                                                                                                                <%} %>><label>Workplace</label>
+</div>

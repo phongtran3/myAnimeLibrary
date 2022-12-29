@@ -6,6 +6,8 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
+const methodOverride = require('method-override');
+
 //const bcrypt = require('bcrypt');
 //const passport = require('passport');
 const bodyParser = require('body-parser');
@@ -23,6 +25,8 @@ app.set('layout', 'layouts/layout');
 app.use(expressLayouts);
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
+app.use(methodOverride('_method'))
+
 
 //ROUTES
 app.use('/', indexRouter);

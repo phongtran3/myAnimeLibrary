@@ -6,7 +6,6 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const session = require('express-session');
-const methodOverride = require('method-override');
 const User = require('../models/user');
 const Anime = require('../models/anime');
 
@@ -17,13 +16,13 @@ router.use(session({
 }));
 router.use(passport.initialize());
 router.use(passport.session());
-router.use(methodOverride('_method'))
 
 //checkAuthenticated
 router.get('/', async(req, res) => {
     console.log("search anime");
     // let users;
-    let query = Anime.find().sort({ title: 'asc' }); //Sort in alphabetical order
+    // let query = Anime.find().sort({ title: 'asc' }); //Sort in alphabetical order
+    let query = Anime.find().sort({ createdAt: -1 }); //Sort by recently added.
     if (req.query.title != null && req.query.title != "") {
         query = query.regex('title', new RegExp(req.query.title, 'i'));
     }
@@ -32,6 +31,9 @@ router.get('/', async(req, res) => {
     }
     if (req.query.theme != null) {
         query = query.find({ "theme": { "$in": req.query.theme } });
+    }
+    if (req.query.type != null) {
+        query = query.find({ "type": { "$in": req.query.type } });
     }
     //console.log(req.query.genre);
     //console.log(req.query.theme);

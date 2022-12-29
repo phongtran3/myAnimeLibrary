@@ -5,15 +5,14 @@
         <input type="text" name="title" value="<% searchOpt.title %>" placeholder="Search">
     </div>
     <%- include('partials/input.ejs') %>
-        <button type="submit">Search</button>
+    <button type="submit">Search</button>
 </form>
 <br>
 <div>
     <% anime.forEach(anime => { %>
         <a href="/anime/<%= anime.id%>">
-        <img height="150" width="100" src="<%= anime.coverImagePath %>">
-        <% }) %>
-        </a>
+        <img height="150" width="100" src="<%= anime.coverImagePath %>"> </a>
+    <% }) %> 
 </div>
 
 <form action="/logout?_method=DELETE" method="POST">

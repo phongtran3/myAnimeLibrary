@@ -55,7 +55,7 @@ router.post('/', async(req, res) => {
     }
 })
 
-//SHOW BOOK ROUTE
+//SHOW ANIME ROUTE
 router.get('/:id', async(req, res) => {
     console.log("show");
     try {
@@ -136,7 +136,6 @@ async function renderNewPage(res, anime, hasError = false) {
 }
 
 async function renderEditPage(res, anime, hasError = false) {
-
     renderFormPage(res, anime, 'edit', hasError);
 }
 

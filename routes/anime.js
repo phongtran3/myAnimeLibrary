@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Anime = require('../models/anime');
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+const Utils = require('../utils/auth');
+const User = require('../models/user');
 
 // router.get('/', async(req, res) => {
 //     res.send("All Anime");
@@ -9,10 +11,34 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 //     // let query = await Anime.find();
 //     // console.log(JSON.stringify(query[0]));
 // });
+const passport = require('passport');
+const session = require('express-session');
+router.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}));
+router.use(passport.initialize());
+router.use(passport.session());
+
+const initPassport = require('../utils/passport-config');
+initPassport(passport,
+    email => User.find({ email: email }),
+    id => User.find({ id: id })
+);
 
 //New Anime Route
-router.get('/new', async(req, res, next) => {
-    renderNewPage(res, new Anime());
+router.get('/new', Utils.checkAuthenticated, async(req, res, next) => {
+    if (req.isAuthenticated())
+        console.log("logged in ");
+    else
+        console.log("not logged in");
+    console.log(req.user._conditions.id);
+    const user = await User.findOne({ _id: req.user._conditions.id });
+    console.log("user: " + user.role);
+    if (user.role == 'admin')
+        renderNewPage(res, new Anime());
+
     // try {
     //     const anime = new Anime();
     //     res.render('animes/new', { anime: anime });
@@ -70,7 +96,7 @@ router.get('/:id', async(req, res) => {
 })
 
 //EDIT BOOK ROUTE
-router.get('/:id/edit', async(req, res) => {
+router.get('/:id/edit', Utils.checkAuthenticated, async(req, res) => {
     console.log("edit");
     try {
         const anime = await Anime.findById(req.params.id);

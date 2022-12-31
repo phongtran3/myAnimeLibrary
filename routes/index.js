@@ -1,21 +1,21 @@
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
-
-const express = require('express');
-const router = express.Router();
-const passport = require('passport');
-const session = require('express-session');
-const User = require('../models/user');
+// const User = require('../models/user');
 const Anime = require('../models/anime');
 
-router.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-}));
-router.use(passport.initialize());
-router.use(passport.session());
+const express = require('express');
+
+const router = express.Router();
+// const passport = require('passport');
+// const session = require('express-session');
+// router.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+// }));
+// router.use(passport.initialize());
+// router.use(passport.session());
 
 //checkAuthenticated
 router.get('/', async(req, res) => {
@@ -66,14 +66,6 @@ router.delete('/logout', function(req, res, next) {
         res.redirect('/auth/login');
     });
 });
-
-function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next()
-    }
-    res.redirect('/auth/login')
-}
-
 
 
 module.exports = router;

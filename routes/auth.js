@@ -2,13 +2,15 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 const User = require('../models/user');
+const Utils = require('../utils/auth');
 
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const flash = require('express-flash');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 const session = require('express-session');
+
 
 const initPassport = require('../utils/passport-config');
 initPassport(passport,
@@ -30,13 +32,13 @@ router.use(passport.session());
 
 
 //GET LOGIN PAGE
-router.get('/login', checkNotAuthenticated, (req, res, next) => {
+router.get('/login', Utils.checkNotAuthenticated, (req, res, next) => {
     //const message = req.flash();
     res.render('login.ejs');
 });
 
 //HANDLE LOGIN REQUEST
-router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+router.post('/login', Utils.checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/auth/login',
     failureFlash: true
@@ -44,13 +46,13 @@ router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 
 
 //Get REGISTER PAGE
-router.get('/register', checkNotAuthenticated, (req, res, next) => {
+router.get('/register', Utils.checkNotAuthenticated, (req, res, next) => {
     //const message = req.flash();
     res.render('register');
 })
 
 //HANDLE REGISTER REQUEST
-router.post('/register', checkNotAuthenticated, async(req, res, next) => {
+router.post('/register', Utils.checkNotAuthenticated, async(req, res, next) => {
     console.log(req.body.name);
     console.log(req.body.email);
     console.log(req.body.password);
@@ -102,12 +104,12 @@ router.post('/register', checkNotAuthenticated, async(req, res, next) => {
 // })
 
 
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return res.redirect('/')
-    }
-    next()
-}
+// function checkNotAuthenticated(req, res, next) {
+//     if (req.isAuthenticated()) {
+//         return res.redirect('/')
+//     }
+//     next()
+// }
 
 
 module.exports = router;

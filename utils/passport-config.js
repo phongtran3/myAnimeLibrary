@@ -7,7 +7,7 @@ function initialize(passport, user, getUserById) {
     const authenticateUser = async(email, password, done) => {
         const user = await User.findOne({ email: email });
         //console.log(email);
-        console.log(user);
+        console.log("init " + user);
         if (user == null) {
             return done(null, false, { message: 'No user found with that email' });
         }

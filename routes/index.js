@@ -74,6 +74,7 @@ router.delete('/logout', function(req, res, next) {
             return next(err);
         }
         res.redirect('/auth/login');
+
     });
 });
 

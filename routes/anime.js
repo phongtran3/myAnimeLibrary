@@ -30,12 +30,18 @@ router.use(passport.session());
 
 //New Anime Route
 router.get('/new', Utils.checkAuthenticated, async(req, res, next) => {
-    if (req.isAuthenticated())
+    let user;
+    if (req.isAuthenticated()) {
         console.log("logged in ");
-    else
+        try {
+            user = await User.findOne({ _id: req.user._conditions.id });
+        } catch (err) {
+            console.log("error: " + err);
+            res.redirect('/');
+        }
+    } else
         console.log("not logged in");
     // console.log(req.user._conditions.id);
-    const user = await User.findOne({ _id: req.user._conditions.id });
     // console.log("user: " + user.role);
     if (user.role == 'admin') {
         console.log("admin");
@@ -88,11 +94,25 @@ router.post('/', async(req, res) => {
 //SHOW ANIME ROUTE
 router.get('/:id', async(req, res) => {
     console.log("show");
+    let user;
+    if (req.isAuthenticated()) {
+        console.log("logged in ");
+        try {
+            user = await User.findOne({ _id: req.user._conditions.id });
+        } catch (err) {
+            console.log("error: " + err);
+            res.redirect('/');
+        }
+    } else
+        console.log("not logged in");
     try {
         const anime = await Anime.findById(req.params.id);
         console.log(anime.genre);
         console.log("theme:" + anime.theme);
-        res.render('animes/show', { anime: anime });
+        res.render('animes/show', {
+            anime: anime,
+            user: user
+        });
 
     } catch {
         res.redirect('/');

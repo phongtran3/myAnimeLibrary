@@ -29,8 +29,10 @@
 	<% } %>
 </div>
 
-<a href="/anime/<%= anime.id %>/edit">Edit</a>
+<% if (locals.user && locals.user.role == 'admin') { %>
+    <a href="/anime/<%= anime.id %>/edit">Edit</a>
 
-<form method="POST" action="/anime/<%=anime.id%>?_method=DELETE">
-    <button class="btn btn-danger" type="submit">Delete</button>
-</form>
+    <form method="POST" action="/anime/<%=anime.id%>?_method=DELETE">
+        <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+<% } %>

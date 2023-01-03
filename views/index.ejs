@@ -10,11 +10,12 @@
 <br>
 <div>
     <% anime.forEach(anime => { %>
-        <a href="/anime/<%= anime.id%>">
-        <img height="150" width="100" src="<%= anime.coverImagePath %>"> </a>
+        <a href="/anime/<%= anime.id%>"> <img height="150" width="100" src="<%= anime.coverImagePath %>"> </a>
     <% }) %> 
 </div>
 
-<form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">Log Out</button>
-</form>
+<% if (locals.user) { %>
+    <form action="/logout?_method=DELETE" method="POST">
+        <button type="submit">Log Out</button>
+    </form>
+<% } %>

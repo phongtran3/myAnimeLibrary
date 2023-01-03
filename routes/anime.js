@@ -11,6 +11,7 @@ const User = require('../models/user');
 //     // let query = await Anime.find();
 //     // console.log(JSON.stringify(query[0]));
 // });
+
 const passport = require('passport');
 const session = require('express-session');
 router.use(session({
@@ -21,11 +22,11 @@ router.use(session({
 router.use(passport.initialize());
 router.use(passport.session());
 
-const initPassport = require('../utils/passport-config');
-initPassport(passport,
-    email => User.find({ email: email }),
-    id => User.find({ id: id })
-);
+// const initPassport = require('../utils/passport-config');
+// initPassport(passport,
+//     email => User.find({ email: email }),
+//     id => User.find({ id: id })
+// );
 
 //New Anime Route
 router.get('/new', Utils.checkAuthenticated, async(req, res, next) => {
@@ -33,11 +34,14 @@ router.get('/new', Utils.checkAuthenticated, async(req, res, next) => {
         console.log("logged in ");
     else
         console.log("not logged in");
-    console.log(req.user._conditions.id);
+    // console.log(req.user._conditions.id);
     const user = await User.findOne({ _id: req.user._conditions.id });
-    console.log("user: " + user.role);
-    if (user.role == 'admin')
+    // console.log("user: " + user.role);
+    if (user.role == 'admin') {
+        console.log("admin");
         renderNewPage(res, new Anime());
+    } else
+        console.log("not admin");
 
     // try {
     //     const anime = new Anime();
@@ -98,15 +102,21 @@ router.get('/:id', async(req, res) => {
 //EDIT BOOK ROUTE
 router.get('/:id/edit', Utils.checkAuthenticated, async(req, res) => {
     console.log("edit");
-    try {
-        const anime = await Anime.findById(req.params.id);
-        console.log(anime.genre);
-        console.log(anime.theme);
-        if (anime.genre.includes('Action'))
-            console.log("true");
 
-        renderEditPage(res, anime);
-    } catch {
+    const user = await User.findOne({ _id: req.user._conditions.id });
+    if (user.role == 'admin') {
+        console.log("admin");
+        try {
+            const anime = await Anime.findById(req.params.id);
+            console.log(anime.genre);
+            console.log(anime.theme);
+
+            renderEditPage(res, anime);
+        } catch {
+            res.redirect('/');
+        }
+    } else {
+        console.log("not admin");
         res.redirect('/');
     }
 })

@@ -18,10 +18,13 @@
 </head>
 
 <body>
-    <div>
+    <div class="container">
+    <% if (locals.user && locals.user.role == 'admin') { %>
         <%- include('../partials/header.ejs') %>
+        <h1><%= user.name ? user.name : '' %></h1>
+    <% } %>
+    
     <%- body %>
-
     </div>
 </body>
 

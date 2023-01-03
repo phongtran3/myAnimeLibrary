@@ -1,25 +1,30 @@
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
-// const User = require('../models/user');
+const User = require('../models/user');
 const Anime = require('../models/anime');
 
 const express = require('express');
 
 const router = express.Router();
-// const passport = require('passport');
-// const session = require('express-session');
-// router.use(session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-// }));
-// router.use(passport.initialize());
-// router.use(passport.session());
+const passport = require('passport');
+const session = require('express-session');
+router.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}));
+router.use(passport.initialize());
+router.use(passport.session());
 
 //checkAuthenticated
 router.get('/', async(req, res) => {
     console.log("search anime");
+    let user;
+    if (req.isAuthenticated()) {
+        console.log("isAuthenticated");
+        user = await User.findOne({ _id: req.user._conditions.id });
+    }
     // let users;
     // let query = Anime.find().sort({ title: 'asc' }); //Sort in alphabetical order
     let query = Anime.find().sort({ createdAt: -1 }); //Sort by recently added.
@@ -36,21 +41,26 @@ router.get('/', async(req, res) => {
         query = query.find({ "type": { "$in": req.query.type } });
     }
     //console.log(req.query.genre);
-    //console.log(req.query.theme);
-
+    //console.log(req.query.theme); 
+    // const user = req.user;
+    // console.log(user);
+    // console.log(user._id);
+    //user = await User.findOne({ _id: user._conditions.id });
     try {
         const anime = await query.exec();
+
         //console.log(anime[0]);
         //users = await User.find();
         //console.log("try block");
         res.render('index.ejs', {
             // users: users[0],
             anime: anime,
-            searchOpt: req.query
+            searchOpt: req.query,
+            user: user
         });
-    } catch {
+    } catch (err) {
         //users = [];
-        console.log("index catch");
+        console.log("index catch" + err);
         res.redirect('/');
     }
     //console.log("user: " + users[0]);

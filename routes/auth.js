@@ -97,11 +97,11 @@ router.post('/register', Utils.checkNotAuthenticated, async(req, res, next) => {
     }
 })
 
-// //LOGOUT PAGE
-// router.get('/logout', (req, res, next) => {
-//     req.session.destroy();
-//     res.redirect('/');
-// })
+//LOGOUT PAGE
+router.get('/logout', (req, res, next) => {
+    req.session.destroy();
+    res.redirect('/');
+})
 
 
 // function checkNotAuthenticated(req, res, next) {

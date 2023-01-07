@@ -13,7 +13,7 @@
     <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
     <script defer src="/javascripts/fileUpload.js"></script>
     <!-- <script defer src="../../public/javascripts/fileUpload.js"></script> -->
-
+    <link rel="stylesheet" href="/stylesheets/main.css">
     <title>MyAnimeLibrary</title>
 </head>
 
@@ -22,7 +22,6 @@
         <div class="wrapper">
             <% if (locals.user && locals.user.role == 'admin') { %>
                 <%- include('../partials/header.ejs') %>
-                <h1><%= user.name ? user.name : '' %></h1>
             <% } %>
 
             <%- body %>

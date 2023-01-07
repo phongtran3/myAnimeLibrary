@@ -1,49 +1,65 @@
-<h1>PLACE HOLDER</h1>
+<div class="header">
+    <h1>PLACE HOLDER</h1>   
+</div>
 <h2>Search Anime</h2>
 
-<div class="main-search-form">
-    <form action="/" method="GET">
-        <div>
-            <label>Title</label>
-            <input type="text" name="title" value="<% searchOpt.title %>" placeholder="Search">
-        </div>
-        <%- include('partials/input.ejs') %>
-        <button type="submit">Search</button>
-    </form>
-</div>
-<br>
+<div class="content-wrapper">
+    <div class="main-search-form">
+        <form action="/" method="GET">
+            <div>
+                <label>Title</label>
+                <input type="text" name="title" value="<% searchOpt.title %>" placeholder="Search">
+            </div>
+            <%- include('partials/input.ejs') %>
+            <button type="submit">Search</button>
+        </form>
+    </div>
 
-<div class="main-anime-list-container">
-    <div class="anime-list">
-        <% anime.forEach(anime => { %>
-            <div class="anime-block">
-                <div class="anime-info-preview">
-                    <div class="anime-title">
-                        <div class="anime-title-text">
-                            <h2><%= anime.title %></h2>
+    <div class="main-anime-list-container">
+        <div class="anime-list">
+            <% anime.forEach(anime => { %>
+                <div class="anime-block">
+                    <div class="anime-info-preview">
+                        <div class="anime-title-preview">
+                            <div class="anime-title">
+                                <div class="anime-title-text">
+                                    <h2><%= anime.title %></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="genre-info-preview">
+                            <div class="genre-info-inner">
+                                <% anime.genre.forEach(genre => { %>
+                                    <span> <%= genre %> </span>
+                                <% }) %>
+                            </div>
+                        </div>
+                        <div class="theme-info-preview">
+                            <div class="genre-info-inner">
+                                <% anime.theme.forEach(theme => { %>
+                                    <span> <%= theme %> </span>
+                                <% }) %>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="genre-info-preview">
-                    <div class="genre-info-inner">
-                        <% anime.genre.forEach(genre => { %>
-                            <span> <%= genre %> </span>
-                        <% }) %>
+                    <div class="anime-image">
+                        <% if (locals.user && locals.user.role == 'admin') { %>
+                            <a href="/anime/<%= anime.id%>"> <img height="150" width="100" src="<%= anime.coverImagePath %>"> </a>
+                        <% } else { %>
+                            <img height="150" width="100" src="<%= anime.coverImagePath %>">
+                        <% } %>
                     </div>
                 </div>
-                <div class="anime-image">
-                    <a href="/anime/<%= anime.id%>"> <img height="150" width="100" src="<%= anime.coverImagePath %>"> </a>
-                </div>
-            </div>
-        <% }) %> 
-    </div >
-</div>
-
-<div class="pag-container">
-    <div class="pagination">
-        <p>Pagination place holder</p>
+            <% }) %> 
+        </div >
     </div>
-    
+
+    <div class="pag-container">
+        <div class="pagination">
+            <p>Pagination place holder</p>
+        </div>
+        
+    </div>
 </div>
 
 <% if (locals.user) { %>

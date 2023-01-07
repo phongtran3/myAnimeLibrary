@@ -18,14 +18,17 @@
 </head>
 
 <body>
-    <div class="content-container">
-    <% if (locals.user && locals.user.role == 'admin') { %>
-        <%- include('../partials/header.ejs') %>
-        <h1><%= user.name ? user.name : '' %></h1>
-    <% } %>
-    
-    <%- body %>
+    <div id="myAnimeLib">
+        <div class="wrapper">
+            <% if (locals.user && locals.user.role == 'admin') { %>
+                <%- include('../partials/header.ejs') %>
+                <h1><%= user.name ? user.name : '' %></h1>
+            <% } %>
+
+            <%- body %>
+       </div>
     </div>
+
 </body>
 
 </html>

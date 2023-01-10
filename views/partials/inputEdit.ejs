@@ -3,6 +3,7 @@
     <input type="radio" name="type" value="Movie" <% if (anime.type=='Movie' ) {%> checked <%} %> ><label>Movie</label>
     <input type="radio" name="type" value="TV Series" <% if (anime.type='TV Series'){%> checked <%}%>><label>TV Series</label>
 </div>
+
 <div>
     <legend>Genre: </legend>
     <input type="checkbox" name="genre" value="Action" <% if (anime.genre.includes( 'Action')) { %> checked <%} %>><label>Action</label>
@@ -20,6 +21,7 @@
     <input type="checkbox" name="genre" value="Supernatural" <% if (anime.genre.includes( 'Supernatural')) { %> checked <%} %>><label>Supernatural</label>
     <input type="checkbox" name="genre" value="Suspense" <% if (anime.genre.includes( 'Suspense')) { %> checked <%} %>><label>Suspense</label>
 </div>
+
 <div>
     <legend>Theme: </legend>
     <input type="checkbox" name="theme" value="Action" <% if (anime.theme.includes( 'Action')) { %> checked <%} %>><label>Adult Cast</label>

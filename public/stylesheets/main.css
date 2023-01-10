@@ -90,7 +90,9 @@ legend {
 /* Search bar CSS */
 
 .search-content {
-    margin-bottom: 1.0rem;
+    margin-bottom: 1rem;
+    position: relative;
+    width: 100%;
 }
 
 .search-content .inputText {

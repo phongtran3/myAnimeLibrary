@@ -48,8 +48,8 @@ body {
 } */
 
 .content-container {
-    max-width: 1800px;
-    width: 100%;
+    max-width: 1160px;
+    /* width: 100%; */
     padding-right: 10px;
     padding-left: 10px;
     margin-right: auto;
@@ -86,8 +86,12 @@ legend {
     margin-bottom: 0.5rem!important;
 }
 
+.filter-form-container {
+    margin-bottom: 3rem!important;
+}
 
-/* Search bar CSS */
+
+/* Search Bar Section CSS */
 
 .search-content-wrapper {
     margin-bottom: 1rem;
@@ -130,7 +134,7 @@ legend {
 }
 
 
-/* Type Radio button CSS */
+/* Type Section CSS */
 
 input[type=radio] {
     display: none;
@@ -157,4 +161,37 @@ input[type=radio]:checked+label {
     display: block;
     clear: both;
     content: "";
+    padding-bottom: 1rem!important;
+}
+
+
+/* Genre/Theme Section CSS */
+
+.genre-wrapper::after,
+.theme-wrapper::after {
+    display: block;
+    clear: both;
+    content: "";
+    padding-bottom: 1rem!important;
+}
+
+input[type=checkbox] {
+    display: none;
+    margin: 10px;
+}
+
+input[type=checkbox]+label {
+    display: block;
+    float: left;
+    margin: 0 6px 6px 0;
+    padding: 0 0.75rem;
+    background-color: #eee;
+    border-color: #ddd;
+    cursor: pointer;
+    border-radius: 0.25rem;
+}
+
+input[type=checkbox]:checked+label {
+    background-image: none;
+    background-color: #d0d0d0;
 }

@@ -89,16 +89,16 @@ legend {
 
 /* Search bar CSS */
 
-.search-content {
+.search-content-wrapper {
     margin-bottom: 1rem;
-    position: relative;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.search-content .inputText {
+.search-content-wrapper .inputText {
     border: #c3c3c3 1px solid;
-    border-radius: 0.5rem 0 0 0.5rem;
-    border-right: #c3c3c3 0 solid;
+    border-radius: 30px !important;
     color: #323232;
     display: block;
     float: left;
@@ -110,20 +110,20 @@ legend {
     width: 715px;
 }
 
-.search-content .submitButton {
+.search-content-wrapper .submitButton {
     cursor: pointer;
     background-color: #f8f8f8;
     border: #c3c3c3 1px solid;
-    border-radius: 0 0.5rem 0.5rem 0;
+    border-radius: 50%;
     display: inline-block;
     font-size: 16px;
     font-weight: 900;
     height: 50px;
     width: 50px;
-    position: absolute;
+    margin-left: 5px;
 }
 
-.search-content::after {
+.search-content-wrapper::after {
     display: block;
     clear: both;
     content: "";

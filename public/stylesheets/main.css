@@ -6,6 +6,8 @@
 
 body {
     color: black;
+    padding: 0;
+    margin: 0;
 }
 
 .header-nav {
@@ -82,14 +84,6 @@ body {
     content: "";
 }
 
-legend {
-    margin-bottom: 0.5rem!important;
-}
-
-.filter-form-container {
-    margin-bottom: 3rem!important;
-}
-
 
 /* Search Bar Section CSS */
 
@@ -134,64 +128,63 @@ legend {
 }
 
 
-/* Type Section CSS */
+/* Filter Section CSS */
 
-input[type=radio] {
-    display: none;
-    margin: 10px;
+legend {
+    margin-bottom: 0.5rem!important;
+    font-weight: 800;
 }
 
-input[type=radio]+label {
-    display: block;
-    float: left;
-    margin: 0 6px 6px 0;
-    padding: 0 0.75rem;
-    background-color: #eee;
-    border-color: #ddd;
+.filter-form-container {
+    margin-bottom: 3rem!important;
+}
+
+.filterButton {
     cursor: pointer;
-    border-radius: 0.25rem;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    border-radius: 0.2rem;
+    border: none!important;
+    box-shadow: none!important;
+    line-height: 1.5;
 }
 
-input[type=radio]:checked+label {
-    background-image: none;
+.filterButton:hover {
     background-color: #d0d0d0;
+    transition: 0.5s;
 }
 
-.type-wrapper::after {
-    display: block;
-    clear: both;
-    content: "";
-    padding-bottom: 1rem!important;
-}
-
-
-/* Genre/Theme Section CSS */
-
-.genre-wrapper::after,
-.theme-wrapper::after {
-    display: block;
-    clear: both;
-    content: "";
-    padding-bottom: 1rem!important;
-}
-
+input[type=radio],
 input[type=checkbox] {
     display: none;
     margin: 10px;
 }
 
+input[type=radio]+label,
 input[type=checkbox]+label {
     display: block;
     float: left;
-    margin: 0 6px 6px 0;
+    margin: 0 8px 8px 0;
     padding: 0 0.75rem;
     background-color: #eee;
     border-color: #ddd;
     cursor: pointer;
     border-radius: 0.25rem;
+    line-height: 2.0rem;
 }
 
+input[type=radio]:checked+label,
 input[type=checkbox]:checked+label {
     background-image: none;
     background-color: #d0d0d0;
+}
+
+.genre-wrapper::after,
+.theme-wrapper::after,
+.type-wrapper::after {
+    display: block;
+    clear: both;
+    content: "";
+    padding-bottom: 1rem!important;
 }

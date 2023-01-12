@@ -25,9 +25,7 @@
                         <div class="anime-info-preview">
                             <div class="anime-title-preview">
                                 <div class="anime-title">
-                                    <div class="anime-title-text">
-                                        <h2><%= anime.title %></h2>
-                                    </div>
+                                    <h2 class="anime-title-text"><%= anime.title %></h2>
                                 </div>
                             </div>
                             <div class="genre-info-preview">
@@ -47,9 +45,9 @@
                         </div>
                         <div class="anime-image">
                             <% if (locals.user && locals.user.role == 'admin') { %>
-                                <a href="/anime/<%= anime.id%>"> <img height="150" width="100" src="<%= anime.coverImagePath %>"> </a>
+                                <a href="/anime/<%= anime.id%>"> <img src="<%= anime.coverImagePath %>"> </a>
                             <% } else { %>
-                                <img height="150" width="100" src="<%= anime.coverImagePath %>">
+                                <img src="<%= anime.coverImagePath %>">
                             <% } %>
                         </div>
                     </div>

@@ -23,14 +23,6 @@ mongoose
   )
   .catch((error) => console.log(error));
 
-const axios = require("axios");
-
 app.get("/", async (req, res) => {
   res.send("Test");
-  try {
-    axios({
-      url: "https://graphql.anilist.co",
-      method: "post",
-    });
-  } catch (error) {}
 });

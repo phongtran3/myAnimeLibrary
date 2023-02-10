@@ -32,6 +32,10 @@ const userAnimeSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  userStatus: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("UserAnime", userAnimeSchema);

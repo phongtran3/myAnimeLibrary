@@ -28,6 +28,10 @@ const userMangaSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  userStatus: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("userManga", userMangaSchema);

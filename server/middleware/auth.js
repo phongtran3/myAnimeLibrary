@@ -1,5 +1,5 @@
 //
-const jwt = require("jwt");
+const jwt = require("jsonwebtoken");
 
 async function verifyToken(req, res, next) {
   try {
@@ -15,3 +15,5 @@ async function verifyToken(req, res, next) {
     res.status(500).json({ message: error.message });
   }
 }
+
+module.exports = verifyToken;

@@ -1,14 +1,14 @@
 import React from "react";
-const { BrowserRouter, Navigate, Routes, Route } = require("react-router-dom");
-const HomePage = require("../src/scenes/homePage");
-const LoginPage = require("../src/scenes/login");
-const ProfilePage = require("../src/scenes/profilePage");
-const IndexPage = require("../src/scenes/indexPage");
-//const NavBar = require("../src/scenes/navBar");
+import IndexPage from "../src/scenes/indexPage";
+import HomePage from "../src/scenes/homePage";
+import LoginPage from "../src/scenes/loginPage";
+import ProfilePage from "../src/scenes/profilePage";
+//import NavBar from "../src/scenes/navBar";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 
 export default function App() {
   return (
-    <>
+    <div className="app">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<IndexPage />} />
@@ -17,6 +17,6 @@ export default function App() {
           <Route path="user/:userId" element={<ProfilePage />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }

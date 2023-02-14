@@ -6,6 +6,8 @@ const morgan = require("morgan");
 require("dotenv").config();
 const helmet = require("helmet");
 const multer = require("multer");
+const path = require("path");
+const { register } = require("./controllers/auth.js");
 
 const app = express();
 const userRouter = require("./routes/users.js");
@@ -20,7 +22,7 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-//File Storage
+//FILE STORAGE
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/assets");
@@ -30,6 +32,9 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
+
+//ROUTES WITH FILE
+app.post("auth/register", upload.single("picture"), register); //Register new user
 
 //ROUTES
 app.use("/user", userRouter);

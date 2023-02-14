@@ -5,7 +5,7 @@ const User = require("../models/user.js");
 //User Registration.
 async function register(req, res) {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, userName, password, picturePath } = req.body;
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -14,7 +14,9 @@ async function register(req, res) {
       firstName,
       lastName,
       email,
+      userName,
       password: hashedPassword,
+      picturePath,
     });
     const newUser = await user.save(); // Save new user to database
 

@@ -4,7 +4,9 @@ import HomePage from "./components/homePage/HomePage";
 import IndexPage from "./components/indexPage/IndexPage";
 import LoginPage from "./components/loginPage/LoginPage";
 import ProfilePage from "./components/profilePage/ProfilePage";
+
 export default function App() {
+  console.log("app render");
   return (
     <div className="app">
       <BrowserRouter>

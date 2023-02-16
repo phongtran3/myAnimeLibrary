@@ -7,6 +7,7 @@ query ($page: Int, $perPage: Int) {
             romaji
             english
         }
+        genres
         coverImage {
             large
         }
@@ -25,6 +26,7 @@ query ($page: Int, $perPage: Int) {
             romaji
             english
         }
+        genres
         coverImage {
             large
         }
@@ -43,6 +45,7 @@ query ($page: Int, $perPage: Int) {
             romaji
             english
         }
+        genres
         coverImage {
             large
         }
@@ -60,6 +63,7 @@ query ($page: Int, $perPage: Int) {
             romaji
             english
         }
+        genres
         coverImage {
             large
         }

@@ -28,8 +28,7 @@ const userSchema = mongoose.Schema({
     default: "",
   },
   animes: {
-    type: Array,
-    default: [
+    type: [
       {
         title: { type: String, required: true },
         genre: { type: [String], required: true },
@@ -40,10 +39,10 @@ const userSchema = mongoose.Schema({
         createdAt: { type: Date, immutable: true, default: () => Date.now() },
       },
     ],
+    default: [],
   },
   manga: {
-    type: Array,
-    default: [
+    type: [
       {
         title: { type: String, required: true },
         genre: { type: [String], required: true },
@@ -53,6 +52,7 @@ const userSchema = mongoose.Schema({
         createdAt: { type: Date, immutable: true, default: () => Date.now() },
       },
     ],
+    default: [],
   },
 });
 

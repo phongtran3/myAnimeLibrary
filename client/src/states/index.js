@@ -24,5 +24,30 @@ export const authSlice = createSlice({
       state.user = null;
       state.token = null;
     },
+    setAnimes: (state, action) => {
+      if (state.user) {
+        state.user.animes = action.payload.friends;
+      } else {
+        console.log("User anime list non-existent");
+      }
+    },
+    setMangas: (state, action) => {
+      if (state.user) {
+        state.user.mangas = action.payload.friends;
+      } else {
+        console.log("User manga list non-existent");
+      }
+    },
   },
 });
+
+export const {
+  setSiteTheme,
+  setLogin,
+  setLogout,
+  setAnimes,
+  setMangas,
+} = authSlice.actions;
+export default authSlice.reducer;
+
+//Will need to update anime/manga info when user adds to list (e.g. adding anime/manga to list, will indicate it's been added)

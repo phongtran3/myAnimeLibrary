@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 
-const userMangaSchema = mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "User",
-  },
+const animeSchema = mongoose.Schema({
   title: {
     type: [String], // Will hold english and romaji style tiitle
     default: [],
@@ -13,6 +8,10 @@ const userMangaSchema = mongoose.Schema({
   },
   genre: {
     type: [String],
+    required: true,
+  },
+  format: {
+    type: String,
     required: true,
   },
   coverImage: {
@@ -28,10 +27,6 @@ const userMangaSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  userStatus: {
-    type: String,
-    required: true,
-  },
 });
 
-module.exports = mongoose.model("userManga", userMangaSchema);
+module.exports = mongoose.model("UserAnime", animeSchema);

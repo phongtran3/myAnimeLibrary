@@ -27,6 +27,33 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "",
   },
+  animes: {
+    type: Array,
+    default: [
+      {
+        title: { type: String, required: true },
+        genre: { type: [String], required: true },
+        format: { type: String, required: true },
+        coverImage: { type: String, required: true },
+        siteUrl: { type: String, required: true },
+        userStatus: { type: String, required: true },
+        createdAt: { type: Date, immutable: true, default: () => Date.now() },
+      },
+    ],
+  },
+  manga: {
+    type: Array,
+    default: [
+      {
+        title: { type: String, required: true },
+        genre: { type: [String], required: true },
+        coverImage: { type: String, required: true },
+        siteUrl: { type: String, required: true },
+        userStatus: { type: String, required: true },
+        createdAt: { type: Date, immutable: true, default: () => Date.now() },
+      },
+    ],
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

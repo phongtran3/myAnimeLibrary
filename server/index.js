@@ -12,6 +12,8 @@ const { register } = require("./controllers/auth.js");
 const app = express();
 const userRouter = require("./routes/users.js");
 const authRouter = require("./routes/auth.js");
+const animeRouter = require("./routes/anime.js");
+const mangaRouter = require("./routes/manga.js");
 
 app.use(express.json());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
@@ -39,6 +41,8 @@ app.post("auth/register", upload.single("picture"), register); //Register new us
 //ROUTES
 app.use("/user", userRouter);
 app.use("/auth", authRouter);
+app.use("/anime", animeRouter);
+app.use("/manga", mangaRouter);
 
 //MONGOOSE SET UP
 const PORT = process.env.PORT || 5001;

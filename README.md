@@ -1,4 +1,5 @@
-# FullStack MERN myAnimeLib App (in progress) ###### (name is subject to change in the future)
+# FullStack MERN myAnimeLib App (in progress) 
+###### (name is subject to change in the future)
 This app utilizes [Anilist Api](https://github.com/AniList/ApiV2-GraphQL-Docs) to access their database of over 500k anime and manga. 
 
 Frontend:

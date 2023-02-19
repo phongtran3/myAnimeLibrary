@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingMangaQuery } from './initalQuery';
-import { Container, Grid, CircularProgress, CardMedia } from '@mui/material';
+import { Grid, CircularProgress } from '@mui/material';
 
 import MediaList from '../../components/MediaList';
 
@@ -50,62 +50,33 @@ export default function IndexPage() {
   return (
     <div>
       <h1>Index Page</h1>
-      <h3>Trending Anime</h3>
-
-
-      <MediaList media={trendingAnime} />
-      <Grid container 
-        justifyContent="center" 
-        alignItems="stretch" 
-        spacing={4} 
-        sx={{ width: 'auto', margin: '0',}}
-        >
-       {!trendingAnime.length ? <CircularProgress /> : 
-       <ImageList cols={5} gap={48} sx={{textAlign: "center"}}>
-        {trendingAnime.map(anime => (
-            //  <a href={anime.siteUrl} target="_blank" rel="noopener noreferrer">
-            //   <img key={anime.id}src={anime.coverImage.large} alt={anime.title.english}></img>
-            //   </a>
-            // <Grid key={anime.id} item xs={12} sm={6} md={6}>
-            //   <MediaCard media={anime}  />
-            // </Grid>
-          
-          <ImageListItem key={anime.id}>
-            <a href={anime.siteUrl} target="_blank" rel="noopener noreferrer"
-            style={{textDecoration: 'none', color: 'inherit'}}>
-                <img
-                  src={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format`}
-                  srcSet={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  alt={anime.title.english === null ? anime.title.romaji : anime.title.english}
-                  loading="lazy"
-                  style={{borderRadius: "0.375rem", width: "230px", height: "377px"}}
-                />
-              
-            <ImageListItemBar 
-              title={anime.title.english === null ? anime.title.romaji : anime.title.english} 
-              position="below"
-              sx={{maxWidth: "230px"}}/>
-                      </a>
-            </ImageListItem>
-  
-        ))}
-        </ImageList>}
+      <Typography variant="h5" mr={5} ml={5} >Trending Anime</Typography>
+      {!trendingAnime.length ? <CircularProgress/> : 
+        <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+          <MediaList media={trendingAnime} />
+        </Grid>
+       }
+      <hr></hr>
+      <Typography variant="h5" mr={5} ml={5}>Popular Anime</Typography>
+      {!popularAnime.length ? <CircularProgress/> : 
+      <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+        <MediaList media={popularAnime} />
       </Grid>
+      }
       <hr></hr>
-      <h3>Popular Anime</h3>
-      {popularAnime.map(anime => (
-          <img key={anime.id}src={anime.coverImage.large} alt={anime.title.english}></img>
-        ))}
+      <Typography variant="h5" mr={5} ml={5}>Trending Manga</Typography>
+      {!trendingManga.length ? <CircularProgress/> : 
+      <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+        <MediaList media={trendingManga} />
+      </Grid>
+      }
       <hr></hr>
-      <h3>Trending Manga</h3>
-      {trendingManga.map(manga => (
-          <img key={manga.id}src={manga.coverImage.large} alt={manga.title.english}></img>
-        ))}
-      <hr></hr>
-      <h3>Popular Manga</h3>
-      {popularManga.map(manga => (
-          <img key={manga.id}src={manga.coverImage.large} alt={manga.title.english}></img>
-        ))}
+      <Typography variant="h5" mr={5} ml={5}>Popular Manga</Typography>
+      {!popularManga.length ? <CircularProgress/> : 
+      <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+        <MediaList media={popularManga} />
+      </Grid>
+      }
       <hr></hr>
     </div>
   )

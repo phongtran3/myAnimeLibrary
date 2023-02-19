@@ -2,6 +2,12 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingMangaQuery } from './initalQuery';
+import { Container, Grid, CircularProgress, CardMedia } from '@mui/material';
+
+import MediaList from '../../components/MediaList';
+
+import { ImageList, ImageListItem , ImageListItemBar, Typography   } from '@mui/material';
+
 export default function IndexPage() {
   const [trendingAnime, setTrendingAnime] = useState([]);
   const [popularAnime, setpopularAnime] = useState([]);
@@ -45,9 +51,46 @@ export default function IndexPage() {
     <div>
       <h1>Index Page</h1>
       <h3>Trending Anime</h3>
-      {trendingAnime.map(anime => (
-          <img key={anime.id}src={anime.coverImage.large} alt={anime.title.english}></img>
+
+
+      <MediaList media={trendingAnime} />
+      <Grid container 
+        justifyContent="center" 
+        alignItems="stretch" 
+        spacing={4} 
+        sx={{ width: 'auto', margin: '0',}}
+        >
+       {!trendingAnime.length ? <CircularProgress /> : 
+       <ImageList cols={5} gap={48} sx={{textAlign: "center"}}>
+        {trendingAnime.map(anime => (
+            //  <a href={anime.siteUrl} target="_blank" rel="noopener noreferrer">
+            //   <img key={anime.id}src={anime.coverImage.large} alt={anime.title.english}></img>
+            //   </a>
+            // <Grid key={anime.id} item xs={12} sm={6} md={6}>
+            //   <MediaCard media={anime}  />
+            // </Grid>
+          
+          <ImageListItem key={anime.id}>
+            <a href={anime.siteUrl} target="_blank" rel="noopener noreferrer"
+            style={{textDecoration: 'none', color: 'inherit'}}>
+                <img
+                  src={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format`}
+                  srcSet={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                  alt={anime.title.english === null ? anime.title.romaji : anime.title.english}
+                  loading="lazy"
+                  style={{borderRadius: "0.375rem", width: "230px", height: "377px"}}
+                />
+              
+            <ImageListItemBar 
+              title={anime.title.english === null ? anime.title.romaji : anime.title.english} 
+              position="below"
+              sx={{maxWidth: "230px"}}/>
+                      </a>
+            </ImageListItem>
+  
         ))}
+        </ImageList>}
+      </Grid>
       <hr></hr>
       <h3>Popular Anime</h3>
       {popularAnime.map(anime => (

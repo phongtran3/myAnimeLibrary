@@ -8,6 +8,8 @@ import ProfilePage from "./pages/profilePage/ProfilePage";
 import LoginPage from "./pages/loginPage/LoginPage";
 import IndexPage from "./pages/indexPage/IndexPage";
 import HomePage from "./pages/homePage/HomePage";
+import NavBar from "./components/NavBar";
+
 export default function App() {
   console.log("app render");
   const mode = useSelector((state) => state.mode);
@@ -18,6 +20,7 @@ export default function App() {
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <NavBar />
           <Routes>
             <Route path="/" element={<IndexPage />} />
             <Route path="/home" element={<HomePage />} />

@@ -12,6 +12,8 @@ query ($page: Int, $perPage: Int) {
             large
         }
         siteUrl
+        format
+        status
         }
     }
 }
@@ -31,6 +33,8 @@ query ($page: Int, $perPage: Int) {
             large
         }
         siteUrl
+        format
+        status
         }
     }
 }
@@ -39,7 +43,7 @@ query ($page: Int, $perPage: Int) {
 const popularMangaQuery = `
 query ($page: Int, $perPage: Int) {
   Page (page: $page, perPage: $perPage) {
-    media(format: MANGA, sort:POPULARITY_DESC) {
+    media(type: MANGA, sort:POPULARITY_DESC) {
         id
         title {
             romaji
@@ -50,6 +54,7 @@ query ($page: Int, $perPage: Int) {
             large
         }
         siteUrl
+        status
         }
     }
 }
@@ -57,7 +62,7 @@ query ($page: Int, $perPage: Int) {
 const trendingMangaQuery = `
 query ($page: Int, $perPage: Int) {
   Page (page: $page, perPage: $perPage) {
-    media(format: MANGA,, sort: TRENDING_DESC) {
+    media(type: MANGA,, sort: TRENDING_DESC) {
         id
         title {
             romaji
@@ -68,6 +73,7 @@ query ($page: Int, $perPage: Int) {
             large
         }
         siteUrl
+        status
         }
     }
 }

@@ -2,11 +2,9 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingMangaQuery } from './initalQuery';
-import { Grid, CircularProgress } from '@mui/material';
-
+import { Grid, CircularProgress, Typography, LinearProgress  } from '@mui/material';
 import MediaList from '../../components/MediaList';
 
-import { ImageList, ImageListItem , ImageListItemBar, Typography   } from '@mui/material';
 
 export default function IndexPage() {
   const [trendingAnime, setTrendingAnime] = useState([]);
@@ -46,10 +44,13 @@ export default function IndexPage() {
   console.log("index render");
   //console.log(trendingAnime[1]);
 
-
+  const isLoading = (!trendingAnime.length || !popularAnime.length || !trendingManga.length || !popularManga.length) ? true : false;
   return (
     <div>
       <h1>Index Page</h1>
+      
+      {(isLoading) ? <LinearProgress /> : 
+      <>
       <Typography variant="h5" mr={5} ml={5} >Trending Anime</Typography>
       {!trendingAnime.length ? <CircularProgress/> : 
         <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
@@ -57,7 +58,7 @@ export default function IndexPage() {
         </Grid>
        }
       <hr></hr>
-      <Typography variant="h5" mr={5} ml={5}>Popular Anime</Typography>
+      <Typography variant="h5" mr={5} ml={5}>All Time Popular Anime</Typography>
       {!popularAnime.length ? <CircularProgress/> : 
       <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
         <MediaList media={popularAnime} />
@@ -71,13 +72,15 @@ export default function IndexPage() {
       </Grid>
       }
       <hr></hr>
-      <Typography variant="h5" mr={5} ml={5}>Popular Manga</Typography>
+      <Typography variant="h5" mr={5} ml={5}>All Time Popular Manga</Typography>
       {!popularManga.length ? <CircularProgress/> : 
       <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
         <MediaList media={popularManga} />
       </Grid>
       }
       <hr></hr>
+      </>
+    }
     </div>
   )
 }

@@ -1,11 +1,11 @@
 import React from 'react'
 //import {Card, Typography, CardMedia, Button, ButtonBase} from "@mui/material"
-import { ImageList, ImageListItem , ImageListItemBar, Typography   } from '@mui/material';
+import { ImageList, ImageListItem , ImageListItemBar } from '@mui/material';
 
 
 
 export default function Media({media}) {
-  console.log(media);
+  //console.log(media);
   return (
     <ImageList cols={5} gap={48} sx={{textAlign: "center"}}>
       {media.map(anime => ( 

@@ -4,7 +4,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate  } from 'react-router-dom';
 import {setMode, setLogout } from '../states/index';
-import { AppBar, Typography, Toolbar, Avatar, Button, useScrollTrigger, Slide, useTheme, HideOnScroll } from '@mui/material';
+import { AppBar, Typography, Toolbar, Avatar, Button, useScrollTrigger, Slide, useTheme, HideOnScroll, DarkMode, LightMode, } from '@mui/material';
 
 export default function NavBar() {
   const dispatch = useDispatch();

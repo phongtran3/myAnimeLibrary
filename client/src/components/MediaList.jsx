@@ -1,10 +1,9 @@
 import React from 'react'
 //import {Card, Typography, CardMedia, Button, ButtonBase} from "@mui/material"
-import { ImageList, ImageListItem , ImageListItemBar, Typography, Paper } from '@mui/material';
+import { ImageList, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade } from '@mui/material';
 import HoverPopover from "material-ui-popup-state/HoverPopover";
 import PopupState, {bindPopover, bindHover, bindToggle, bindPopper} from "material-ui-popup-state";
-import Popper from '@mui/material/Popper'
-import Fade from '@mui/material/Fade'
+
 
 export default function Media({media}) {
   //console.log(media);
@@ -12,7 +11,7 @@ export default function Media({media}) {
   return (
     <ImageList cols={5} gap={48} sx={{textAlign: "center"}}>
       {media.map(anime => (
-        <PopupState variant="popper" popupId="demoPopper">
+        <PopupState key={anime.id} variant="popper" popupId="demoPopper">
           {(popupState) => (
             <ImageListItem key={anime.id} {...bindHover(popupState)}>
             <a href={anime.siteUrl} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>

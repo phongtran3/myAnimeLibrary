@@ -1,6 +1,6 @@
 import React, { useState} from "react";
 import { TextField, Typography, useTheme, Button, Box, InputAdornment, IconButton } from "@mui/material";
-import {Person, Lock,} from "@mui/icons-material"
+import {Person, AccountCircle, Email, Lock,} from "@mui/icons-material"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
@@ -77,10 +77,19 @@ const registerSchema = yup.object().shape({
                     <Box
                         display="flex"
                         flexDirection={"column"}
+                        sx={{
+                            "& .MuiInputBase-root": {background: `rgb(255,255,255, .94)`},
+                            "& .MuiInputBase-root:hover": {background: `rgb(255,255,255, .94)`},
+                            "& .MuiFilledInput-root.Mui-focused": {backgroundColor: `rgb(255,255,255, .94)`}
+                        
+                        }}
+                        //background: rgb(255,255,255, .94)
                     >
                         {!isLogin && (
                             <>
                             <TextField
+                                autoComplete="off"
+                                variant="filled"
                                 label="First Name"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
@@ -88,8 +97,18 @@ const registerSchema = yup.object().shape({
                                 name="firstName"
                                 error={ Boolean(touched.firstName) && Boolean(errors.firstName)}
                                 helperText={touched.firstName && errors.firstName}
+                                InputProps={{
+                                    startAdornment: (
+                                      <InputAdornment position="start">
+                                        <Person />
+                                      </InputAdornment>
+                                    ),
+                                }}
+                                sx={{marginBottom: '10px'}}
                             />
                             <TextField
+                                autoComplete="off"
+                                variant="filled"
                                 label="Last Name"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
@@ -97,8 +116,19 @@ const registerSchema = yup.object().shape({
                                 name="lastName"
                                 error={Boolean(touched.lastName) && Boolean(errors.lastName)}
                                 helperText={touched.lastName && errors.lastName}
+                                InputProps={{
+                                    startAdornment: (
+                                      <InputAdornment position="start">
+                                        <Person />
+                                      </InputAdornment>
+                                    ),
+                                }}
+                                sx={{marginBottom: '10px'}}
+
                             />
                             <TextField
+                                autoComplete="off"
+                                variant="filled"
                                 label="Username"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
@@ -106,11 +136,21 @@ const registerSchema = yup.object().shape({
                                 name="userName"
                                 error={Boolean(touched.userName) && Boolean(errors.userName)}
                                 helperText={touched.userName && errors.userName}
+                                InputProps={{
+                                    startAdornment: (
+                                      <InputAdornment position="start">
+                                        <AccountCircle />
+                                      </InputAdornment>
+                                    ),
+                                }}
+                                sx={{marginBottom: '10px'}}
+
                             />
                             <Box
-                                border={`1px solid ${palette.neutral.medium}`}
+                                border={`1px solid rgba(0, 0, 0, 0.23)`}
                                 borderRadius="5px"
-                                p="1rem"
+                                p=".75rem"
+                                mb={'15px'}
                             >
                                 <Dropzone
                                     acceptedFiles=".jpg,.jpeg,.png"
@@ -147,6 +187,8 @@ const registerSchema = yup.object().shape({
                         )}
 
                         <TextField
+                            autoComplete="off"
+                            variant="filled"
                             label="Email"
                             onBlur={handleBlur}
                             onChange={handleChange}
@@ -154,8 +196,19 @@ const registerSchema = yup.object().shape({
                             name="email"
                             error={Boolean(touched.email) && Boolean(errors.email)}
                             helperText={touched.email && errors.email}
+                            InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <Email />
+                                  </InputAdornment>
+                                ),
+                            }}
+                            sx={{marginBottom: '10px'}}
+
                         />
                         <TextField
+                            autoComplete="off"
+                            variant="filled"
                             label="Password"
                             type={showPassword ? 'text' : 'password'}
                             onBlur={handleBlur}
@@ -165,6 +218,11 @@ const registerSchema = yup.object().shape({
                             error={Boolean(touched.password) && Boolean(errors.password)}
                             helperText={touched.password && errors.password}
                             InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                      <Lock />
+                                    </InputAdornment>
+                                  ),
                                 endAdornment: (
                                   <InputAdornment position="end">
                                     <IconButton onClick={handleShowPassword}>
@@ -173,18 +231,27 @@ const registerSchema = yup.object().shape({
                                   </InputAdornment>
                                 ),
                             }}
+                            sx={{marginBottom: '10px'}}
+
                         />
                         {!isLogin && (
                             <TextField
+                                autoComplete="off"
+                                variant="filled"
                                 label="Confirm Password"
                                 type={showConfirmPassword ? 'text' : 'password'}
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                                 value={values.confirmPassword}
                                 name="confirmPassword"
-                                error={Boolean(touched.confirmPassword) && Boolean(errors.confirmPassword)}
-                                helperText={touched.confirmPassword && errors.confirmPassword}
+                                error={Boolean(touched.password) && Boolean(errors.password)}
+                                helperText={touched.password && errors.password}
                                 InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                          <Lock />
+                                        </InputAdornment>
+                                      ),
                                     endAdornment: (
                                       <InputAdornment position="end">
                                         <IconButton onClick={handleShowConfirmPassword}>
@@ -193,6 +260,8 @@ const registerSchema = yup.object().shape({
                                       </InputAdornment>
                                     ),
                                 }}
+                                sx={{marginBottom: '10px'}}
+
                             />
                         )}
 
@@ -204,7 +273,7 @@ const registerSchema = yup.object().shape({
                             fullWidth
                             type="submit"
                             sx={{
-                                m: "2rem 0",
+                                m: "0",
                                 p: "1rem",
                                 backgroundColor: palette.primary.main,
                                 color: palette.background.alt,

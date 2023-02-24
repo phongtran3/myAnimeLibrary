@@ -1,9 +1,8 @@
 //Login and Registration page for user
 import React from 'react'
 import axios from 'axios';
-import {useTheme, Box, useMediaQuery, Typography, Paper } from '@mui/material';
+import {Box, useMediaQuery, Typography, Paper } from '@mui/material';
 import Form from './Form';
-import "./style.css";
 
 
 //Array of images for background. 
@@ -19,7 +18,6 @@ const Images =[
 
 export default function LoginPage() {
   const backgroundImgs= Images[Math.floor(Math.random() * Images.length)];
-  const theme = useTheme();
   const isDesktopScreen = useMediaQuery("(min-width: 1000px)");
 
   return (

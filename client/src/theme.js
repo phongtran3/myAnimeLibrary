@@ -48,7 +48,7 @@ export const themeSettings = (mode) => {
             primary: {
               dark: deepPurple[700],
               main: deepPurple[500],
-              light: deepPurple[50],
+              light: deepPurple[100],
             },
             neutral: {
               dark: colorTokens.grey[700],

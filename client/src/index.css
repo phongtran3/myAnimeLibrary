@@ -7,3 +7,8 @@ body,
   font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
   background-color: #DDD5F3; /* Will change*/
 }
+
+*{
+  margin: 0;
+  padding: 0;
+ }

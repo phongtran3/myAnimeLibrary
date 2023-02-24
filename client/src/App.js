@@ -20,7 +20,6 @@ export default function App() {
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <NavBar />
           <Routes>
             <Route path="/" element={<IndexPage />} />
             <Route path="/home" element={<HomePage />} />

@@ -1,9 +1,8 @@
 //Login and Registration page for user
 import React from 'react'
-import axios from 'axios';
 import {Box, useMediaQuery, Typography, Paper } from '@mui/material';
 import Form from './Form';
-
+import {Link } from "react-router-dom";
 
 //Array of images for background. 
 //No copyright intended. All right goes to the orginal owner.
@@ -24,6 +23,7 @@ export default function LoginPage() {
     <div
       style={{
         display: 'flex',
+        flexDirection: 'column',
         backgroundImage: `url(${backgroundImgs})`,
         width: '100%',
         height: '100%',
@@ -32,7 +32,17 @@ export default function LoginPage() {
         backgroundRepeat: 'no-repeat',
         opacity: '.75',
     }}>
-    
+    <Box
+        width="100%"
+        backgroundColor="transparent"
+        p=".5rem"
+        textAlign="center"
+        position="absolute"
+      >
+        <Typography fontWeight="bold" fontSize="32px" color="primary" component={Link} to="/">
+          My Anime Library
+        </Typography>
+      </Box>
     <Paper 
         //p="1rem"
         //m="auto"

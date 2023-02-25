@@ -15,6 +15,7 @@ const authRouter = require("./routes/auth.js");
 const animeRouter = require("./routes/anime.js");
 const mangaRouter = require("./routes/manga.js");
 
+// CONFIGURATIONS
 app.use(express.json());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
@@ -36,7 +37,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 //ROUTES WITH FILE
-app.post("auth/register", upload.single("picture"), register); //Register new user
+app.post("/auth/register", upload.single("picture"), register); //Register new user
 
 //ROUTES
 app.use("/user", userRouter);

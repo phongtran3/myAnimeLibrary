@@ -21,7 +21,7 @@ export default function LoginPage() {
   const isDesktopScreen = useMediaQuery("(min-width: 1000px)");
 
   return (
-    <div class="background-img"
+    <div
       style={{
         display: 'flex',
         backgroundImage: `url(${backgroundImgs})`,
@@ -34,14 +34,14 @@ export default function LoginPage() {
     }}>
     
     <Paper 
-        p="1rem"
-        m="auto"
-        borderRadius="1.5rem"
+        //p="1rem"
+        //m="auto"
+        //borderRadius="1.5rem"
         elevation={12}
         sx={{ 
           backdropFilter: "blur(12px)",
-          width: isDesktopScreen ? "40%" : "70%", 
-          padding: "1rem",
+          // width: isDesktopScreen ? "40%" : "70%", 
+          padding: "1rem 2rem",
           margin: "auto",
           borderRadius:"1.5rem",
           background: "transparent"

@@ -37,7 +37,7 @@ export default function LoginPage() {
         backgroundColor="transparent"
         p=".5rem"
         textAlign="center"
-        position="absolute"
+        position="relative"
       >
         <Typography fontWeight="bold" fontSize="32px" color="primary" component={Link} to="/">
           My Anime Library
@@ -49,7 +49,7 @@ export default function LoginPage() {
         //borderRadius="1.5rem"
         elevation={12}
         sx={{ 
-          backdropFilter: "blur(12px)",
+          backdropFilter: "blur(15px)",
           // width: isDesktopScreen ? "40%" : "70%", 
           padding: "1rem 2rem",
           margin: "auto",

@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { TextField, Typography, useTheme, Button, Box, InputAdornment, IconButton } from "@mui/material";
+import { TextField, Typography, useTheme, Button, Box, InputAdornment, IconButton, Alert  } from "@mui/material";
 import {Person, AccountCircle, Email, Lock, Visibility, VisibilityOff, EditOutlined} from "@mui/icons-material"
 import {Formik} from "formik";
 import * as yup from "yup";
@@ -7,13 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Dropzone from "react-dropzone"; //File/image upload
 import { setLogin } from "../../states";
+import axios from "axios";
 
 const registerSchema = yup.object().shape({
     firstName: yup.string().required("required"),
     lastName: yup.string().required("required"),
     email: yup.string().email("invalid email").required("required"),
     password: yup.string().required("required"),
-    confirmPassword: yup.string().required("required"),
+    confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match').required("required"),
     userName: yup.string().required("required"),
     picture: yup.string().required("required"),
   });
@@ -44,6 +45,7 @@ const registerSchema = yup.object().shape({
     const [isLogin, setIsLogin] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { palette  } = useTheme();
@@ -51,23 +53,45 @@ const registerSchema = yup.object().shape({
     const handleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
     async function login (values, onSubmitProps) {
-        const loggedInResponse = await fetch("http://localhost:5000/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(values),
-        });
-        const loggedIn = await loggedInResponse.json();
-        onSubmitProps.resetForm();
-        if (loggedIn) {
-            dispatch(
-                setLogin({
-                user: loggedIn.user,
-                token: loggedIn.token,
-                })
-            );
-            console.log(loggedIn)
-            navigate("/");  
-        }
+        await axios.post("http://localhost:5000/auth/login", JSON.stringify(values), {headers: { "Content-Type": "application/json" }})
+            .then(res => {
+                console.log("logging in");
+                console.log(res);
+                onSubmitProps.resetForm();
+                dispatch(
+                    setLogin({
+                        user: res.data.user,
+                        token: res.data.token,
+                    })
+                );
+                navigate("/");
+            })
+            .catch(err => {
+                if (err.response){
+                    console.log(err.response.data);
+                    setError(err.response.data.message);
+                }
+                console.log(err);
+            })
+        // const loggedInResponse = await fetch("http://localhost:5000/auth/login", {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify(values),
+        // });
+        // const loggedIn = await loggedInResponse.json();
+        // onSubmitProps.resetForm();
+        // console.log(loggedIn)
+        // console.log(loggedIn.status)
+        // if (loggedIn) {
+        //     dispatch(
+        //         setLogin({
+        //         user: loggedIn.user,
+        //         token: loggedIn.token,
+        //         })
+        //     );
+        //     console.log(loggedIn)
+        //     navigate("/");  
+        // }
     }
 
     async function register (values, onSubmitProps) {
@@ -77,17 +101,32 @@ const registerSchema = yup.object().shape({
         }
         formData.append('picturePath', values.picture.name);
 
-        const savedUserResponse = await fetch( "http://localhost:5000/auth/register", {
-                method: "POST",
-                body: formData,
-            }
-        );
-        const savedUser = await savedUserResponse.json();
-        console.log(savedUser)
-        onSubmitProps.resetForm();
-        if (savedUser) {
-            setIsLogin("false");
-        }
+        await axios.post("http://localhost:5000/auth/register", formData)
+            .then(res => {
+                console.log("registering");
+                console.log(res);
+                onSubmitProps.resetForm();
+                setIsLogin("false");
+
+            }).catch(err => {
+                if (err.response){
+                    console.log(err.response.data);
+                    setError(err.response.data.message);
+                }
+                console.log(err);
+            })
+
+        // const savedUserResponse = await fetch( "http://localhost:5000/auth/register", {
+        //         method: "POST",
+        //         body: formData,
+        //     }
+        // );
+        // const savedUser = await savedUserResponse.json();
+        // console.log(savedUser)
+        // onSubmitProps.resetForm();
+        // if (savedUser) {
+        //     setIsLogin("false");
+        // }
     }
 
 
@@ -123,18 +162,24 @@ const registerSchema = yup.object().shape({
                             marginBottom:"10px" 
                         }}> {!isLogin ? "Register" : "Login"}
                     </Typography>
-
+                    {/* <Typography>{error ? error : ""}</Typography> */}
+                    {error ? <Alert severity="error" sx={{marginBottom:"10px"}}> {error}</Alert> : null }
+                    {/* <Alert severity="error">{error ? error : ""}</Alert> */}
                     <form onSubmit={handleSubmit}>
                         <Box
-                            display="flex"
-                            flexDirection={"column"}
+                            // display="flex"
+                            // flexDirection={"column"}
                             sx={{
                                 "& .MuiInputBase-root": {background: `rgb(255,255,255, .94)`},
                                 "& .MuiInputBase-root:hover": {background: `rgb(255,255,255, .94)`},
                                 "& .MuiFilledInput-root.Mui-focused": {backgroundColor: `rgb(255,255,255, .94)`},
                                 "& .MuiSvgIcon-root" :{color: 'black'},
+                                "& > div": { gridColumn: undefined }
                             
                             }}
+                            display="grid"
+                            columnGap="10px"
+                            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
                             //background: rgb(255,255,255, .94)
                         >
                             {!isLogin && (
@@ -156,7 +201,7 @@ const registerSchema = yup.object().shape({
                                         </InputAdornment>
                                         ),
                                     }}
-                                    sx={{marginBottom: '5px'}}
+                                    sx={{marginBottom: '5px', gridColumn: "span 2" }}
                                 />
                                 <TextField
                                     autoComplete="off"
@@ -175,7 +220,7 @@ const registerSchema = yup.object().shape({
                                         </InputAdornment>
                                         ),
                                     }}
-                                    sx={{marginBottom: '5px'}}
+                                    sx={{marginBottom: '5px', gridColumn: "span 2" }}
 
                                 />
                                 <TextField
@@ -195,10 +240,11 @@ const registerSchema = yup.object().shape({
                                         </InputAdornment>
                                         ),
                                     }}
-                                    sx={{marginBottom: '5px'}}
+                                    sx={{marginBottom: '5px', gridColumn: "span 4" }}
 
                                 />
                                 <Box
+                                    sx={{ gridColumn: "span 4" }}
                                     border={`1px solid rgba(0, 0, 0, 0.23)`}
                                     borderRadius="5px"
                                     p=".75rem"
@@ -256,7 +302,7 @@ const registerSchema = yup.object().shape({
                                     </InputAdornment>
                                     ),
                                 }}
-                                sx={{marginBottom: '5px'}}
+                                sx={{marginBottom: '5px', gridColumn: "span 4" }}
 
                             />
                             <TextField
@@ -284,7 +330,7 @@ const registerSchema = yup.object().shape({
                                     </InputAdornment>
                                     ),
                                 }}
-                                sx={{marginBottom: '5px'}}
+                                sx={{marginBottom: '5px', gridColumn: "span 4" }}
 
                             />
                             {!isLogin && (
@@ -313,7 +359,7 @@ const registerSchema = yup.object().shape({
                                         </InputAdornment>
                                         ),
                                     }}
-                                    sx={{marginBottom: '5px'}}
+                                    sx={{marginBottom: '5px', gridColumn: "span 4" }}
 
                                 />
                             )}
@@ -338,6 +384,7 @@ const registerSchema = yup.object().shape({
                             <Typography
                                 onClick={() => {
                                     setIsLogin(isLogin ? false : true )
+                                    setError(null);
                                     resetForm();
                                 }}
                                 sx={{

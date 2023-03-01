@@ -60,6 +60,7 @@ query ($page: Int, $perPage: Int) {
             large
         }
         siteUrl
+        format
         status
         averageScore
         duration
@@ -81,6 +82,7 @@ query ($page: Int, $perPage: Int) {
         coverImage {
             large
         }
+        format
         siteUrl
         status
         averageScore

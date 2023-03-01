@@ -80,7 +80,7 @@ export default function IndexPage() {
       }
       <hr></hr>
       </>
-    }
+      }
     </div>
   )
 }

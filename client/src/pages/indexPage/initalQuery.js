@@ -14,6 +14,9 @@ query ($page: Int, $perPage: Int) {
         siteUrl
         format
         status
+        averageScore
+        duration
+      	episodes
         }
     }
 }
@@ -35,6 +38,9 @@ query ($page: Int, $perPage: Int) {
         siteUrl
         format
         status
+        averageScore
+        duration
+      	episodes
         }
     }
 }
@@ -55,6 +61,9 @@ query ($page: Int, $perPage: Int) {
         }
         siteUrl
         status
+        averageScore
+        duration
+      	episodes
         }
     }
 }
@@ -74,6 +83,9 @@ query ($page: Int, $perPage: Int) {
         }
         siteUrl
         status
+        averageScore
+        duration
+      	episodes
         }
     }
 }

@@ -2,6 +2,9 @@ import React from 'react'
 import {Box, Fab, SpeedDial, SpeedDialAction } from '@mui/material';
 import {Add, PlayArrow, Check, Schedule, ExpandLess, ExpandMore} from "@mui/icons-material";
 
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import EditIcon from '@mui/icons-material/Edit';
+
 export default function QuickAction() {
   //Default actions
   const actions = [
@@ -18,7 +21,7 @@ export default function QuickAction() {
        <SpeedDial
         ariaLabel="quick action"
         sx={{ position: 'absolute', bottom: "55px", right: "5px"}}
-        icon={<ExpandLess openIcon={<ExpandMore />}  />}
+        icon={<SpeedDialIcon openIcon={<ExpandMore />} />}
       >
         {actions.map((action) => (
           <SpeedDialAction

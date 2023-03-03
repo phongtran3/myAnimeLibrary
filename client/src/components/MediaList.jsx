@@ -46,7 +46,7 @@ export default function Media({media}) {
                         <Typography variant='body2' mt="5px">{anime.format === 'TV' ? "TV Show" : anime.format} {anime.episodes ? `\u2022 ${anime.episodes} Episodes` : null} {anime.duration ? `\u2022 ${anime.duration} Minutes` : null}</Typography>
                       </Box>
                       <Typography variant='body2' mt="5px">Status: {anime.status[0] + anime.status.slice(1).toLowerCase()}</Typography>
-                      <Box>
+                      <Box key={TransitionProps.id}>
                         <Typography variant="body2" mt="5px">
                           Genre: {anime.genres.map(genre => <a href={anime.siteUrl} style={{textDecoration: 'none'}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
                         </Typography>

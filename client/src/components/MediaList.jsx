@@ -4,16 +4,18 @@ import {Box, ImageList, ImageListItem , ImageListItemBar, Typography, Paper, Pop
 import {SentimentNeutral, SentimentSatisfiedAlt, SentimentVeryDissatisfied } from "@mui/icons-material";
 import HoverPopover from "material-ui-popup-state/HoverPopover";
 import PopupState, {bindPopover, bindHover, bindToggle, bindPopper} from "material-ui-popup-state";
+import QuickAction from './QuickAction';
 
 
 export default function Media({media}) {
+
   //console.log(media);
   return (
     <ImageList cols={5} gap={48} sx={{textAlign: "center"}}>
       {media.map(anime => (
         <PopupState key={anime.id} variant="popper" popupId="demoPopper" >
           {(popupState) => (
-            <ImageListItem key={anime.id} {...bindToggle(popupState)}>
+            <ImageListItem key={anime.id} {...bindHover(popupState)}>
             <a href={anime.siteUrl} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>
               <img
                   src={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format`}
@@ -24,6 +26,8 @@ export default function Media({media}) {
               />
             <ImageListItemBar title={anime.title.english === null ? anime.title.romaji : anime.title.english} position="below" sx={{maxWidth: "230px"}}/>
             </a>
+            <QuickAction />
+
             <Popper {...bindPopper(popupState)} transition placement="right-start" sx={{width:'100%', maxWidth:'280px', minWidth:'250px'}}>
               {({ TransitionProps }) => (
                 <Fade {...TransitionProps}  >
@@ -47,11 +51,11 @@ export default function Media({media}) {
                           Genre: {anime.genres.map(genre => <a href={anime.siteUrl} style={{textDecoration: 'none'}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
                         </Typography>
                       </Box>
-
                   </Paper>
                 </Fade>
               )}
             </Popper>
+        
           </ImageListItem>
          )}
       </PopupState>

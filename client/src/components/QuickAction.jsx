@@ -27,7 +27,7 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl}
       "userId": _id,
       "title": title,
       "genres": genres,
-      "format": format !== null ? format : null,
+      "format": format === 'MANGA' ? null : format,
       "coverImage": coverImage,
       "siteUrl": siteUrl,
       "userStatus": value

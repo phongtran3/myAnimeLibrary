@@ -41,11 +41,11 @@ const userSchema = mongoose.Schema({
     ],
     default: [],
   },
-  manga: {
+  mangas: {
     type: [
       {
         title: { type: String, required: true },
-        genre: { type: [String], required: true },
+        genres: { type: [String], required: true },
         coverImage: { type: String, required: true },
         siteUrl: { type: String, required: true },
         userStatus: { type: String, required: true },

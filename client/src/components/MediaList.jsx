@@ -5,10 +5,10 @@ import {SentimentNeutral, SentimentSatisfiedAlt, SentimentVeryDissatisfied } fro
 import HoverPopover from "material-ui-popup-state/HoverPopover";
 import PopupState, {bindPopover, bindHover, bindToggle, bindPopper} from "material-ui-popup-state";
 import QuickAction from './QuickAction';
-
+import { useSelector } from "react-redux";
 
 export default function Media({media}) {
-
+  const user = useSelector((state) => state.user);
   //console.log(media);
   return (
     <ImageList cols={5} gap={48} sx={{textAlign: "center"}}>
@@ -26,8 +26,15 @@ export default function Media({media}) {
               />
             <ImageListItemBar title={anime.title.english === null ? anime.title.romaji : anime.title.english} position="below" sx={{maxWidth: "230px"}}/>
             </a>
-            <QuickAction />
-
+           <Box sx={{"& .MuiButtonBase-root": {width:"40px", height:"40px"}}}>
+            {user && <QuickAction 
+               title={anime.title.english === null ? anime.title.romaji : anime.title.english}
+               genres={anime.genres}
+               format={anime.format}
+               coverImage={anime.coverImage.large}
+               siteUrl={anime.siteUrl}
+            />}
+          </Box>
             <Popper {...bindPopper(popupState)} transition placement="right-start" sx={{width:'100%', maxWidth:'280px', minWidth:'250px'}}>
               {({ TransitionProps }) => (
                 <Fade {...TransitionProps}  >
@@ -39,16 +46,16 @@ export default function Media({media}) {
                     }}>
                       <Box sx={{display: 'flex', justifyContent:'space-between', alignItems:'center'}}>
                         <Typography variant='subtitle2' width='190px'>{anime.title.english === null ? anime.title.romaji : anime.title.english}</Typography>
-                        {anime.averageScore > 75 ? <SentimentSatisfiedAlt/> : anime.averageScore > 60 ? <SentimentNeutral /> : <SentimentVeryDissatisfied/>}
-                        <Typography variant='subtitle2' fontWeight="600">{`${anime.averageScore}%`}</Typography>
+                        {anime.averageScore > 75 ? <SentimentSatisfiedAlt/> : anime.averageScore > 60 ? <SentimentNeutral /> : anime.averageScore !== null ? <SentimentVeryDissatisfied/> : null}
+                        <Typography variant='subtitle2' fontWeight="600">{anime.averageScore && `${anime.averageScore}%`}</Typography>
                       </Box>
                       <Box>
                         <Typography variant='body2' mt="5px">{anime.format === 'TV' ? "TV Show" : anime.format} {anime.episodes ? `\u2022 ${anime.episodes} Episodes` : null} {anime.duration ? `\u2022 ${anime.duration} Minutes` : null}</Typography>
                       </Box>
                       <Typography variant='body2' mt="5px">Status: {anime.status[0] + anime.status.slice(1).toLowerCase()}</Typography>
-                      <Box key={TransitionProps.id}>
+                      <Box>
                         <Typography variant="body2" mt="5px">
-                          Genre: {anime.genres.map(genre => <a href={anime.siteUrl} style={{textDecoration: 'none'}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
+                          Genre: {anime.genres.map(genre => <a key={genre} href={anime.siteUrl} style={{textDecoration: 'none'}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
                         </Typography>
                       </Box>
                   </Paper>

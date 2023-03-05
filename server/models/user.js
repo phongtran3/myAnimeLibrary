@@ -31,7 +31,7 @@ const userSchema = mongoose.Schema({
     type: [
       {
         title: { type: String, required: true },
-        genre: { type: [String], required: true },
+        genres: { type: [String], required: true },
         format: { type: String, required: true },
         coverImage: { type: String, required: true },
         siteUrl: { type: String, required: true },

@@ -53,26 +53,32 @@ const registerSchema = yup.object().shape({
     const handleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
     async function login (values, onSubmitProps) {
-        await axios.post("http://localhost:5000/auth/login", JSON.stringify(values), {headers: { "Content-Type": "application/json" }})
-            .then(res => {
-                console.log("logging in");
-                console.log(res);
-                onSubmitProps.resetForm();
-                dispatch(
-                    setLogin({
-                        user: res.data.user,
-                        token: res.data.token,
-                    })
-                );
-                navigate("/");
-            })
-            .catch(err => {
-                if (err.response){
-                    console.log(err.response.data);
-                    setError(err.response.data.message);
-                }
-                console.log(err);
-            })
+        await axios.post(
+            "http://localhost:5000/auth/login",
+            JSON.stringify(values), 
+            {headers: { 
+                "Content-Type": "application/json",
+            }}
+        )   
+        .then(res => {
+            console.log("logging in");
+            console.log(res);
+            onSubmitProps.resetForm();
+            dispatch(
+                setLogin({
+                    user: res.data.user,
+                    token: res.data.token,
+                })
+            );
+            navigate("/");
+        })
+        .catch(err => {
+            if (err.response){
+                console.log(err.response.data);
+                setError(err.response.data.message);
+            }
+            console.log(err);
+        })
         // const loggedInResponse = await fetch("http://localhost:5000/auth/login", {
         //     method: "POST",
         //     headers: { "Content-Type": "application/json" },

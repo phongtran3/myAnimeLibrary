@@ -6,7 +6,7 @@ const animeSchema = mongoose.Schema({
     default: [],
     required: true,
   },
-  genre: {
+  genres: {
     type: [String],
     required: true,
   },

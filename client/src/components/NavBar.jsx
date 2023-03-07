@@ -31,7 +31,7 @@ export default function NavBar() {
   const theme = useTheme();
 
   const user = useSelector((state) => state.user);
-  const { userName } = useSelector((state) => state.user);
+  //const { userName } = useSelector((state) => state.user);
   const trigger = useScrollTrigger();
 
 
@@ -39,25 +39,25 @@ export default function NavBar() {
     <div>
       <Slide appear={false} direction="down" in={!trigger}>
         <AppBar>
-          <Toolbar>
+          <Toolbar sx={{margin:"0 50px"}}>
             <Typography fontWeight="bold" fontSize="16px" component={Link} to="/">MyAnimeLibrary</Typography>
             <Box display="inline-flex" justifyContent="center" alignItems="center" width="100%" 
               sx={{"& > a": { padding:"0 12px", textDecoration:"none", color:"inherit"}}}
             > 
               {user && (
                 <>
-                <Typography fontWeight="bold" fontSize="16px" component={Link} to={`/user/${userName}`} >Profile</Typography>
-                <Typography fontWeight="bold" fontSize="16px" component={Link} to={`/user/${userName}/animelist`} >Anime List</Typography>
-                <Typography fontWeight="bold" fontSize="16px" component={Link} to={`/user/${userName}/mangalist`} >Manga List</Typography>
+                <Typography fontWeight="bold" fontSize="16px" component={Link} to={`/user/${user.userName}`} >Profile</Typography>
+                <Typography fontWeight="bold" fontSize="16px" component={Link} to={`/user/${user.userName}/animelist`} >Anime List</Typography>
+                <Typography fontWeight="bold" fontSize="16px" component={Link} to={`/user/${user.userName}/mangalist`} >Manga List</Typography>
                 </>
               )}
               <PopupState variant="popper" popupId="demoPopover">
                   {(popupState) => ( 
                     <>
-                      <Typography fontWeight="bold" fontSize="16px" {...bindHover(popupState)} component={Link} to="search/anime" >Browse</Typography>
+                      <Typography fontWeight="bold" fontSize="16px" {...bindHover(popupState)} component={Link} to="/search/anime" >Browse</Typography>
                       <HoverMenu {...bindMenu(popupState)}>
-                        <MenuItem onClick={popupState.close}><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" component={Link} to="search/anime">Anime</Typography></MenuItem>
-                        <MenuItem onClick={popupState.close}><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" component={Link} to="search/manga">Manga</Typography></MenuItem>
+                        <MenuItem onClick={popupState.close}><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" component={Link} to="/search/anime">Anime</Typography></MenuItem>
+                        <MenuItem onClick={popupState.close}><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" component={Link} to="/search/manga">Manga</Typography></MenuItem>
                       </HoverMenu  >
                     </>
                   )}

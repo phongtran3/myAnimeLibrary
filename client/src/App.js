@@ -9,6 +9,7 @@ import LoginPage from "./pages/loginPage/LoginPage";
 import IndexPage from "./pages/indexPage/IndexPage";
 import HomePage from "./pages/homePage/HomePage";
 import NavBar from "./components/NavBar";
+import SearchPage from "./pages/searchPage/SearchPage";
 
 export default function App() {
   console.log("app render");
@@ -25,6 +26,8 @@ export default function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/auth" element={<LoginPage />} />
             <Route path="user/:userName" element={<ProfilePage />} />
+            <Route path="/search/*" exact element={<SearchPage />} />
+
             {/* <Route path="user/:userName/animelist" element={<ProfilePage />} /> */}
           </Routes>
         </ThemeProvider>

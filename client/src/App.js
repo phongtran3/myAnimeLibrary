@@ -24,7 +24,8 @@ export default function App() {
             <Route path="/" element={<IndexPage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/auth" element={<LoginPage />} />
-            <Route path="user/:userId" element={<ProfilePage />} />
+            <Route path="user/:userName" element={<ProfilePage />} />
+            {/* <Route path="user/:userName/animelist" element={<ProfilePage />} /> */}
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

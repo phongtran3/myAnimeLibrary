@@ -4,7 +4,7 @@ import axios from 'axios';
 import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingMangaQuery } from './initalQuery';
 import { Grid, CircularProgress, Typography, LinearProgress  } from '@mui/material';
 import MediaList from '../../components/MediaList';
-
+import NavBar from '../../components/NavBar';
 
 export default function IndexPage() {
   const [trendingAnime, setTrendingAnime] = useState([]);
@@ -46,9 +46,9 @@ export default function IndexPage() {
 
   const isLoading = (!trendingAnime.length || !popularAnime.length || !trendingManga.length || !popularManga.length) ? true : false;
   return (
-    <div>
-      <h1>Index Page</h1>
-      
+    <>
+    <NavBar />
+    <div>      
       {(isLoading) ? <LinearProgress /> : 
       <>
       <Typography variant="h5" mr={5} ml={5} >Trending Anime</Typography>
@@ -82,5 +82,6 @@ export default function IndexPage() {
       </>
       }
     </div>
+    </>
   )
 }

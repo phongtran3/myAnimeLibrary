@@ -20,6 +20,7 @@ import {
   Menu,
   MenuItem
 } from '@mui/material';
+import {PlayArrow, AutoStories} from "@mui/icons-material";
 
 
 import PopupState, {bindPopover, bindHover, bindToggle, bindPopper, bindMenu} from "material-ui-popup-state";
@@ -42,7 +43,7 @@ export default function NavBar() {
           <Toolbar sx={{margin:"0 50px"}}>
             <Typography fontWeight="bold" fontSize="16px" component={Link} to="/">MyAnimeLibrary</Typography>
             <Box display="inline-flex" justifyContent="center" alignItems="center" width="100%" 
-              sx={{"& > a": { padding:"0 12px", textDecoration:"none", color:"inherit"}}}
+              sx={{"& > a": { padding:"0 12px", textDecoration:"none", color:"inherit"}, "button:last-child": {color:"red"}}}
             > 
               {user && (
                 <>
@@ -54,14 +55,27 @@ export default function NavBar() {
               <PopupState variant="popper" popupId="demoPopover">
                   {(popupState) => ( 
                     <>
-                      <Typography fontWeight="bold" fontSize="16px" {...bindHover(popupState)} component={Link} to="/search/anime" >Browse</Typography>
-                      <HoverMenu {...bindMenu(popupState)}>
-                        <MenuItem onClick={popupState.close}><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" component={Link} to="/search/anime">Anime</Typography></MenuItem>
-                        <MenuItem onClick={popupState.close}><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" component={Link} to="/search/manga">Manga</Typography></MenuItem>
+                      <Typography fontWeight="bold" fontSize="16px" {...bindToggle(popupState)} component={Link} to="/search/anime" >Browse</Typography>
+                      <HoverMenu {...bindMenu(popupState)} sx={{width:"150px", padding:"20px"}}>
+                        <Box display="flex" alignItems="center">
+                          <Typography component={Link} to="/search/anime" display="flex" ><PlayArrow /></Typography >
+                          <MenuItem onClick={popupState.close}><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" component={Link} to="/search/anime">Anime</Typography></MenuItem>
+                        </Box>
+                        <Box>
+                          <MenuItem onClick={popupState.close}><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" component={Link} to="/search/manga">Manga</Typography></MenuItem>
+                        </Box>
                       </HoverMenu  >
                     </>
                   )}
                 </PopupState>
+                {/* <Button variant="contained">
+                  <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
+                </Button> */}
+            </Box>
+            <Box>
+               <Button variant="contained">
+                  <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
+                </Button> 
             </Box>
           </Toolbar>
         </AppBar>

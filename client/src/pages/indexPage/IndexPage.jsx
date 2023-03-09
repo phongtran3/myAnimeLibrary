@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingMangaQuery } from './initalQuery';
-import { Grid, CircularProgress, Typography, LinearProgress  } from '@mui/material';
+import { Box, Grid, CircularProgress, Typography, LinearProgress  } from '@mui/material';
 import MediaList from '../../components/MediaList';
 import NavBar from '../../components/NavBar';
 
@@ -48,40 +48,43 @@ export default function IndexPage() {
   return (
     <>
     <NavBar />
-    <div>      
+    <Box maxWidth="1440px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:"0.5em auto .5em 10px"}}}>      
       {(isLoading) ? <LinearProgress /> : 
       <>
-      <Typography variant="h5" mr={5} ml={5} >Trending Anime</Typography>
       {!trendingAnime.length ? <CircularProgress/> : 
         <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+          <Typography variant="h5" >Trending Anime</Typography>
           <MediaList media={trendingAnime} />
         </Grid>
        }
       <hr></hr>
-      <Typography variant="h5" mr={5} ml={5}>All Time Popular Anime</Typography>
+      
       {!popularAnime.length ? <CircularProgress/> : 
       <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+        <Typography variant="h5">All Time Popular Anime</Typography>
         <MediaList media={popularAnime} />
       </Grid>
       }
       <hr></hr>
-      <Typography variant="h5" mr={5} ml={5}>Trending Manga</Typography>
+      
       {!trendingManga.length ? <CircularProgress/> : 
       <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+        <Typography variant="h5">Trending Manga</Typography>
         <MediaList media={trendingManga} />
       </Grid>
       }
       <hr></hr>
-      <Typography variant="h5" mr={5} ml={5}>All Time Popular Manga</Typography>
+      
       {!popularManga.length ? <CircularProgress/> : 
       <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+        <Typography variant="h5">All Time Popular Manga</Typography>
         <MediaList media={popularManga} />
       </Grid>
       }
       <hr></hr>
       </>
       }
-    </div>
+    </Box>
     </>
   )
 }

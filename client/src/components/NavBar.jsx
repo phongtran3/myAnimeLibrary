@@ -37,7 +37,7 @@ export default function NavBar() {
   const trigger = useScrollTrigger();
 
   return (
-    <div>
+    <>
       <Slide appear={false} direction="down" in={!trigger}>
         <AppBar>
           <Toolbar sx={{margin:"0 50px"}}>
@@ -102,6 +102,6 @@ export default function NavBar() {
         </AppBar>
       </Slide>
       <Toolbar />
-    </div>
+    </>
   )
 }

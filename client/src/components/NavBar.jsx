@@ -94,10 +94,8 @@ export default function NavBar() {
                 </>
               )}
             </PopupState>
-
             )}
-
-
+            
           </Toolbar>
         </AppBar>
       </Slide>

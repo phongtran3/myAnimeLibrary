@@ -40,7 +40,7 @@ const upload = multer({ storage });
 app.post("/auth/register", upload.single("picture"), register); //Register new user
 
 //ROUTES
-app.use("/user", userRouter);
+app.use("/users", userRouter);
 app.use("/auth", authRouter);
 app.use("/anime", animeRouter);
 app.use("/manga", mangaRouter);

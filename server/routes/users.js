@@ -5,7 +5,7 @@ const { getUser } = require("../controllers/uesrs.js");
 const router = express.Router();
 
 //READ
-router.get("/:id", verifyToken, getUser); //Get user
+router.get("/:userName", getUser); //Get user
 //router.get("/:id/animelist", verifyToken, getAnimeList); //Get user's animeList
 //router.get("/:id/mangalist", verifyToken, getMangaList); //Get user's mangalist
 

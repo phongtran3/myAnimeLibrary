@@ -42,19 +42,27 @@ export default function ProfilePage() {
     <>
       <NavBar />
       <h1>ProfilePage</h1>
-      <Box>
-        <Box>
-          <ProfileCard 
-            user={user} 
-            firstName={firstName} 
-            lastName={lastName} 
-            userName={userName} 
-            animes={animes} 
-            mangas={mangas} 
-            picturePath={picturePath} 
-          />
-
+      <Box id="content-container" margin="0 auto" maxWidth="1440px" padding="0 50px">
+        <Box id="content" 
+          display="grid"
+          gridTemplateColumns="45% 55%"
+          gap="30px"
+        >
+        
+          <Box id="section-1"> 
+            {/* will rename id later */}
+            <ProfileCard 
+              user={user} 
+              firstName={firstName} 
+              lastName={lastName} 
+              userName={userName} 
+              animes={animes} 
+              mangas={mangas} 
+              picturePath={picturePath} 
+            />
+          </Box>
         </Box>
+
       </Box>
     </>
   )

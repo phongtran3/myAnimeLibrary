@@ -42,17 +42,19 @@ export default function ProfilePage() {
     <>
       <NavBar />
       <h1>ProfilePage</h1>
-
       <Box>
-        <ProfileCard 
-          user={user} 
-          lastName={lastName} 
-          userName={userName} 
-          animes={animes} 
-          mangas={mangas} 
-          picturePath={picturePath} 
-        />
+        <Box>
+          <ProfileCard 
+            user={user} 
+            firstName={firstName} 
+            lastName={lastName} 
+            userName={userName} 
+            animes={animes} 
+            mangas={mangas} 
+            picturePath={picturePath} 
+          />
 
+        </Box>
       </Box>
     </>
   )

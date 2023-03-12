@@ -1,13 +1,13 @@
 import React from 'react'
 import {Card, CardContent, Avatar, Divider, Typography, Box} from '@mui/material'
-import {Twitter, Instagram, YouTube} from "@mui/icons-material";
+import {Twitter, Instagram, YouTube, GitHub} from "@mui/icons-material";
 
 import { Link  } from 'react-router-dom';
 
 export default function ProfileCard({firstName, lastName, userName, animes, mangas, picturePath}) {
     console.log(picturePath);
     return (
-        <Card id="profile-card" sx={{maxWidth: 400, borderRadius: "12px", textAlign: "center"}}>
+        <Card id="profile-card" sx={{maxWidth: 350, borderRadius: "12px", textAlign: "center"}}>
             <CardContent>
                 <Avatar sx={{ width: 150, height: 150, margin: "1em auto 0" }} src={`http://localhost:5000/assets/${picturePath}`}/>
                 <Typography variant='h5' mt="0.5em" fontWeight="bold" >{`${firstName} ${lastName}`}</Typography>
@@ -33,7 +33,18 @@ export default function ProfileCard({firstName, lastName, userName, animes, mang
                 </Box>
             </Box>
             <Divider variant="middle"/>
-            <Box>
+            <Box sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: ".5em",
+                padding: ".5em",
+                gap: "2em",
+                alignItems: "center"
+            }}>
+                <Typography><Twitter/></Typography>
+                <Typography><Instagram/></Typography>
+                <Typography><YouTube/></Typography>
+                <Typography><GitHub/></Typography>
 
             </Box>
         </Card>

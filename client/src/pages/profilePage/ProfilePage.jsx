@@ -60,6 +60,7 @@ export default function ProfilePage() {
               mangas={mangas} 
               picturePath={picturePath} 
             />
+            
           </Box>
         </Box>
 

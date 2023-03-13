@@ -49,7 +49,6 @@ export default function ProfilePage() {
       
   }
 
-  console.log(progress);
   return (
     <>
       <NavBar />
@@ -78,54 +77,56 @@ export default function ProfilePage() {
               <Typography variant="h6">In Progress</Typography>
               <ImageList cols={6} gap={20} sx={{backgroundColor: "lightblue", textAlign: "center", padding:"15px"}}>
                 {progress.map(media => 
-                  <ImageListItem key={media.id}>
+                  <ImageListItem key={media._id}>
                     <a href={media.siteUrl} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>
                       <img
                           src={`${media.coverImage}?w=164&h=164&fit=crop&auto=format`}
                           srcSet={`${media.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          alt={media}
+                          alt={media.title}
                           loading="lazy"
                           style={{borderRadius: "0.375rem"}}
-                          width={"125px"}
-                          height={"100%"}
+                          width={"105px"}
+                          height={"150px"}
                       />
                     </a>
                   </ImageListItem>
                 )}
               </ImageList>
             </Box>
-            <Box id="anime-list-preview-wrap">
+            <Box id="anime-list-preview-wrap" mt="1em">
               <Typography variant="h6">Animes</Typography>
               <ImageList cols={6} gap={20} sx={{backgroundColor: "lightblue", textAlign: "center", padding:"15px"}}>
                 {animes.map(anime => 
-                  <ImageListItem key={anime.id}>
+                  <ImageListItem key={anime._id}>
                     <a href={anime.siteUrl} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>
                       <img
                           src={`${anime.coverImage}?w=164&h=164&fit=crop&auto=format`}
                           srcSet={`${anime.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          alt={anime}
+                          alt={anime.title}
                           loading="lazy"
                           style={{borderRadius: "0.375rem"}}
-                          width={"125px"}
+                          width={"105px"}
+                          height={"150px"}
                       />
                     </a>
                   </ImageListItem>
                 )}
               </ImageList>
             </Box>
-            <Box id="manga-list-preview-wrap">
+            <Box id="manga-list-preview-wrap" mt="1em">
               <Typography variant="h6">Manga</Typography>
               <ImageList cols={6} gap={20} sx={{backgroundColor: "lightblue", textAlign: "center", padding:"15px"}}>
                 {mangas.map(manga => 
-                  <ImageListItem key={manga.id}>
+                  <ImageListItem key={manga._id}>
                     <a href={manga.siteUrl} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>
                       <img
                           src={`${manga.coverImage}?w=164&h=164&fit=crop&auto=format`}
                           srcSet={`${manga.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          alt={manga}
+                          alt={manga.title}
                           loading="lazy"
                           style={{borderRadius: "0.375rem"}}
-                          width={"125px"}
+                          width={"105px"}
+                          height={"150px"}
                       />
                     </a>
                   </ImageListItem>

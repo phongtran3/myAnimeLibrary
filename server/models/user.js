@@ -54,6 +54,10 @@ const userSchema = mongoose.Schema({
     ],
     default: [],
   },
+  socialMediaHandles: {
+    type: Map,
+    of: String,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

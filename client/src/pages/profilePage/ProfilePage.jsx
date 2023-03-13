@@ -5,8 +5,8 @@ import ProfileCard from '../../components/ProfileCard'
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
-import { Box, Typography, useMediaQuery, ImageList, ImageListItem , ImageListItemBar } from "@mui/material";
-
+import { Box, Typography, useMediaQuery, ImageList, ImageListItem} from "@mui/material";
+import PreviewList from '../../components/PreviewList';
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -75,63 +75,17 @@ export default function ProfilePage() {
           <Box id="section-2">
             <Box id="progress-list-preview-wrap">
               <Typography variant="h6">In Progress</Typography>
-              <ImageList cols={6} gap={20} sx={{backgroundColor: "lightblue", textAlign: "center", padding:"15px"}}>
-                {progress.map(media => 
-                  <ImageListItem key={media._id}>
-                    <a href={media.siteUrl} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>
-                      <img
-                          src={`${media.coverImage}?w=164&h=164&fit=crop&auto=format`}
-                          srcSet={`${media.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          alt={media.title}
-                          loading="lazy"
-                          style={{borderRadius: "0.375rem"}}
-                          width={"105px"}
-                          height={"150px"}
-                      />
-                    </a>
-                  </ImageListItem>
-                )}
-              </ImageList>
+              <PreviewList medium={progress} />
             </Box>
+
             <Box id="anime-list-preview-wrap" mt="1em">
               <Typography variant="h6">Animes</Typography>
-              <ImageList cols={6} gap={20} sx={{backgroundColor: "lightblue", textAlign: "center", padding:"15px"}}>
-                {animes.map(anime => 
-                  <ImageListItem key={anime._id}>
-                    <a href={anime.siteUrl} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>
-                      <img
-                          src={`${anime.coverImage}?w=164&h=164&fit=crop&auto=format`}
-                          srcSet={`${anime.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          alt={anime.title}
-                          loading="lazy"
-                          style={{borderRadius: "0.375rem"}}
-                          width={"105px"}
-                          height={"150px"}
-                      />
-                    </a>
-                  </ImageListItem>
-                )}
-              </ImageList>
+              <PreviewList medium={animes} />
             </Box>
+
             <Box id="manga-list-preview-wrap" mt="1em">
               <Typography variant="h6">Manga</Typography>
-              <ImageList cols={6} gap={20} sx={{backgroundColor: "lightblue", textAlign: "center", padding:"15px"}}>
-                {mangas.map(manga => 
-                  <ImageListItem key={manga._id}>
-                    <a href={manga.siteUrl} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>
-                      <img
-                          src={`${manga.coverImage}?w=164&h=164&fit=crop&auto=format`}
-                          srcSet={`${manga.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          alt={manga.title}
-                          loading="lazy"
-                          style={{borderRadius: "0.375rem"}}
-                          width={"105px"}
-                          height={"150px"}
-                      />
-                    </a>
-                  </ImageListItem>
-                )}
-              </ImageList>
+              <PreviewList medium={mangas} />
             </Box>
           </Box>
         </Box>

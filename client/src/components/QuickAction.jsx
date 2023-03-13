@@ -12,7 +12,7 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl}
   const actions = [
     { icon: <Schedule />, name: 'Add to planning', value: "PLANNING" }, //Planning
     { icon: <Check />, name: 'Add to completed', value: "COMPLETED" }, //Completed
-    { icon: <PlayArrow />, name: 'Add to watching', value: "WATCHING" }, //Watching
+    { icon: <PlayArrow />, name: format === 'MANGA' ? 'Add to reading' : 'Add to watching', value: format === 'MANGA' ? "READING" :"WATCHING" }, //Watching
   ]; 
   const token = useSelector((state) => state.token);
   const { _id } = useSelector((state) => state.user);

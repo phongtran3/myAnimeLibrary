@@ -8,11 +8,12 @@ async function register(req, res) {
     const { firstName, lastName, email, userName, password, picturePath } =
       req.body;
     const oldUser = await User.findOne({ email: email });
+    console.log(oldUser);
     if (oldUser)
       return res.status(400).json({ message: "User already exists" });
 
-    if (oldUser.userName === userName)
-      return res.status(400).json({ message: "Username already exists" });
+    // if (oldUser.userName === userName)
+    //   return res.status(400).json({ message: "Username already exists" });
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);

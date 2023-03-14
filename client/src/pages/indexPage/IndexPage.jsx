@@ -5,7 +5,7 @@ import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingManga
 import { Box, Grid, CircularProgress, Typography, LinearProgress  } from '@mui/material';
 import MediaList from '../../components/MediaList';
 import NavBar from '../../components/NavBar';
-
+import Filter from '../../components/Filter';
 export default function IndexPage() {
   const [trendingAnime, setTrendingAnime] = useState([]);
   const [popularAnime, setpopularAnime] = useState([]);
@@ -48,11 +48,12 @@ export default function IndexPage() {
   return (
     <>
     <NavBar />
-    <Box maxWidth="1440px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:"0.5em auto .5em 10px"}}}>      
+    <Box maxWidth="1440px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}>   
+      <Filter />
       {(isLoading) ? <LinearProgress /> : 
       <>
       {!trendingAnime.length ? <CircularProgress/> : 
-        <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+        <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
           <Typography variant="h5" >Trending Anime</Typography>
           <MediaList media={trendingAnime} />
         </Grid>
@@ -60,7 +61,7 @@ export default function IndexPage() {
       <hr></hr>
       
       {!popularAnime.length ? <CircularProgress/> : 
-      <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
         <Typography variant="h5">All Time Popular Anime</Typography>
         <MediaList media={popularAnime} />
       </Grid>
@@ -68,7 +69,7 @@ export default function IndexPage() {
       <hr></hr>
       
       {!trendingManga.length ? <CircularProgress/> : 
-      <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
         <Typography variant="h5">Trending Manga</Typography>
         <MediaList media={trendingManga} />
       </Grid>
@@ -76,7 +77,7 @@ export default function IndexPage() {
       <hr></hr>
       
       {!popularManga.length ? <CircularProgress/> : 
-      <Grid container justifyContent="center" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
         <Typography variant="h5">All Time Popular Manga</Typography>
         <MediaList media={popularManga} />
       </Grid>

@@ -6,7 +6,7 @@ export default function PreviewList({medium}) {
   return (
     <ImageList cols={6} gap={20} sx={{backgroundColor: "lightblue", textAlign: "center", padding:"15px", marginTop: ".5em"}}>
         {medium.map(media => (
-            <PopupState key={media.id} variant="popper" popupId="demoPopper" >
+            <PopupState  key={media._id} variant="popper" popupId="demoPopper" >
             {(popupState) => (
                 <ImageListItem key={media._id} {...bindHover(popupState)}>
                     <a href={media.siteUrl} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>

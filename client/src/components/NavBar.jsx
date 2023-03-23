@@ -22,11 +22,10 @@ import {
   MenuItem
 } from '@mui/material';
 import {PlayArrow, AutoStories, Logout, Settings, Person } from "@mui/icons-material";
-
-
 import PopupState, {bindPopover, bindHover, bindToggle, bindPopper, bindMenu} from "material-ui-popup-state";
 import HoverMenu from 'material-ui-popup-state/HoverMenu'
 import HoverPopover from 'material-ui-popup-state/HoverPopover'
+
 export default function NavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();

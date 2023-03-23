@@ -26,7 +26,7 @@ export default function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/auth" element={<LoginPage />} />
             <Route path="user/:userName" element={<ProfilePage />} />
-            <Route path="/search/*" exact element={<SearchPage />} />
+            <Route path="/search/:media/:sort" exact element={<SearchPage />} />
 
             {/* <Route path="user/:userName/animelist" element={<ProfilePage />} /> */}
           </Routes>

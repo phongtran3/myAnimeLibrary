@@ -6,6 +6,8 @@ import { Box, Grid, CircularProgress, Typography, LinearProgress  } from '@mui/m
 import MediaList from '../../components/MediaList';
 import NavBar from '../../components/NavBar';
 import Filter from '../../components/Filter';
+
+import { useNavigate, Link  } from 'react-router-dom';
 export default function IndexPage() {
   const [trendingAnime, setTrendingAnime] = useState([]);
   const [popularAnime, setpopularAnime] = useState([]);
@@ -41,6 +43,7 @@ export default function IndexPage() {
       console.log("error: " + error.message);
     }
   }, [])
+
   console.log("index render");
   //console.log(trendingAnime[1]);
 
@@ -54,7 +57,7 @@ export default function IndexPage() {
       <>
       {!trendingAnime.length ? <CircularProgress/> : 
         <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
-          <Typography variant="h5" >Trending Anime</Typography>
+          <Typography variant="h5" component={Link} to={`search/anime/trending`} >Trending Anime</Typography>
           <MediaList media={trendingAnime} />
         </Grid>
        }
@@ -62,7 +65,7 @@ export default function IndexPage() {
       
       {!popularAnime.length ? <CircularProgress/> : 
       <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
-        <Typography variant="h5">All Time Popular Anime</Typography>
+        <Typography variant="h5" component={Link} to={`search/anime/popular`}>All Time Popular Anime</Typography>
         <MediaList media={popularAnime} />
       </Grid>
       }
@@ -70,7 +73,7 @@ export default function IndexPage() {
       
       {!trendingManga.length ? <CircularProgress/> : 
       <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
-        <Typography variant="h5">Trending Manga</Typography>
+        <Typography variant="h5" component={Link} to={`search/manga/trending`}>Trending Manga</Typography>
         <MediaList media={trendingManga} />
       </Grid>
       }
@@ -78,7 +81,7 @@ export default function IndexPage() {
       
       {!popularManga.length ? <CircularProgress/> : 
       <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
-        <Typography variant="h5">All Time Popular Manga</Typography>
+        <Typography variant="h5" component={Link} to={`search/manga/popular`}>All Time Popular Manga</Typography>
         <MediaList media={popularManga} />
       </Grid>
       }

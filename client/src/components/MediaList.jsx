@@ -22,7 +22,7 @@ export default function MediaList({media}) {
                     srcSet={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                     alt={anime.title.english === null ? anime.title.romaji : anime.title.english}
                     loading="lazy"
-                    style={{borderRadius: "0.375rem", width: "230px", height: "326px"}}
+                    style={{borderRadius: "0.375rem", width: "230px", height: "360px"}}
                 />
               <ImageListItemBar title={anime.title.english === null ? anime.title.romaji : anime.title.english} position="below" sx={{maxWidth: "230px"}}/>
               </a>

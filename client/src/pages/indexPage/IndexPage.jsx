@@ -15,7 +15,7 @@ export default function IndexPage() {
   const [popularManga, setpopularManga] = useState([]);
   //const [variables, setVariable] = useState({page: 1, perPage: 50}); for full search page
   //const [viewAll, setViewAll] = useState(false); 
- 
+  const navigate = useNavigate();
   const variables = {
     page: 1,
     perPage: 5,
@@ -25,18 +25,17 @@ export default function IndexPage() {
     console.log("UseEffect");
     try{
         const fetchData = async () => {
-          const getTrendingAnime = axios.post('https://graphql.anilist.co', { query: trendingAnimeQuery, variables })
-          const getPopularAnime = axios.post('https://graphql.anilist.co', { query: popularAnimeQuery, variables })
-          const getTrendingManga = axios.post('https://graphql.anilist.co', { query: trendingMangaQuery, variables })
-          const getPopularManga = axios.post('https://graphql.anilist.co', { query: popularMangaQuery, variables })
-          axios.all([getTrendingAnime,getPopularAnime,getTrendingManga,getPopularManga]).then(
-            axios.spread((...allData) => {
-              setTrendingAnime(allData[0].data.data.Page.media)
-              setpopularAnime(allData[1].data.data.Page.media)
-              setTrendingManga(allData[2].data.data.Page.media)
-              setpopularManga(allData[3].data.data.Page.media)
+          const getTrendingAnime = await axios.post('https://graphql.anilist.co', { query: trendingAnimeQuery, variables })
+          const getPopularAnime = await axios.post('https://graphql.anilist.co', { query: popularAnimeQuery, variables })
+          const getTrendingManga = await axios.post('https://graphql.anilist.co', { query: trendingMangaQuery, variables })
+          const getPopularManga = await axios.post('https://graphql.anilist.co', { query: popularMangaQuery, variables })
+          Promise.all([getTrendingAnime,getPopularAnime,getTrendingManga,getPopularManga])
+            .then(res => {
+              setTrendingAnime(res[0].data.data.Page.media)
+              setpopularAnime(res[1].data.data.Page.media)
+              setTrendingManga(res[2].data.data.Page.media)
+              setpopularManga(res[3].data.data.Page.media)
             })
-          )
         }
       fetchData();
     }catch(error){
@@ -47,12 +46,19 @@ export default function IndexPage() {
   console.log("index render");
   //console.log(trendingAnime[1]);
 
-  const isLoading = (!trendingAnime.length || !popularAnime.length || !trendingManga.length || !popularManga.length) ? true : false;
+  const isLoading = (!trendingAnime.length && !popularAnime.length && !trendingManga.length && !popularManga.length) ? true : false;
   return (
     <>
     <NavBar />
-    <Box maxWidth="1440px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}>   
+    <Box maxWidth="1440px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}> 
+    <Box>
       <Filter />
+    </Box>
+    
+    {/* <Box margin="0 2.5rem">
+        <h1>Filter</h1>
+    </Box> */}
+
       {(isLoading) ? <LinearProgress /> : 
       <>
       {!trendingAnime.length ? <CircularProgress/> : 

@@ -1,4 +1,4 @@
-import { TextField, Autocomplete, Checkbox,  } from '@mui/material';
+import { TextField, Autocomplete, Checkbox, Typography, Chip} from '@mui/material';
 import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material';
 import React from 'react'
 
@@ -32,6 +32,22 @@ export default function DropDownMenu({array, name}) {
         renderInput={(params) => (
             <TextField {...params} label={`Select ${name}`}/>
         )}
+        renderTags={(value, getTagProps) => {
+            const numTags = value.length;
+            const limitTags = 3;
+            return (
+              <>
+                {value.slice(0, limitTags).map((option, index) => (
+                  <Chip
+                    {...getTagProps({ index })}
+                    key={index}
+                    label={option}
+                  />
+                ))}
+                {numTags > limitTags && ` +${numTags - limitTags}`}
+              </>
+            );
+          }}
       />
     </>
   )

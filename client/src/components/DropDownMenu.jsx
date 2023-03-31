@@ -36,18 +36,18 @@ export default function DropDownMenu({array, name, setter}) {
             const numTags = value.length;
             const limitTags = 3;
             return (
-              <>
+                <>
                 {value.slice(0, limitTags).map((option, index) => (
-                  <Chip
+                    <Chip
                     {...getTagProps({ index })}
                     key={index}
                     label={option}
-                  />
+                    />
                 ))}
                 {numTags > limitTags && ` +${numTags - limitTags}`}
-              </>
+                </>
             );
-          }}
+        }}
       />
     </>
   )

@@ -1,4 +1,3 @@
-//Main page for unauthenticated user
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingMangaQuery } from './initalQuery';
@@ -6,16 +5,17 @@ import { Box, Grid, CircularProgress, Typography, LinearProgress  } from '@mui/m
 import MediaList from '../../components/MediaList';
 import NavBar from '../../components/NavBar';
 import Filter from '../../components/Filter';
+import { useNavigate, Link} from 'react-router-dom';
 
-import { useNavigate, Link  } from 'react-router-dom';
+
+
 export default function IndexPage() {
   const [trendingAnime, setTrendingAnime] = useState([]);
   const [popularAnime, setpopularAnime] = useState([]);
   const [trendingManga, setTrendingManga] = useState([]);
   const [popularManga, setpopularManga] = useState([]);
-  //const [variables, setVariable] = useState({page: 1, perPage: 50}); for full search page
-  //const [viewAll, setViewAll] = useState(false); 
   const navigate = useNavigate();
+
   const variables = {
     page: 1,
     perPage: 5,
@@ -47,13 +47,14 @@ export default function IndexPage() {
   //console.log(trendingAnime[1]);
 
   const isLoading = (!trendingAnime.length && !popularAnime.length && !trendingManga.length && !popularManga.length) ? true : false;
+  if (isLoading) return <LinearProgress />
   return (
     <>
     <NavBar />
     <Box maxWidth="1440px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}> 
-    <Box>
-      <Filter />
-    </Box>
+      <Box>
+        <Filter />
+      </Box>
     
     {/* <Box margin="0 2.5rem">
         <h1>Filter</h1>

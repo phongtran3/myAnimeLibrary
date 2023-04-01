@@ -40,12 +40,8 @@ export default function SearchPage() {
     <>
       <NavBar />
       <Box maxWidth="1440px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}>
-        <Box>
-          <Filter 
-            searchTitle={searchTitle}
-            setSearchTitle={setSearchTitle}
-            setSearchFormat={setSearchFormat}
-          />
+        <Box margin="0 2.5rem">
+          <Filter />
         </Box>
       </Box>
     </>

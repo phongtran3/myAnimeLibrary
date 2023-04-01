@@ -60,12 +60,12 @@ export default function Filter({searchTitle, setSearchTitle, setSearchFormat}) {
           }}
         />
 
-        <Autocomplete multiple limitTags={2} id="checkboxes-tags-demo" options={formatCollection} // defaultValue={[array[1]]}
+        <Autocomplete id="checkboxes-tags-demo" options={formatCollection} // defaultValue={[array[1]]}
           disableCloseOnSelect
           getOptionLabel={(option) => option}
           renderOption={(props, option, { selected }) => (
               <li {...props}>
-              <Radio
+              <Checkbox
                   icon={<CheckBoxOutlineBlank fontSize="small" />}
                   checkedIcon={<CheckBox fontSize="small" />}
                   style={{ marginRight: 4 }}
@@ -78,27 +78,28 @@ export default function Filter({searchTitle, setSearchTitle, setSearchFormat}) {
           renderInput={(params) => (
               <TextField {...params} label={`Select Format`}/>
           )}
-          renderTags={(value, getTagProps) => {
-              const numTags = value.length;
-              const limitTags = 3;
-              return (
-                  <>
-                  {value.slice(0, limitTags).map((option, index) => (
-                      <Chip
-                      {...getTagProps({ index })}
-                      key={index}
-                      label={option}
-                      />
-                  ))}
-                  {numTags > limitTags && ` +${numTags - limitTags}`}
-                  </>
-              );
-          }}
         />
         
-        {/* <DropDownMenu array={genreCollection} name={"Genre"}/> */}
-        {/* <DropDownMenu array={formatCollection} setter={setSearchFormat} name={"Format"}/> */}
-        <DropDownMenu array={airingStatus} name={"Airing Status"}/>
+        <Autocomplete id="checkboxes-tags-demo" options={airingStatus} // defaultValue={[array[1]]}
+          disableCloseOnSelect
+          getOptionLabel={(option) => option}
+          renderOption={(props, option, { selected }) => (
+              <li {...props}>
+              <Checkbox
+                  icon={<CheckBoxOutlineBlank fontSize="small" />}
+                  checkedIcon={<CheckBox fontSize="small" />}
+                  style={{ marginRight: 4 }}
+                  checked={selected}
+              />
+              {option}
+              </li>
+          )}
+          sx={{width: 500}}
+          renderInput={(params) => (
+              <TextField {...params} label={`Select Airing Status`}/>
+          )}
+        />
+ 
         <Button onClick={searchMedia} variant="contained" >Filter</Button>
     </Box>
   )

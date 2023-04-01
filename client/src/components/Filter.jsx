@@ -10,6 +10,7 @@ export default function Filter() {
   const [searchTitle, setSearchTitle] = useState('');
   const [searchFormat, setSearchFormat] = useState('');
   const [searchAiringStatus, setSearchAiringStatus] = useState('');
+  const [searchGenre, setSearchGenre] = useState([]);
 
 
   function searchMedia(){
@@ -17,6 +18,7 @@ export default function Filter() {
     console.log(searchTitle);
     console.log(searchFormat);
     console.log(searchAiringStatus);
+    console.log(searchGenre);
   }
 
   return (
@@ -30,20 +32,13 @@ export default function Filter() {
           onChange={(e) => {setSearchTitle(e.target.value)}}
         />
 
-        <Autocomplete multiple limitTags={2} id="checkboxes-tags-demo" options={genreCollection} // defaultValue={[array[1]]}
+        <Autocomplete multiple limitTags={2} id="checkboxes-genres" options={genreCollection} 
+          // defaultValue={[array[1]]}
+          onChange={(e, newValue) => {
+            setSearchGenre(newValue);
+          }}
           disableCloseOnSelect
           getOptionLabel={(option) => option}
-          renderOption={(props, option, { selected }) => (
-            <li {...props}>
-            <Checkbox
-                icon={<CheckBoxOutlineBlank fontSize="small" />}
-                checkedIcon={<CheckBox fontSize="small" />}
-                style={{ marginRight: 4 }}
-                checked={selected}
-            />
-            {option}
-            </li>
-          )}
           sx={{width: 500}}
           renderInput={(params) => (
               <TextField {...params} label={`Select Genre`}/>

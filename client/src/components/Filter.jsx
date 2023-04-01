@@ -1,25 +1,57 @@
-import React, {useState} from 'react'
-import { useParams, useSearchParams, useHistory, useLocation  } from 'react-router-dom';
-
+import React, {useState, useEffect} from 'react'
+import { useParams, useSearchParams, useNavigate  } from 'react-router-dom';
 import { Box, Button, TextField, Autocomplete, Checkbox, Chip, MenuItem  } from '@mui/material'
 import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material';
 import { genreCollection, formatCollection, airingStatus } from './FilterCollections';
+
 
 
 export default function Filter() {
   const [searchTitle, setSearchTitle] = useState('');
   const [searchFormat, setSearchFormat] = useState('');
   const [searchAiringStatus, setSearchAiringStatus] = useState('');
-  const [searchGenre, setSearchGenre] = useState([]);
+  const [searchGenre, setSearchGenre] = useState([""]);
+
+  const params = useParams()
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC";
+  //console.log("sort: " + sort);
+  const navigate  = useNavigate();
+  const paramSearch = searchParams.get('search');
+  //console.log("search: " + paramSearch)
+  const paramFormat = searchParams.get('format');
+  //console.log("format: " + paramFormat)
+  const paramStatus = searchParams.get("airing status");
+  //console.log("status: " + paramStatus);
+  const paramGenres = searchParams.getAll('genres');
+  //console.log("genres: " + paramGenres)
+
+  useEffect(() => {
+    if (paramSearch) setSearchTitle(paramSearch)
+    if (paramFormat) setSearchFormat(paramFormat)
+    if (paramStatus) setSearchAiringStatus(paramStatus)
+    if (searchGenre) setSearchGenre(paramGenres)
+
+
+  },[])
 
 
   function searchMedia(){
-    console.log("Search Media");
-    console.log(searchTitle);
-    console.log(searchFormat);
-    console.log(searchAiringStatus);
-    console.log(searchGenre);
+    if(searchTitle.trim() || searchFormat.trim() || searchAiringStatus.trim() || searchGenre.length > 0){
+      console.log("Search Media");
+      console.log(searchTitle);
+      console.log(searchFormat);
+      console.log(searchAiringStatus);
+      console.log(searchGenre);
+      //history.push(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
+      navigate(`/search/anime?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&airing status=${searchAiringStatus}&search=${searchTitle}`)
+    }else{
+      navigate('/');
+    }
   }
+
+
 
   return (
     <Box >
@@ -33,7 +65,7 @@ export default function Filter() {
         />
 
         <Autocomplete multiple limitTags={2} id="checkboxes-genres" options={genreCollection} 
-          // defaultValue={[array[1]]}
+          value={searchGenre}
           onChange={(e, newValue) => {
             setSearchGenre(newValue);
           }}

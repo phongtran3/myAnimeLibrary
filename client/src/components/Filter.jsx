@@ -2,15 +2,15 @@ import React, {useState, useEffect} from 'react'
 import { useParams, useSearchParams, useNavigate  } from 'react-router-dom';
 import { Box, Button, TextField, Autocomplete, Checkbox, Chip, MenuItem  } from '@mui/material'
 import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material';
-import { genreCollection, formatCollection, airingStatus } from './FilterCollections';
+import { genreCollection, formatCollection, status } from './FilterCollections';
 
 
 
 export default function Filter() {
   const [searchTitle, setSearchTitle] = useState('');
   const [searchFormat, setSearchFormat] = useState('');
-  const [searchAiringStatus, setSearchAiringStatus] = useState('');
-  const [searchGenre, setSearchGenre] = useState([""]);
+  const [searchStatus, setSearchStatus] = useState('');
+  const [searchGenre, setSearchGenre] = useState([]);
 
   const params = useParams()
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,36 +22,36 @@ export default function Filter() {
   //console.log("search: " + paramSearch)
   const paramFormat = searchParams.get('format');
   //console.log("format: " + paramFormat)
-  const paramStatus = searchParams.get("airing status");
+  const paramStatus = searchParams.get("status");
   //console.log("status: " + paramStatus);
   const paramGenres = searchParams.getAll('genres');
-  //console.log("genres: " + paramGenres)
+  //console.log(paramGenres)
 
   useEffect(() => {
+    console.log("Filter useEffect");
     if (paramSearch) setSearchTitle(paramSearch)
     if (paramFormat) setSearchFormat(paramFormat)
-    if (paramStatus) setSearchAiringStatus(paramStatus)
-    if (searchGenre) setSearchGenre(paramGenres)
+    if (paramStatus) setSearchStatus(paramStatus)
+    if (paramGenres[0] != "") setSearchGenre(paramGenres)
 
 
   },[])
 
 
   function searchMedia(){
-    if(searchTitle.trim() || searchFormat.trim() || searchAiringStatus.trim() || searchGenre.length > 0){
+    if(searchTitle.trim() || searchFormat.trim() || searchStatus.trim() || searchGenre.length > 0){
       console.log("Search Media");
       console.log(searchTitle);
       console.log(searchFormat);
-      console.log(searchAiringStatus);
+      console.log(searchStatus);
       console.log(searchGenre);
       //history.push(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
-      navigate(`/search/anime?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&airing status=${searchAiringStatus}&search=${searchTitle}`)
+      navigate(
+        `/search/anime?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&airing status=${searchStatus}&search=${searchTitle}`)
     }else{
       navigate('/');
     }
   }
-
-
 
   return (
     <Box >
@@ -65,7 +65,7 @@ export default function Filter() {
         />
 
         <Autocomplete multiple limitTags={2} id="checkboxes-genres" options={genreCollection} 
-          value={searchGenre}
+          value={searchGenre} 
           onChange={(e, newValue) => {
             setSearchGenre(newValue);
           }}
@@ -97,7 +97,7 @@ export default function Filter() {
         <TextField
           value={searchFormat}
           onChange={(e) => setSearchFormat(e.target.value)}
-          id="outlined-select-status"
+          id="outlined-select-format"
           select
           label="Select Format"
           defaultValue=""
@@ -112,15 +112,15 @@ export default function Filter() {
 
         {/*AIRING STATUS */}
         <TextField
-          value={searchAiringStatus}
-          onChange={(e) => setSearchAiringStatus(e.target.value)}
+          value={searchStatus}
+          onChange={(e) => setSearchStatus(e.target.value)}
           id="outlined-select-status"
           select
-          label="Select Airing Status"
+          label="Select Status"
           defaultValue=""
           sx={{width: 500}}
         >
-          {airingStatus.map((option) => (
+          {status.map((option) => (
             <MenuItem key={option} value={option}>
               {option}
             </MenuItem>

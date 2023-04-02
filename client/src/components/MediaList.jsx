@@ -24,7 +24,14 @@ export default function MediaList({media}) {
                     loading="lazy"
                     style={{borderRadius: "0.375rem", width: "230px", height: "360px"}}
                 />
-              <ImageListItemBar title={anime.title.english === null ? anime.title.romaji : anime.title.english} position="below" sx={{maxWidth: "230px"}}/>
+              <ImageListItemBar 
+                title={anime.title.english === null ? anime.title.romaji : anime.title.english} 
+                position="below" 
+                sx={{
+                  '& .MuiImageListItemBar-title': {whiteSpace: "normal"},
+                  maxWidth: "230px"
+                }}
+              />
               </a>
               <Box sx={{"& .MuiButtonBase-root": {width:"40px", height:"40px"}}}>
                 {user && <QuickAction 

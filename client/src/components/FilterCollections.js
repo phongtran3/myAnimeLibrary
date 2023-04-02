@@ -30,6 +30,6 @@ const formatCollection = [
   "Music",
 ];
 
-const airingStatus = ["Airing", "Finished"];
+const status = ["Releasing", "Finished"];
 
-export { genreCollection, formatCollection, airingStatus };
+export { genreCollection, formatCollection, status };

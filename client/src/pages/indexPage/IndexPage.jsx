@@ -16,9 +16,12 @@ export default function IndexPage() {
   const [popularManga, setpopularManga] = useState([]);
   const navigate = useNavigate();
 
+
   const variables = {
     page: 1,
     perPage: 5,
+    search: 'Demon Slayer',
+    // genre_in: ['Mystery']
   };
  
   useEffect(() => {

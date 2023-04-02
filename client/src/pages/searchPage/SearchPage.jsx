@@ -1,39 +1,59 @@
 import React, {useState, useEffect} from 'react'
 import Filter from '../../components/Filter';
 import NavBar from '../../components/NavBar'
-import { useParams, useSearchParams, useHistory, useLocation  } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 export default function SearchPage() {
-  const [searchTitle, setSearchTitle] = useState('');
-  const [searchAiringStatus, setSearchAiringStatus] = useState('');
-  const [searchFormat, setSearchFormat] = useState('');
-  const [searchGenre, setSearchGenre] = useState([]);
-
   const params = useParams()
   const [searchParams, setSearchParams] = useSearchParams();
-  // const format = searchParams.get('format')
-  // console.log("format: " + format)
-  // const status = searchParams.get("status")
-  // console.log("status: " + status);
-  // const genres = searchParams.getAll('genres');
-  // console.log("genres: " + genres)
-  // console.log(JSON.stringify(params));
+  const paramSearch = searchParams.get('search');
+  const paramFormat = searchParams.get('format');
+  const paramStatus = searchParams.get("status");
+  const paramGenres = searchParams.getAll('genres');
   const sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC";
   const media = params.media;
-  // console.log(sort)
-  // console.log(media)
 
-  const query = useQuery();
-  const search = query.get('search');
-  console.log("search: " + search)
+  const variables = {
+    page: 1,
+    perPage: 5,
+    search: paramSearch,
+    genre_in: paramGenres
+  };
 
   useEffect(() => {
     console.log("SearchPage UseEffect")
+    const query = `
+      query ($page: Int, $perPage: Int, $search: String, $genre_in: [String]) {
+        Page (page: $page, perPage: $perPage) {
+          media(
+            type: ${media}, 
+            ${paramFormat ? `format: ${paramFormat}` : ""} 
+            sort: ${sort}, 
+            search: $search, 
+            genre_in: $genre_in
+            ${paramStatus ? `status: ${paramStatus}` : ""} 
+          ) {
+              id
+              title {
+                  romaji
+                  english
+              }
+              genres
+              coverImage {
+                  large
+              }
+              siteUrl
+              format
+              status
+              averageScore
+              duration
+              episodes
+            }
+        }
+      }
+    `;
+
   },[])
 
   return (

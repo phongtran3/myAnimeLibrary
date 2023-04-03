@@ -5,7 +5,7 @@ import { Box, Grid, CircularProgress, Typography, LinearProgress  } from '@mui/m
 import MediaList from '../../components/MediaList';
 import NavBar from '../../components/NavBar';
 import Filter from '../../components/Filter';
-import { useNavigate, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
 
@@ -14,7 +14,6 @@ export default function IndexPage() {
   const [popularAnime, setpopularAnime] = useState([]);
   const [trendingManga, setTrendingManga] = useState([]);
   const [popularManga, setpopularManga] = useState([]);
-  const navigate = useNavigate();
 
 
   const variables = {

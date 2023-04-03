@@ -20,8 +20,6 @@ export default function IndexPage() {
   const variables = {
     page: 1,
     perPage: 5,
-    search: 'Demon Slayer',
-    // genre_in: ['Mystery']
   };
  
   useEffect(() => {

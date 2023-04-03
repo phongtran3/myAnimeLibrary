@@ -12,11 +12,12 @@ export default function SearchPage() {
   const params = useParams()
   let format;
   const [searchParams, setSearchParams] = useSearchParams();
-  const paramSearch = searchParams.get('search').toUpperCase();
-  const paramFormat = searchParams.get('format').toUpperCase();
-  if (paramFormat === 'TV SHOW') format = 'TV'
-  if (paramFormat === 'TV SHORT') format = 'TV_SHORT'
-  const paramStatus = searchParams.get("status").toUpperCase();
+  const paramSearch = searchParams.get('search');
+  const paramFormat = searchParams.get('format');
+  if (paramFormat === 'TV Show') format = 'TV'
+  else if (paramFormat === 'TV Short') format = 'TV_SHORT'
+  else format = paramFormat;
+  const paramStatus = searchParams.get("status");
   const paramGenres = searchParams.getAll('genres');
   const sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC";
   const media = params.media.toUpperCase();
@@ -40,9 +41,9 @@ export default function SearchPage() {
             ${paramGenres[0] !== '' ? `genre_in: $genre_in`: ""},
             type: ${media}, 
             sort: ${sort}, 
-            ${paramSearch ? `search: ${paramSearch}` : ""} 
-            ${paramFormat ? `format: ${format}` : ""} 
-            ${paramStatus ? `status: ${paramStatus}` : ""} 
+            ${paramSearch ? `search: ${paramSearch.toUpperCase()}` : ""} 
+            ${paramFormat ? `format: ${format.toUpperCase()}` : ""} 
+            ${paramStatus ? `status: ${paramStatus.toUpperCase()}` : ""} 
           ) {
               id
               title {

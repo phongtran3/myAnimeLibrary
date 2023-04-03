@@ -48,7 +48,7 @@ export default function Filter() {
       console.log(searchGenre);
       //history.push(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
       navigate(
-        `/search/anime?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&status=${searchStatus}&search=${searchTitle}`,
+        `/search/anime?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&status=${searchStatus}&search=${searchTitle}&sort=${sort}`,
         
       )
     }else{

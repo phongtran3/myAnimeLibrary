@@ -7,6 +7,7 @@ import { genreCollection, formatCollection, status } from './FilterCollections';
 
 
 export default function Filter() {
+  const [filter, setFilter] = useState({title: '', format: '', status: '', genres: []});
   const [searchTitle, setSearchTitle] = useState('');
   const [searchFormat, setSearchFormat] = useState('');
   const [searchStatus, setSearchStatus] = useState('');
@@ -47,7 +48,9 @@ export default function Filter() {
       console.log(searchGenre);
       //history.push(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
       navigate(
-        `/search/anime?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&status=${searchStatus}&search=${searchTitle}`)
+        `/search/anime?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&status=${searchStatus}&search=${searchTitle}`,
+        
+      )
     }else{
       navigate('/');
     }

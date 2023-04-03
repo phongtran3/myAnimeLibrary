@@ -6,19 +6,24 @@ import { Box } from '@mui/material';
 import axios from 'axios';
 
 export default function SearchPage() {
-  
+  const [queryParam, setQueryParam] = useState({search: "", format: "", status: "", genres: [], sort: "", type: ""});
+  const [pageNumber, setPageNumber] = useState(1)
+
   const params = useParams()
   let format;
   const [searchParams, setSearchParams] = useSearchParams();
   const paramSearch = searchParams.get('search').toUpperCase();
   const paramFormat = searchParams.get('format').toUpperCase();
   if (paramFormat === 'TV SHOW') format = 'TV'
+  if (paramFormat === 'TV SHORT') format = 'TV_SHORT'
   const paramStatus = searchParams.get("status").toUpperCase();
   const paramGenres = searchParams.getAll('genres');
   const sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC";
   const media = params.media.toUpperCase();
   console.log (paramGenres);
+  console.log (paramGenres.length);
   console.log (paramFormat);
+  console.log (format);
   
   const variables = {
     page: 1,
@@ -29,10 +34,10 @@ export default function SearchPage() {
   useEffect(() => {
     console.log("SearchPage UseEffect")
     const query = `
-      query ($page: Int, $perPage: Int, ${paramGenres.length > 1 ? `$genre_in: [String]`: ""}) {
+      query ($page: Int, $perPage: Int, ${paramGenres[0] !== '' ? `$genre_in: [String]`: ""}) {
         Page (page: $page, perPage: $perPage) {
           media(
-            ${paramGenres.length > 1 ? `genre_in: $genre_in`: ""},
+            ${paramGenres[0] !== '' ? `genre_in: $genre_in`: ""},
             type: ${media}, 
             sort: ${sort}, 
             ${paramSearch ? `search: ${paramSearch}` : ""} 
@@ -58,6 +63,7 @@ export default function SearchPage() {
         }
       }
     `;
+    console.log(query);
     const fetchData = async () => { 
       await axios.post('https://graphql.anilist.co', { query, variables })
         .then(res => {
@@ -67,7 +73,7 @@ export default function SearchPage() {
         })
     }
     fetchData();
-  },[])
+  })
 
   return (
     <>

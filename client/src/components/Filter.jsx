@@ -7,26 +7,27 @@ import { genreCollection, formatCollection, status } from './FilterCollections';
 
 
 export default function Filter() {
-  const [filter, setFilter] = useState({title: '', format: '', status: '', genres: []});
   const [searchTitle, setSearchTitle] = useState('');
   const [searchFormat, setSearchFormat] = useState('');
   const [searchStatus, setSearchStatus] = useState('');
   const [searchGenre, setSearchGenre] = useState([]);
-
-  const params = useParams()
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC";
-  //console.log("sort: " + sort);
   const navigate  = useNavigate();
+  const params = useParams()
+  let sort;
+  if (params.sort){
+    sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC"
+  } else if (searchParams.get('sort'))
+    sort = searchParams.get('sort');
+
+  //const sort = params.sort && params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC";
+  console.log(sort);
+  const type = params.media ? params.media : 'anime';
   const paramSearch = searchParams.get('search');
-  //console.log("search: " + paramSearch)
   const paramFormat = searchParams.get('format');
-  //console.log("format: " + paramFormat)
   const paramStatus = searchParams.get("status");
-  //console.log("status: " + paramStatus);
   const paramGenres = searchParams.getAll('genres');
-  //console.log(paramGenres)
 
   useEffect(() => {
     console.log("Filter useEffect");
@@ -48,8 +49,7 @@ export default function Filter() {
       console.log(searchGenre);
       //history.push(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
       navigate(
-        `/search/anime?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&status=${searchStatus}&search=${searchTitle}&sort=${sort}`,
-        
+        `/search/${type}?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&status=${searchStatus}&search=${searchTitle}&sort=${sort}`,
       )
     }else{
       navigate('/');

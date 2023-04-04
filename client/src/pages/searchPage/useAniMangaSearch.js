@@ -6,19 +6,25 @@ import axios from "axios";
 export default function useAniMangaSearch({ pageNumber }) {
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+
   let tempFormat;
   const paramFormat = searchParams.get("format");
   if (paramFormat === "TV Show") tempFormat = "TV";
   else if (paramFormat === "TV Short") tempFormat = "TV_SHORT";
   else tempFormat = paramFormat;
 
+  let sort;
+  if (params.sort) {
+    sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC";
+  } else if (searchParams.get("sort")) sort = searchParams.get("sort");
+
   const [queryParam, setQueryParam] = useState({
     search: searchParams.get("search"),
     format: tempFormat,
     status: searchParams.get("status"),
     genres: searchParams.getAll("genres"),
-    sort: params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC",
-    type: params.media.toUpperCase(),
+    sort: sort,
+    type: params.media ? params.media.toUpperCase() : "",
   });
 
   const [loading, setLoading] = useState(true);
@@ -53,9 +59,9 @@ export default function useAniMangaSearch({ pageNumber }) {
           media(
             ${
               genres[0] !== "" && genres.length > 0 ? `genre_in: $genre_in` : ""
-            },
-            type: ${type},
-            sort: ${sort},
+            }
+            type: ${type}
+            sort: ${sort}
             ${search ? `search: "${search.toUpperCase()}"` : ""}
             ${format ? `format: ${format.toUpperCase()}` : ""}
             ${status ? `status: ${status.toUpperCase()}` : ""}
@@ -97,5 +103,7 @@ export default function useAniMangaSearch({ pageNumber }) {
         });
     };
     fetchData();
-  }, [pageNumber]);
+  }, [queryParam, pageNumber]);
+
+  return { loading, aniManga, hasNextPage };
 }

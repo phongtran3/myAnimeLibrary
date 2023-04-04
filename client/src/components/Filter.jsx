@@ -21,7 +21,6 @@ export default function Filter() {
   } else if (searchParams.get('sort'))
     sort = searchParams.get('sort');
 
-  //const sort = params.sort && params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC";
   console.log(sort);
   const type = params.media ? params.media : 'anime';
   const paramSearch = searchParams.get('search');
@@ -35,8 +34,6 @@ export default function Filter() {
     if (paramFormat) setSearchFormat(paramFormat)
     if (paramStatus) setSearchStatus(paramStatus)
     if (paramGenres[0] != "") setSearchGenre(paramGenres)
-
-
   },[])
 
 
@@ -51,6 +48,7 @@ export default function Filter() {
       navigate(
         `/search/${type}?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&status=${searchStatus}&search=${searchTitle}&sort=${sort}`,
       )
+      navigate(0)
     }else{
       navigate('/');
     }

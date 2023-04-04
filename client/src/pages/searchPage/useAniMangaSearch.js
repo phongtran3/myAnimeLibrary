@@ -3,9 +3,10 @@ import { useParams, useSearchParams } from "react-router-dom";
 
 import axios from "axios";
 
-export default function useAniMangaSearch({ pageNumber }) {
+export default function useAniMangaSearch(pageNumber) {
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+  console.log(pageNumber);
 
   let tempFormat;
   const paramFormat = searchParams.get("format");
@@ -29,7 +30,7 @@ export default function useAniMangaSearch({ pageNumber }) {
 
   const [loading, setLoading] = useState(true);
   const [hasNextPage, sethasNextPage] = useState(false);
-  const [aniManga, setAniManga] = useState([]);
+  const [aniMangas, setAniMangas] = useState([]);
 
   const variables = {
     page: pageNumber,
@@ -41,7 +42,7 @@ export default function useAniMangaSearch({ pageNumber }) {
     console.log("search useEffect");
     //console.log(queryParam);
     const { search, format, status, genres, sort, type } = queryParam;
-    //console.log(search);
+    // console.log(search);
     // console.log(format);
     // console.log(status);
     // console.log(genres);
@@ -87,13 +88,16 @@ export default function useAniMangaSearch({ pageNumber }) {
     `;
     console.log(query);
     const fetchData = async () => {
+      console.log("fetch data");
       await axios
         .post("https://graphql.anilist.co", { query, variables })
         .then((res) => {
           console.log(res);
           //console.log(res.data.data.Page.pageInfo.hasNextPage);
-          setAniManga((prevAniManga) => {
-            return [...new Set([...prevAniManga, ...res.data.data.Page.media])];
+          setAniMangas((prevAniMangas) => {
+            return [
+              ...new Set([...prevAniMangas, ...res.data.data.Page.media]),
+            ];
           });
           sethasNextPage(res.data.data.Page.pageInfo.hasNextPage);
           setLoading(false);
@@ -105,5 +109,5 @@ export default function useAniMangaSearch({ pageNumber }) {
     fetchData();
   }, [queryParam, pageNumber]);
 
-  return { loading, aniManga, hasNextPage };
+  return { loading, aniMangas, hasNextPage };
 }

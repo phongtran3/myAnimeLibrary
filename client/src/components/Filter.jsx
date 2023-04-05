@@ -35,7 +35,7 @@ export default function Filter() {
     if (paramSearch) setSearchTitle(paramSearch)
     if (paramFormat) setSearchFormat(paramFormat)
     if (paramStatus) setSearchStatus(paramStatus)
-    if (paramGenres[0] != "") setSearchGenre(paramGenres)
+    if (paramGenres[0] !== "") setSearchGenre(paramGenres)
   },[])
 
 
@@ -102,16 +102,21 @@ export default function Filter() {
 
         {/*FORMAT */}
         <Autocomplete
+          options={formatCollection}
+          getOptionLabel={(option) => option}
+          //freeSolo
           defaultValue=""
-          value={searchFormat} 
-          onChange={(e, newValue) => {
-            setSearchFormat(newValue);
+          value={searchFormat ? searchFormat : null} 
+          // onChange={(e, newValue) => {
+          //   setSearchFormat(newValue);
+          // }}
+          inputValue={searchFormat ? searchFormat : ""}
+          onInputChange={(event, newInputValue) => {
+            setSearchFormat(newInputValue);
           }}
           isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          options={formatCollection}
-          getOptionLabel={(option) => option}
           sx={{ width: 500 }}
           renderInput={(params) => <TextField {...params} label="Select Format" />}
         />
@@ -132,7 +137,27 @@ export default function Filter() {
         </TextField> */}
 
         {/*AIRING STATUS */}
-        <TextField
+        <Autocomplete
+          options={status}
+          getOptionLabel={(option) => option}
+          //freeSolo
+          defaultValue=""
+          value={searchStatus ? searchStatus : null} 
+          // onChange={(e, newValue) => {
+          //   setSearchStatus(newValue);
+          // }}
+          inputValue={searchStatus ? searchStatus : ""}
+          onInputChange={(event, newInputValue) => {
+            setSearchStatus(newInputValue);
+          }}
+
+          isOptionEqualToValue={(option, value) => option === value}
+          disablePortal
+          id="combo-box-demo"
+          sx={{ width: 500 }}
+          renderInput={(params) => <TextField {...params} label="Select Status" />}
+        />
+        {/* <TextField
           value={searchStatus} 
           onChange={(e) => setSearchStatus(e.target.value)}
           id="outlined-select-status"
@@ -148,7 +173,7 @@ export default function Filter() {
               {option}
             </MenuItem>
           ))}
-        </TextField>
+        </TextField> */}
  
         <Button onClick={searchMedia} variant="contained" >Filter</Button>
     </Box>

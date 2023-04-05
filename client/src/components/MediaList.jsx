@@ -61,9 +61,11 @@ export default function MediaList({media}) {
                           </Box>
                           <Typography variant='body2' mt="5px">Status: {anime.status[0] + anime.status.slice(1).toLowerCase()}</Typography>
                           <Box>
-                            <Typography variant="body2" mt="5px">
+                            {anime.genres.length > 0 ? 
+                              (<Typography variant="body2" mt="5px">
                               Genre: {anime.genres.map(genre => <a key={genre} href={anime.siteUrl} style={{textDecoration: 'none'}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
-                            </Typography>
+                              </Typography>) : null
+                            }
                           </Box>
                       </Paper>
                     </Fade>

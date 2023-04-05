@@ -3,6 +3,9 @@ import Filter from '../../components/Filter';
 import NavBar from '../../components/NavBar'
 import { Box } from '@mui/material';
 import useAniMangaSearch from './useAniMangaSearch';
+import MediaList from '../../components/MediaList';
+
+import {ImageList, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade } from '@mui/material';
 
 
 export default function SearchPage() {
@@ -36,24 +39,20 @@ export default function SearchPage() {
         <Box margin="0 2.5rem">
           <Filter />
         </Box>
-        <Box>
+
+        {/* <Box margin="0 2.5rem">
           {aniMangas.map((aniManga, index) => {
             if (aniMangas.length === index + 1) {
-              return (
-              <>
-              <div>testing</div>
-              <div ref={lastAniMangaEleRef} key={aniManga.id}>{aniManga.title.english === null ? aniManga.title.romaji : aniManga.title.english}</div>
-              </>
-              )
+              return <div ref={lastAniMangaEleRef} key={aniManga.id}>{aniManga.title.english === null ? aniManga.title.romaji : aniManga.title.english}</div>
             } else {
               return <div key={aniManga.id}>{aniManga.title.english === null ? aniManga.title.romaji : aniManga.title.english}</div>
             }
 
           })}
 
-        </Box>
+        </Box> */}
         <div>{loading && 'Loading...'}</div>
-
+        <MediaList media={aniMangas}/>
 
       </Box>
     </>

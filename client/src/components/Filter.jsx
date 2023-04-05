@@ -20,6 +20,8 @@ export default function Filter() {
     sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC"
   } else if (searchParams.get('sort'))
     sort = searchParams.get('sort');
+  else 
+    sort = "POPULARITY_DESC"
 
   console.log(sort);
   const type = params.media ? params.media : 'anime';
@@ -65,7 +67,11 @@ export default function Filter() {
           onChange={(e) => {setSearchTitle(e.target.value)}}
         />
 
-        <Autocomplete multiple limitTags={2} id="checkboxes-genres" options={genreCollection} 
+        <Autocomplete 
+          multiple 
+          limitTags={2} 
+          id="checkboxes-genres" 
+          options={genreCollection} 
           value={searchGenre} 
           onChange={(e, newValue) => {
             setSearchGenre(newValue);
@@ -95,7 +101,21 @@ export default function Filter() {
         />
 
         {/*FORMAT */}
-        <TextField
+        <Autocomplete
+          defaultValue=""
+          value={searchFormat} 
+          onChange={(e, newValue) => {
+            setSearchFormat(newValue);
+          }}
+          isOptionEqualToValue={(option, value) => option === value}
+          disablePortal
+          id="combo-box-demo"
+          options={formatCollection}
+          getOptionLabel={(option) => option}
+          sx={{ width: 500 }}
+          renderInput={(params) => <TextField {...params} label="Select Format" />}
+        />
+        {/* <TextField
           value={searchFormat}
           onChange={(e) => setSearchFormat(e.target.value)}
           id="outlined-select-format"
@@ -109,18 +129,20 @@ export default function Filter() {
               {option}
             </MenuItem>
           ))}
-        </TextField>
+        </TextField> */}
 
         {/*AIRING STATUS */}
         <TextField
-          value={searchStatus}
+          value={searchStatus} 
           onChange={(e) => setSearchStatus(e.target.value)}
           id="outlined-select-status"
           select
           label="Select Status"
           defaultValue=""
           sx={{width: 500}}
+
         >
+          <MenuItem value="">Any</MenuItem>
           {status.map((option) => (
             <MenuItem key={option} value={option}>
               {option}

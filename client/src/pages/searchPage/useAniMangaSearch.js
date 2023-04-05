@@ -18,6 +18,7 @@ export default function useAniMangaSearch(pageNumber) {
   if (params.sort) {
     sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC";
   } else if (searchParams.get("sort")) sort = searchParams.get("sort");
+  else sort = "POPULARITY_DESC";
 
   const [queryParam, setQueryParam] = useState({
     search: searchParams.get("search"),

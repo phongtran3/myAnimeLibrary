@@ -12,16 +12,16 @@ Nodejs Express.js Mongodb JWT Mongoose
 
 ## Features (to be added)
 
-- Login/Signup User Account
-- Login using Email/Password
-- Visit User Profiles
+- Login/Signup User Account (x)
+- Login using Email/Password (x) 
+- Visit User Profiles (x) 
 - Edit User profile.
 - Search User Accounts by Username
 - Follow/Unfollow Users (TBD)
-- Search Anime/Manga
-- Add/Remove Anime/Manga to User's collection (one for each).
+- Search Anime/Manga (x) 
+- Add/Remove Anime/Manga to User's collection (one for each) (x)
 - Dark mode
-- Data Pagination
+- Infinite Scrolling (x)
 
 ## Disclaimer
 

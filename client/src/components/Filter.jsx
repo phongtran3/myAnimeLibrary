@@ -23,7 +23,7 @@ export default function Filter() {
   else 
     sort = "POPULARITY_DESC"
 
-  console.log(sort);
+  //console.log(sort);
   const type = params.media ? params.media : 'anime';
   const paramSearch = searchParams.get('search');
   const paramFormat = searchParams.get('format');
@@ -31,7 +31,7 @@ export default function Filter() {
   const paramGenres = searchParams.getAll('genres');
 
   useEffect(() => {
-    console.log("Filter useEffect");
+    //console.log("Filter useEffect");
     if (paramSearch) setSearchTitle(paramSearch)
     if (paramFormat) setSearchFormat(paramFormat)
     if (paramStatus) setSearchStatus(paramStatus)
@@ -41,11 +41,11 @@ export default function Filter() {
 
   function searchMedia(){
     if(searchTitle.trim() || searchFormat.trim() || searchStatus.trim() || searchGenre.length > 0){
-      console.log("Search Media");
-      console.log(searchTitle);
-      console.log(searchFormat);
-      console.log(searchStatus);
-      console.log(searchGenre);
+      //console.log("Search Media");
+      //console.log(searchTitle);
+      //console.log(searchFormat);
+      //console.log(searchStatus);
+      //console.log(searchGenre);
       //history.push(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
       navigate(
         `/search/${type}?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&status=${searchStatus}&search=${searchTitle}&sort=${sort}`,

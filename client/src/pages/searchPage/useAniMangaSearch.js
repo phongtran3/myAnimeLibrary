@@ -40,7 +40,7 @@ export default function useAniMangaSearch(pageNumber) {
   };
 
   useEffect(() => {
-    console.log("search useEffect");
+    //console.log("search useEffect");
     //console.log(queryParam);
     const { search, format, status, genres, sort, type } = queryParam;
     // console.log(search);

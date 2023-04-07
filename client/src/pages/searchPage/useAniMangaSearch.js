@@ -12,6 +12,8 @@ export default function useAniMangaSearch(pageNumber) {
   const paramFormat = searchParams.get("format");
   if (paramFormat === "TV Show") tempFormat = "TV";
   else if (paramFormat === "TV Short") tempFormat = "TV_SHORT";
+  else if (paramFormat === "One Shot") tempFormat = "ONE_SHOT";
+  else if (paramFormat === "Light Novel") tempFormat = "NOVEL";
   else tempFormat = paramFormat;
 
   let sort;

@@ -102,7 +102,7 @@ export default function Filter() {
 
         {/*FORMAT */}
         <Autocomplete
-          options={animeFormat}
+          options={type === 'anime' ? animeFormat : mangaFormat}
           getOptionLabel={(option) => option}
           //freeSolo
           defaultValue=""

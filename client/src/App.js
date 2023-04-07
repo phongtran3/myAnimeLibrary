@@ -9,7 +9,7 @@ import LoginPage from "./pages/loginPage/LoginPage";
 import IndexPage from "./pages/indexPage/IndexPage";
 import HomePage from "./pages/homePage/HomePage";
 import SearchPage from "./pages/searchPage/SearchPage";
-
+import ListPage from "./pages/listPage/ListPage";
 export default function App() {
   console.log("app render");
   const mode = useSelector((state) => state.mode);
@@ -25,6 +25,7 @@ export default function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/auth" element={<LoginPage />} />
             <Route path="user/:userName" element={<ProfilePage />} />
+            <Route path="user/:userName/:list" element={<ListPage />} />
             <Route
               path="/search/:media/:sort?/:page?"
               exact

@@ -1,13 +1,14 @@
 import React, { useState, useRef, useCallback } from 'react'
+import PropTypes from "prop-types";
 import Filter from '../../components/Filter';
 import NavBar from '../../components/NavBar'
-import { Box, ImageList, LinearProgress } from '@mui/material';
+import { Box, ImageList, LinearProgress, useScrollTrigger, Fab, Zoom, Toolbar } from '@mui/material';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useAniMangaSearch from './useAniMangaSearch';
 import Card from '../../components/Card';
 
 export default function SearchPage() {
   const [pageNumber, setPageNumber] = useState(1)
-
   const {loading, hasNextPage, aniMangas} = useAniMangaSearch(pageNumber);
   //console.log(aniMangas);
   //console.log(hasNextPage);
@@ -30,9 +31,36 @@ export default function SearchPage() {
     //console.log(node);
   }, [loading, hasNextPage])
 
+
+  function ScrollToTop(props){
+    const {children} = props;
+    const trigger = useScrollTrigger({
+      disableHysteresis: true,
+      threshold: 100
+    });
+
+    function handleClick (event) {
+      const anchor = (event.target.ownerDocument || document).querySelector("#back-to-top-anchor");
+      if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+      console.log("click")
+    }
+
+    return (
+      <Zoom in={trigger}>
+        <Box onClick={handleClick} role="presentation" sx={{ position: 'fixed', bottom: 16, right: 16 }} >
+          {children}
+        </Box>
+      </Zoom>
+    );
+  }
+  ScrollToTop.propTypes = {children: PropTypes.element.isRequired};
+
+
+
   return (
     <>
       <NavBar />
+      <Toolbar id="back-to-top-anchor" />
       <Box maxWidth="1440px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}>
         <Box margin="0 2.5rem">
           <Filter />
@@ -51,7 +79,7 @@ export default function SearchPage() {
         
         <ImageList cols={5} gap={48} sx={{textAlign: "center"}}>
           {aniMangas.map((anime, index) => {
-            if (aniMangas.length - 8 === index + 1) {
+            if (aniMangas.length - 10 === index + 1) {
               return (
                 <div ref={lastAniMangaEleRef} key={anime.id}>
                   <Card anime={anime} />
@@ -67,10 +95,13 @@ export default function SearchPage() {
         </ImageList>
         <div>{loading && <LinearProgress />}</div>
 
-
-
-
       </Box>
+      <ScrollToTop>  
+        <Fab color="secondary" size="small" aria-label="scroll back to top">
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </ScrollToTop>   
+
     </>
   )
 }

@@ -20,7 +20,7 @@ const genreCollection = [
   "Thriller",
 ];
 
-const formatCollection = [
+const animeFormat = [
   "TV Show",
   "Movie",
   "TV Short",
@@ -30,6 +30,8 @@ const formatCollection = [
   "Music",
 ];
 
+const mangaFormat = ["Manga", "Light Novel", "One Shot"];
+
 const status = ["Releasing", "Finished"];
 
-export { genreCollection, formatCollection, status };
+export { genreCollection, animeFormat, status, mangaFormat };

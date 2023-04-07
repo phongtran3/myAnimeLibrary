@@ -53,16 +53,16 @@ export default function NavBar() {
               <PopupState variant="popper" popupId="demoPopover">
                   {(popupState) => ( 
                     <>
-                      <Typography fontWeight="bold" fontSize="16px" {...bindHover(popupState)} component={Link} to="/search/anime" >Browse</Typography>
+                      <Typography fontWeight="bold" component={Link} fontSize="16px" {...bindHover(popupState)} onClick={() => {navigate("/search/anime"); navigate(0);}}>Browse</Typography>
                       <HoverMenu {...bindMenu(popupState)} sx={{"& .MuiPaper-root": {width:"175px", padding:"10px"}}}>
                         <Box display="flex" alignItems="center" flexDirection="column">
                           <Box display="flex" alignItems="center">
-                            <MenuItem><Typography component={Link} to="/search/anime" display="flex" ><PlayArrow /></Typography></MenuItem>
-                            <MenuItem ><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" component={Link} to="/search/anime">Anime</Typography></MenuItem>
+                            <MenuItem><Typography onClick={() => {navigate("/search/anime"); navigate(0);}} display="flex" ><PlayArrow /></Typography></MenuItem>
+                            <MenuItem ><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" onClick={() => {navigate("/search/anime"); navigate(0);}}>Anime</Typography></MenuItem>
                           </Box>
                           <Box display="flex" alignItems="center">
-                            <MenuItem><Typography component={Link} to="/search/manga" display="flex" ><AutoStories /></Typography></MenuItem>
-                            <MenuItem ><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" component={Link} to="/search/manga">Manga</Typography></MenuItem>
+                            <MenuItem><Typography onClick={() => {navigate("/search/manga"); navigate(0);}} display="flex" ><AutoStories /></Typography></MenuItem>
+                            <MenuItem ><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" onClick={() => {navigate("/search/manga"); navigate(0);}}>Manga</Typography></MenuItem>
                           </Box>
                         </Box>
                       </HoverMenu>

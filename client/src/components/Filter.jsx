@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useParams, useSearchParams, useNavigate  } from 'react-router-dom';
 import { Box, Button, TextField, Autocomplete, Checkbox, Chip, MenuItem  } from '@mui/material'
 import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material';
-import { genreCollection, formatCollection, status } from './FilterCollections';
+import { genreCollection, animeFormat, status, mangaFormat } from './FilterCollections';
 
 
 
@@ -102,7 +102,7 @@ export default function Filter() {
 
         {/*FORMAT */}
         <Autocomplete
-          options={formatCollection}
+          options={animeFormat}
           getOptionLabel={(option) => option}
           //freeSolo
           defaultValue=""
@@ -129,7 +129,7 @@ export default function Filter() {
           defaultValue=""
           sx={{width: 500}}
         >
-          {formatCollection.map((option) => (
+          {animeFormat.map((option) => (
             <MenuItem key={option} value={option}>
               {option}
             </MenuItem>

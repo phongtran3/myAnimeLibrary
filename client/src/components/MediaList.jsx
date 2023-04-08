@@ -11,7 +11,8 @@ export default function MediaList({media}) {
   const user = useSelector((state) => state.user);
   //console.log(media);
   return (
-    <ImageList cols={5} gap={48} sx={{textAlign: "center"}}>
+    // Large screen gap 72 / small screen 48
+    <ImageList cols={5} gap={72} sx={{textAlign: "center"}}>
       {media.map(anime => (
         <PopupState key={anime.id} variant="popper" popupId="demoPopper" >
           {(popupState) => (

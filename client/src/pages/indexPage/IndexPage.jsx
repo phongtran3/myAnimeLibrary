@@ -51,7 +51,7 @@ export default function IndexPage() {
   return (
     <>
     <NavBar />
-    <Box maxWidth="1440px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}> 
+    <Box maxWidth="1520px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}> 
       <Box margin="0 2.5rem">
         <Filter />
       </Box>

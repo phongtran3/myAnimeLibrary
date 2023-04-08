@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react'
 import PropTypes from "prop-types";
 import Filter from '../../components/Filter';
 import NavBar from '../../components/NavBar'
-import { Box, ImageList, LinearProgress, useScrollTrigger, Fab, Zoom, Toolbar } from '@mui/material';
+import { Box, ImageList, LinearProgress, useScrollTrigger, Fab, Zoom, Toolbar, Grid } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useAniMangaSearch from './useAniMangaSearch';
 import Card from '../../components/Card';
@@ -60,7 +60,7 @@ export default function SearchPage() {
     <>
       <NavBar />
       <Toolbar id="back-to-top-anchor" />
-      <Box maxWidth="1440px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}>
+      <Box maxWidth="1520px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}>
         <Box margin="0 2.5rem">
           <Filter />
         </Box>
@@ -75,8 +75,9 @@ export default function SearchPage() {
 
           })}
         </Box> */}
-        
-        <ImageList cols={5} gap={48} sx={{textAlign: "center"}}>
+      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+        {/* Large screen gap 72 / small screen 48 */}
+        <ImageList cols={5} sx={{textAlign: "center", gap:"20px 72px !important" }}>
           {aniMangas.map((anime, index) => {
             if (aniMangas.length - 10 === index + 1) {
               return (
@@ -92,7 +93,8 @@ export default function SearchPage() {
             }
           })}
         </ImageList>
-        <div>{loading && <LinearProgress />}</div>
+      </Grid>
+      <div>{loading && <LinearProgress />}</div>
 
       </Box>
       <ScrollToTop>  

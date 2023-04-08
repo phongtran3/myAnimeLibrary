@@ -27,6 +27,7 @@ import HoverMenu from 'material-ui-popup-state/HoverMenu'
 import HoverPopover from 'material-ui-popup-state/HoverPopover'
 
 export default function NavBar() {
+  const [type, setType] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -45,8 +46,8 @@ export default function NavBar() {
               {user && (
                 <>
                 <Typography fontWeight="bold" fontSize="16px" component={Link} to={`/user/${user.userName}`} >Profile</Typography>
-                <Typography fontWeight="bold" fontSize="16px" component={Link} to={`/user/${user.userName}/animelist`} >Anime List</Typography>
-                <Typography fontWeight="bold" fontSize="16px" component={Link} to={`/user/${user.userName}/mangalist`} >Manga List</Typography>
+                <Typography fontWeight="bold" fontSize="16px" component={Link} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}} >Anime List</Typography>
+                <Typography fontWeight="bold" fontSize="16px" component={Link} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}} >Manga List</Typography>
                 </>
               )}
               

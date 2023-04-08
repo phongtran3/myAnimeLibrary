@@ -34,7 +34,7 @@ export default function Filter() {
     if (paramGenres[0] !== "") setSearchGenre(paramGenres)
     let sort;
     if (params.sort){
-      sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC"
+      sort = params.sort.charAt(0).toUpperCase() + params.sort.slice(1);
       setSearchSort(sort);
     } else if (searchParams.get('sort')){
       sort = searchParams.get('sort');

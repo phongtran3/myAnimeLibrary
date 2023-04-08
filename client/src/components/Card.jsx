@@ -24,10 +24,7 @@ export default function Card({anime}) {
             <ImageListItemBar 
                 title={anime.title.english === null ? anime.title.romaji : anime.title.english} 
                 position="below" 
-                sx={{
-                '& .MuiImageListItemBar-title': {whiteSpace: "normal"},
-                maxWidth: "230px"
-                }}
+                sx={{ maxWidth: "230px"}}
             />
             </a>
             <Box sx={{"& .MuiButtonBase-root": {width:"40px", height:"40px"}}}>

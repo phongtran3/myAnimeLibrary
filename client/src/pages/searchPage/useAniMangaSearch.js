@@ -19,8 +19,13 @@ export default function useAniMangaSearch(pageNumber) {
   let sort;
   if (params.sort) {
     sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC";
-  } else if (searchParams.get("sort")) sort = searchParams.get("sort");
-  else sort = "POPULARITY_DESC";
+  } else if (searchParams.get("sort")) {
+    if (searchParams.get("sort") === "Popularity") sort = "POPULARITY_DESC";
+    else if (searchParams.get("sort") === "Average Score") sort = "SCORE_DESC";
+    else if (searchParams.get("sort") === "Trending") sort = "TRENDING_DESC";
+    else if (searchParams.get("sort") === "Favorites") sort = "FAVOURITES_DESC";
+    else if (searchParams.get("sort") === "Date Added") sort = "ID_DESC";
+  } else sort = "POPULARITY_DESC";
 
   const [queryParam, setQueryParam] = useState({
     search: searchParams.get("search"),

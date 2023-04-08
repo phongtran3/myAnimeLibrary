@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useParams, useSearchParams, useNavigate  } from 'react-router-dom';
 import { Box, Button, TextField, Autocomplete, Checkbox, Chip, MenuItem  } from '@mui/material'
 import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material';
-import { genreCollection, animeFormat, status, mangaFormat } from './FilterCollections';
+import { genreCollection, animeFormat, status, mangaFormat, sortCollection } from './FilterCollections';
 
 
 
@@ -11,17 +11,13 @@ export default function Filter() {
   const [searchFormat, setSearchFormat] = useState('');
   const [searchStatus, setSearchStatus] = useState('');
   const [searchGenre, setSearchGenre] = useState([]);
+  const [searchSort, setSearchSort] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate  = useNavigate();
   const params = useParams()
-  let sort;
-  if (params.sort){
-    sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC"
-  } else if (searchParams.get('sort'))
-    sort = searchParams.get('sort');
-  else 
-    sort = "POPULARITY_DESC"
+
+  
 
   //console.log(sort);
   const type = params.media ? params.media : 'anime';
@@ -36,19 +32,29 @@ export default function Filter() {
     if (paramFormat) setSearchFormat(paramFormat)
     if (paramStatus) setSearchStatus(paramStatus)
     if (paramGenres[0] !== "") setSearchGenre(paramGenres)
+    let sort;
+    if (params.sort){
+      sort = params.sort === "trending" ? "TRENDING_DESC" : "POPULARITY_DESC"
+      setSearchSort(sort);
+    } else if (searchParams.get('sort')){
+      sort = searchParams.get('sort');
+      setSearchSort(sort);
+    }
+
   },[])
 
 
   function searchMedia(){
-    if(searchTitle.trim() || searchFormat.trim() || searchStatus.trim() || searchGenre.length > 0){
+    if(searchTitle.trim() || searchSort.trim() || searchFormat.trim() || searchStatus.trim() || searchGenre.length > 0){
       //console.log("Search Media");
       //console.log(searchTitle);
       //console.log(searchFormat);
       //console.log(searchStatus);
       //console.log(searchGenre);
-      //history.push(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
+      console.log(searchSort);
+
       navigate(
-        `/search/${type}?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&status=${searchStatus}&search=${searchTitle}&sort=${sort}`,
+        `/search/${type}?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&status=${searchStatus}&search=${searchTitle}&sort=${searchSort}`,
       )
       navigate(0)
     }else{
@@ -174,7 +180,24 @@ export default function Filter() {
             </MenuItem>
           ))}
         </TextField> */}
- 
+
+        {/*Sort */}
+        <Autocomplete
+          options={sortCollection}
+          getOptionLabel={(option) => option}
+          defaultValue=""
+          value={searchSort ? searchSort : null} 
+          inputValue={searchSort ? searchSort : ""}
+          onInputChange={(event, newInputValue) => {
+            setSearchSort(newInputValue);
+          }}
+          isOptionEqualToValue={(option, value) => option === value}
+          disablePortal
+          id="combo-box-demo"
+          sx={{ width: 500 }}
+          renderInput={(params) => <TextField {...params} label="Select Sorting" />}
+        />
+
         <Button onClick={searchMedia} variant="contained" >Filter</Button>
     </Box>
   )

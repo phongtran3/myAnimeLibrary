@@ -4,7 +4,7 @@ import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingManga
 import { Box, Grid, CircularProgress, Typography, LinearProgress  } from '@mui/material';
 import MediaList from '../../components/MediaList';
 import NavBar from '../../components/NavBar';
-import Filter from '../../components/Filter';
+import BrowseFilter from '../../components/BrowseFilter';
 import {Link} from 'react-router-dom';
 
 
@@ -53,7 +53,7 @@ export default function IndexPage() {
     <NavBar />
     <Box maxWidth="1520px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}> 
       <Box margin="0 2.5rem">
-        <Filter />
+        <BrowseFilter />
       </Box>
     
     {/* <Box margin="0 2.5rem">

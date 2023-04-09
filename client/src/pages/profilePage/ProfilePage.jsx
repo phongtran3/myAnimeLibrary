@@ -48,7 +48,7 @@ export default function ProfilePage() {
       progress.push(mangas[i])
       
   }
-
+  console.log(user)
   return (
     <>
       <NavBar />

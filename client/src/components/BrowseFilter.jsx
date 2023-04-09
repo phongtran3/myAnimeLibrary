@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useParams, useSearchParams, useNavigate  } from 'react-router-dom';
-import { Box, Button, TextField, Autocomplete, Checkbox, Chip, MenuItem  } from '@mui/material'
-import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material';
+import { Box, Button, TextField, Autocomplete, Chip} from '@mui/material'
 import { genreCollection, animeFormat, status, mangaFormat, sortCollection } from './FilterCollections';
 
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react'
 import PropTypes from "prop-types";
-import Filter from '../../components/Filter';
+import BrowseFilter from '../../components/BrowseFilter';
 import NavBar from '../../components/NavBar'
 import { Box, ImageList, LinearProgress, useScrollTrigger, Fab, Zoom, Toolbar, Grid } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -62,7 +62,7 @@ export default function SearchPage() {
       <Toolbar id="back-to-top-anchor" />
       <Box maxWidth="1520px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}>
         <Box margin="0 2.5rem">
-          <Filter />
+          <BrowseFilter />
         </Box>
 
         {/* <Box margin="0 2.5rem">

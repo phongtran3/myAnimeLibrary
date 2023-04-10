@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
+import { Box, Typography, useMediaQuery} from "@mui/material";
 import axios from 'axios';
 import NavBar from '../../components/NavBar'
 
@@ -8,7 +9,7 @@ export default function ListPage() {
   const [user, setUser] = useState(null);
   const { userName, list } = useParams();
   const token = useSelector((state) => state.token);
-
+  const type = list === 'animelist' ? 'anime' : 'manga'
   async function getUser(){
     await axios.get(
       `http://localhost:5000/users/${userName}`,
@@ -33,7 +34,7 @@ export default function ListPage() {
   }
   const {firstName, lastName, animes, mangas, picturePath } = user.data;
   const progress = [];
-  if (list === 'animelist'){
+  if (type === 'anime'){
     for(let i = 0; i < animes.length; i++){
       if(animes[i].userStatus === 'WATCHING')
         progress.push(animes[i])
@@ -50,7 +51,10 @@ export default function ListPage() {
   return (
     <>
       <NavBar />
-      <h1>List Page</h1>
+      <Box id="content-container" margin="3em auto 0" maxWidth="1520px" padding="0 50px">
+        <h1>List Page</h1>
+
+      </Box>
     </>
   )
 }

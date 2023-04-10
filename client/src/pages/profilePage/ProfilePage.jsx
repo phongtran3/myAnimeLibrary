@@ -5,7 +5,7 @@ import ProfileCard from '../../components/ProfileCard'
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
-import { Box, Typography, useMediaQuery, ImageList, ImageListItem} from "@mui/material";
+import { Box, Typography, useMediaQuery} from "@mui/material";
 import PreviewList from '../../components/PreviewList';
 
 export default function ProfilePage() {
@@ -36,7 +36,7 @@ export default function ProfilePage() {
   if (!user) {
     return null;
   }
-  const {firstName, lastName, animes, mangas, picturePath, status } = user.data;
+  const {firstName, lastName, animes, mangas, picturePath } = user.data;
   const progress = [];
   for(let i = 0; i < animes.length; i++){
     if(animes[i].userStatus === 'WATCHING')

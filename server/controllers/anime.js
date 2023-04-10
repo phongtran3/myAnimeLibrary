@@ -3,8 +3,16 @@ const User = require("../models/user.js");
 
 async function addAnime(req, res) {
   try {
-    const { userId, title, genres, format, coverImage, siteUrl, userStatus } =
-      req.body.data;
+    const {
+      userId,
+      title,
+      genres,
+      format,
+      coverImage,
+      siteUrl,
+      userStatus,
+      status,
+    } = req.body.data;
     const user = await User.findById(userId); //May have to change
     console.log(req.body.data);
     //console.log(genres);
@@ -16,7 +24,9 @@ async function addAnime(req, res) {
       coverImage,
       siteUrl,
       userStatus,
+      status,
     };
+    console.log(animeObj.status);
     user.animes.push(animeObj);
     await user.save();
     res.status(201).json(user.animes);

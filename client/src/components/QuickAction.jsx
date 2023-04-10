@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useSelector  } from "react-redux";
 // const dispatch = useDispatch();
 
-export default function QuickAction({title, genres, format, coverImage, siteUrl}) {
+export default function QuickAction({title, genres, format, coverImage, siteUrl, status}) {
   //Default actions
   const actions = [
     { icon: <Schedule />, name: 'Add to planning', value: "PLANNING" }, //Planning
@@ -30,7 +30,8 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl}
       "format": format === 'MANGA' ? null : format,
       "coverImage": coverImage,
       "siteUrl": siteUrl,
-      "userStatus": value
+      "userStatus": value,
+      "status": status
     }
     
     await axios.post(url, {data: body}, {headers: { Authorization: `${token}` }},)

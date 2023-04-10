@@ -34,6 +34,7 @@ export default function Card({anime}) {
                 format={anime.format}
                 coverImage={anime.coverImage.large}
                 siteUrl={anime.siteUrl}
+                status={anime.status}
             />}
             </Box>
                 <Popper {...bindPopper(popupState)} transition placement="right-start" sx={{width:'100%', maxWidth:'280px', minWidth:'250px'}}>

@@ -36,7 +36,7 @@ export default function ProfilePage() {
   if (!user) {
     return null;
   }
-  const {firstName, lastName, animes, mangas, picturePath } = user.data;
+  const {firstName, lastName, animes, mangas, picturePath, status } = user.data;
   const progress = [];
   for(let i = 0; i < animes.length; i++){
     if(animes[i].userStatus === 'WATCHING')

@@ -3,7 +3,7 @@ const User = require("../models/user.js");
 
 async function addManga(req, res) {
   try {
-    const { userId, title, genres, coverImage, siteUrl, userStatus } =
+    const { userId, title, genres, coverImage, siteUrl, userStatus, status } =
       req.body.data;
     const user = await User.findById(userId); //May have to change
     console.log(req.body.data);
@@ -15,6 +15,7 @@ async function addManga(req, res) {
       coverImage,
       siteUrl,
       userStatus,
+      status,
     };
     user.mangas.push(mangaObj);
     await user.save();

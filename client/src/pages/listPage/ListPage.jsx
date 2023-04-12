@@ -59,9 +59,11 @@ export default function ListPage() {
 
   console.log(user)
   let format = '';
-  let genre = ["Romance"];
+  let genre = [];
   let query = ''
-  let status = 'FINISHED'
+  let status = ''
+  let sort = ''
+  //genre.length > 0 ? genre.some(v => item.genres.includes(v)) : true
   return (
     <>
       <NavBar />
@@ -78,12 +80,14 @@ export default function ListPage() {
           <Box id="section-2">
             {userList.filter(
                 item => (item.userStatus === 'COMPLETED') && 
-                ((genre ? genre.some(v => item.genres.includes(v)) : false) &&
+                ((genre.length === 0 ? true : genre.some(v => item.genres.includes(v))) &&
                 (format === '' ? true : item.format === format) &&
                 (item.title.toLowerCase().includes(query.toLowerCase())) &&
-                (status === '' ? true : item.status === status)
-                )).map(item => (
-              <p key={item._id}>{item.title}, {genre.some(v => item.genres.includes(v)) ? "Romance" : "Not Romance"}</p>
+                (status === '' ? true : item.status === status) 
+                )).sort(function(a,b) {
+                   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                }).map(item => (
+              <p key={item._id}>{item.title}</p>
             ))}
           </Box>
         </Box>
@@ -91,3 +95,15 @@ export default function ListPage() {
     </>
   )
 }
+
+// Alphabetical
+// if (a.title < b.title) {
+//   return -1;
+// }
+// if (a.title > b.title) {
+//   return 1;
+// }
+// return 0;
+
+// Last added at top
+// return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();

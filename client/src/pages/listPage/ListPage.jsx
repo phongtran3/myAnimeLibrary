@@ -9,6 +9,13 @@ import ListsFilter from '../../components/ListsFilter';
 
 export default function ListPage() {
   const [user, setUser] = useState(null);
+  const [filters, setFilters] = useState({
+    query: '',
+    format:'',
+    status: '',
+    genres: [],
+    sort: ''
+  });
   const [userList, setUserList] = useState([]);
   const { userName, list } = useParams();
   const token = useSelector((state) => state.token);
@@ -58,11 +65,12 @@ export default function ListPage() {
   // }
 
   console.log(user)
+  console.log(filters);
   let format = '';
   let genre = [];
   let query = ''
   let status = ''
-  let sort = ''
+  let sort = 'Last Added'
   //genre.length > 0 ? genre.some(v => item.genres.includes(v)) : true
   return (
     <>
@@ -75,17 +83,21 @@ export default function ListPage() {
         >
           <Box id="section-1"> 
             <h1>List Page</h1>
-            <ListsFilter />
+            <ListsFilter type={type} filters={filters} setFilters={setFilters} />
           </Box>
+
           <Box id="section-2">
             {userList.filter(
                 item => (item.userStatus === 'COMPLETED') && 
                 ((genre.length === 0 ? true : genre.some(v => item.genres.includes(v))) &&
-                (format === '' ? true : item.format === format) &&
-                (item.title.toLowerCase().includes(query.toLowerCase())) &&
+                (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
+                (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
                 (status === '' ? true : item.status === status) 
                 )).sort(function(a,b) {
-                   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                  if(sort === 'Title'){
+                    return a.title.localeCompare(b.title)
+                  }else if (sort === 'Last Added')
+                    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
                 }).map(item => (
               <p key={item._id}>{item.title}</p>
             ))}

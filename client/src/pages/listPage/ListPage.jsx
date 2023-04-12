@@ -85,18 +85,18 @@ export default function ListPage() {
             <h1>List Page</h1>
             <ListsFilter type={type} filters={filters} setFilters={setFilters} />
           </Box>
-
+          {/* (item.userStatus === 'COMPLETED') &&  */}
           <Box id="section-2">
             {userList.filter(
-                item => (item.userStatus === 'COMPLETED') && 
-                ((genre.length === 0 ? true : genre.some(v => item.genres.includes(v))) &&
+                item => 
+                ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
                 (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
                 (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
-                (status === '' ? true : item.status === status) 
+                (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
                 )).sort(function(a,b) {
-                  if(sort === 'Title'){
+                  if(filters.sort === 'Title'){
                     return a.title.localeCompare(b.title)
-                  }else if (sort === 'Last Added')
+                  }else if (filters.sort === 'Last Added')
                     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
                 }).map(item => (
               <p key={item._id}>{item.title}</p>

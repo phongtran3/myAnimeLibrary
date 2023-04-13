@@ -65,6 +65,7 @@ export default function ListPage() {
   // }
 
   console.log(user)
+  console.log(userList);
   console.log(filters);
   let format = '';
   let genre = [];
@@ -87,20 +88,79 @@ export default function ListPage() {
           </Box>
           {/* (item.userStatus === 'COMPLETED') &&  */}
           <Box id="section-2">
-            {userList.filter(
-                item => 
-                ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
-                (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
-                (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
-                (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
-                )).sort(function(a,b) {
-                  if(filters.sort === 'Title'){
-                    return a.title.localeCompare(b.title)
-                  }else if (filters.sort === 'Last Added')
-                    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-                }).map(item => (
-              <p key={item._id}>{item.title}</p>
-            ))}
+            <Box className="list-wrapper">
+              {userList.some(item => item['userStatus'] === 'WATCHING' || item['userStatus'] === 'READING')  &&  
+              <>
+                {/* <Typography variant='h6'>{type ==='anime' ? "WATCHING" : "READING"}</Typography> */}
+                {userList.filter(item => (item.userStatus === 'WATCHING' || item.userStatus === 'READING') &&
+                    ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
+                    (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
+                    (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
+                    (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
+                    )).sort(function(a,b) {
+                      if(filters.sort === 'Title'){
+                        return a.title.localeCompare(b.title)
+                      }else if (filters.sort === 'Last Added')
+                        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                    }).map((item, index) => (
+                      <>
+                        {index === 0 ? <Typography variant='h6'>{type ==='anime' ? "Watching" : "Reading"}</Typography>: null}
+                        <p key={item._id}>{item.title}</p>
+                      </>
+                    ))
+                  }
+              </>}
+            </Box>
+            
+            <hr></hr>
+
+            <Box className="list-wrapper">
+              {userList.some(item => item['userStatus'] === 'COMPLETED')  &&  
+              <>
+                {userList.filter(item => (item.userStatus === 'COMPLETED') &&
+                    ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
+                    (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
+                    (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
+                    (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
+                    )).sort(function(a,b) {
+                      if(filters.sort === 'Title'){
+                        return a.title.localeCompare(b.title)
+                      }else if (filters.sort === 'Last Added')
+                        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                    }).map((item, index) => (
+                      <>
+                      {index === 0 ? <Typography variant='h6'>Completed</Typography>: null}
+                      <p key={item._id}>{item.title}</p>
+                      </>
+                  ))
+                }
+              </>}
+            </Box>
+            
+            <hr></hr>
+            
+            <Box className="list-wrapper">
+              {userList.some(item => item['userStatus'] === 'PLANNING')  &&  
+              <>
+                {userList.filter(item => (item.userStatus === 'PLANNING') &&
+                    ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
+                    (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
+                    (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
+                    (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
+                    )).sort(function(a,b) {
+                      if(filters.sort === 'Title'){
+                        return a.title.localeCompare(b.title)
+                      }else if (filters.sort === 'Last Added')
+                        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                    }).map((item, index) => (
+                      <>
+                      {index === 0 ? <Typography variant='h6'>Planning</Typography>: null}
+                      <p key={item._id}>{item.title}</p>
+                      </>
+                  ))
+                }
+              </>}
+            </Box>
           </Box>
         </Box>
       </Box>

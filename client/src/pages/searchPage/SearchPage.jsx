@@ -78,17 +78,17 @@ export default function SearchPage() {
       <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
         {/* Large screen gap 72 / small screen 48 */}
         <ImageList cols={5} sx={{textAlign: "center", gap:"20px 72px !important" }}>
-          {aniMangas.map((anime, index) => {
+          {aniMangas.map((item, index) => {
             if (aniMangas.length - 10 === index + 1) {
               return (
-                <div ref={lastAniMangaEleRef} key={anime.id}>
-                  <Card anime={anime} />
+                <div ref={lastAniMangaEleRef} key={item.id}>
+                  <Card item={item} />
                 </div>
               )
             } else {
               return (
-              <div key={anime.id}>
-                <Card anime={anime} />
+              <div key={item.id}>
+                <Card item={item} />
               </div>)
             }
           })}

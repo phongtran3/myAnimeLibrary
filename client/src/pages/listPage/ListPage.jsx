@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-import { Box, Typography, useMediaQuery} from "@mui/material";
+import { Box, Typography, ImageList, ImageListItemBar, useMediaQuery} from "@mui/material";
 import axios from 'axios';
 import NavBar from '../../components/NavBar'
 import ProfileCard from '../../components/ProfileCard'
 import ListsFilter from '../../components/ListsFilter';
+import Card2 from '../../components/Card2';
+
 
 export default function ListPage() {
   const [user, setUser] = useState(null);
@@ -67,11 +69,11 @@ export default function ListPage() {
   console.log(user)
   console.log(userList);
   console.log(filters);
-  let format = '';
-  let genre = [];
-  let query = ''
-  let status = ''
-  let sort = 'Last Added'
+  // let format = '';
+  // let genre = [];
+  // let query = ''
+  // let status = ''
+  // let sort = 'Last Added'
   //genre.length > 0 ? genre.some(v => item.genres.includes(v)) : true
   return (
     <>
@@ -79,7 +81,7 @@ export default function ListPage() {
       <Box id="content-container" margin="3em auto 0" maxWidth="1520px" padding="0 50px">
         <Box id="content" 
             display="grid"
-            gridTemplateColumns= "calc(40% - 30px) 60%"
+            gridTemplateColumns= "calc(20% - 30px) 80%"
             gap="30px"
         >
           <Box id="section-1"> 
@@ -91,24 +93,26 @@ export default function ListPage() {
             <Box className="list-wrapper">
               {userList.some(item => item['userStatus'] === 'WATCHING' || item['userStatus'] === 'READING')  &&  
               <>
-                {/* <Typography variant='h6'>{type ==='anime' ? "WATCHING" : "READING"}</Typography> */}
-                {userList.filter(item => (item.userStatus === 'WATCHING' || item.userStatus === 'READING') &&
-                    ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
-                    (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
-                    (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
-                    (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
-                    )).sort(function(a,b) {
-                      if(filters.sort === 'Title'){
-                        return a.title.localeCompare(b.title)
-                      }else if (filters.sort === 'Last Added')
-                        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-                    }).map((item, index) => (
-                      <>
-                        {index === 0 ? <Typography variant='h6'>{type ==='anime' ? "Watching" : "Reading"}</Typography>: null}
-                        <p key={item._id}>{item.title}</p>
-                      </>
-                    ))
-                  }
+                <Typography variant='h6'>{type ==='anime' ? "Watching" : "Reading"}</Typography>
+                <ImageList cols={6} sx={{textAlign: "center", gap:"20px 20px !important" }}>
+                  {userList.filter(item => (item.userStatus === 'WATCHING' || item.userStatus === 'READING') &&
+                      ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
+                      (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
+                      (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
+                      (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
+                      )).sort(function(a,b) {
+                        if(filters.sort === 'Title'){
+                          return a.title.localeCompare(b.title)
+                        }else if (filters.sort === 'Last Added')
+                          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                      }).map((item, index) => (
+                        <>
+                          {/* <p key={item._id}>{item.title}</p> */}
+                          <Card2 key={item._id} item={item}/>
+                        </>
+                      ))
+                    }
+                  </ImageList>
               </>}
             </Box>
             
@@ -117,24 +121,27 @@ export default function ListPage() {
             <Box className="list-wrapper">
               {userList.some(item => item['userStatus'] === 'COMPLETED')  &&  
               <>
-                {userList.filter(item => (item.userStatus === 'COMPLETED') &&
-                    ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
-                    (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
-                    (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
-                    (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
-                    )).sort(function(a,b) {
-                      if(filters.sort === 'Title'){
-                        return a.title.localeCompare(b.title)
-                      }else if (filters.sort === 'Last Added')
-                        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-                    }).map((item, index) => (
-                      <>
-                      {index === 0 ? <Typography variant='h6'>Completed</Typography>: null}
-                      <p key={item._id}>{item.title}</p>
-                      </>
-                  ))
-                }
-              </>}
+                <Typography variant='h6'>Completed</Typography>
+                  <ImageList cols={6} sx={{textAlign: "center", gap:"20px 20px !important" }}>
+                    {userList.filter(item => (item.userStatus === 'COMPLETED') &&
+                        ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
+                        (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
+                        (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
+                        (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
+                        )).sort(function(a,b) {
+                          if(filters.sort === 'Title'){
+                            return a.title.localeCompare(b.title)
+                          }else if (filters.sort === 'Last Added')
+                            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                        }).map((item, index) => (
+                          <>
+                          <Card2 key={item._id} item={item}/>
+                          </>
+                      ))
+                    }
+                  </ImageList>
+              </>
+              }
             </Box>
             
             <hr></hr>
@@ -142,24 +149,27 @@ export default function ListPage() {
             <Box className="list-wrapper">
               {userList.some(item => item['userStatus'] === 'PLANNING')  &&  
               <>
-                {userList.filter(item => (item.userStatus === 'PLANNING') &&
-                    ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
-                    (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
-                    (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
-                    (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
-                    )).sort(function(a,b) {
-                      if(filters.sort === 'Title'){
-                        return a.title.localeCompare(b.title)
-                      }else if (filters.sort === 'Last Added')
-                        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-                    }).map((item, index) => (
-                      <>
-                      {index === 0 ? <Typography variant='h6'>Planning</Typography>: null}
-                      <p key={item._id}>{item.title}</p>
-                      </>
-                  ))
-                }
-              </>}
+                <Typography variant='h6'>Planning</Typography>
+                <ImageList cols={6} sx={{textAlign: "center", gap:"20px 20px !important" }}>
+                  {userList.filter(item => (item.userStatus === 'PLANNING') &&
+                      ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
+                      (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
+                      (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
+                      (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
+                      )).sort(function(a,b) {
+                        if(filters.sort === 'Title'){
+                          return a.title.localeCompare(b.title)
+                        }else if (filters.sort === 'Last Added')
+                          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                      }).map((item, index) => (
+                        <>
+                        <Card2 key={item._id} item={item}/>
+                        </>
+                    ))
+                  }
+                </ImageList>
+              </>
+              }
             </Box>
           </Box>
         </Box>

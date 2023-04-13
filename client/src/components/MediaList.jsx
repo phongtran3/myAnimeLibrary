@@ -27,7 +27,8 @@ export default function MediaList({media}) {
                 />
               <ImageListItemBar 
                 title={anime.title.english === null ? anime.title.romaji : anime.title.english} 
-                position="below" 
+                //position="below" 
+                //subtitle={anime.title.english === null ? anime.title.romaji : anime.title.english}
                 sx={{ maxWidth: "230px"}}
               />
               </a>

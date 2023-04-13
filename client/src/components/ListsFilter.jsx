@@ -44,7 +44,7 @@ export default function ListsFilter({type, filters, setFilters}) {
           //isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          sx={{ width: 500 }}
+          // sx={{ width: 500 }}
           renderInput={(params) => <TextField {...params} label="Select Format" />}
         />
 
@@ -62,7 +62,7 @@ export default function ListsFilter({type, filters, setFilters}) {
           //isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          sx={{ width: 500 }}
+          // sx={{ width: 500 }}
           renderInput={(params) => <TextField {...params} label="Select Status" />}
         />
 
@@ -80,7 +80,7 @@ export default function ListsFilter({type, filters, setFilters}) {
           }}
           disableCloseOnSelect
           getOptionLabel={(option) => option}
-          sx={{width: 500}}
+          // sx={{width: 500}}
           renderInput={(params) => (
               <TextField {...params} label={`Select Genre`}/>
           )}
@@ -116,7 +116,7 @@ export default function ListsFilter({type, filters, setFilters}) {
           //isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          sx={{ width: 500 }}
+          // sx={{ width: 500 }}
           renderInput={(params) => <TextField {...params} label="Select Sorting" />}
         />
     </Box>

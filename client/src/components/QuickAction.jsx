@@ -12,14 +12,16 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
   const actions = [
     { icon: <Schedule />, name: 'Add to planning', value: "PLANNING" }, //Planning
     { icon: <Check />, name: 'Add to completed', value: "COMPLETED" }, //Completed
-    { icon: <PlayArrow />, name: format === 'MANGA' ? 'Add to reading' : 'Add to watching', value: format === 'MANGA' ? "READING" :"WATCHING" }, //Watching
+    { icon: <PlayArrow />, 
+      name: format === 'MANGA' || format === 'NOVEL' || format === 'ONE_SHOT' ? 'Add to reading' : 'Add to watching', 
+      value: format === 'MANGA' || format === 'NOVEL' || format === 'ONE_SHOT' ? "READING" :"WATCHING" }, //Watching
   ]; 
   const token = useSelector((state) => state.token);
   const { _id } = useSelector((state) => state.user);
 
   async function addToList(value){
     let url;
-    if(format === 'MANGA')
+    if(format === 'MANGA' || format === 'NOVEL' || format === 'ONE_SHOT')
       url = `http://localhost:5000/manga`
     else
       url = `http://localhost:5000/anime`
@@ -27,7 +29,7 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
       "userId": _id,
       "title": title,
       "genres": genres,
-      "format": format === 'MANGA' ? null : format,
+      "format": format,
       "coverImage": coverImage,
       "siteUrl": siteUrl,
       "userStatus": value,

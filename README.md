@@ -15,7 +15,7 @@ Nodejs Express.js Mongodb JWT Mongoose
 - Login/Signup User Account (x)
 - Login using Email/Password (x) 
 - Visit User Profiles (x) 
-  - Display user's full Anime/Manga collection on their own page
+  - Display user's full Anime/Manga collection on their own page (x) 
 - Edit User profile.
 - Search User Accounts by Username
 - Follow/Unfollow Users (TBD)

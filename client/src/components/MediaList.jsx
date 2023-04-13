@@ -2,10 +2,11 @@ import React from 'react'
 //import {Card, Typography, CardMedia, Button, ButtonBase} from "@mui/material"
 import {Box, ImageList, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade } from '@mui/material';
 import {SentimentNeutral, SentimentSatisfiedAlt, SentimentVeryDissatisfied } from "@mui/icons-material";
-import HoverPopover from "material-ui-popup-state/HoverPopover";
-import PopupState, {bindPopover, bindHover, bindToggle, bindPopper} from "material-ui-popup-state";
+// import HoverPopover from "material-ui-popup-state/HoverPopover";
+import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
 import QuickAction from './QuickAction';
 import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
 export default function MediaList({media}) {
   const user = useSelector((state) => state.user);
@@ -16,8 +17,7 @@ export default function MediaList({media}) {
       {media.map(anime => (
         <PopupState key={anime.id} variant="popper" popupId="demoPopper" >
           {(popupState) => (
-            <ImageListItem key={anime.id} {...bindHover(popupState)}>
-              <a href={anime.siteUrl} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>
+            <ImageListItem key={anime.id} {...bindHover(popupState)} component={Link} to={anime.siteUrl}>
                 <img
                     src={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format`}
                     srcSet={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
@@ -31,7 +31,6 @@ export default function MediaList({media}) {
                 //subtitle={anime.title.english === null ? anime.title.romaji : anime.title.english}
                 sx={{ maxWidth: "230px"}}
               />
-              </a>
               <Box sx={{"& .MuiButtonBase-root": {width:"40px", height:"40px"}}}>
                 {user && <QuickAction 
                   title={anime.title.english === null ? anime.title.romaji : anime.title.english}

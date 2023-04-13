@@ -4,7 +4,7 @@ import {Box, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade }
 import {SentimentNeutral, SentimentSatisfiedAlt, SentimentVeryDissatisfied } from "@mui/icons-material";
 import QuickAction from './QuickAction';
 import { useSelector } from "react-redux";
-
+import { Link } from 'react-router-dom';
 
 export default function Card({item}) {
   const user = useSelector((state) => state.user);
@@ -12,8 +12,7 @@ export default function Card({item}) {
   return (
     <PopupState key={item.id} variant="popper" popupId="demoPopper" >
         {(popupState) => (
-            <ImageListItem key={item.id} {...bindHover(popupState)}>
-            <a href={item.siteUrl} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>
+            <ImageListItem key={item.id} {...bindHover(popupState)} component={Link} to={item.siteUrl}>
                 <img
                     src={`${item.coverImage.large}?w=164&h=164&fit=crop&auto=format`}
                     srcSet={`${item.coverImage.large}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
@@ -26,7 +25,6 @@ export default function Card({item}) {
                 //position="below" 
                 sx={{ maxWidth: "230px"}}
             />
-            </a>
             <Box sx={{"& .MuiButtonBase-root": {width:"40px", height:"40px"}}}>
                 {user && <QuickAction 
                 title={item.title.english === null ? item.title.romaji : item.title.english}

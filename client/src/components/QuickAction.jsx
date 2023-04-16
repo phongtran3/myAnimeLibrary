@@ -19,7 +19,8 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
   const token = useSelector((state) => state.token);
   const { _id } = useSelector((state) => state.user);
 
-  async function addToList(value){
+  async function addToList(value, event){
+    event.preventDefault()
     let url;
     if(format === 'MANGA' || format === 'NOVEL' || format === 'ONE_SHOT')
       url = `http://localhost:5000/manga`
@@ -60,7 +61,7 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
             key={action.name}
             icon={action.icon}
             tooltipTitle={action.name}
-            onClick={() => addToList(action.value)}            
+            onClick={(event) => {addToList(action.value, event)}}            
           />
         ))}
       </SpeedDial>

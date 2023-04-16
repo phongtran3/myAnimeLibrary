@@ -105,11 +105,9 @@ export default function ListPage() {
                           return a.title.localeCompare(b.title)
                         }else if (filters.sort === 'Last Added')
                           return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-                      }).map((item, index) => (
-                        <>
-                          {/* <p key={item._id}>{item.title}</p> */}
+                      }).map((item) => (
                           <Card2 key={item._id} item={item}/>
-                        </>
+                        
                       ))
                     }
                   </ImageList>
@@ -133,10 +131,8 @@ export default function ListPage() {
                             return a.title.localeCompare(b.title)
                           }else if (filters.sort === 'Last Added')
                             return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-                        }).map((item, index) => (
-                          <>
+                        }).map((item) => (
                           <Card2 key={item._id} item={item}/>
-                          </>
                       ))
                     }
                   </ImageList>
@@ -161,10 +157,8 @@ export default function ListPage() {
                           return a.title.localeCompare(b.title)
                         }else if (filters.sort === 'Last Added')
                           return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-                      }).map((item, index) => (
-                        <>
+                      }).map((item) => (
                         <Card2 key={item._id} item={item}/>
-                        </>
                     ))
                   }
                 </ImageList>

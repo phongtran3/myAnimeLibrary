@@ -260,9 +260,7 @@ const registerSchema = yup.object().shape({
                                     <Dropzone
                                         acceptedFiles=".jpg,.jpeg,.png"
                                         multiple={false}
-                                        onDrop={(acceptedFiles) =>
-                                        setFieldValue("picture", acceptedFiles[0])
-                                        }
+                                        onDrop={(acceptedFiles) => setFieldValue("picture", acceptedFiles[0])}
                                     >
                                     {({ getRootProps, getInputProps }) => (
                                     <Box
@@ -309,8 +307,8 @@ const registerSchema = yup.object().shape({
                                     ),
                                 }}
                                 sx={{marginBottom: '5px', gridColumn: "span 4" }}
-
                             />
+
                             <TextField
                                 autoComplete="off"
                                 variant="filled"
@@ -337,8 +335,8 @@ const registerSchema = yup.object().shape({
                                     ),
                                 }}
                                 sx={{marginBottom: '5px', gridColumn: "span 4" }}
-
                             />
+
                             {!isLogin && (
                                 <TextField
                                     autoComplete="off"
@@ -366,7 +364,6 @@ const registerSchema = yup.object().shape({
                                         ),
                                     }}
                                     sx={{marginBottom: '5px', gridColumn: "span 4" }}
-
                                 />
                             )}
 
@@ -407,7 +404,7 @@ const registerSchema = yup.object().shape({
                         </Box>
                     </form>
             </>
-
+            
             )}
         </Formik>
     )

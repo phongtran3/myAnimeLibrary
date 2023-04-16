@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { themeSettings } from "./theme";
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
@@ -10,9 +10,12 @@ import IndexPage from "./pages/indexPage/IndexPage";
 import HomePage from "./pages/homePage/HomePage";
 import SearchPage from "./pages/searchPage/SearchPage";
 import ListPage from "./pages/listPage/ListPage";
+import SettingPage from "./pages/settingPage/SettingPage";
+
 export default function App() {
   console.log("app render");
   const mode = useSelector((state) => state.mode);
+  const user = useSelector((state) => state.user);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
   return (
@@ -24,6 +27,10 @@ export default function App() {
             <Route path="/" element={<IndexPage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/auth" element={<LoginPage />} />
+            <Route
+              path="/settings"
+              element={!user ? <Navigate to="/" /> : <SettingPage />}
+            />
             <Route path="user/:userName" element={<ProfilePage />} />
             <Route path="user/:userName/:list" element={<ListPage />} />
             <Route

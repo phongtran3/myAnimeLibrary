@@ -14,5 +14,6 @@ router.get("/:userName", getUser); //Get user
 
 //UPDATE
 //router.patch("/:id", verifyToken, addRemoveAnime);
+//router.post("/id", verifyToken, updateProfile);
 
 module.exports = router;

@@ -14,6 +14,18 @@ async function getUser(req, res) {
   }
 }
 
+async function updateProfile(req, res) {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    console.log(req.body);
+    console.log(user.userName);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
+
 module.exports = {
   getUser,
+  updateProfile,
 };

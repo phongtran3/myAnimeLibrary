@@ -8,12 +8,15 @@ import {Formik} from "formik";
 import * as yup from "yup";
 import Dropzone from "react-dropzone"; //File/image upload
 
-import { Box, useTheme, Typography, TextField, Alert, InputAdornment, IconButton } from '@mui/material'
-import {Person, AccountCircle, Email, Lock, Visibility, VisibilityOff, EditOutlined} from "@mui/icons-material"
+import { Box, useTheme, Typography, Input, OutlinedInput, TextField, Alert, InputAdornment, IconButton, Button } from '@mui/material'
+import {Person, AccountCircle, Email, Lock, Visibility, VisibilityOff, EditOutlined, Clear} from "@mui/icons-material"
 
 
 export default function SettingPage() {
   const [user, setUser] = useState(null);
+  const [newUserName, setNewUserName] = useState("")
+  const [files, setFiles] = useState([]);
+
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showNewConfirmPassword, setShowNewConfirmPassword] = useState(false);
   const [error, setError] = useState("");
@@ -32,6 +35,7 @@ export default function SettingPage() {
     ).then(res =>{
       //console.log(res);
       setUser(res.data);
+      setNewUserName(res.data.userName)
     }).catch(err => {
       if (err.response){
         console.log(err.response.data);
@@ -42,206 +46,65 @@ export default function SettingPage() {
 
   useEffect(() => {
     getUser();
+
+    return () => files.forEach(file => URL.revokeObjectURL(file.preview));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) {
     return 
   }
 
-  const editProfileSchema = yup.object().shape({
-    firstName: yup.string().required("required"),
-    lastName: yup.string().required("required"),
-    email: yup.string().email("invalid email").required("required"),
-    newPassword: yup.string().required("required"),
-    confirmNewPassword: yup.string().oneOf([yup.ref('newPassword'), null], 'Passwords must match').required("required"),
-    userName: yup.string().required("required"),
-    picture: yup.string().required("required"),
-  });
-  
-  const editProfileInitialValues= {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    userName: user.userName,
-    picture: user.picturePath,
-    newPassword: "",
-    confirmNewPassword: "",
-  
-  };
   console.log(user);
   
+  async function handleSaveFunction(attribute, value){
+    console.log(attribute)
+    console.log(value)
+    const body = {
+      [attribute]: value
+    }
+    console.log(body)
 
-  async function handleFormSubmit (values, onSubmitProps) {
-      // if(isLogin) await login(values, onSubmitProps);
-      // if(!isLogin) await register(values, onSubmitProps);
+    await axios.patch(
+      `http://localhost:5000/users/${user._id}/update`, 
+      {data: attribute}, 
+      {headers: { Authorization: `${token}`}}
+    ).then(res =>{
+
+    }).catch(err => {
+      if (err.response){
+        console.log(err.response.data);
+          // setError(err.response.data.message);
+      }
+      console.log(err);
+    })
+
   }
+
+  
+  console.log(newUserName)
   return (
     <>
     <NavBar />
     <Box maxWidth="1520px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}>
-      <Box 
-        sx={{
-          borderRadius: "4px",
-          padding: "20px",
-          background: "mediumpurple"
-        
-        }}
-      >
-        <Formik
-            onSubmit={handleFormSubmit}
-            initialValues={editProfileInitialValues}
-            validationSchema={editProfileSchema}
-        >
-          {({
-            values,
-              errors,
-              touched,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-              setFieldValue,
-              resetForm,
-              }) => (
-                <>
-                <Typography variant='h4' sx={{  color: "white", display: "flex",  justifyContent:"center", marginBottom:"10px"  }}>Edit Profile</Typography>
-                {error ? <Alert severity="error" sx={{marginBottom:"10px"}}> {error}</Alert> : null }
+      <Box sx={{ borderRadius: "4px", padding: "20px", background: "mediumpurple" }} >
+        <Typography variant='h4' sx={{  color: "white", display: "flex",  justifyContent:"center", marginBottom:"10px"  }}>Edit Profile</Typography>
+        <Box className="userName-section">
+          <Typography variant='h6'>User Name</Typography>
+          <OutlinedInput 
+            //defaultValue={user.userName}
+            value={newUserName} 
+            onChange={(e)=>{
+              // if (e.key === 'Space') e.preventDefault()
+              setNewUserName(e.target.value.split(" ").join(""))
+            }}
+          />
 
-                <form onSubmit={handleSubmit}>
-                  <Box>
-                    <TextField
-                      autoComplete="off"
-                      variant="filled"
-                      label="First Name"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.firstName}
-                      name="firstName"
-                      error={ Boolean(touched.firstName) && Boolean(errors.firstName)}
-                      helperText={touched.firstName && errors.firstName}
-                    />
-                    
-                    <TextField
-                      autoComplete="off"
-                      variant="filled"
-                      label="Last Name"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.lastName}
-                      name="lastName"
-                      error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                      helperText={touched.lastName && errors.lastName}
-                    />
-
-                    <TextField
-                      autoComplete="off"
-                      variant="filled"
-                      label="Username"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.userName}
-                      name="userName"
-                      error={Boolean(touched.userName) && Boolean(errors.userName)}
-                      helperText={touched.userName && errors.userName}
-                    />    
-
-                    <TextField
-                      autoComplete="off"
-                      variant="filled"
-                      label="Email"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.email}
-                      name="email"
-                      error={Boolean(touched.email) && Boolean(errors.email)}
-                      helperText={touched.email && errors.email}
-                    />  
-
-                    <TextField
-                      autoComplete="off"
-                      variant="filled"
-                      label="New Password"
-                      type={showNewPassword ? 'text' : 'password'}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.newPassword}
-                      name="newPassword"
-                      error={Boolean(touched.newPassword) && Boolean(errors.newPassword)}
-                      helperText={touched.newPassword && errors.newPassword}
-                      InputProps={{
-                          endAdornment: (
-                          <InputAdornment position="end">
-                              <IconButton onClick={handleShowNewPassword}>
-                              {!showNewPassword ? <Visibility /> : <VisibilityOff />}
-                              </IconButton>
-                          </InputAdornment>
-                          ),
-                      }}
-                    /> 
-
-                    <TextField
-                      autoComplete="off"
-                      variant="filled"
-                      label="Confirm New Password"
-                      type={showNewConfirmPassword ? 'text' : 'password'}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.confirmNewPassword}
-                      name="confirmNewPassword"
-                      error={Boolean(touched.confirmNewPassword) && Boolean(errors.confirmNewPassword)}
-                      helperText={touched.confirmNewPassword && errors.confirmNewPassword}
-                      InputProps={{
-                          endAdornment: (
-                          <InputAdornment position="end">
-                              <IconButton onClick={handleShowNewConfirmPassword}>
-                              {!showNewConfirmPassword ? <Visibility /> : <VisibilityOff />}
-                              </IconButton>
-                          </InputAdornment>
-                          ),
-                      }}
-                    /> 
-
-                    <Box >
-                      <Dropzone
-                          acceptedFiles=".jpg,.jpeg,.png"
-                          multiple={false}
-                          onDrop={(acceptedFiles) => setFieldValue("picture", acceptedFiles[0])}
-                      >
-                      {({ getRootProps, getInputProps }) => (
-                      <Box
-                          {...getRootProps()}
-                          border={`2px dashed ${palette.primary.main}`}
-                          p="1rem"
-                          sx={{ "&:hover": { cursor: "pointer" } }}
-                      >
-                      <input {...getInputProps()} />
-                      {!values.picture ? (
-                      <p>Add Picture Here</p>
-                      ) : (
-                      <Box
-                          display="flex"
-                          justifyContent={"space-between"}
-                          alignItems={'center'}
-                      >
-                          <Typography>{values.picture.name ? values.picture.name : values.picture }</Typography>
-                          <EditOutlined />
-                      </Box>
-                      )}
-                      </Box>
-                      )}
-                      </Dropzone>
-                  </Box>
-
-                  </Box>
-                </form>
-
-
-
-
-
-                </>
-              )}
-
-        </Formik>
+          {newUserName != user.userName ? <Button variant='contained' name="userName" onClick={(e)=>{handleSaveFunction(e.target.name, newUserName)}}>Save Username</Button> : ""}
+        </Box>
+        <Box className="name-section">
+          <Typography variant='h6'>First Name</Typography>
+          <OutlinedInput defaultValue={user.firstName}/>
+        </Box>
       </Box>
     </Box>
     </>

@@ -1,6 +1,6 @@
 const express = require("express");
 const verifyToken = require("../middleware/auth.js");
-const { getUser } = require("../controllers/users.js");
+const { getUser, updateProfile } = require("../controllers/users.js");
 
 const router = express.Router();
 
@@ -14,6 +14,6 @@ router.get("/:userName", getUser); //Get user
 
 //UPDATE
 //router.patch("/:id", verifyToken, addRemoveAnime);
-//router.post("/id", verifyToken, updateProfile);
+router.patch("/:id/update", verifyToken, updateProfile);
 
 module.exports = router;

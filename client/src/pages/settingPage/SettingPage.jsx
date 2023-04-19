@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import NavBar from '../../components/NavBar'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setSiteUser } from '../../states/index';
 
 import axios from 'axios';
 import {Formik} from "formik";
@@ -22,6 +23,7 @@ export default function SettingPage() {
   const [error, setError] = useState("");
 
   const { palette  } = useTheme();
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const userName = useSelector((state) => state.user.userName);
   const handleShowNewPassword = () => setShowNewPassword(!showNewPassword);
@@ -33,7 +35,7 @@ export default function SettingPage() {
       `http://localhost:5000/users/${userName}`,
       {headers: { Authorization: `${token}` }}
     ).then(res =>{
-      //console.log(res);
+      console.log(res);
       setUser(res.data);
       setNewUserName(res.data.userName)
     }).catch(err => {
@@ -56,20 +58,27 @@ export default function SettingPage() {
 
   console.log(user);
   
-  async function handleSaveFunction(attribute, value){
+  async function handleSave(attribute, value){
     console.log(attribute)
     console.log(value)
     const body = {
-      [attribute]: value
+      attribute: attribute,
+      value: value
     }
     console.log(body)
 
     await axios.patch(
       `http://localhost:5000/users/${user._id}/update`, 
-      {data: attribute}, 
+      body, 
       {headers: { Authorization: `${token}`}}
     ).then(res =>{
-
+      console.log(res);
+      setUser(res.data)
+      dispatch(setSiteUser({
+        user: res.data,
+        token: token,
+      }))
+      window.location.reload();
     }).catch(err => {
       if (err.response){
         console.log(err.response.data);
@@ -99,7 +108,7 @@ export default function SettingPage() {
             }}
           />
 
-          {newUserName != user.userName ? <Button variant='contained' name="userName" onClick={(e)=>{handleSaveFunction(e.target.name, newUserName)}}>Save Username</Button> : ""}
+          {newUserName != user.userName ? <Button variant='contained' name="userName" onClick={(e)=>{handleSave(e.target.name, newUserName)}}>Save Username</Button> : ""}
         </Box>
         <Box className="name-section">
           <Typography variant='h6'>First Name</Typography>

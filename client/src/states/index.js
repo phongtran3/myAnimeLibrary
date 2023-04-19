@@ -13,10 +13,18 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setSiteUser: (state, action) => {
+      console.log(action.payload.user);
+      console.log(action.payload.token);
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+    },
     setSiteTheme: (state) => {
       state.mode = state.mode === "light" ? "dark" : "light";
     },
     setLogin: (state, action) => {
+      console.log(action.payload.user);
+      console.log(action.payload.token);
       state.user = action.payload.user;
       state.token = action.payload.token;
     },
@@ -42,6 +50,7 @@ export const authSlice = createSlice({
 });
 
 export const {
+  setSiteUser,
   setSiteTheme,
   setLogin,
   setLogout,

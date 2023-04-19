@@ -85,7 +85,7 @@ export default function NavBar() {
               <PopupState variant="popper" popupId="demoPopover">
               {(popupState) => ( 
                 <>
-                  <IconButton {...bindToggle(popupState)}><Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/></IconButton>
+                  <IconButton {...bindHover(popupState)}><Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/></IconButton>
                   <HoverMenu {...bindMenu(popupState)} sx={{"& .MuiPaper-root": {width:"175px", padding:"10px"}}}>
                     <MenuItem onClick={() => {navigate(`/user/${user.userName}`)}}><Person/>&nbsp;Profile</MenuItem>
                     <MenuItem onClick={() => {navigate('/settings')}}><Settings/>&nbsp;Edit Profile</MenuItem>

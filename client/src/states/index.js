@@ -14,8 +14,6 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setSiteUser: (state, action) => {
-      console.log(action.payload.user);
-      console.log(action.payload.token);
       state.user = action.payload.user;
       state.token = action.payload.token;
     },
@@ -23,8 +21,6 @@ export const authSlice = createSlice({
       state.mode = state.mode === "light" ? "dark" : "light";
     },
     setLogin: (state, action) => {
-      console.log(action.payload.user);
-      console.log(action.payload.token);
       state.user = action.payload.user;
       state.token = action.payload.token;
     },

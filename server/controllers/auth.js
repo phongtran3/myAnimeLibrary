@@ -53,11 +53,20 @@ async function login(req, res) {
       expiresIn: "1h",
     });
     delete user.password;
+    user.password = undefined;
     res.status(200).json({ token, user });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
+
+// async function comparePassword(req, res) {
+//   try {
+//     const { currentPassword } = req.body;
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// }
 
 module.exports = {
   register,

@@ -1,4 +1,5 @@
 const User = require("../models/user.js");
+const bcrypt = require("bcrypt");
 
 //READ
 async function getUser(req, res) {
@@ -17,16 +18,18 @@ async function getUser(req, res) {
 async function updateProfile(req, res) {
   try {
     const { id } = req.params;
+    const { attribute, value, currentPassword } = req.body.data;
     const user = await User.findById(id);
-    console.log(req.body.attribute);
-    console.log(req.body.value);
-    console.log(user.userName);
-    console.log(user[req.body.attribute]);
 
-    user[req.body.attribute] = req.body.value;
+    const matchPassword = await bcrypt.compare(currentPassword, user.password);
+    if (!matchPassword)
+      return res.status(400).json({ message: "Incorrect Password" });
+
+    user[attribute] = value;
     console.log(user.userName);
     await user.save();
 
+    user.password = undefined;
     res.status(200).json(user);
   } catch (error) {
     res.status(404).json({ message: error.message });

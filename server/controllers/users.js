@@ -8,6 +8,7 @@ async function getUser(req, res) {
     //const user = await User.findById(id);
     const user = await User.findOne({ userName: userName });
 
+    user.password = undefined;
     res.status(200).json(user);
     console.log("getUser try");
   } catch (error) {
@@ -17,6 +18,7 @@ async function getUser(req, res) {
 
 async function updateProfile(req, res) {
   try {
+    let regEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     const { id } = req.params;
     const { attribute, value, currentPassword } = req.body.data;
     const user = await User.findById(id);
@@ -24,6 +26,9 @@ async function updateProfile(req, res) {
     const matchPassword = await bcrypt.compare(currentPassword, user.password);
     if (!matchPassword)
       return res.status(400).json({ message: "Incorrect Password" });
+
+    if (attribute === "email" && !regEmail.test(value))
+      return res.status(400).json({ message: "Invalid Email Address" });
 
     user[attribute] = value;
     console.log(user.userName);

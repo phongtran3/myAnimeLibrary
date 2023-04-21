@@ -22,7 +22,6 @@ export default function SettingPage() {
     currentPassword: "",
   })
   const [user, setUser] = useState(null);
-  // const [currentPassword, setCurrentPassword] = useState("");
   const [newUserName, setNewUserName] = useState("")
   const [newFirstName, setNewFirstName] = useState("")
   const [newLastName, setNewLastName] = useState("")
@@ -31,7 +30,7 @@ export default function SettingPage() {
 
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showNewConfirmPassword, setShowNewConfirmPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(""); //JWT EXPIRED needs to be fixed
 
   const { palette  } = useTheme();
   const dispatch = useDispatch();
@@ -87,10 +86,8 @@ export default function SettingPage() {
 
   console.log(user);
 
-  async function handleSave(attribute, value){
+  async function handleSave(){
     console.log(body);
-    console.log("current password: " + body.currentPassword);
-
     await axios.patch(
       `http://localhost:5000/users/${user._id}/update`, 
       {data: body}, 
@@ -107,7 +104,7 @@ export default function SettingPage() {
       attribute:"",
       value:""
       })
-      //window.location.reload();
+      window.location.reload();
     }).catch(err => {
       if (err.response){
         console.log(err.response.data);
@@ -130,42 +127,31 @@ export default function SettingPage() {
           <OutlinedInput 
             value={newUserName} 
             onChange={(e)=>{
-              // if (e.key === 'Space') e.preventDefault()
               setNewUserName(e.target.value.split(" ").join(""))
             }}
           />
-          {/* {newUserName !== user.userName ? <Button variant='contained' name="userName" onClick={(e)=>{handleSave(e.target.name, newUserName)}}>Save Username</Button> : ""} */}
           {newUserName !== user.userName ? <Button variant='contained' name="userName" onClick={(e)=>handleOpenPopover(e.target.name, newUserName)}>Save Username</Button> : ""}
-          <ConfirmPassword 
-            open={open} 
-            error={error}
-            handleClose={handleClose} 
-            setBody={setBody}
-            handleSave={handleSave}
-          />
         </Box>
 
 
-        {/* <Box className="name-section">
+        <Box className="name-section">
           <Typography variant='h6'>First Name</Typography>
           <OutlinedInput 
             value={newFirstName}
             onChange={(e)=>{
-              // if (e.key === 'Space') e.preventDefault()
               setNewFirstName(e.target.value.split(" ").join(""))
             }}
           />
-          {newFirstName !== user.firstName ? <Button variant='contained' name="firstName" onClick={(e)=>{handleSave(e.target.name, newFirstName)}}>Save First Name</Button> : ""}
+          {newFirstName !== user.firstName ? <Button variant='contained' name="firstName" onClick={(e)=>{handleOpenPopover(e.target.name, newFirstName)}}>Save First Name</Button> : ""}
 
           <Typography variant='h6'>Last Name</Typography>
           <OutlinedInput 
             value={newLastName}
             onChange={(e)=>{
-              // if (e.key === 'Space') e.preventDefault()
               setNewLastName(e.target.value.split(" ").join(""))
             }}
           />
-          {newLastName !== user.lastName ? <Button variant='contained' name="lastName" onClick={(e)=>{handleSave(e.target.name, newLastName)}}>Save Last Name</Button> : ""}
+          {newLastName !== user.lastName ? <Button variant='contained' name="lastName" onClick={(e)=>{handleOpenPopover(e.target.name, newLastName)}}>Save Last Name</Button> : ""}
         </Box>
 
         <Box className="email-section">
@@ -174,13 +160,19 @@ export default function SettingPage() {
             type='email'
             value={newEmail}
             onChange={(e)=>{
-              // if (e.key === 'Space') e.preventDefault()
               setNewEmail(e.target.value.split(" ").join(""))
             }}
           />
-          {newEmail !== user.email ? <Button variant='contained' name="email" onClick={(e)=>{handleSave(e.target.name, newEmail)}}>Save Email</Button> : ""}
-        </Box> */}
+          {newEmail !== user.email ? <Button variant='contained' name="email" onClick={(e)=>{handleOpenPopover(e.target.name, newEmail)}}>Save Email</Button> : ""}
+        </Box>
 
+        <ConfirmPassword 
+          open={open} 
+          error={error}
+          handleClose={handleClose} 
+          setBody={setBody}
+          handleSave={handleSave}
+        />
       </Box>
     </Box>
     </>

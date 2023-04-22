@@ -107,20 +107,21 @@ const registerSchema = yup.object().shape({
         }
         formData.append('picturePath', values.picture.name);
         console.log(formData);
-        await axios.post("http://localhost:5000/auth/register", formData)
-            .then(res => {
-                console.log("registering");
-                console.log(res);
-                onSubmitProps.resetForm();
-                setIsLogin("false");
+        console.log(values);
+        // await axios.post("http://localhost:5000/auth/register", formData)
+        //     .then(res => {
+        //         console.log("registering");
+        //         console.log(res);
+        //         onSubmitProps.resetForm();
+        //         setIsLogin("false");
 
-            }).catch(err => {
-                if (err.response){
-                    console.log(err.response.data);
-                    setError(err.response.data.message);
-                }
-                console.log(err);
-            })
+        //     }).catch(err => {
+        //         if (err.response){
+        //             console.log(err.response.data);
+        //             setError(err.response.data.message);
+        //         }
+        //         console.log(err);
+        //     })
 
         // const savedUserResponse = await fetch( "http://localhost:5000/auth/register", {
         //         method: "POST",

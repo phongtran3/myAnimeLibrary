@@ -20,7 +20,8 @@ async function updateProfile(req, res) {
   try {
     let regEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     const { id } = req.params;
-    const { attribute, value, currentPassword } = req.body;
+    const { attribute, value, currentPassword, picturePath } = req.body;
+    console.log(req.body);
     const user = await User.findById(id);
     console.log(attribute);
     console.log(value);

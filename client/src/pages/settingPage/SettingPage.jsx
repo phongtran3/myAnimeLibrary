@@ -107,7 +107,7 @@ export default function SettingPage() {
         console.log(body[value]);
         formData.append(value, body[value]);
       }
-      if(body.attribute === 'picturePath') formData.append('picturePath', body.value);
+      if(body.attribute === 'picturePath') formData.append('picture', newPicturePath);
       
       console.log(formData)
       await axios.patch(
@@ -126,7 +126,7 @@ export default function SettingPage() {
         attribute:"",
         value:""
         })
-        //window.location.reload();
+        window.location.reload();
       }).catch(err => {
         if (err.response){
           console.log(err.response.data);
@@ -249,7 +249,8 @@ export default function SettingPage() {
               acceptedFiles=".jpg,.jpeg,.png"
               multiple={false}
               onDrop={(acceptedFiles) => {
-                //setNewPicturePath(acceptedFiles[0].name)
+                setNewPicturePath(acceptedFiles[0]) //File object
+                //handleOpenPopover("picturePath", acceptedFiles[0].name)
                 handleOpenPopover("picturePath", acceptedFiles[0].name)
                 //setBody({attribute: "picturePath", value: acceptedFiles[0].name})
                 console.log(body);
@@ -264,11 +265,11 @@ export default function SettingPage() {
                     sx={{ "&:hover": { cursor: "pointer" } }}
                 >
                   <input {...getInputProps()} />
-                  {!newPicturePath? (
+                  {!newPicturePath.name? (
                     <p>Drop Image here or click to upload</p>
                   ) : (
                   <Box display="flex" justifyContent={"space-between"} alignItems={'center'}>
-                    <Typography>{newPicturePath ? newPicturePath : user.picturePath }</Typography>
+                    <Typography>{newPicturePath.name ? newPicturePath.name : user.picturePath }</Typography>
                     <Box display={"flex"} alignItems={"center"}>
                       <EditOutlined />
                     </Box>

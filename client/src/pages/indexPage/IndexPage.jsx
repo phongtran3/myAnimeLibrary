@@ -88,7 +88,7 @@ export default function IndexPage() {
       
       {!popularManga.length ? <CircularProgress/> : 
       <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
-        <Typography variant="h5" component={Link} to={`search/manga/popular`}>All Time Popular Manga</Typography>
+        <Typography variant="h5" component={Link} to={`search/manga/popularity`}>All Time Popular Manga</Typography>
         <MediaList media={popularManga} />
       </Grid>
       }

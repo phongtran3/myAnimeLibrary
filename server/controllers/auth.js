@@ -29,6 +29,7 @@ async function register(req, res) {
     });
     const newUser = await user.save(); // Save new user to database
 
+    user.password = undefined;
     res.status(201).json(newUser);
     console.log("register try");
   } catch (error) {

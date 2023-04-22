@@ -9,7 +9,9 @@ import {Formik} from "formik";
 import * as yup from "yup";
 import Dropzone from "react-dropzone"; //File/image upload
 
-import { Box, useTheme, Typography, OutlinedInput, Dialog, TextField, Alert, InputAdornment, IconButton, Button } from '@mui/material'
+import { Box, useTheme, Typography, OutlinedInput, Dialog, TextField, Alert, InputAdornment, IconButton, Button} from '@mui/material'
+import {Visibility, VisibilityOff, Lock} from "@mui/icons-material"
+
 import ConfirmPassword from '../../components/ConfirmPassword';
 //import {Person, AccountCircle, Email, Lock, Visibility, VisibilityOff, EditOutlined, Clear} from "@mui/icons-material"
 
@@ -26,16 +28,20 @@ export default function SettingPage() {
   const [newFirstName, setNewFirstName] = useState("")
   const [newLastName, setNewLastName] = useState("")
   const [newEmail, setNewEmail] = useState("")
+  const [newPassword, setNewPassword] = useState("")
+  const [newConfirmPassword, setNewConfirmPassword] = useState("")
   const [files, setFiles] = useState([]);
 
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showNewConfirmPassword, setShowNewConfirmPassword] = useState(false);
+  
   const [error, setError] = useState(""); //JWT EXPIRED needs to be fixed
 
   const { palette  } = useTheme();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const userName = useSelector((state) => state.user.userName);
+
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showNewConfirmPassword, setShowNewConfirmPassword] = useState(false);
   const handleShowNewPassword = () => setShowNewPassword(!showNewPassword);
   const handleShowNewConfirmPassword = () => setShowNewConfirmPassword(!showNewConfirmPassword);
 
@@ -78,6 +84,7 @@ export default function SettingPage() {
 
   function handleClose(e){
     setOpen(false);
+    setError("")
     setBody({
       attribute:"",
       value:""
@@ -87,31 +94,38 @@ export default function SettingPage() {
   console.log(user);
 
   async function handleSave(){
-    console.log(body);
-    await axios.patch(
-      `http://localhost:5000/users/${user._id}/update`, 
-      {data: body}, 
-      {headers: { Authorization: `${token}`}}
-    ).then(res =>{
-      console.log(res);
-      setUser(res.data)
-      dispatch(setSiteUser({
-        user: res.data,
-        token: token,
-      }))
-      setOpen(false);
-      setBody({
-      attribute:"",
-      value:""
+    if(newPassword !== newConfirmPassword){
+      console.log("New passwords do not match")
+      setError("New passwords do not match")
+    }else{
+      console.log("Password Match")
+      console.log(body);
+      await axios.patch(
+        `http://localhost:5000/users/${user._id}/update`, 
+        {data: body}, 
+        {headers: { Authorization: `${token}`}}
+      ).then(res =>{
+        console.log(res);
+        setUser(res.data)
+        dispatch(setSiteUser({
+          user: res.data,
+          token: token,
+        }))
+        setOpen(false);
+        setBody({
+        attribute:"",
+        value:""
+        })
+        window.location.reload();
+      }).catch(err => {
+        if (err.response){
+          console.log(err.response.data);
+          setError(err.response.data.message);
+        }
+        console.log(err);
       })
-      window.location.reload();
-    }).catch(err => {
-      if (err.response){
-        console.log(err.response.data);
-        setError(err.response.data.message);
-      }
-      console.log(err);
-    })
+    }
+
     
   }
   
@@ -164,6 +178,44 @@ export default function SettingPage() {
             }}
           />
           {newEmail !== user.email ? <Button variant='contained' name="email" onClick={(e)=>{handleOpenPopover(e.target.name, newEmail)}}>Save Email</Button> : ""}
+        </Box>
+
+        <Box className="new-password-section">
+          <Typography variant='h6'>Change Password</Typography>
+          <OutlinedInput
+            type={showNewPassword ? "text": "password"}
+            placeholder='New password'
+            value={newPassword}
+            onChange={(e)=>{
+              setNewPassword(e.target.value.split(" ").join(""))
+            }}
+            endAdornment= {(
+              <InputAdornment position="end">
+                  <IconButton onClick={handleShowNewPassword}>
+                  {!showNewPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+              </InputAdornment>
+              )}
+          />
+
+          <OutlinedInput
+            type={showNewConfirmPassword ? "text": "password"}
+            placeholder='Confirm new password'
+            value={newConfirmPassword}
+            onChange={(e)=>{
+              setNewConfirmPassword(e.target.value.split(" ").join(""))
+            }}
+            endAdornment= {(
+              <InputAdornment position="end">
+                  <IconButton onClick={handleShowNewConfirmPassword}>
+                  {!showNewConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+              </InputAdornment>
+              )}
+          /> 
+          {newPassword && newConfirmPassword ? 
+            <Button variant='contained' name="password" onClick={(e)=>{handleOpenPopover(e.target.name, newConfirmPassword)}}>Save Password</Button> : ""
+          }
         </Box>
 
         <ConfirmPassword 

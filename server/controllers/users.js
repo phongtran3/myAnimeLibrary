@@ -30,7 +30,11 @@ async function updateProfile(req, res) {
     if (attribute === "email" && !regEmail.test(value))
       return res.status(400).json({ message: "Invalid Email Address" });
 
-    user[attribute] = value;
+    if (attribute === "password") {
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(value, salt);
+      user[attribute] = hashedPassword;
+    } else user[attribute] = value;
     console.log(user.userName);
     await user.save();
 

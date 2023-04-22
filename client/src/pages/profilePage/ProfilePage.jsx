@@ -61,7 +61,6 @@ export default function ProfilePage() {
           <Box id="section-1"> 
             {/* will rename id later */}
             <ProfileCard 
-              user={user} 
               firstName={firstName} 
               lastName={lastName} 
               userName={userName} 
@@ -69,8 +68,8 @@ export default function ProfilePage() {
               mangas={mangas} 
               picturePath={picturePath} 
             />
-
           </Box>
+
           <Box id="section-2">
             <Box id="progress-list-preview-wrap">
               <Typography variant="h6">In Progress</Typography>

@@ -8,7 +8,8 @@ const helmet = require("helmet");
 const multer = require("multer");
 const path = require("path");
 const { register } = require("./controllers/auth.js");
-
+const { updateProfile } = require("./controllers/users.js");
+const verifyToken = require("./middleware/auth.js");
 const app = express();
 const userRouter = require("./routes/users.js");
 const authRouter = require("./routes/auth.js");
@@ -38,6 +39,13 @@ const upload = multer({ storage });
 
 //ROUTES WITH FILE
 app.post("/auth/register", upload.single("picture"), register); //Register new user
+app.patch(
+  "/users/:id/update",
+  upload.single("picture"),
+  verifyToken,
+  updateProfile
+);
+//router.patch("/:id/update", verifyToken, updateProfile);
 
 //ROUTES
 app.use("/users", userRouter);

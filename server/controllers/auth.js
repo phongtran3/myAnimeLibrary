@@ -9,6 +9,7 @@ async function register(req, res) {
       req.body;
     const oldUser = await User.findOne({ email: email });
     console.log(oldUser);
+    console.log(picturePath);
     if (oldUser)
       return res.status(400).json({ message: "User already exists" });
 

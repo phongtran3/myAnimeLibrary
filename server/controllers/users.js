@@ -20,8 +20,10 @@ async function updateProfile(req, res) {
   try {
     let regEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     const { id } = req.params;
-    const { attribute, value, currentPassword } = req.body.data;
+    const { attribute, value, currentPassword } = req.body;
     const user = await User.findById(id);
+    console.log(attribute);
+    console.log(value);
 
     const matchPassword = await bcrypt.compare(currentPassword, user.password);
     if (!matchPassword)
@@ -35,9 +37,9 @@ async function updateProfile(req, res) {
       const hashedPassword = await bcrypt.hash(value, salt);
       user[attribute] = hashedPassword;
     } else user[attribute] = value;
-    console.log(user.userName);
-    await user.save();
+    console.log(user[attribute]);
 
+    await user.save();
     user.password = undefined;
     res.status(200).json(user);
   } catch (error) {

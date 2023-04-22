@@ -106,7 +106,7 @@ const registerSchema = yup.object().shape({
             formData.append(value, values[value]);
         }
         formData.append('picturePath', values.picture.name);
-
+        console.log(formData);
         await axios.post("http://localhost:5000/auth/register", formData)
             .then(res => {
                 console.log("registering");

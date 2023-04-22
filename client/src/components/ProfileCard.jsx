@@ -5,7 +5,6 @@ import {Twitter, Instagram, YouTube, GitHub} from "@mui/icons-material";
 import { Link  } from 'react-router-dom';
 
 export default function ProfileCard({firstName, lastName, userName, animes, mangas, picturePath}) {
-    console.log(picturePath);
     return (
         <Card id="profile-card" sx={{maxWidth: 350, borderRadius: "12px", textAlign: "center"}}>
             <CardContent>

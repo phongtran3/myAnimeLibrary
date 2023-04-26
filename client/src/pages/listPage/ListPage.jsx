@@ -66,7 +66,6 @@ export default function ListPage() {
   //   console.log(completed);
   // }
 
-  console.log(user)
   console.log(userList);
   console.log(filters);
   // let format = '';
@@ -75,6 +74,10 @@ export default function ListPage() {
   // let status = ''
   // let sort = 'Last Added'
   //genre.length > 0 ? genre.some(v => item.genres.includes(v)) : true
+
+  let result = userList.find(item => item.title === 'Your Name.');
+  console.log(result)
+
   return (
     <>
       <NavBar />

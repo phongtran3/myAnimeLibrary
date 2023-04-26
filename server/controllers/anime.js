@@ -1,4 +1,4 @@
-const UserAnime = require("../models/anime.js");
+//const UserAnime = require("../models/anime.js");
 const User = require("../models/user.js");
 
 async function addAnime(req, res) {
@@ -14,7 +14,7 @@ async function addAnime(req, res) {
       status,
     } = req.body.data;
     const user = await User.findById(userId); //May have to change
-    console.log(req.body.data);
+    //console.log(req.body.data);
     //console.log(genres);
     // console.log(user);
     const animeObj = {
@@ -26,7 +26,7 @@ async function addAnime(req, res) {
       userStatus,
       status,
     };
-    console.log(animeObj.status);
+    //console.log(animeObj.status);
     user.animes.push(animeObj);
     await user.save();
     res.status(201).json(user.animes);
@@ -35,15 +35,6 @@ async function addAnime(req, res) {
   }
 }
 
-async function getUserAnimes(req, res) {
-  try {
-    const user = await User.findById(req.id);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-}
-
 module.exports = {
   addAnime,
-  getUserAnimes,
 };

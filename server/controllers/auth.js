@@ -8,13 +8,11 @@ async function register(req, res) {
     const { firstName, lastName, email, userName, password, picturePath } =
       req.body;
     const oldUser = await User.findOne({ email: email });
-    console.log(oldUser);
-    console.log(picturePath);
-    if (oldUser)
-      return res.status(400).json({ message: "User already exists" });
 
-    // if (oldUser.userName === userName)
-    //   return res.status(400).json({ message: "Username already exists" });
+    if (oldUser)
+      return res
+        .status(400)
+        .json({ message: "User already exists with that email" });
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -43,7 +41,7 @@ async function register(req, res) {
 async function login(req, res) {
   try {
     const { email, password } = req.body;
-    console.log("email: " + email + " password: " + password);
+    //console.log("email: " + email + " password: " + password);
     const user = await User.findOne({ email: email });
     if (!user) return res.status(400).json({ message: "User does not exist" });
 
@@ -54,21 +52,13 @@ async function login(req, res) {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    delete user.password;
+
     user.password = undefined;
     res.status(200).json({ token, user });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
-
-// async function comparePassword(req, res) {
-//   try {
-//     const { currentPassword } = req.body;
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// }
 
 module.exports = {
   register,

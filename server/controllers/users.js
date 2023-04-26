@@ -23,8 +23,6 @@ async function updateProfile(req, res) {
     const { attribute, value, currentPassword, picturePath } = req.body;
     console.log(req.body);
     const user = await User.findById(id);
-    console.log(attribute);
-    console.log(value);
 
     const matchPassword = await bcrypt.compare(currentPassword, user.password);
     if (!matchPassword)

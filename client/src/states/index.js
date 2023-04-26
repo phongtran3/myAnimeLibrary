@@ -30,14 +30,14 @@ export const authSlice = createSlice({
     },
     setAnimes: (state, action) => {
       if (state.user) {
-        state.user.animes = action.payload.friends;
+        state.user.animes = action.payload.animes;
       } else {
         console.log("User anime list non-existent");
       }
     },
     setMangas: (state, action) => {
       if (state.user) {
-        state.user.mangas = action.payload.friends;
+        state.user.mangas = action.payload.mangas;
       } else {
         console.log("User manga list non-existent");
       }

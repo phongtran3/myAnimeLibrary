@@ -22,9 +22,9 @@ export default function IndexPage() {
   };
  
   useEffect(() => {
-    console.log("UseEffect");
     try{
         const fetchData = async () => {
+          //All requests made to the AniList GraphQL API must be made as a POST request to 'https://graphql.anilist.co'.
           const getTrendingAnime = await axios.post('https://graphql.anilist.co', { query: trendingAnimeQuery, variables })
           const getPopularAnime = await axios.post('https://graphql.anilist.co', { query: popularAnimeQuery, variables })
           const getTrendingManga = await axios.post('https://graphql.anilist.co', { query: trendingMangaQuery, variables })
@@ -35,6 +35,9 @@ export default function IndexPage() {
               setpopularAnime(res[1].data.data.Page.media)
               setTrendingManga(res[2].data.data.Page.media)
               setpopularManga(res[3].data.data.Page.media)
+            })
+            .catch(err =>{
+              console.log(err)
             })
         }
       fetchData();
@@ -55,10 +58,6 @@ export default function IndexPage() {
       <Box margin="0 2.5rem">
         <BrowseFilter />
       </Box>
-    
-    {/* <Box margin="0 2.5rem">
-        <h1>Filter</h1>
-    </Box> */}
 
       {(isLoading) ? <LinearProgress /> : 
       <>

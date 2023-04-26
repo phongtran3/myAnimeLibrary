@@ -1,16 +1,19 @@
 const express = require("express");
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser"); //Process request body
 const mongoose = require("mongoose");
-const cors = require("cors");
-const morgan = require("morgan");
+const cors = require("cors"); //Cross origin request
+const morgan = require("morgan"); //Request Logger
 require("dotenv").config();
-const helmet = require("helmet");
-const multer = require("multer");
+const helmet = require("helmet"); //Request safety (hide tech stack)
+const multer = require("multer"); //File storage locally
 const path = require("path");
+
 const { register } = require("./controllers/auth.js");
 const { updateProfile } = require("./controllers/users.js");
 const verifyToken = require("./middleware/auth.js");
 const app = express();
+
+// ROUTES
 const userRouter = require("./routes/users.js");
 const authRouter = require("./routes/auth.js");
 const animeRouter = require("./routes/anime.js");
@@ -45,7 +48,6 @@ app.patch(
   verifyToken,
   updateProfile
 );
-//router.patch("/:id/update", verifyToken, updateProfile);
 
 //ROUTES
 app.use("/users", userRouter);
@@ -65,7 +67,3 @@ mongoose
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
   )
   .catch((error) => console.log(error));
-
-app.get("/", async (req, res) => {
-  res.send("Test");
-});

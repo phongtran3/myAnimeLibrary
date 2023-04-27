@@ -94,10 +94,11 @@ export default function SettingPage() {
   }
 
   console.log(user);
+  console.log(user.socialMediaHandles);
 
   async function handleSave(){
     if(body.attribute === 'password' && newPassword !== newConfirmPassword){
-      console.log("New passwords do not match")
+      //console.log("New passwords do not match")
       setError("New passwords do not match")
     }else{
       console.log("Password Match")
@@ -157,6 +158,7 @@ export default function SettingPage() {
             animes={user.animes} 
             mangas={user.mangas} 
             picturePath={user.picturePath} 
+            socialMediaHandles={user.socialMediaHandles}
           />
         </Box>
         <Box id="section-2" sx={{ borderRadius: "4px", padding: "20px", background: "mediumpurple" }} >
@@ -279,6 +281,7 @@ export default function SettingPage() {
               )}
             </Dropzone>
           </Box>
+
           <ConfirmPassword 
             open={open} 
             error={error}

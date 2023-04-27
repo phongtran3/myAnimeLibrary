@@ -47,7 +47,7 @@ export default function ListPage() {
   if (!user) {
     return null;
   }
-  const {firstName, lastName, animes, mangas, picturePath } = user.data;
+  //const {firstName, lastName, animes, mangas, picturePath } = user.data;
   //const progress = [];
   //const planning = []
   // if (type === 'anime'){
@@ -68,15 +68,8 @@ export default function ListPage() {
 
   console.log(userList);
   console.log(filters);
-  // let format = '';
-  // let genre = [];
-  // let query = ''
-  // let status = ''
-  // let sort = 'Last Added'
-  //genre.length > 0 ? genre.some(v => item.genres.includes(v)) : true
 
-  let result = userList.find(item => item.title === 'Your Name.');
-  console.log(result)
+
 
   return (
     <>

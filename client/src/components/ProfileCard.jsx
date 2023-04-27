@@ -4,7 +4,7 @@ import {Twitter, Instagram, YouTube, GitHub} from "@mui/icons-material";
 
 import { Link  } from 'react-router-dom';
 
-export default function ProfileCard({firstName, lastName, userName, animes, mangas, picturePath}) {
+export default function ProfileCard({firstName, lastName, userName, animes, mangas, picturePath, socialMediaHandles}) {
     return (
         <Card id="profile-card" sx={{maxWidth: 350, borderRadius: "12px", textAlign: "center"}}>
             <CardContent>
@@ -43,7 +43,7 @@ export default function ProfileCard({firstName, lastName, userName, animes, mang
                 <Typography><Twitter/></Typography>
                 <Typography><Instagram/></Typography>
                 <Typography><YouTube/></Typography>
-                <Typography><GitHub/></Typography>
+                <Typography rel="noopener noreferrer" target="_blank" component={Link} to={`https://github.com/${socialMediaHandles.github}`}>{socialMediaHandles.github ? <GitHub/>: ""}</Typography>
 
             </Box>
         </Card>

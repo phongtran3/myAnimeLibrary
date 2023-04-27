@@ -25,7 +25,10 @@ async function register(req, res) {
       userName,
       password: hashedPassword,
       picturePath,
+      socialMediaHandles: {},
     });
+
+    //user.socialMediaHandles.set("github", "phongtran3");
     const newUser = await user.save(); // Save new user to database
 
     user.password = undefined;

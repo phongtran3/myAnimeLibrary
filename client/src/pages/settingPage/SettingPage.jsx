@@ -32,6 +32,7 @@ export default function SettingPage() {
   const [newPassword, setNewPassword] = useState("")
   const [newConfirmPassword, setNewConfirmPassword] = useState("")
   const [newPicturePath, setNewPicturePath] = useState("")
+  const [newSocialMedia, setNewSocialMedia] = useState({})
   const [files, setFiles] = useState([]);
 
   
@@ -59,6 +60,7 @@ export default function SettingPage() {
       setNewFirstName(res.data.firstName);
       setNewLastName(res.data.lastName);
       setNewEmail(res.data.email);
+      setNewSocialMedia(res.data.socialMediaHandles)
     }).catch(err => {
       if (err.response){
         console.log(err.response.data);
@@ -94,7 +96,8 @@ export default function SettingPage() {
   }
 
   console.log(user);
-  console.log(user.socialMediaHandles);
+  //console.log(user.socialMediaHandles);
+  console.log(newSocialMedia);
 
   async function handleSave(){
     if(body.attribute === 'password' && newPassword !== newConfirmPassword){
@@ -105,12 +108,10 @@ export default function SettingPage() {
       console.log(body);
       const formData = new FormData();
       for (let value in body) {
-        console.log(body[value]);
         formData.append(value, body[value]);
       }
       if(body.attribute === 'picturePath') formData.append('picture', newPicturePath);
       
-      console.log(formData)
       await axios.patch(
         `http://localhost:5000/users/${user._id}/update`, 
         formData, 
@@ -281,6 +282,66 @@ export default function SettingPage() {
               )}
             </Dropzone>
           </Box>
+
+          <Box className="social-media-section">
+            <Typography variant='h6'>Social Media</Typography>
+            <Box display="flex" alignItems="center">
+                <Typography variant='subtitle1'>Twitter</Typography>
+                  <OutlinedInput 
+                    value={newSocialMedia.twitter}
+                    onChange={(e)=>{
+                      setNewSocialMedia(prev =>({
+                        ...prev,
+                        twitter: e.target.value.split(" ").join("")
+                      }))
+                    }}
+                  />
+            </Box>
+
+            <Box display="flex" alignItems="center">
+              <Typography variant='subtitle1'>Instagram</Typography>
+                <OutlinedInput 
+                  value={newSocialMedia.instagram}
+                  onChange={(e)=>{
+                    setNewSocialMedia(prev =>({
+                      ...prev,
+                      instagram: e.target.value.split(" ").join("")
+                    }))
+                  }}
+                />
+            </Box>
+
+            <Box display="flex" alignItems="center">
+              <Typography variant='subtitle1'>Youtube</Typography>
+                <OutlinedInput 
+                  value={newSocialMedia.youtube}
+                  onChange={(e)=>{
+                    setNewSocialMedia(prev =>({
+                      ...prev,
+                      youtube: e.target.value.split(" ").join("")
+                    }))
+                  }}
+                />
+            </Box>
+
+            <Box display="flex" alignItems="center">
+              <Typography variant='subtitle1'>Github</Typography>
+                <OutlinedInput 
+                  value={newSocialMedia.github}
+                  onChange={(e)=>{
+                    setNewSocialMedia(prev =>({
+                      ...prev,
+                      github: e.target.value.split(" ").join("")
+                    }))
+                  }}
+                />
+            </Box>
+
+            
+
+            
+          </Box>
+
 
           <ConfirmPassword 
             open={open} 

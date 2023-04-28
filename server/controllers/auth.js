@@ -25,7 +25,12 @@ async function register(req, res) {
       userName,
       password: hashedPassword,
       picturePath,
-      socialMediaHandles: {},
+      socialMediaHandles: {
+        github: "",
+        instagram: "",
+        twitter: "",
+        youtube: "",
+      },
     });
 
     //user.socialMediaHandles.set("github", "phongtran3");

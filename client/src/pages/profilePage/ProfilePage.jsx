@@ -48,7 +48,7 @@ export default function ProfilePage() {
       
   }
   console.log(user.data)
-  console.log(socialMediaHandles.github)
+  //console.log(socialMediaHandles.github)
   return (
     <>
       <NavBar />

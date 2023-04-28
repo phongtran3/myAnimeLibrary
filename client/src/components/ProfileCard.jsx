@@ -43,7 +43,7 @@ export default function ProfileCard({firstName, lastName, userName, animes, mang
                 <Typography><Twitter/></Typography>
                 <Typography><Instagram/></Typography>
                 <Typography><YouTube/></Typography>
-                <Typography rel="noopener noreferrer" target="_blank" component={Link} to={`https://github.com/${socialMediaHandles.github}`}>{socialMediaHandles.github ? <GitHub/>: ""}</Typography>
+                <Typography rel="noopener noreferrer" target="_blank" component={Link} to={`${socialMediaHandles.github}`}>{socialMediaHandles.github ? <GitHub/>: ""}</Typography>
 
             </Box>
         </Card>

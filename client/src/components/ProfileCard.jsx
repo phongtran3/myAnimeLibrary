@@ -40,9 +40,9 @@ export default function ProfileCard({firstName, lastName, userName, animes, mang
                 gap: "2em",
                 alignItems: "center"
             }}>
-                <Typography><Twitter/></Typography>
-                <Typography><Instagram/></Typography>
-                <Typography><YouTube/></Typography>
+                <Typography rel="noopener noreferrer" target="_blank" component={Link} to={`${socialMediaHandles.twitter}`}>{socialMediaHandles.twitter ? <Twitter/>:""}</Typography>
+                <Typography rel="noopener noreferrer" target="_blank" component={Link} to={`${socialMediaHandles.instagram}`}>{socialMediaHandles.instagram ? <Instagram/>: ""}</Typography>
+                <Typography rel="noopener noreferrer" target="_blank" component={Link} to={`${socialMediaHandles.youtube}`}>{socialMediaHandles.youtube ? <YouTube/>: ""}</Typography>
                 <Typography rel="noopener noreferrer" target="_blank" component={Link} to={`${socialMediaHandles.github}`}>{socialMediaHandles.github ? <GitHub/>: ""}</Typography>
 
             </Box>

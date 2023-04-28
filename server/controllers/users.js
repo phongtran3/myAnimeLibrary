@@ -44,6 +44,14 @@ async function updateProfile(req, res) {
       const salt = await bcrypt.genSalt();
       const hashedPassword = await bcrypt.hash(value, salt);
       user[attribute] = hashedPassword;
+    } else if (attribute === "socialMediaHandles") {
+      if (value.includes("twitter"))
+        user.socialMediaHandles.set("twitter", value);
+      else if (value.includes("instagram"))
+        user.socialMediaHandles.set("instagram", value);
+      else if (value.includes("youtube"))
+        user.socialMediaHandles.set("youtube", value);
+      else user.socialMediaHandles.set("github", value);
     } else user[attribute] = value;
 
     console.log(user[attribute]);

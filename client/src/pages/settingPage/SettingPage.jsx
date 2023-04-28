@@ -125,8 +125,8 @@ export default function SettingPage() {
         }))
         setOpen(false);
         setBody({
-        attribute:"",
-        value:""
+          attribute:"",
+          value:""
         })
         window.location.reload();
       }).catch(err => {
@@ -243,7 +243,11 @@ export default function SettingPage() {
                 )}
             /> 
             {newPassword && newConfirmPassword ? 
-              <Button variant='contained' name="password" onClick={(e)=>{handleOpenPopover(e.target.name, newConfirmPassword)}}>Save Password</Button> : ""
+              <Button 
+                variant='contained' 
+                name="password" 
+                onClick={(e)=>{handleOpenPopover(e.target.name, newConfirmPassword)}}
+              >Save Password</Button> : ""
             }
           </Box>
           
@@ -283,12 +287,17 @@ export default function SettingPage() {
             </Dropzone>
           </Box>
 
+
+          {/* {newEmail !== user.email ? <Button variant='contained' name="email" onClick={(e)=>{handleOpenPopover(e.target.name, newEmail)}}>Save Email</Button> : ""} */}
+          
           <Box className="social-media-section">
             <Typography variant='h6'>Social Media</Typography>
             <Box display="flex" alignItems="center">
-                <Typography variant='subtitle1'>Twitter</Typography>
-                  <OutlinedInput 
+                <Typography variant='subtitle1'>Twitter </Typography>
+                  <TextField 
                     value={newSocialMedia.twitter}
+                    variant="outlined"
+                    helperText="URL (required)"
                     onChange={(e)=>{
                       setNewSocialMedia(prev =>({
                         ...prev,
@@ -296,12 +305,25 @@ export default function SettingPage() {
                       }))
                     }}
                   />
+                  {newSocialMedia.twitter !== user.socialMediaHandles.twitter ?
+                    <Button 
+                      variant='contained'
+                      name="socialMediaHandles"
+                      onClick={(e)=>{handleOpenPopover(e.target.name, newSocialMedia.twitter)}}
+                    >
+                      Save Twitter
+                    </Button> : ""
+                  }
+
+
             </Box>
 
             <Box display="flex" alignItems="center">
               <Typography variant='subtitle1'>Instagram</Typography>
-                <OutlinedInput 
+                <TextField 
                   value={newSocialMedia.instagram}
+                  variant="outlined"
+                  helperText="URL (required)"
                   onChange={(e)=>{
                     setNewSocialMedia(prev =>({
                       ...prev,
@@ -313,8 +335,10 @@ export default function SettingPage() {
 
             <Box display="flex" alignItems="center">
               <Typography variant='subtitle1'>Youtube</Typography>
-                <OutlinedInput 
+                <TextField 
                   value={newSocialMedia.youtube}
+                  variant="outlined"
+                  helperText="URL (required)"
                   onChange={(e)=>{
                     setNewSocialMedia(prev =>({
                       ...prev,
@@ -326,8 +350,10 @@ export default function SettingPage() {
 
             <Box display="flex" alignItems="center">
               <Typography variant='subtitle1'>Github</Typography>
-                <OutlinedInput 
+                <TextField 
                   value={newSocialMedia.github}
+                  variant="outlined"
+                  helperText="URL (required)"
                   onChange={(e)=>{
                     setNewSocialMedia(prev =>({
                       ...prev,

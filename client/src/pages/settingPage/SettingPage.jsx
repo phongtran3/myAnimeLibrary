@@ -331,6 +331,15 @@ export default function SettingPage() {
                     }))
                   }}
                 />
+                {newSocialMedia.instagram !== user.socialMediaHandles.instagram ?
+                  <Button 
+                    variant='contained'
+                    name="socialMediaHandles"
+                    onClick={(e)=>{handleOpenPopover(e.target.name, newSocialMedia.instagram)}}
+                  >
+                    Save Instagram
+                  </Button> : ""
+                }
             </Box>
 
             <Box display="flex" alignItems="center">
@@ -346,6 +355,15 @@ export default function SettingPage() {
                     }))
                   }}
                 />
+                {newSocialMedia.youtube !== user.socialMediaHandles.youtube ?
+                  <Button 
+                    variant='contained'
+                    name="socialMediaHandles"
+                    onClick={(e)=>{handleOpenPopover(e.target.name, newSocialMedia.youtube)}}
+                  >
+                    Save Youtube
+                  </Button> : ""
+                }
             </Box>
 
             <Box display="flex" alignItems="center">
@@ -361,6 +379,15 @@ export default function SettingPage() {
                     }))
                   }}
                 />
+                {newSocialMedia.github !== user.socialMediaHandles.github ?
+                  <Button 
+                    variant='contained'
+                    name="socialMediaHandles"
+                    onClick={(e)=>{handleOpenPopover(e.target.name, newSocialMedia.github)}}
+                  >
+                    Save Github
+                  </Button> : ""
+                }
             </Box>
 
             

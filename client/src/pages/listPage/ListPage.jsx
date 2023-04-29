@@ -28,8 +28,8 @@ export default function ListPage() {
       `http://localhost:5000/users/${userName}`,
       {headers: { Authorization: `${token}` }}
     ).then(res =>{
-      console.log(res);
-      setUser(res);
+      console.log(res.data);
+      setUser(res.data);
       //console.log(type);
       setUserList(type === 'anime' ? res.data.animes : res.data.mangas);
     }).catch(err => {
@@ -102,11 +102,11 @@ export default function ListPage() {
                         }else if (filters.sort === 'Last Added')
                           return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
                       }).map((item) => (
-                          <Card2 key={item._id} item={item}/>
+                          <Card2 user={user} key={item._id} item={item}/>
                         
                       ))
                     }
-                    
+
                   </ImageList>
               </>}
             </Box>
@@ -129,7 +129,7 @@ export default function ListPage() {
                           }else if (filters.sort === 'Last Added')
                             return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
                         }).map((item) => (
-                          <Card2 key={item._id} item={item}/>
+                          <Card2 user={user} key={item._id} item={item}/>
                       ))
                     }
                   </ImageList>
@@ -155,7 +155,7 @@ export default function ListPage() {
                         }else if (filters.sort === 'Last Added')
                           return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
                       }).map((item) => (
-                        <Card2 key={item._id} item={item}/>
+                        <Card2 user={user} key={item._id} item={item}/>
                     ))
                   }
                 </ImageList>

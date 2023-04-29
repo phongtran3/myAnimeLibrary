@@ -1,12 +1,18 @@
 import React, {useState} from 'react'
 import {ImageListItem , ImageListItemBar, IconButton , Link} from '@mui/material';
-
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-export default function Card2({item}) {
+
+import { useSelector } from "react-redux";
+
+
+export default function Card2({item, user}) {
     //console.log(item)
     const [displayEditBtn, setDisplayEditBtn] = useState(true);
+    const [open, setOpen] = useState(false);
 
-
+    const loggedUser = useSelector((state) => state.user);
+    console.log(loggedUser);
+    console.log(user)
 
     function showBtn(e){
         e.preventDefault();
@@ -17,6 +23,14 @@ export default function Card2({item}) {
         setDisplayEditBtn(false);
 
     }
+
+    function handleOpen(){
+        setOpen(true);
+    }
+    function handleClose(){
+        setOpen(false);
+    }
+
     return (
         
         <ImageListItem 
@@ -42,7 +56,7 @@ export default function Card2({item}) {
                     sx={{"& .MuiImageListItemBar-title": {fontSize: ".8rem", whiteSpace: "normal"}}}
                 />
             </Link>
-            {displayEditBtn ? 
+            {displayEditBtn && loggedUser._id === user._id? 
                 <IconButton 
                     sx={{
                         position: "absolute",

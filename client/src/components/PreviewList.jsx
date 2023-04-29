@@ -1,8 +1,10 @@
 import React from 'react'
 import {ImageList, ImageListItem, Paper, Popper, Fade, Typography} from "@mui/material";
-import PopupState, {bindPopover, bindHover, bindToggle, bindPopper} from "material-ui-popup-state";
+import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
 
 export default function PreviewList({medium}) {
+    
+
   return (
     <ImageList cols={6} gap={20} sx={{backgroundColor: "lightblue", textAlign: "center", padding:"15px", marginTop: ".5em"}}>
         {medium.map(media => (

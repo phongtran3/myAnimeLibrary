@@ -1,13 +1,28 @@
 import React, {useState} from 'react'
-import {ImageListItem , ImageListItemBar} from '@mui/material';
-//import { Link } from 'react-router-dom';
-import { Link } from '@mui/material';
+import {ImageListItem , ImageListItemBar, IconButton , Link} from '@mui/material';
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 export default function Card2({item}) {
     //console.log(item)
-    const [displayEditBtn, setDisplayEditBtn] = useState(false);
-    //component={Link} to={item.siteUrl}
+    const [displayEditBtn, setDisplayEditBtn] = useState(true);
+
+
+
+    function showBtn(e){
+        e.preventDefault();
+        setDisplayEditBtn(true);
+    }
+    function hideBtn(e){
+        e.preventDefault();
+        setDisplayEditBtn(false);
+
+    }
     return (
-        <ImageListItem >
+        
+        <ImageListItem 
+            //onMouseEnter={(e) => showBtn(e)}
+            //onMouseLeave={(e) => hideBtn(e)}
+        >
             <img
                 src={`${item.coverImage}?w=164&h=164&fit=crop&auto=format`}
                 srcSet={`${item.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
@@ -27,6 +42,22 @@ export default function Card2({item}) {
                     sx={{"& .MuiImageListItemBar-title": {fontSize: ".8rem", whiteSpace: "normal"}}}
                 />
             </Link>
+            {displayEditBtn ? 
+                <IconButton 
+                    sx={{
+                        position: "absolute",
+                        height: "30px",
+                        width: "30px",
+                        backgroundColor: "purple",
+                        right: "10px",
+                        top: "10px",
+                        '&:hover':{
+                            backgroundColor: "lightpink"
+                        }                    
+                    }}
+                >
+                    <MoreHorizIcon />
+                </IconButton > : ""}
         </ImageListItem>
     )
 }

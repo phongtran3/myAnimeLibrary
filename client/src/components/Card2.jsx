@@ -84,7 +84,7 @@ export default function Card2({item, user}) {
                     sx={{
                         ".MuiDialog-paper:first-of-type": {
                             minWidth:"700px",
-                            maxWidth:"1000px",
+                            //maxWidth:"1000px",
                             backgroundColor: "lightgray",
                             flexDirection: "row"
                         },
@@ -114,6 +114,10 @@ export default function Card2({item, user}) {
                             renderInput={(params) => <TextField {...params} label="Status" />}
                             />
                     </DialogContent>
+                    <DialogActions sx={{alignItems:"flex-end", padding:"0 10px 20px 0"}}>
+                        <Button>Delete</Button>
+                        <Button>Save</Button>
+                    </DialogActions>
                 </Dialog>
         </ImageListItem>
     )

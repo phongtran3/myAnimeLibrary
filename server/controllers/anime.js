@@ -35,6 +35,30 @@ async function addAnime(req, res) {
   }
 }
 
+async function removeAnime(req, res) {
+  try {
+    console.log("Removing Anime");
+    const { id } = req.params;
+    const { animeId } = req.body.data;
+    const user = await User.findById(id);
+    //console.log(animeId);
+    //const animeToDelete = user.animes.find((x) => x.id === animeId);
+    //console.log(animeToDelete);
+
+    console.log(user.animes);
+    user.animes.splice(
+      user.animes.findIndex((el) => el.id === animeId),
+      1
+    );
+    console.log(user.animes);
+    await user.save();
+    res.status(201).json(user.animes);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+}
+
 module.exports = {
   addAnime,
+  removeAnime,
 };

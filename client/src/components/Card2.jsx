@@ -4,11 +4,12 @@ import { useSelector } from "react-redux";
 import {ImageListItem , ImageListItemBar, IconButton , Link, Autocomplete} from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField, Alert  } from '@mui/material'
+import axios from 'axios';
 
+const mangaFormat = ["MANGA", "ONE_SHOT", "NOVEL"];
 
 export default function Card2({item, user}) {
     console.log(item)
-    const mangaFormat = ["MANGA", "ONE_SHOT", "NOVEL"];
     const userStatuses = [
         mangaFormat.indexOf(item.format) > -1 ? "READING" : "WATCHING",
         "COMPLETED",
@@ -19,6 +20,7 @@ export default function Card2({item, user}) {
     const [userStatus, setUserStatus] = useState(item.userStatus)
 
     const loggedUser = useSelector((state) => state.user);
+    const token = useSelector((state) => state.token);
 
     function showBtn(e){
         e.preventDefault();
@@ -35,6 +37,32 @@ export default function Card2({item, user}) {
     }
     function handleClose(){
         setOpen(false);
+    }
+
+    async function handleDelete(){
+        console.log("Deleting");
+        const body = {
+            "animeId": item._id
+        }
+        await axios.patch(
+            `http://localhost:5000/anime/${user._id}/remove`,
+            {data: body},
+            {headers: { Authorization: `${token}`}}
+        ).then(res =>{
+            console.log(res);
+
+            setOpen(false);
+            window.location.reload();
+        }).catch(err =>{
+            if (err.response){
+                console.log(err.response.data);
+                //setError(err.response.data.message);
+              }
+              console.log(err);
+        })
+
+
+        
     }
 
     return (
@@ -97,7 +125,7 @@ export default function Card2({item, user}) {
                             alt={item.title}
                         />
                     </DialogContent>
-                    <DialogContent>
+                    <DialogContent sx={{display:"flex", flexDirection:"column"}}>
                         <DialogTitle sx={{padding: "0 0 24px 0"}}>{item.title}</DialogTitle>
                         <Autocomplete
                             options={userStatuses}
@@ -113,11 +141,12 @@ export default function Card2({item, user}) {
                             //sx={{ width: 500 }}
                             renderInput={(params) => <TextField {...params} label="Status" />}
                             />
+                            <DialogActions sx={{alignItems:"flex-end", marginTop:"auto", padding:"0"}}>
+                                <Button onClick={handleDelete}>Delete</Button>
+                                <Button>Save</Button>
+                            </DialogActions>
                     </DialogContent>
-                    <DialogActions sx={{alignItems:"flex-end", padding:"0 10px 20px 0"}}>
-                        <Button>Delete</Button>
-                        <Button>Save</Button>
-                    </DialogActions>
+                    
                 </Dialog>
         </ImageListItem>
     )

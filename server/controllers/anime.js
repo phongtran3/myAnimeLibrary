@@ -39,15 +39,15 @@ async function removeAnime(req, res) {
   try {
     console.log("Removing Anime");
     const { id } = req.params;
-    const { animeId } = req.body.data;
+    const { itemId } = req.body.data;
     const user = await User.findById(id);
-    //console.log(animeId);
-    //const animeToDelete = user.animes.find((x) => x.id === animeId);
+    //console.log(itemId);
+    //const animeToDelete = user.animes.find((x) => x.id === itemId);
     //console.log(animeToDelete);
 
     console.log(user.animes);
     user.animes.splice(
-      user.animes.findIndex((el) => el.id === animeId),
+      user.animes.findIndex((el) => el.id === itemId),
       1
     );
     console.log(user.animes);

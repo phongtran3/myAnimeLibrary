@@ -10,6 +10,7 @@ const mangaFormat = ["MANGA", "ONE_SHOT", "NOVEL"];
 
 export default function Card2({item, user}) {
     console.log(item)
+    const type = mangaFormat.indexOf(item.format) > -1 ? "manga" : "anime";
     const userStatuses = [
         mangaFormat.indexOf(item.format) > -1 ? "READING" : "WATCHING",
         "COMPLETED",
@@ -42,10 +43,10 @@ export default function Card2({item, user}) {
     async function handleDelete(){
         console.log("Deleting");
         const body = {
-            "animeId": item._id
+            "itemId": item._id
         }
         await axios.patch(
-            `http://localhost:5000/anime/${user._id}/remove`,
+            `http://localhost:5000/${type}/${user._id}/remove`,
             {data: body},
             {headers: { Authorization: `${token}`}}
         ).then(res =>{

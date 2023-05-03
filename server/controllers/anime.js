@@ -58,7 +58,28 @@ async function removeAnime(req, res) {
   }
 }
 
+async function updateAnime(req, res) {
+  try {
+    console.log("Updating Anime");
+    const { id } = req.params;
+    const { itemId, userStatus } = req.body.data;
+
+    const user = await User.findById(id);
+    let objIndex = user.animes.findIndex((el) => el.id === itemId);
+    if (user.animes[objIndex].userStatus === userStatus)
+      res.status(201).json(user.animes);
+    else {
+      user.animes[objIndex].userStatus = userStatus;
+      await user.save();
+      res.status(201).json(user.animes);
+    }
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+}
+
 module.exports = {
   addAnime,
   removeAnime,
+  updateAnime,
 };

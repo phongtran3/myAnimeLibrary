@@ -61,11 +61,32 @@ export default function Card2({item, user}) {
               }
               console.log(err);
         })
-
-
-        
     }
 
+    async function handleUpdate(){
+        console.log("Saving");
+        const body = {
+            "userStatus": userStatus,
+            "itemId": item._id
+        }
+        await axios.patch(
+            `http://localhost:5000/${type}/${user._id}/update`,
+            {data: body},
+            {headers: { Authorization: `${token}`}}
+        ).then(res =>{
+            console.log(res);
+            setOpen(false);
+            window.location.reload();
+
+        }).catch(err =>{
+            if (err.response){
+                console.log(err.response.data);
+                //setError(err.response.data.message);
+              }
+              console.log(err);
+        })
+
+    }
     return (
         
         <ImageListItem 
@@ -144,7 +165,7 @@ export default function Card2({item, user}) {
                             />
                             <DialogActions sx={{alignItems:"flex-end", marginTop:"auto", padding:"0"}}>
                                 <Button onClick={handleDelete}>Delete</Button>
-                                <Button>Save</Button>
+                                <Button onClick={handleUpdate}>Save</Button>
                             </DialogActions>
                     </DialogContent>
                     

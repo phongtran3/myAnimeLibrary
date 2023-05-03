@@ -51,7 +51,28 @@ async function removeManga(req, res) {
   }
 }
 
+async function updateManga(req, res) {
+  try {
+    console.log("updating manga");
+    const { id } = req.params;
+    const { itemId, userStatus } = req.body.data;
+
+    const user = await User.findById(id);
+    let objIndex = user.mangas.findIndex((el) => el.id === itemId);
+    if (user.mangas[objIndex].userStatus === userStatus)
+      res.status(201).json(user.mangas);
+    else {
+      user.mangas[objIndex].userStatus = userStatus;
+      await user.save();
+      res.status(201).json(user.mangas);
+    }
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+}
+
 module.exports = {
   addManga,
   removeManga,
+  updateManga,
 };

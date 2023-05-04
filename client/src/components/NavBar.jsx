@@ -1,6 +1,5 @@
 //Navagation bar
 import React, { useState } from 'react'
-
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link  } from 'react-router-dom';
 import {setMode, setLogout } from '../states/index';
@@ -15,25 +14,24 @@ import {
   useScrollTrigger, 
   Slide, 
   useTheme, 
-  HideOnScroll, 
   DarkMode, 
   LightMode,
-  Menu,
-  MenuItem
+  MenuItem,
+  Autocomplete,
+  TextField
 } from '@mui/material';
 import {PlayArrow, AutoStories, Logout, Settings, Person } from "@mui/icons-material";
-import PopupState, {bindPopover, bindHover, bindToggle, bindPopper, bindMenu} from "material-ui-popup-state";
+import PopupState, {bindHover, bindMenu} from "material-ui-popup-state";
 import HoverMenu from 'material-ui-popup-state/HoverMenu'
-import HoverPopover from 'material-ui-popup-state/HoverPopover'
 
 export default function NavBar() {
-  const [type, setType] = useState("");
+  const [users, setUsers] = useState([]);
+
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
-
   const user = useSelector((state) => state.user);
-  //const { userName } = useSelector((state) => state.user);
   const trigger = useScrollTrigger();
 
   return (
@@ -73,7 +71,28 @@ export default function NavBar() {
                 {/* <Button variant="contained">
                   <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
                 </Button> */}
+                <Box>
+                  <Autocomplete 
+                    options={users}
+                    size='small'
+                    renderInput={(params) => <TextField {...params} label="Search Users" />}
+                    sx={{
+                      width:"200px",
+                      '& .MuiAutocomplete-endAdornment':{ display: "none"},
+                      '& .MuiFormLabel-root': {
+                        color: "black", 
+                      },
+                      '& .MuiInputLabel-root.Mui-focused':{
+                        color: "black",
+                      }
+        
+                    }}
+                  />
+                </Box>
             </Box>
+            
+
+
             {!user && (
               <Box>
                 <Button variant="contained">

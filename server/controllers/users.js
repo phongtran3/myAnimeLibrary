@@ -16,6 +16,13 @@ async function getUser(req, res) {
   }
 }
 
+async function getAllUser(req, res) {
+  try {
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
+
 async function updateProfile(req, res) {
   try {
     let regEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -66,4 +73,5 @@ async function updateProfile(req, res) {
 module.exports = {
   getUser,
   updateProfile,
+  getAllUser,
 };

@@ -25,23 +25,8 @@ import PopupState, {bindHover, bindMenu} from "material-ui-popup-state";
 import HoverMenu from 'material-ui-popup-state/HoverMenu'
 import axios from 'axios';
 
-//<IconButton {...bindHover(popupState)}><Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/></IconButton>
-
-// function ListboxComponent(props){
-//   console.log(props);
-//   return (
-//     <>
-//       <ul {...props} />
-//       <Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${props.picturePath}`}/>
-//     </>
-//   )
-// }
-
-
-
 export default function NavBar() {
   const [users, setUsers] = useState([]);
-  //const [search, setSearch] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,17 +35,12 @@ export default function NavBar() {
   const trigger = useScrollTrigger();
 
   async function handleChange(search){
-    console.log(search);
-    // const body = {
-    //   "search": JSON.stringify(value)
-    // }
-    //setSearch(value);
     await axios.get(
       `http://localhost:5000/users/`,
       {params: {"search": search},
       headers: {"Content-Type": "application/json", 'Accept': 'application/json',}},
     ).then(res =>{
-      console.log(res.data);
+      //console.log(res.data);
       setUsers(res.data);
     }).catch(err => {
       if (err.response){

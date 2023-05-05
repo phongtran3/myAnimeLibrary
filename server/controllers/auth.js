@@ -31,6 +31,8 @@ async function register(req, res) {
         twitter: "",
         youtube: "",
       },
+      following: [],
+      followers: [],
     });
 
     //user.socialMediaHandles.set("github", "phongtran3");

@@ -19,7 +19,7 @@ export default function ProfilePage() {
       {headers: { Authorization: `${token}` }}
     ).then(res =>{
       //console.log(res);
-      setUser(res);
+      setUser(res.data);
     }).catch(err => {
       if (err.response){
         console.log(err.response.data);
@@ -35,7 +35,7 @@ export default function ProfilePage() {
   if (!user) {
     return null;
   }
-  const {firstName, lastName, animes, mangas, picturePath, socialMediaHandles } = user.data;
+  const {firstName, lastName, animes, mangas, picturePath, socialMediaHandles, following, followers } = user
   const progress = [];
   for(let i = 0; i < animes.length; i++){
     if(animes[i].userStatus === 'WATCHING')
@@ -47,7 +47,7 @@ export default function ProfilePage() {
       progress.push(mangas[i])
       
   }
-  console.log(user.data)
+  console.log(user)
   //console.log(socialMediaHandles.github)
   return (
     <>
@@ -69,6 +69,8 @@ export default function ProfilePage() {
               mangas={mangas} 
               picturePath={picturePath} 
               socialMediaHandles={socialMediaHandles}
+              following={following}
+              followers={followers}
             />
           </Box>
 

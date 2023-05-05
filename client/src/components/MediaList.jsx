@@ -17,7 +17,7 @@ export default function MediaList({media}) {
       {media.map(anime => (
         <PopupState key={anime.id} variant="popper" popupId="demoPopper" >
           {(popupState) => (
-            <ImageListItem key={anime.id} {...bindHover(popupState)} component={Link} to={anime.siteUrl}>
+            <ImageListItem key={anime.id} {...bindHover(popupState)} component={Link} to={anime.siteUrl} target="_blank" rel="noopener noreferrer" >
                 <img
                     src={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format`}
                     srcSet={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}

@@ -1,5 +1,5 @@
-import React from 'react'
-import {Card, CardContent, Avatar, Button, Typography, Box} from '@mui/material'
+import React, { useState } from 'react'
+import {Card, CardContent, Avatar, Button, Typography, Box, Alert, Snackbar  } from '@mui/material'
 import {Twitter, Instagram, YouTube, GitHub} from "@mui/icons-material";
 import { Link, useNavigate  } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,9 @@ import axios from 'axios';
 import { setSiteUser } from '../states';
 
 export default function ProfileCard({user, setUser}) {
+    const [open, setOpen] = useState(false);
+
+
     const loggedUser = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
     const navigate = useNavigate();
@@ -18,6 +21,7 @@ export default function ProfileCard({user, setUser}) {
         console.log("Handle Click " + value )
         if(!loggedUser){
             console.log("User's not logged in")
+            setOpen(true);
         }
         else {
             await axios.patch(
@@ -38,8 +42,14 @@ export default function ProfileCard({user, setUser}) {
                 console.log(err);
             })
         }
-
     }
+    function handleClose(reason){
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    }
+
 
 
     return (
@@ -117,10 +127,12 @@ export default function ProfileCard({user, setUser}) {
                     >
                     {isFollowing ? "Unfollow" : "Follow"}
                     </Button>
-                    
                 }
-
-      
+                <Snackbar open={open} autoHideDuration={5000} onClose={(event, reason) => handleClose(reason)} anchorOrigin={{vertical: 'top', horizontal:'center'}}>
+                    <Alert onClose={(event, reason) => handleClose(reason)} severity='error'>
+                        Unauthorized. Please log in to follow user
+                    </Alert>
+                </Snackbar>
             </Box>
         </Card>
     )

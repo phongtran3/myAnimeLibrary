@@ -35,16 +35,16 @@ export default function ProfilePage() {
   if (!user) {
     return null;
   }
-  const {firstName, lastName, animes, mangas, picturePath, socialMediaHandles, following, followers } = user
+  //const {firstName, lastName, animes, mangas, picturePath, socialMediaHandles, following, followers } = user
   const progress = [];
-  for(let i = 0; i < animes.length; i++){
-    if(animes[i].userStatus === 'WATCHING')
-      progress.push(animes[i])
+  for(let i = 0; i < user.animes.length; i++){
+    if(user.animes[i].userStatus === 'WATCHING')
+      progress.push(user.animes[i])
       
   }
-  for(let i = 0; i < mangas.length; i++){
-    if(mangas[i].userStatus === 'READING')
-      progress.push(mangas[i])
+  for(let i = 0; i < user.mangas.length; i++){
+    if(user.mangas[i].userStatus === 'READING')
+      progress.push(user.mangas[i])
       
   }
   console.log(user)
@@ -62,15 +62,7 @@ export default function ProfilePage() {
           <Box id="section-1"> 
             {/* will rename id later */}
             <ProfileCard 
-              firstName={firstName} 
-              lastName={lastName} 
-              userName={userName} 
-              animes={animes} 
-              mangas={mangas} 
-              picturePath={picturePath} 
-              socialMediaHandles={socialMediaHandles}
-              following={following}
-              followers={followers}
+              user={user}
             />
           </Box>
 
@@ -82,12 +74,12 @@ export default function ProfilePage() {
 
             <Box id="anime-list-preview-wrap" mt="1em">
               <Typography variant="h6">Animes</Typography>
-              <PreviewList medium={animes} />
+              <PreviewList medium={user.animes} />
             </Box>
 
             <Box id="manga-list-preview-wrap" mt="1em">
               <Typography variant="h6">Manga</Typography>
-              <PreviewList medium={mangas} />
+              <PreviewList medium={user.mangas} />
             </Box>
           </Box>
         </Box>

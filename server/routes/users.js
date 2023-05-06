@@ -4,6 +4,7 @@ const {
   getUser,
   updateProfile,
   getAllUser,
+  followUnfollowUser,
 } = require("../controllers/users.js");
 
 const router = express.Router();
@@ -20,5 +21,6 @@ router.get("/", getAllUser);
 //UPDATE
 //router.patch("/:id", verifyToken, addRemoveAnime);
 router.patch("/:id/update", verifyToken, updateProfile);
+router.patch("/:id/:followerId", verifyToken, followUnfollowUser);
 
 module.exports = router;

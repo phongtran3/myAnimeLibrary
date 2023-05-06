@@ -148,8 +148,8 @@ export default function NavBar() {
                 <>
                   <IconButton {...bindHover(popupState)}><Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/></IconButton>
                   <HoverMenu {...bindMenu(popupState)} sx={{"& .MuiPaper-root": {width:"175px", padding:"10px"}}}>
-                    <MenuItem onClick={() => {navigate(`/user/${user.userName}`)}}><Person/>&nbsp;Profile</MenuItem>
-                    <MenuItem onClick={() => {navigate('/settings')}}><Settings/>&nbsp;Edit Profile</MenuItem>
+                    <MenuItem onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/>&nbsp;Profile</MenuItem>
+                    <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/>&nbsp;Edit Profile</MenuItem>
                     <MenuItem onClick={() => dispatch(setLogout())}><Logout/>&nbsp;Logout</MenuItem>
                   </HoverMenu>
                 </>

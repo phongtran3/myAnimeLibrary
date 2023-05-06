@@ -81,8 +81,11 @@ async function updateProfile(req, res) {
   }
 }
 
+async function followUnfollowUser(req, res) {}
+
 module.exports = {
   getUser,
   updateProfile,
   getAllUser,
+  followUnfollowUser,
 };

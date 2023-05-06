@@ -153,13 +153,7 @@ export default function SettingPage() {
         <Box id="section-1"> 
           {/* will rename id later */}
           <ProfileCard 
-            firstName={user.firstName} 
-            lastName={user.lastName} 
-            userName={user.userName} 
-            animes={user.animes} 
-            mangas={user.mangas} 
-            picturePath={user.picturePath} 
-            socialMediaHandles={user.socialMediaHandles}
+            user={user}
           />
         </Box>
         <Box id="section-2" sx={{ borderRadius: "4px", padding: "20px", background: "mediumpurple" }} >

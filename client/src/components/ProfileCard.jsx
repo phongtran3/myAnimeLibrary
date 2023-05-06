@@ -35,6 +35,7 @@ export default function ProfileCard({user, setUser}) {
                     user: res.data[0],
                     token: token,
                 }));
+                setOpen(true);
             }).catch(err =>{
                 if (err.response){
                     console.log(err.response.data);
@@ -129,9 +130,14 @@ export default function ProfileCard({user, setUser}) {
                     </Button>
                 }
                 <Snackbar open={open} autoHideDuration={5000} onClose={(event, reason) => handleClose(reason)} anchorOrigin={{vertical: 'top', horizontal:'center'}}>
-                    <Alert onClose={(event, reason) => handleClose(reason)} severity='error'>
-                        Unauthorized. Please log in to follow user
-                    </Alert>
+                    {!loggedUser ?
+                        <Alert onClose={(event, reason) => handleClose(reason)} severity='error'>
+                            Unauthorized. Please log in to follow user
+                        </Alert> : 
+                        <Alert onClose={(event, reason) => handleClose(reason)} severity='success'>
+                            Successfully {isFollowing ? "Followed" : "Unfollowed"} User
+                        </Alert> 
+                    }
                 </Snackbar>
             </Box>
         </Card>

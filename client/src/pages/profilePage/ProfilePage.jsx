@@ -48,7 +48,6 @@ export default function ProfilePage() {
       
   }
   console.log(user)
-  //console.log(socialMediaHandles.github)
   return (
     <>
       <NavBar />
@@ -63,6 +62,7 @@ export default function ProfilePage() {
             {/* will rename id later */}
             <ProfileCard 
               user={user}
+              setUser={setUser}
             />
           </Box>
 

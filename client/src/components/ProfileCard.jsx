@@ -2,18 +2,42 @@ import React from 'react'
 import {Card, CardContent, Avatar, Button, Typography, Box} from '@mui/material'
 import {Twitter, Instagram, YouTube, GitHub} from "@mui/icons-material";
 import { Link, useNavigate  } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { setSiteUser } from '../states';
 
-export default function ProfileCard({user}) {
+export default function ProfileCard({user, setUser}) {
     const loggedUser = useSelector((state) => state.user);
+    const token = useSelector((state) => state.token);
     const navigate = useNavigate();
-    //console.log(loggedUser);
-    const isFollowing = loggedUser.following.includes(user.userName);
+    const dispatch = useDispatch();
 
-    console.log(isFollowing);
+    const isFollowing = loggedUser ? loggedUser.following.includes(user._id) : "";
+
     async function handleClick(value){
-        console.log("Handle Click")
-        console.log(value)
+        console.log("Handle Click " + value )
+        if(!loggedUser){
+            console.log("User's not logged in")
+        }
+        else {
+            await axios.patch(
+                `http://localhost:5000/users/${loggedUser._id}/${user._id}`,
+                {data: null},
+                {headers: { Authorization: `${token}`, "Content-Type": "application/json",}}
+            ).then(res => {
+                //console.log(res.data)
+                setUser(res.data[1]);
+                dispatch(setSiteUser({
+                    user: res.data[0],
+                    token: token,
+                }));
+            }).catch(err =>{
+                if (err.response){
+                    console.log(err.response.data);
+                }
+                console.log(err);
+            })
+        }
 
     }
 

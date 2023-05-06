@@ -154,6 +154,7 @@ export default function SettingPage() {
           {/* will rename id later */}
           <ProfileCard 
             user={user}
+            setUser={setUser}
           />
         </Box>
         <Box id="section-2" sx={{ borderRadius: "4px", padding: "20px", background: "mediumpurple" }} >

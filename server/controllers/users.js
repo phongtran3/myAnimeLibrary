@@ -81,7 +81,33 @@ async function updateProfile(req, res) {
   }
 }
 
-async function followUnfollowUser(req, res) {}
+async function followUnfollowUser(req, res) {
+  try {
+    console.log("unfollow/follow");
+    const { id, followerId } = req.params;
+    const user = await User.findById(id);
+    const followUser = await User.findById(followerId);
+
+    if (user.following.includes(followerId)) {
+      //Unfollowing user
+      user.following = user.following.filter((id) => id !== followerId);
+      followUser.followers = followUser.followers.filter((id) => id !== id);
+    } else {
+      //Following user
+      user.following.push(followerId);
+      followUser.followers.push(id);
+    }
+
+    console.log(user.following);
+    console.log(followUser.followers);
+
+    await user.save();
+    await followUser.save();
+    res.status(200).json([user, followUser]);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
 
 module.exports = {
   getUser,

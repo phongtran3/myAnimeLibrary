@@ -56,7 +56,15 @@ export default function Card({item}) {
                         <Box>
                             {item.genres.length > 0 ? 
                             (<Typography variant="body2" mt="5px">
-                            Genre: {item.genres.map(genre => <a key={genre} href={item.siteUrl} style={{textDecoration: 'none'}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
+                            Genre: {item.genres.map(genre => 
+                                <a key={genre} 
+                                    //href={item.siteUrl} 
+                                    href={`http://localhost:3000/search/anime?genres=${genre}`}
+                                    style= {{textDecoration: 'none'}}
+                                >
+                                    {genre}
+                                </a>
+                                ).reduce((prev,curr) => [prev, ', ', curr])}
                             </Typography>) : null
                             }
                         </Box>

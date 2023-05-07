@@ -62,7 +62,7 @@ export default function MediaList({media}) {
                           <Box>
                             {anime.genres.length > 0 ? 
                               (<Typography variant="body2" mt="5px">
-                              Genre: {anime.genres.map(genre => <a key={genre} href={anime.siteUrl} style={{textDecoration: 'none'}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
+                              Genre: {anime.genres.map(genre => <a key={genre} href={`http://localhost:3000/search/anime?genres=${genre}`} style={{textDecoration: 'none'}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
                               </Typography>) : null
                             }
                           </Box>

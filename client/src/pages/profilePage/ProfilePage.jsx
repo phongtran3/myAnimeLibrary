@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 import NavBar from '../../components/NavBar'
 import ProfileCard from '../../components/ProfileCard'
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from 'axios';
 import { Box, Typography, useMediaQuery} from "@mui/material";
 import PreviewList from '../../components/PreviewList';
@@ -73,13 +73,13 @@ export default function ProfilePage() {
             </Box>
 
             <Box id="anime-list-preview-wrap" mt="1em">
-              <Typography variant="h6">Animes</Typography>
-              <PreviewList medium={user.animes} />
+              <Typography sx={{textDecoration: "none", color: "inherit"}} component={Link} to={`/user/${user.userName}/animelist`} variant="h6">Animes</Typography>
+              <PreviewList medium={user.animes.slice(-6)} />
             </Box>
 
             <Box id="manga-list-preview-wrap" mt="1em">
-              <Typography variant="h6">Manga</Typography>
-              <PreviewList medium={user.mangas} />
+              <Typography sx={{textDecoration: "none", color: "inherit"}} component={Link} to={`/user/${user.userName}/mangalist`} variant="h6">Mangas</Typography>
+              <PreviewList medium={user.mangas.slice(-6)} />
             </Box>
           </Box>
         </Box>

@@ -50,7 +50,8 @@ export default function Follow({open, handleClose, type, user, loggedUser, handl
                         </ListItemButton>
                         {loggedUser._id != user._id &&
                           <Button sx={{marginLeft: "5rem"}} variant="contained"  size="small" aria-label={type === "following" ? "Following" : "Unfollow"}>
-                              {type === "following" ? "Following" : "Unfollow"}
+                              {type === "following" && loggedUser.following.includes(user._id) ? "Unfollow" :
+                              loggedUser.followers.includes(user._id) && loggedUser.following.includes(user._id) ? "Following" : "Follow"}
                           </Button>
                         } 
                       </ListItem>

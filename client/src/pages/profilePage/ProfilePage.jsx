@@ -65,9 +65,16 @@ export default function ProfilePage() {
               setUser={setUser}
             />
           </Box>
-
-          <Box id="section-2">
-            <Box id="progress-list-preview-wrap">
+          {/* grid-auto-columns: minmax(8rem, auto);
+          grid-auto-flow: column; */}
+          <Box id="section-2" >
+            <Box id="progress-list-preview-wrap" 
+              sx={{
+                '& .MuiImageList-root:first-of-type': {
+                  gridAutoFlow: "column"
+                }
+              }}
+            >
               <Typography variant="h6">In Progress</Typography>
               <PreviewList medium={progress} />
             </Box>

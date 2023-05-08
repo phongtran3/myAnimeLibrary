@@ -1,20 +1,19 @@
 import React, {useState, useEffect} from 'react'
 import NavBar from '../../components/NavBar'
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { setSiteUser } from '../../states/index';
-
-import axios from 'axios';
-import {Formik} from "formik";
-import * as yup from "yup";
 import Dropzone from "react-dropzone"; //File/image upload
-
-import { Box, useTheme, Typography, OutlinedInput, Dialog, TextField, Alert, InputAdornment, IconButton, Button} from '@mui/material'
-import {Visibility, VisibilityOff, EditOutlined, Clear} from "@mui/icons-material"
-
+import { Box, useTheme, Typography, OutlinedInput, TextField, InputAdornment, IconButton, Button} from '@mui/material'
+import {Visibility, VisibilityOff, EditOutlined,} from "@mui/icons-material"
 import ConfirmPassword from '../../components/ConfirmPassword';
 import ProfileCard from '../../components/ProfileCard';
-//import {Person, AccountCircle, Email, Lock, Visibility, VisibilityOff, EditOutlined, Clear} from "@mui/icons-material"
+import axios from 'axios';
+
+// import {Formik} from "formik";
+// import * as yup from "yup";
+// import { useNavigate } from "react-router-dom";
+
+
 
 
 export default function SettingPage() {
@@ -384,12 +383,7 @@ export default function SettingPage() {
                   </Button> : ""
                 }
             </Box>
-
-            
-
-            
           </Box>
-
 
           <ConfirmPassword 
             open={open} 
@@ -398,6 +392,7 @@ export default function SettingPage() {
             setBody={setBody}
             handleSave={handleSave}
           />
+
         </Box>
       </Box>
     </Box>

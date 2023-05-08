@@ -5,6 +5,7 @@ const {
   updateProfile,
   getAllUser,
   followUnfollowUser,
+  getFollowers,
 } = require("../controllers/users.js");
 
 const router = express.Router();
@@ -12,6 +13,8 @@ const router = express.Router();
 //READ
 router.get("/:userName", getUser); //Get user
 router.get("/", getAllUser);
+router.get("/:id/follower", getFollowers); //Get user's list of followers/followings
+
 //router.get("/:id/animelist", verifyToken, getAnimeList); //Get user's animeList
 //router.get("/:id/mangalist", verifyToken, getMangaList); //Get user's mangalist
 

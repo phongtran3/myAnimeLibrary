@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
-import {Card, CardContent, Avatar, Button, Typography, Box, Alert, Snackbar  } from '@mui/material'
+import {Card, CardContent, Avatar, Button, Typography, Box, Alert, Snackbar, ButtonBase   } from '@mui/material'
 import {Twitter, Instagram, YouTube, GitHub} from "@mui/icons-material";
 import { Link, useNavigate  } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { setSiteUser } from '../states';
 
-export default function ProfileCard({user, setUser}) {
-    const [open, setOpen] = useState(false);
+import Follow from './Follow';
 
+export default function ProfileCard({user, setUser}) {
+    const [openAlert, setOpenAlert] = useState(false);
+    const [openFollows, setOpenFollows] = useState(false);
+    const [type, setType] = useState("");
 
     const loggedUser = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
@@ -17,11 +20,11 @@ export default function ProfileCard({user, setUser}) {
 
     const isFollowing = loggedUser ? loggedUser.following.includes(user._id) : "";
 
-    async function handleClick(value){
+    async function handleFollowUnfollow(value){
         console.log("Handle Click " + value )
         if(!loggedUser){
             console.log("User's not logged in")
-            setOpen(true);
+            setOpenAlert(true);
         }
         else {
             await axios.patch(
@@ -35,7 +38,7 @@ export default function ProfileCard({user, setUser}) {
                     user: res.data[0],
                     token: token,
                 }));
-                setOpen(true);
+                setOpenAlert(true);
             }).catch(err =>{
                 if (err.response){
                     console.log(err.response.data);
@@ -44,14 +47,21 @@ export default function ProfileCard({user, setUser}) {
             })
         }
     }
-    function handleClose(reason){
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
+    function handleCloseAlert(reason){
+        if (reason === 'clickaway') return;
+        setOpenAlert(false);
     }
 
+    function handleFollowClose(){
 
+        setOpenFollows(false);
+    }
+
+    function handleFollowOpen(select){
+        setOpenFollows(true);
+        setType(select);
+
+    }
 
     return (
         <Card id="profile-card" sx={{maxWidth: 350, borderRadius: "12px", textAlign: "center"}}>
@@ -69,10 +79,34 @@ export default function ProfileCard({user, setUser}) {
                     alignItems: "center",
                     marginBottom: "10px"
             }}>
-                <Typography rel="noopener noreferrer" target="_blank" component={Link} to={`${user.socialMediaHandles.twitter}`}>{user.socialMediaHandles.twitter ? <Twitter/>:""}</Typography>
-                <Typography rel="noopener noreferrer" target="_blank" component={Link} to={`${user.socialMediaHandles.instagram}`}>{user.socialMediaHandles.instagram ? <Instagram/>: ""}</Typography>
-                <Typography rel="noopener noreferrer" target="_blank" component={Link} to={`${user.socialMediaHandles.youtube}`}>{user.socialMediaHandles.youtube ? <YouTube/>: ""}</Typography>
-                <Typography rel="noopener noreferrer" target="_blank" component={Link} to={`${user.socialMediaHandles.github}`}>{user.socialMediaHandles.github ? <GitHub/>: ""}</Typography>
+                <Typography 
+                    sx={{color: "#00acee"}}
+                    rel="noopener noreferrer" 
+                    target="_blank" 
+                    component={Link} 
+                    to={`${user.socialMediaHandles.twitter}`}
+                >{user.socialMediaHandles.twitter ? <Twitter/>:""}</Typography>
+                <Typography 
+                    sx={{color: "black"}}
+                    rel="noopener noreferrer" 
+                    target="_blank" 
+                    component={Link} 
+                    to={`${user.socialMediaHandles.instagram}
+                `}>{user.socialMediaHandles.instagram ? <Instagram/>: ""}</Typography>
+                <Typography 
+                    sx={{color: "#eb3223"}}
+                    rel="noopener noreferrer" 
+                    target="_blank" 
+                    component={Link} 
+                    to={`${user.socialMediaHandles.youtube}`}
+                >{user.socialMediaHandles.youtube ? <YouTube/>: ""}</Typography>
+                <Typography 
+                    sx={{color: "black"}}
+                    rel="noopener noreferrer" 
+                    target="_blank" 
+                    component={Link} 
+                    to={`${user.socialMediaHandles.github}`}
+                >{user.socialMediaHandles.github ? <GitHub/>: ""}</Typography>
                 
             </Box>
             {/* <Divider variant="middle" /> */}
@@ -92,6 +126,7 @@ export default function ProfileCard({user, setUser}) {
                         flexBasis: "50%",
                         background: "#ECEFF1",
                         borderBottom: "1px solid #ddd",
+                        cursor: "pointer",
                         '&:hover':{
                             background: "#CFD8DC",
                         }
@@ -107,14 +142,14 @@ export default function ProfileCard({user, setUser}) {
                     <Typography  variant='h6'>{user.mangas.length}</Typography>
                     <Typography variant='subtitle1'>Mangas</Typography>
                 </Box>
-                <Box sx={{borderRight:"1px solid #ddd"}}>
+                <ButtonBase component="div" sx={{borderRight:"1px solid #ddd"}} onClick={() => handleFollowOpen("following")}>
                     <Typography variant='h6'>{user.following.length}</Typography>
                     <Typography variant='subtitle1'>Following</Typography>
-                </Box>
-                <Box>
+                </ButtonBase>
+                <ButtonBase component="div" onClick={() => handleFollowOpen("follower")}>
                     <Typography variant='h6'>{user.followers.length}</Typography>
                     <Typography variant='subtitle1'>Followers</Typography>
-                </Box>
+                </ButtonBase>
             </Box>
             <Box display="flex">
                 {loggedUser && loggedUser.userName  === user.userName ? 
@@ -124,22 +159,31 @@ export default function ProfileCard({user, setUser}) {
                     >Edit Profile</Button> : 
                     <Button
                         sx={{flexBasis:"100%", padding: "15px"}}
-                        onClick={(e) => handleClick(e.target.textContent)}
+                        onClick={(e) => handleFollowUnfollow(e.target.textContent)}
                     >
                     {isFollowing ? "Unfollow" : "Follow"}
                     </Button>
                 }
-                <Snackbar open={open} autoHideDuration={5000} onClose={(event, reason) => handleClose(reason)} anchorOrigin={{vertical: 'top', horizontal:'center'}}>
+                <Snackbar open={openAlert} autoHideDuration={5000} onClose={(event, reason) => handleCloseAlert(reason)} anchorOrigin={{vertical: 'top', horizontal:'center'}}>
                     {!loggedUser ?
-                        <Alert onClose={(event, reason) => handleClose(reason)} severity='error'>
+                        <Alert onClose={(event, reason) => handleCloseAlert(reason)} severity='error'>
                             Unauthorized. Please log in to follow user
                         </Alert> : 
-                        <Alert onClose={(event, reason) => handleClose(reason)} severity='success'>
+                        <Alert onClose={(event, reason) => handleCloseAlert(reason)} severity='success'>
                             Successfully {isFollowing ? "Followed" : "Unfollowed"} User
                         </Alert> 
                     }
                 </Snackbar>
             </Box>
+
+            {openFollows && 
+                <Follow 
+                    user={user}
+                    open={openFollows}
+                    type={type}
+                    handleClose={handleFollowClose}
+                />
+            }
         </Card>
     )
 }

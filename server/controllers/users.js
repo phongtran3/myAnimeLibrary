@@ -108,10 +108,28 @@ async function followUnfollowUser(req, res) {
     res.status(404).json({ message: error.message });
   }
 }
+async function getFollowers(req, res) {
+  try {
+    console.log("getFollowers");
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    const followers = await Promise.all(
+      user.followers.map((id) => User.findById(id))
+    );
+    const following = await Promise.all(
+      user.following.map((id) => User.findById(id))
+    );
+    res.status(200).json([followers, following]);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
 
 module.exports = {
   getUser,
   updateProfile,
   getAllUser,
   followUnfollowUser,
+  getFollowers,
 };

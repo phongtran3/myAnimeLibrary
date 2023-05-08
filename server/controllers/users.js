@@ -110,7 +110,6 @@ async function followUnfollowUser(req, res) {
 }
 async function getFollowers(req, res) {
   try {
-    console.log("getFollowers");
     const { id } = req.params;
     const user = await User.findById(id);
 
@@ -120,7 +119,19 @@ async function getFollowers(req, res) {
     const following = await Promise.all(
       user.following.map((id) => User.findById(id))
     );
-    res.status(200).json([followers, following]);
+
+    const formattedFollowers = followers.map(
+      ({ _id, firstName, lastName, picturePath, userName }) => {
+        return { _id, firstName, lastName, picturePath, userName };
+      }
+    );
+    const formattedFollowing = following.map(
+      ({ _id, firstName, lastName, picturePath, userName }) => {
+        return { _id, firstName, lastName, picturePath, userName };
+      }
+    );
+
+    res.status(200).json([formattedFollowers, formattedFollowing]);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

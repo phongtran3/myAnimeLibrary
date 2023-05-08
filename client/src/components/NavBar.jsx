@@ -63,7 +63,7 @@ export default function NavBar() {
               }}>
                 {user && (
                   <>
-                  <Typography fontWeight="bold" fontSize="16px" component={Link} to={`/user/${user.userName}`} >Profile</Typography>
+                  <Typography fontWeight="bold" fontSize="16px" component={Link} onClick={() => {navigate(`/user/${user.userName}`); navigate(0);}}>Profile</Typography>
                   <Typography fontWeight="bold" fontSize="16px" component={Link} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}} >Anime List</Typography>
                   <Typography fontWeight="bold" fontSize="16px" component={Link} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}} >Manga List</Typography>
                   </>
@@ -110,7 +110,6 @@ export default function NavBar() {
                     renderOption={(props, option) => (
                       <Box component="li" {...props}>
                         <Avatar src={`http://localhost:5000/assets/${option.picturePath}`}/>&nbsp;{option.userName}
-                        
                       </Box>
                     )}
                     size='small'

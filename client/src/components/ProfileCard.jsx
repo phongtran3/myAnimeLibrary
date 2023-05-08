@@ -142,11 +142,25 @@ export default function ProfileCard({user, setUser}) {
                     <Typography  variant='h6'>{user.mangas.length}</Typography>
                     <Typography variant='subtitle1'>Mangas</Typography>
                 </Box>
-                <ButtonBase component="div" sx={{borderRight:"1px solid #ddd"}} onClick={() => handleFollowOpen("following")}>
+                <ButtonBase component="div" sx={{borderRight:"1px solid #ddd"}} 
+                    onClick={() => {
+                        if(loggedUser)
+                            handleFollowOpen("following");
+                        else
+                            setOpenAlert(true);
+                    }}
+                >
                     <Typography variant='h6'>{user.following.length}</Typography>
                     <Typography variant='subtitle1'>Following</Typography>
                 </ButtonBase>
-                <ButtonBase component="div" onClick={() => handleFollowOpen("follower")}>
+                <ButtonBase component="div" 
+                    onClick={() => {
+                        if(loggedUser)
+                            handleFollowOpen("follower");
+                        else
+                            setOpenAlert(true);
+                    }}
+                >
                     <Typography variant='h6'>{user.followers.length}</Typography>
                     <Typography variant='subtitle1'>Followers</Typography>
                 </ButtonBase>
@@ -167,10 +181,10 @@ export default function ProfileCard({user, setUser}) {
                 <Snackbar open={openAlert} autoHideDuration={5000} onClose={(event, reason) => handleCloseAlert(reason)} anchorOrigin={{vertical: 'top', horizontal:'center'}}>
                     {!loggedUser ?
                         <Alert onClose={(event, reason) => handleCloseAlert(reason)} severity='error'>
-                            Unauthorized. Please log in to follow user
+                            Unauthorized. Please log in to follow user.
                         </Alert> : 
                         <Alert onClose={(event, reason) => handleCloseAlert(reason)} severity='success'>
-                            Successfully {isFollowing ? "Followed" : "Unfollowed"} User
+                            Successfully {isFollowing ? "Followed" : "Unfollowed"} User.
                         </Alert> 
                     }
                 </Snackbar>
@@ -178,10 +192,12 @@ export default function ProfileCard({user, setUser}) {
 
             {openFollows && 
                 <Follow 
+                    loggedUser={loggedUser}
                     user={user}
                     open={openFollows}
                     type={type}
                     handleClose={handleFollowClose}
+                    handleFollowUnfollow={handleFollowUnfollow}
                 />
             }
         </Card>

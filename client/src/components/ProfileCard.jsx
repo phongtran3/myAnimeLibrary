@@ -19,21 +19,28 @@ export default function ProfileCard({user, setUser}) {
     const dispatch = useDispatch();
 
     const isFollowing = loggedUser ? loggedUser.following.includes(user._id) : "";
-
-    async function handleFollowUnfollow(value){
-        console.log("Handle Click " + value )
+    console.log(loggedUser)
+    async function handleFollowUnfollow(userId){
+        console.log("Handle Click " + userId )
         if(!loggedUser){
             console.log("User's not logged in")
             setOpenAlert(true);
         }
         else {
             await axios.patch(
-                `http://localhost:5000/users/${loggedUser._id}/${user._id}`,
+                `http://localhost:5000/users/${loggedUser._id}/${userId}`,
                 {data: null},
                 {headers: { Authorization: `${token}`, "Content-Type": "application/json",}}
             ).then(res => {
-                //console.log(res.data)
-                setUser(res.data[1]);
+                console.log(res.data)
+                if(openFollows){
+                    if(loggedUser._id === user._id)
+                        setUser(res.data[0])
+                    // else if (loggedUser._id !== user._id)
+                    //     setUser(res.data[1])
+                } else
+                    setUser(res.data[1])
+                //setUser(openFollows ? res.data[0] : res.data[1]);
                 dispatch(setSiteUser({
                     user: res.data[0],
                     token: token,
@@ -173,12 +180,18 @@ export default function ProfileCard({user, setUser}) {
                     >Edit Profile</Button> : 
                     <Button
                         sx={{flexBasis:"100%", padding: "15px"}}
-                        onClick={(e) => handleFollowUnfollow(e.target.textContent)}
+                        onClick={(e) => handleFollowUnfollow(user._id)}
                     >
                     {isFollowing ? "Unfollow" : "Follow"}
                     </Button>
                 }
-                <Snackbar open={openAlert} autoHideDuration={5000} onClose={(event, reason) => handleCloseAlert(reason)} anchorOrigin={{vertical: 'top', horizontal:'center'}}>
+                <Snackbar 
+                    open={openAlert} 
+                    autoHideDuration={2000}
+                    onClose={(event, reason) => handleCloseAlert(reason)} 
+                    anchorOrigin={{vertical: 'top', horizontal:'center'}}
+                    
+                >
                     {!loggedUser ?
                         <Alert onClose={(event, reason) => handleCloseAlert(reason)} severity='error'>
                             Unauthorized. Please log in to follow user.

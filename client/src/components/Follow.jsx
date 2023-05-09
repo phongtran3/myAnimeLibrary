@@ -7,7 +7,9 @@ export default function Follow({open, handleClose, type, user, loggedUser, handl
     // const [following, setFollowing] = useState([]);
     const [array, setArray] = useState([]);
     const navigate = useNavigate(); 
+
     async function getFollowers(){
+        //console.log(loggedUser);
         await axios.get(`http://localhost:5000/users/${user._id}/follower`)
         .then(res =>{
             // setFollowers(res.data[0])
@@ -35,7 +37,7 @@ export default function Follow({open, handleClose, type, user, loggedUser, handl
         <Dialog maxWidth={'sm'} open={open} onClose={handleClose} sx={{'& .MuiPaper-root': {alignItems: "center"}}}>
             <DialogTitle>{type === "following" ? "Following" : "Followers"}</DialogTitle>
             <DialogContent >
-              {array.length != 0 ?
+              {array.length !== 0 ?
                 <List >
                   {array.map((user) => 
                     <React.Fragment key={user._id}>
@@ -47,17 +49,24 @@ export default function Follow({open, handleClose, type, user, loggedUser, handl
                         //   </Button>
                         // }
                       >
-
+                        {/* onClick={(e) => handleFollowUnfollow(e.target.textContent)} */}
+                        
                         <ListItemButton onClick={()=>{navigate(`/user/${user.userName}`); navigate(0)}}>
                           <ListItemAvatar>
                             <Avatar alt="profile picture" src={`http://localhost:5000/assets/${user.picturePath}`}/>
                           </ListItemAvatar>
                           <ListItemText primary={user.userName} secondary={`${user.firstName} ${user.lastName}`}/>
                         </ListItemButton>
-                        {loggedUser._id != user._id &&
-                          <Button sx={{marginLeft: "5rem"}} variant="contained"  size="small" aria-label={type === "following" ? "Following" : "Unfollow"}>
-                              {type === "following" && loggedUser.following.includes(user._id) ? "Unfollow" :
-                              loggedUser.followers.includes(user._id) && loggedUser.following.includes(user._id) ? "Following" : "Follow"}
+                        {loggedUser._id !== user._id &&
+                          <Button 
+                            sx={{marginLeft: "5rem"}} 
+                            variant="contained"  
+                            size="small" 
+                            aria-label={type === "following" ? "Following" : "Unfollow"}
+                            onClick={(e) => handleFollowUnfollow(user._id)}
+                          >
+                              {type === "following" && loggedUser.following.includes(user._id) ? "Unfollow" :  loggedUser.following.includes(user._id) ? "Following" : "Follow"}
+                          
                           </Button>
                         } 
                       </ListItem>

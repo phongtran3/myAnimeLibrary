@@ -62,7 +62,7 @@ export default function IndexPage() {
       {(isLoading) ? <LinearProgress /> : 
       <>
       {!trendingAnime.length ? <CircularProgress/> : 
-        <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+        <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '1rem 2.5rem',}}>
           <Typography variant="h5" component={Link} to={`search/anime/trending`} >Trending Anime</Typography>
           <MediaList media={trendingAnime} />
         </Grid>
@@ -70,7 +70,7 @@ export default function IndexPage() {
       <hr></hr>
       
       {!popularAnime.length ? <CircularProgress/> : 
-      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '1rem 2.5rem',}}>
         <Typography variant="h5" component={Link} to={`search/anime/popularity`}>All Time Popular Anime</Typography>
         <MediaList media={popularAnime} />
       </Grid>
@@ -78,7 +78,7 @@ export default function IndexPage() {
       <hr></hr>
       
       {!trendingManga.length ? <CircularProgress/> : 
-      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '1rem 2.5rem',}}>
         <Typography variant="h5" component={Link} to={`search/manga/trending`}>Trending Manga</Typography>
         <MediaList media={trendingManga} />
       </Grid>
@@ -86,7 +86,7 @@ export default function IndexPage() {
       <hr></hr>
       
       {!popularManga.length ? <CircularProgress/> : 
-      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '1rem 2.5rem',}}>
         <Typography variant="h5" component={Link} to={`search/manga/popularity`}>All Time Popular Manga</Typography>
         <MediaList media={popularManga} />
       </Grid>

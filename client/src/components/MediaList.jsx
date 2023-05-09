@@ -13,7 +13,18 @@ export default function MediaList({media}) {
   //console.log(media);
   return (
     // Large screen gap 72 / small screen 48
-    <ImageList cols={5} gap={72} sx={{textAlign: "center"}}>
+    <ImageList cols={5} gap={72} 
+      sx={{
+        textAlign: "center",
+        padding: "2rem 0",
+        '& > a':{
+          transition: "transform 250ms"
+        },
+        '& > a:hover':{
+            transform: "translateY(-15px)"
+        }
+      }}
+      >
       {media.map(anime => (
         <PopupState key={anime.id} variant="popper" popupId="demoPopper" >
           {(popupState) => (

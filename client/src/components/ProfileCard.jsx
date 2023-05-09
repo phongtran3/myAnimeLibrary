@@ -19,7 +19,7 @@ export default function ProfileCard({user, setUser}) {
     const dispatch = useDispatch();
 
     const isFollowing = loggedUser ? loggedUser.following.includes(user._id) : "";
-    console.log(loggedUser)
+    //console.log(loggedUser)
     async function handleFollowUnfollow(userId){
         console.log("Handle Click " + userId )
         if(!loggedUser){
@@ -84,7 +84,13 @@ export default function ProfileCard({user, setUser}) {
                     justifyContent: "center",
                     gap: "2em",
                     alignItems: "center",
-                    marginBottom: "10px"
+                    marginBottom: "10px",
+                    '& > a':{
+                        transition: "transform 250ms"
+                    },
+                    '& > a:hover':{
+                        transform: "translateY(-2px)"
+                    }
             }}>
                 <Typography 
                     sx={{color: "#00acee"}}

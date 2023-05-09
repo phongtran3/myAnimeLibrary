@@ -12,7 +12,13 @@ export default function Follow({open, handleClose, type, user, loggedUser, handl
         .then(res =>{
             // setFollowers(res.data[0])
             // setFollowing(res.data[1])
-            setArray(type === "following" ? res.data[1] : res.data[0])
+            //Move logged in user to the top of the list
+            let arr = type === "following" ? res.data[1] : res.data[0];
+            let index = arr.findIndex(item => item._id === loggedUser._id);
+            if(index !== -1){
+              arr.unshift(arr.splice(index, 1)[0]);
+            }
+            setArray(arr)
           }).catch(err => {
             if (err.response){
               console.log(err.response.data);

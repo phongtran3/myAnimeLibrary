@@ -25,7 +25,7 @@ export default function App() {
           <CssBaseline />
           <Routes>
             <Route path="/" element={<IndexPage />} />
-            <Route path="/home" element={<HomePage />} />
+            {/* <Route path="/home" element={<HomePage />} /> */}
             <Route path="/auth" element={<LoginPage />} />
             <Route
               path="/settings"

@@ -14,25 +14,36 @@ import {
   useScrollTrigger, 
   Slide, 
   useTheme, 
-  DarkMode, 
-  LightMode,
   MenuItem,
   Autocomplete,
-  TextField
+  TextField,
+  useMediaQuery
 } from '@mui/material';
-import {PlayArrow, AutoStories, Logout, Settings, Person } from "@mui/icons-material";
+import {PlayArrow, AutoStories, Logout, Settings, Person, LightMode, Nightlight } from "@mui/icons-material";
 import PopupState, {bindHover, bindMenu} from "material-ui-popup-state";
 import HoverMenu from 'material-ui-popup-state/HoverMenu'
 import axios from 'axios';
 
 export default function NavBar() {
-  const [users, setUsers] = useState([]);
-
+  const [users, setUsers] = useState([]); //Hold searched users
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const theme = useTheme();
   const user = useSelector((state) => state.user);
   const trigger = useScrollTrigger();
+
+  const mobileScreen = useMediaQuery("(min-width: 320px)");
+  const tabletScreen = useMediaQuery("(min-width: 630px)");
+  const desktopScreen = useMediaQuery("(min-width: 1040px)");
+
+
+  const theme = useTheme();
+  const neutralLight = theme.palette.neutral.light;
+  const dark = theme.palette.neutral.dark;
+  const background = theme.palette.background.default;
+  const primaryLight = theme.palette.primary.light;
+  const alt = theme.palette.background.alt;
+
+  const primaryMain = theme.palette.primary.main
 
   async function handleChange(search){
     await axios.get(
@@ -49,23 +60,54 @@ export default function NavBar() {
     console.log(err);
     })
   }
+
   return (
     <>
       <Slide appear={false} direction="down" in={!trigger}>
         <AppBar>
-          <Toolbar sx={{margin:"0 50px"}}>
-            <Typography fontWeight="bold" fontSize="16px" component={Link} to="/">MyAnimeLibrary</Typography>
-            <Box display="inline-flex" justifyContent="center" alignItems="center" width="100%" sx={{"& > a": { padding:"0 12px", textDecoration:"none", color:"inherit"}}}> 
-              <Box sx={{
-                "& > a": { padding:"0 12px", textDecoration:"none", color:"inherit"},
+          <Toolbar sx={{backgroundColor: dark}}>
+            <Typography
+              color="primary"
+              fontWeight="bold" 
+              fontSize="clamp(.5rem, 1.5rem, 2rem)"
+              onClick={() => navigate("/")}
+              sx={{
+                display: desktopScreen ? "inherit" : "none",
+                "&:hover": {
+                  color: primaryLight,
+                  cursor: "pointer",
+                },
+              }}
+            > 
+              myAnimeLibrary
+            </Typography>
+
+            <Box 
+              display="inline-flex"  
+              justifyContent="center"  
+              alignItems="center" 
+              width="100%" 
+              sx={{
+                "& > a": { 
+                  padding:"18px 16px", 
+                  textDecoration:"none", 
+                  color: primaryMain,
+                  fontWeight:"bold",
+                  fontSize:"16px",
+                  "&:hover": {
+                    color: primaryLight,
+                    cursor: "pointer",
+                  },
+                },
                 margin: "0 auto",
-                padding: "0 0 0 200px"
-              }}>
+                //padding: "0 0 0 200px"
+              }}
+            > 
+              
                 {user && (
                   <>
-                  <Typography fontWeight="bold" fontSize="16px" component={Link} onClick={() => {navigate(`/user/${user.userName}`); navigate(0);}}>Profile</Typography>
-                  <Typography fontWeight="bold" fontSize="16px" component={Link} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}} >Anime List</Typography>
-                  <Typography fontWeight="bold" fontSize="16px" component={Link} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}} >Manga List</Typography>
+                  <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}} >Anime List</Typography>
+                  <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}} >Manga List</Typography>
                   </>
                 )}
                 
@@ -73,9 +115,7 @@ export default function NavBar() {
                     {(popupState) => ( 
                       <>
                         <Typography 
-                          fontWeight="bold" 
                           component={Link} 
-                          fontSize="16px" 
                           {...bindHover(popupState)} 
                           onClick={() => {
                             navigate("/search/anime"); 
@@ -102,8 +142,8 @@ export default function NavBar() {
                 {/* <Button variant="contained">
                   <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
                 </Button> */}
-
-                  <Autocomplete 
+      
+            <Autocomplete 
                     freeSolo 
                     options={users || []}
                     getOptionLabel={(option) => option.userName}
@@ -130,8 +170,6 @@ export default function NavBar() {
                       },
                     }}
                   />
-            </Box>
-            
 
 
             {!user && (

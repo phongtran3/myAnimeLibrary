@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link  } from 'react-router-dom';
-import {setMode, setLogout } from '../states/index';
+import {setSiteTheme, setLogout } from '../states/index';
 import { 
   AppBar, 
   Box, 
@@ -33,7 +33,7 @@ export default function NavBar() {
 
   const mobileScreen = useMediaQuery("(min-width: 320px)");
   const tabletScreen = useMediaQuery("(min-width: 630px)");
-  const desktopScreen = useMediaQuery("(min-width: 1040px)");
+  const desktopScreen = useMediaQuery("(min-width: 1100px)");
 
 
   const theme = useTheme();
@@ -64,7 +64,7 @@ export default function NavBar() {
   return (
     <>
       <Slide appear={false} direction="down" in={!trigger}>
-        <AppBar sx={{backgroundColor: dark}}>
+        <AppBar sx={{backgroundColor: alt}}>
           <Toolbar >
             <Typography
               color="primary"
@@ -84,23 +84,24 @@ export default function NavBar() {
 
             <Box 
               display="inline-flex"  
-              justifyContent="center"  
+              justifyContent= {desktopScreen ? "center" : "flex-start"}  
               alignItems="center" 
               width="100%" 
               sx={{
                 "& > a": { 
-                  padding:"18px 16px", 
+                  padding:"15px 16px", 
                   textDecoration:"none", 
                   color: primaryMain,
                   fontWeight:"bold",
-                  fontSize:"16px",
+                  fontSize:"20px",
+                  whiteSpace:"nowrap",
                   "&:hover": {
                     color: primaryLight,
                     cursor: "pointer",
                   },
                 },
                 margin: "0 auto",
-                //padding: "0 0 0 200px"
+                paddingLeft: desktopScreen ? "150px" : null
               }}
             > 
               
@@ -142,8 +143,24 @@ export default function NavBar() {
                 {/* <Button variant="contained">
                   <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
                 </Button> */}
-      
-            <Autocomplete 
+                
+                {tabletScreen && 
+                <Box 
+                  sx={{
+                    display:"flex",
+                    alignItems:"center",
+                    gap:"1rem",
+                  }}
+                >
+                  <IconButton onClick={() => dispatch(setSiteTheme())}>
+                    {theme.palette.mode === "dark" ? (
+                      <Nightlight sx={{ fontSize: "25px" }} />
+                    ) : (
+                      <LightMode sx={{ color: dark, fontSize: "25px" }} />
+                    )}
+                  </IconButton>
+                  
+                  <Autocomplete 
                     freeSolo 
                     options={users || []}
                     getOptionLabel={(option) => option.userName}
@@ -159,8 +176,7 @@ export default function NavBar() {
                     }}
                     renderInput={(params) => <TextField {...params} label="Search Users" />}
                     sx={{
-                      width:"250px",
-                      marginRight:"1em",
+                      width:"200px",
                       '& .MuiAutocomplete-endAdornment':{ display: "none"},
                       '& .MuiFormLabel-root': {
                         color: "black", 
@@ -172,28 +188,30 @@ export default function NavBar() {
                   />
 
 
-            {!user && (
-              <Box>
-                <Button variant="contained">
-                    <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
-                  </Button> 
-              </Box>
-              )}
-            {user && (
-              <PopupState variant="popper" popupId="demoPopover">
-              {(popupState) => ( 
-                <>
-                  <IconButton {...bindHover(popupState)}><Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/></IconButton>
-                  <HoverMenu {...bindMenu(popupState)} sx={{"& .MuiPaper-root": {width:"175px", padding:"10px"}}}>
-                    <MenuItem onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/>&nbsp;Profile</MenuItem>
-                    <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/>&nbsp;Edit Profile</MenuItem>
-                    <MenuItem onClick={() => dispatch(setLogout())}><Logout/>&nbsp;Logout</MenuItem>
-                  </HoverMenu>
-                </>
-              )}
-            </PopupState>
-            )}
-            
+                    {!user && (
+                      <Box>
+                        <Button variant="contained">
+                            <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
+                          </Button> 
+                      </Box>
+                      )}
+                    {user && (
+                      <PopupState variant="popper" popupId="demoPopover">
+                        {(popupState) => ( 
+                          <>
+                            <IconButton {...bindHover(popupState)}><Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/></IconButton>
+                            <HoverMenu {...bindMenu(popupState)} sx={{"& .MuiPaper-root": {width:"175px", padding:"10px"}}}>
+                              <MenuItem onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/>&nbsp;Profile</MenuItem>
+                              <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/>&nbsp;Edit Profile</MenuItem>
+                              <MenuItem onClick={() => dispatch(setLogout())}><Logout/>&nbsp;Logout</MenuItem>
+                            </HoverMenu>
+                          </>
+                        )}
+                      </PopupState>
+                      )}
+                  </Box>
+                  }
+                
           </Toolbar>
         </AppBar>
       </Slide>

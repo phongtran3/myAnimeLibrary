@@ -19,7 +19,7 @@ import {
   TextField,
   useMediaQuery
 } from '@mui/material';
-import {PlayArrow, AutoStories, Logout, Settings, Person, LightMode, Nightlight } from "@mui/icons-material";
+import {Search, Menu, PlayArrow, AutoStories, Logout, Settings, Person, LightMode, Nightlight } from "@mui/icons-material";
 import PopupState, {bindHover, bindMenu} from "material-ui-popup-state";
 import HoverMenu from 'material-ui-popup-state/HoverMenu'
 import axios from 'axios';
@@ -105,7 +105,7 @@ export default function NavBar() {
               }}
             > 
               
-                {user && (
+                {user && tabletScreen && (
                   <>
                   <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}} >Anime List</Typography>
                   <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}} >Manga List</Typography>
@@ -145,71 +145,77 @@ export default function NavBar() {
                 </Button> */}
                 
                 {tabletScreen && 
-                <Box 
-                  sx={{
-                    display:"flex",
-                    alignItems:"center",
-                    gap:"1rem",
-                  }}
-                >
-                  <IconButton onClick={() => dispatch(setSiteTheme())}>
-                    {theme.palette.mode === "dark" ? (
-                      <Nightlight sx={{ fontSize: "25px" }} />
-                    ) : (
-                      <LightMode sx={{ color: dark, fontSize: "25px" }} />
-                    )}
-                  </IconButton>
-                  
-                  <Autocomplete 
-                    freeSolo 
-                    options={users || []}
-                    getOptionLabel={(option) => option.userName}
-                    renderOption={(props, option) => (
-                      <Box component="li" {...props}>
-                        <Avatar src={`http://localhost:5000/assets/${option.picturePath}`}/>&nbsp;{option.userName}
-                      </Box>
-                    )}
-                    size='small'
-                    onInputChange={(event) => {handleChange(event.target.value)}}
-                    onChange={(event, option) =>{
-                      window.location.href = `http://localhost:3000/user/${option.userName}`
-                    }}
-                    renderInput={(params) => <TextField {...params} label="Search Users" />}
+                  <Box 
                     sx={{
-                      width:"200px",
-                      '& .MuiAutocomplete-endAdornment':{ display: "none"},
-                      '& .MuiFormLabel-root': {
-                        color: "black", 
-                      },
-                      '& .MuiInputLabel-root.Mui-focused':{
-                        color: "black",
-                      },
+                      display:"flex",
+                      alignItems:"center",
+                      gap:"1rem",
                     }}
-                  />
-
-
-                    {!user && (
-                      <Box>
-                        <Button variant="contained">
-                            <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
-                          </Button> 
-                      </Box>
+                  >
+                    <IconButton onClick={() => dispatch(setSiteTheme())}>
+                      {theme.palette.mode === "dark" ? (
+                        <Nightlight sx={{ fontSize: "25px" }} />
+                      ) : (
+                        <LightMode sx={{ color: dark, fontSize: "25px" }} />
                       )}
-                    {user && (
-                      <PopupState variant="popper" popupId="demoPopover">
-                        {(popupState) => ( 
-                          <>
-                            <IconButton {...bindHover(popupState)}><Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/></IconButton>
-                            <HoverMenu {...bindMenu(popupState)} sx={{"& .MuiPaper-root": {width:"175px", padding:"10px"}}}>
-                              <MenuItem onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/>&nbsp;Profile</MenuItem>
-                              <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/>&nbsp;Edit Profile</MenuItem>
-                              <MenuItem onClick={() => dispatch(setLogout())}><Logout/>&nbsp;Logout</MenuItem>
-                            </HoverMenu>
-                          </>
+                    </IconButton>
+                    
+                    {desktopScreen ?
+                      <Autocomplete 
+                        freeSolo 
+                        options={users || []}
+                        getOptionLabel={(option) => option.userName}
+                        renderOption={(props, option) => (
+                          <Box component="li" {...props}>
+                            <Avatar src={`http://localhost:5000/assets/${option.picturePath}`}/>&nbsp;{option.userName}
+                          </Box>
                         )}
-                      </PopupState>
-                      )}
-                  </Box>
+                        size='small'
+                        onInputChange={(event) => {handleChange(event.target.value)}}
+                        onChange={(event, option) =>{
+                          window.location.href = `http://localhost:3000/user/${option.userName}`
+                        }}
+                        renderInput={(params) => <TextField {...params} label="Search Users" />}
+                        sx={{
+                          width:"200px",
+                          '& .MuiAutocomplete-endAdornment':{ display: "none"},
+                          '& .MuiFormLabel-root': {
+                            color: "black", 
+                          },
+                          '& .MuiInputLabel-root.Mui-focused':{
+                            color: "black",
+                          },
+                        }}
+                      /> : 
+                      <IconButton>
+                        <Search sx={{ color: dark, fontSize: "25px" }}/>
+                      </IconButton>
+                  
+                  }
+
+
+                      {!user && (
+                        <Box>
+                          <Button variant="contained">
+                              <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
+                            </Button> 
+                        </Box>
+                        )}
+                      {user && (
+                        <PopupState variant="popper" popupId="demoPopover">
+                          {(popupState) => ( 
+                            <>
+                              <IconButton {...bindHover(popupState)}><Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/></IconButton>
+                              <HoverMenu {...bindMenu(popupState)} sx={{"& .MuiPaper-root": {width:"175px", padding:"10px"}}}>
+                                <MenuItem onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/>&nbsp;Profile</MenuItem>
+                                <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/>&nbsp;Edit Profile</MenuItem>
+                                <MenuItem onClick={() => dispatch(setLogout())}><Logout/>&nbsp;Logout</MenuItem>
+                              </HoverMenu>
+                            </>
+                          )}
+                        </PopupState>
+                        )}
+                    </Box>
                   }
                 
           </Toolbar>

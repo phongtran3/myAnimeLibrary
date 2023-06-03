@@ -19,9 +19,10 @@ import {
   TextField,
   useMediaQuery
 } from '@mui/material';
-import {Search, Menu, PlayArrow, AutoStories, Logout, Settings, Person, LightMode, Nightlight } from "@mui/icons-material";
+import {Search, Menu, PlayArrow, AutoStories, Logout, Settings, Person, LightMode, Nightlight, Home, Close } from "@mui/icons-material";
 import PopupState, {bindHover, bindMenu} from "material-ui-popup-state";
 import HoverMenu from 'material-ui-popup-state/HoverMenu'
+import HoverPopover from 'material-ui-popup-state/HoverPopover'
 import axios from 'axios';
 
 export default function NavBar() {
@@ -144,14 +145,18 @@ export default function NavBar() {
                   <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
                 </Button> */}
                 
+
+
+              <Box 
+                sx={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:"1rem",
+                }}
+              >
+                  
                 {tabletScreen && 
-                  <Box 
-                    sx={{
-                      display:"flex",
-                      alignItems:"center",
-                      gap:"1rem",
-                    }}
-                  >
+                  <>
                     <IconButton onClick={() => dispatch(setSiteTheme())}>
                       {theme.palette.mode === "dark" ? (
                         <Nightlight sx={{ fontSize: "25px" }} />
@@ -190,34 +195,67 @@ export default function NavBar() {
                       <IconButton>
                         <Search sx={{ color: dark, fontSize: "25px" }}/>
                       </IconButton>
-                  
-                  }
+                    }
+                  </>
+                }
+
+{/* <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}} >Anime List</Typography>
+                  <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}} >Manga List</Typography>
+                  </> */}
+
+                {user ? 
+                  <PopupState variant="popover" popupId="profilePopper">
+                    {(popupState) => ( 
+                      <>
+                        <IconButton {...bindHover(popupState)}><Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/></IconButton>
+                        <HoverMenu {...bindMenu(popupState)} 
+                          sx={{"& .MuiPaper-root": {width:"210px", padding:"10px"}}}
+                        >
+                          {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/>&nbsp;Home</MenuItem>}
+                          <MenuItem onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/>&nbsp;Profile</MenuItem>
+                          <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/>&nbsp;Edit Profile</MenuItem>
 
 
-                      {!user && (
-                        <Box>
-                          <Button variant="contained">
-                              <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
-                            </Button> 
-                        </Box>
-                        )}
-                      {user && (
-                        <PopupState variant="popper" popupId="demoPopover">
-                          {(popupState) => ( 
+                          {/* <MenuItem>
+                            <IconButton onClick={() => dispatch(setSiteTheme())}>
+                              {theme.palette.mode === "dark" ? (
+                                <><Nightlight sx={{ fontSize: "25px" }}/><span>Night Mode</span> </>
+                              ) : (
+                                <><LightMode sx={{ color: dark, fontSize: "25px" }}/><span>Light Mode</span></>
+                              )}
+                            </IconButton>
+                          </MenuItem> */}
+                          {!tabletScreen && (
                             <>
-                              <IconButton {...bindHover(popupState)}><Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/></IconButton>
-                              <HoverMenu {...bindMenu(popupState)} sx={{"& .MuiPaper-root": {width:"175px", padding:"10px"}}}>
-                                <MenuItem onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/>&nbsp;Profile</MenuItem>
-                                <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/>&nbsp;Edit Profile</MenuItem>
-                                <MenuItem onClick={() => dispatch(setLogout())}><Logout/>&nbsp;Logout</MenuItem>
-                              </HoverMenu>
+                              <MenuItem><Search/>&nbsp;Search</MenuItem>
+                              {theme.palette.mode === "dark" ? 
+                                <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton><LightMode sx={{ color: dark }}/></IconButton>Light Mode</MenuItem>
+                                :
+                                <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton><Nightlight sx={{ color: dark }}/></IconButton>Dark Mode</MenuItem>
+                              }
+                              <MenuItem onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}}><PlayArrow/>&nbsp;Anime List</MenuItem>
+                              <MenuItem onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}}><AutoStories/>&nbsp;Manga List</MenuItem>
                             </>
                           )}
-                        </PopupState>
-                        )}
+                          <MenuItem onClick={() => dispatch(setLogout())}><Logout/>&nbsp;Logout</MenuItem>
+                          {!tabletScreen && <MenuItem><Close/></MenuItem>}
+                        </HoverMenu>
+                      </>
+                    )}
+                  </PopupState>
+                : <>
+                    {!tabletScreen ? 
+                    <IconButton><Menu sx={{ color: primaryMain, width: 42, height: 42 }} /></IconButton> 
+                    :
+                    <Box>
+                      <Button variant="contained">
+                          <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
+                      </Button> 
                     </Box>
-                  }
-                
+                    }
+                  </>
+                }          
+              </Box>
           </Toolbar>
         </AppBar>
       </Slide>

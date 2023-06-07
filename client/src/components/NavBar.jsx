@@ -292,6 +292,12 @@ export default function NavBar() {
                                     <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/>&nbsp;Edit Profile</MenuItem>
                                     {!tabletScreen && (
                                       <>
+                                        <MenuItem><Search/>&nbsp;Search</MenuItem>
+                                        {theme.palette.mode === "dark" ? 
+                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}}><LightMode sx={{ color: dark }}/></IconButton>Light Mode</MenuItem>
+                                        :
+                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}}><Nightlight sx={{ color: dark }}/></IconButton>Dark Mode</MenuItem>
+                                        }
                                         <MenuItem onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}}><PlayArrow/>&nbsp;Anime List</MenuItem>
                                         <MenuItem onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}}><AutoStories/>&nbsp;Manga List</MenuItem>
                                       </>
@@ -301,18 +307,18 @@ export default function NavBar() {
                                   :
                                   <>
                                     {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/>&nbsp;Home</MenuItem>}
+                                    <MenuItem onClick={() => {navigate(`/auth`);}}><Login/>&nbsp;Login</MenuItem>
                                     {!tabletScreen && (
                                       <>
-                                       <MenuItem><Search/>&nbsp;Search</MenuItem>
-                                        {theme.palette.mode === "dark" ? 
-                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton><LightMode sx={{ color: dark }}/></IconButton>Light Mode</MenuItem>
-                                        :
-                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton><Nightlight sx={{ color: dark }}/></IconButton>Dark Mode</MenuItem>
-                                        }
+                                      <MenuItem><Search/>&nbsp;Search</MenuItem>
+                                      {theme.palette.mode === "dark" ? 
+                                      <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}} ><LightMode sx={{ color: dark }}/></IconButton>Light Mode</MenuItem>
+                                      :
+                                      <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}} ><Nightlight sx={{ color: dark }}/></IconButton>Dark Mode</MenuItem>
+                                      }
                                       </>
                                     )}
-                                    <MenuItem onClick={() => {navigate(`/auth`);}}><Login/>&nbsp;Login</MenuItem>
-                                    
+
                                   </>
                                 }
                                 <MenuItem onClick={handleClose}><Close/></MenuItem>

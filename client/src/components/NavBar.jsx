@@ -284,44 +284,62 @@ export default function NavBar() {
                               id="composition-menu"
                               aria-labelledby="composition-button"
                             >
-                              <Box>
+                              <Box id="menu-grid"
+                                sx={{
+                                  display: desktopScreen || (tabletScreen && !user) ? "block" : "grid",
+                                  gridTemplateColumns: "repeat(3,1fr)",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  "& .MuiButtonBase-root":{
+                                    flexDirection: desktopScreen || (tabletScreen && !user) ? "row" : "column",
+                                  },
+                                  "& .MuiSvgIcon-root": {
+                                    fontSize: "2rem"
+                                  },
+                                  "span:first-of-type": {
+                                    paddingTop: desktopScreen || (tabletScreen && !user) ? "0px" : "8px",
+                                    paddingLeft: desktopScreen || (tabletScreen && !user) ? "8px" : "0px"
+                                  }
+                                  
+                                }}
+                              >
                                 {user ? 
                                   <>
-                                    {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/>&nbsp;Home</MenuItem>}
-                                    <MenuItem onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/>&nbsp;Profile</MenuItem>
-                                    <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/>&nbsp;Edit Profile</MenuItem>
+                                    {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/><span>Home</span></MenuItem>}
+                                    <MenuItem onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/><span>Profile</span></MenuItem>
+                                    <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/><span>Edit Profile</span></MenuItem>
                                     {!tabletScreen && (
                                       <>
                                         <MenuItem><Search/>&nbsp;Search</MenuItem>
                                         {theme.palette.mode === "dark" ? 
-                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}}><LightMode sx={{ color: dark }}/></IconButton>Light Mode</MenuItem>
+                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}}><LightMode sx={{ color: dark }}/></IconButton><span>Light Mode</span></MenuItem>
                                         :
-                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}}><Nightlight sx={{ color: dark }}/></IconButton>Dark Mode</MenuItem>
+                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}}><Nightlight sx={{ color: dark }}/></IconButton><span>Dark Mode</span></MenuItem>
                                         }
-                                        <MenuItem onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}}><PlayArrow/>&nbsp;Anime List</MenuItem>
-                                        <MenuItem onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}}><AutoStories/>&nbsp;Manga List</MenuItem>
+                                        <MenuItem onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}}><PlayArrow/><span>Anime List</span></MenuItem>
+                                        <MenuItem onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}}><AutoStories/><span>Manga List</span></MenuItem>
                                       </>
                                     )}
-                                    <MenuItem onClick={() => dispatch(setLogout())}><Logout/>&nbsp;Logout</MenuItem>
+                                    <MenuItem onClick={() => dispatch(setLogout())}><Logout/><span>Logout</span></MenuItem>
                                   </>
                                   :
                                   <>
-                                    {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/>&nbsp;Home</MenuItem>}
-                                    <MenuItem onClick={() => {navigate(`/auth`);}}><Login/>&nbsp;Login</MenuItem>
+                                    {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/><span>Home</span></MenuItem>}
+                                    <MenuItem onClick={() => {navigate(`/auth`);}}><Login/><span>Login</span></MenuItem>
                                     {!tabletScreen && (
                                       <>
-                                      <MenuItem><Search/>&nbsp;Search</MenuItem>
+                                      <MenuItem><Search/>Search</MenuItem>
                                       {theme.palette.mode === "dark" ? 
-                                      <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}} ><LightMode sx={{ color: dark }}/></IconButton>Light Mode</MenuItem>
+                                      <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}} ><LightMode sx={{ color: dark }}/></IconButton><span>Light Mode</span></MenuItem>
                                       :
-                                      <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}} ><Nightlight sx={{ color: dark }}/></IconButton>Dark Mode</MenuItem>
+                                      <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}} ><Nightlight sx={{ color: dark }}/></IconButton><span>Dark Mode</span></MenuItem>
                                       }
                                       </>
                                     )}
 
                                   </>
                                 }
-                                <MenuItem onClick={handleClose}><Close/></MenuItem>
+                                <MenuItem onClick={handleClose}><Close/><span>Close</span></MenuItem>
 
                               </Box>
                             </MenuList>

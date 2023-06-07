@@ -1,41 +1,26 @@
 //Navagation bar
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link  } from 'react-router-dom';
 import {setSiteTheme, setLogout } from '../states/index';
 import { 
-  AppBar, 
-  Box, 
-  Typography, 
-  Toolbar, 
-  Avatar, 
-  IconButton,
-  Button, 
-  useScrollTrigger, 
-  Slide, 
-  useTheme, 
-  MenuItem,
-  Autocomplete,
-  TextField,
-  useMediaQuery
-} from '@mui/material';
-import {Search, Menu, PlayArrow, AutoStories, Logout, Settings, Person, LightMode, Nightlight, Home, Close } from "@mui/icons-material";
-import PopupState, {bindHover, bindMenu} from "material-ui-popup-state";
+  AppBar, Box, Typography, Toolbar, Avatar, IconButton, Button, useScrollTrigger, Slide, MenuList, Popper,
+  useTheme, MenuItem, Autocomplete, TextField, useMediaQuery, Paper, Grow, ClickAwayListener } from '@mui/material';
+import {Search, Menu, PlayArrow, AutoStories, Logout, Login, Settings, Person, LightMode, Nightlight, Home, Close } from "@mui/icons-material";
+import PopupState, {bindMenu, bindToggle} from "material-ui-popup-state";
 import HoverMenu from 'material-ui-popup-state/HoverMenu'
-import HoverPopover from 'material-ui-popup-state/HoverPopover'
 import axios from 'axios';
 
 export default function NavBar() {
   const [users, setUsers] = useState([]); //Hold searched users
+  const [openMenu, setOpenMenu] = useState(false) ;
+  const mobileScreen = useMediaQuery("(min-width: 320px)");
+  const tabletScreen = useMediaQuery("(min-width: 630px)");
+  const desktopScreen = useMediaQuery("(min-width: 1100px)");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const trigger = useScrollTrigger();
-
-  const mobileScreen = useMediaQuery("(min-width: 320px)");
-  const tabletScreen = useMediaQuery("(min-width: 630px)");
-  const desktopScreen = useMediaQuery("(min-width: 1100px)");
-
 
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
@@ -43,8 +28,48 @@ export default function NavBar() {
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
-
   const primaryMain = theme.palette.primary.main
+
+  const anchorRef = useRef(null);
+  const handleToggle = () => {
+    setOpenMenu((prevOpen) => !prevOpen);
+  };
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setOpenMenu(false);
+  };
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpenMenu(false);
+    } else if (event.key === 'Escape') {
+      setOpenMenu(false);
+    }
+  }
+  const handleResize = () => {
+    if(user)
+      return
+    if (desktopScreen && openMenu) {
+      setOpenMenu(false);
+    } 
+  }
+  useEffect(()=>{
+    console.log("useEffect");
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  })
+  const prevOpen = useRef(openMenu);
+  useEffect(() => {
+    if (prevOpen.current === true && openMenu === false) {
+      anchorRef.current.focus();
+    }
+    prevOpen.current = openMenu;
+  }, [openMenu]);
 
   async function handleChange(search){
     await axios.get(
@@ -118,11 +143,12 @@ export default function NavBar() {
                       <>
                         <Typography 
                           component={Link} 
-                          {...bindHover(popupState)} 
-                          onClick={() => {
-                            navigate("/search/anime"); 
-                            navigate(0);
-                          }}>
+                          {...bindToggle(popupState)} 
+                          // onClick={() => {
+                          //   navigate("/search/anime"); 
+                          //   navigate(0);
+                          // }}
+                          >
                             Browse
                           </Typography>
                         <HoverMenu {...bindMenu(popupState)} sx={{"& .MuiPaper-root": {width:"175px", padding:"10px"}}}>
@@ -199,62 +225,108 @@ export default function NavBar() {
                   </>
                 }
 
-{/* <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}} >Anime List</Typography>
-                  <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}} >Manga List</Typography>
-                  </> */}
-
-                {user ? 
-                  <PopupState variant="popover" popupId="profilePopper">
-                    {(popupState) => ( 
-                      <>
-                        <IconButton {...bindHover(popupState)}><Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/></IconButton>
-                        <HoverMenu {...bindMenu(popupState)} 
-                          sx={{"& .MuiPaper-root": {width:"210px", padding:"10px"}}}
+                {/*User's Avatar or Login/Menu Button */}
+                <Box id="iconMenu">
+                  <>
+                  {user ? 
+                    <IconButton
+                      ref={anchorRef}
+                      onClick={handleToggle}
+                      id="composition-button"
+                      aria-controls={openMenu ? 'composition-menu' : undefined}
+                      aria-expanded={openMenu ? 'true' : undefined}
+                      aria-haspopup="true"
+                    >
+                      <Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/>
+                    </IconButton>
+                  :
+                    <>
+                        <IconButton
+                          ref={anchorRef}
+                          onClick={handleToggle}
+                          sx={{display: !desktopScreen ? "block" : "none"}}
+                          id="composition-button"
+                          aria-controls={openMenu ? 'composition-menu' : undefined}
+                          aria-expanded={openMenu ? 'true' : undefined}
+                          aria-haspopup="true"
                         >
-                          {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/>&nbsp;Home</MenuItem>}
-                          <MenuItem onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/>&nbsp;Profile</MenuItem>
-                          <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/>&nbsp;Edit Profile</MenuItem>
+                          <Menu sx={{ color: primaryMain, width: 42, height: 42 }}/>
+                        </IconButton> 
+                        <Box>
+                          <Button  sx={{display: desktopScreen ? "block" : "none"}} variant="contained">
+                            <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
+                          </Button> 
+                        </Box>
+                    </>
+                  }
+                  
+                  {anchorRef && 
+                  <Popper
+                    anchorEl={anchorRef.current} 
+                    open={openMenu}
+                    role={undefined}
+                    placement="bottom-start"
+                    transition
+                    disablePortal
+                  >
+                    {({ TransitionProps, placement }) => (
+                      <Grow
+                        {...TransitionProps}
+                        style={{
+                          transformOrigin:
+                            placement === 'bottom-start' ? 'left top' : 'left bottom',
+                        }}
+                      >
+                        <Paper>
+                          <ClickAwayListener onClickAway={handleClose}>
+                            <MenuList
+                              autoFocusItem={openMenu}
+                              id="composition-menu"
+                              aria-labelledby="composition-button"
+                            >
+                              <Box>
+                                {user ? 
+                                  <>
+                                    {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/>&nbsp;Home</MenuItem>}
+                                    <MenuItem onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/>&nbsp;Profile</MenuItem>
+                                    <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/>&nbsp;Edit Profile</MenuItem>
+                                    {!tabletScreen && (
+                                      <>
+                                        <MenuItem onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}}><PlayArrow/>&nbsp;Anime List</MenuItem>
+                                        <MenuItem onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}}><AutoStories/>&nbsp;Manga List</MenuItem>
+                                      </>
+                                    )}
+                                    <MenuItem onClick={() => dispatch(setLogout())}><Logout/>&nbsp;Logout</MenuItem>
+                                  </>
+                                  :
+                                  <>
+                                    {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/>&nbsp;Home</MenuItem>}
+                                    {!tabletScreen && (
+                                      <>
+                                       <MenuItem><Search/>&nbsp;Search</MenuItem>
+                                        {theme.palette.mode === "dark" ? 
+                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton><LightMode sx={{ color: dark }}/></IconButton>Light Mode</MenuItem>
+                                        :
+                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton><Nightlight sx={{ color: dark }}/></IconButton>Dark Mode</MenuItem>
+                                        }
+                                      </>
+                                    )}
+                                    <MenuItem onClick={() => {navigate(`/auth`);}}><Login/>&nbsp;Login</MenuItem>
+                                    
+                                  </>
+                                }
+                                <MenuItem onClick={handleClose}><Close/></MenuItem>
 
-
-                          {/* <MenuItem>
-                            <IconButton onClick={() => dispatch(setSiteTheme())}>
-                              {theme.palette.mode === "dark" ? (
-                                <><Nightlight sx={{ fontSize: "25px" }}/><span>Night Mode</span> </>
-                              ) : (
-                                <><LightMode sx={{ color: dark, fontSize: "25px" }}/><span>Light Mode</span></>
-                              )}
-                            </IconButton>
-                          </MenuItem> */}
-                          {!tabletScreen && (
-                            <>
-                              <MenuItem><Search/>&nbsp;Search</MenuItem>
-                              {theme.palette.mode === "dark" ? 
-                                <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton><LightMode sx={{ color: dark }}/></IconButton>Light Mode</MenuItem>
-                                :
-                                <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton><Nightlight sx={{ color: dark }}/></IconButton>Dark Mode</MenuItem>
-                              }
-                              <MenuItem onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}}><PlayArrow/>&nbsp;Anime List</MenuItem>
-                              <MenuItem onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}}><AutoStories/>&nbsp;Manga List</MenuItem>
-                            </>
-                          )}
-                          <MenuItem onClick={() => dispatch(setLogout())}><Logout/>&nbsp;Logout</MenuItem>
-                          {!tabletScreen && <MenuItem><Close/></MenuItem>}
-                        </HoverMenu>
-                      </>
+                              </Box>
+                            </MenuList>
+                          </ClickAwayListener>
+                        </Paper>
+                      </Grow>
                     )}
-                  </PopupState>
-                : <>
-                    {!tabletScreen ? 
-                    <IconButton><Menu sx={{ color: primaryMain, width: 42, height: 42 }} /></IconButton> 
-                    :
-                    <Box>
-                      <Button variant="contained">
-                          <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
-                      </Button> 
-                    </Box>
-                    }
+                  </Popper>}
                   </>
-                }          
+                </Box>
+
               </Box>
           </Toolbar>
         </AppBar>

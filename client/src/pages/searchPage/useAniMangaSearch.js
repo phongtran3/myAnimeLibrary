@@ -6,7 +6,7 @@ import axios from "axios";
 export default function useAniMangaSearch(pageNumber) {
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(pageNumber);
+  //console.log(pageNumber);
 
   let tempFormat;
   const paramFormat = searchParams.get("format");

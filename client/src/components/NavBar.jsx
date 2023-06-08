@@ -153,7 +153,7 @@ export default function NavBar() {
                 
 
                 {/* BROWSE MENU */}
-                <PopupState variant="popper" popupId="browsePopper">
+                <PopupState variant="popper" popupId="browsePopper" >
                     {(popupState) => ( 
                         <Typography 
                           component={Link} 
@@ -165,15 +165,26 @@ export default function NavBar() {
                         >
                           Browse
                         
-                        <Popper {...bindPopper(popupState)} transition placement="bottom-start" sx={{width:'100%', width:"200px", marginTop:"5px", backgroundColor: background}}>
+                        <Popper 
+                          {...bindPopper(popupState)} 
+                          transition 
+                          placement="bottom-start" 
+                          sx={{
+                            width:'100%', 
+                            width:"250px", 
+                            marginTop:"5px", 
+                            zIndex:"1101"
+                          }}
+                        >
                           {({ TransitionProps }) => (
                             <Fade {...TransitionProps}>
                               <Paper 
                                 sx={{
+                                  backgroundColor: background,
                                   padding: "10px"
                                 }}
                               >
-                                <Box display="flex" alignItems="center" flexDirection="column" >
+                                <Box display="flex" alignItems="center" flexDirection="column" padding="10px" >
                                   {/* <Typography >The content of the Popper.</Typography> */}
                                   <Box id="anime-links" 
                                     sx={{
@@ -187,14 +198,17 @@ export default function NavBar() {
                                         },
                                       },
                                       "& > div":{
+                                        gap:"1.4rem",
                                         display: "flex",
-                                        justifyContent:"space-evenly",
+                                        justifyContent:"flex-end",
                                         alignItems:"center",
                                       }
                                     }}
                                   >
                                     <Link 
                                       sx={{
+                                        fontSize:"1.2rem",
+                                        fontWeight:"600",
                                         display:"flex",
                                         justifyContent:"space-around",
                                         alignItems:"center",
@@ -204,7 +218,7 @@ export default function NavBar() {
                                         navigate(0);
                                       }}
                                     >
-                                      <PlayArrow/><span>Anime Search</span>
+                                      <PlayArrow sx={{fontSize:"2rem"}}/><span>Anime Search</span>
                                     </Link>
                                     <Box id="secondary-anime-links">
                                       <Link 
@@ -228,6 +242,7 @@ export default function NavBar() {
 
                                   <Box id="manga-links" 
                                     sx={{
+                                      marginTop:"10px",
                                       width:"100%",
                                       "& a":{
                                         color: primaryMain,
@@ -238,14 +253,17 @@ export default function NavBar() {
                                         },
                                       },
                                       "& > div":{
+                                        gap:"1.4rem",
                                         display: "flex",
-                                        justifyContent:"space-evenly",
+                                        justifyContent:"flex-end",
                                         alignItems:"center",
                                       }
                                     }}
                                   >
                                     <Link 
                                       sx={{
+                                        fontSize:"1.2rem",
+                                        fontWeight:"600",
                                         display:"flex",
                                         justifyContent:"space-around",
                                         alignItems:"center",
@@ -255,7 +273,7 @@ export default function NavBar() {
                                         navigate(0);
                                       }}
                                     >
-                                      <AutoStories/><span>Manga Search</span>
+                                      <AutoStories sx={{fontSize:"2rem"}}/><span>Manga Search</span>
                                     </Link>
                                     <Box id="secondary-manga-links">
                                       <Link 
@@ -281,31 +299,13 @@ export default function NavBar() {
                             </Fade>
                           )}
                         </Popper>
-
-                        {/* <HoverMenu {...bindMenu(popupState)} sx={{"& .MuiPaper-root": {width:"175px", padding:"10px"}}}>
-                          <Box display="flex" alignItems="center" flexDirection="column">
-                            <Box display="flex" alignItems="center">
-                              <MenuItem><Typography onClick={() => {navigate("/search/anime"); navigate(0);}} display="flex" ><PlayArrow /></Typography></MenuItem>
-                              <MenuItem ><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" onClick={() => {navigate("/search/anime"); navigate(0);}}>Anime</Typography></MenuItem>
-                            </Box>
-                            <Box display="flex" alignItems="center">
-                              <MenuItem><Typography onClick={() => {navigate("/search/manga"); navigate(0);}} display="flex" ><AutoStories /></Typography></MenuItem>
-                              <MenuItem ><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" onClick={() => {navigate("/search/manga"); navigate(0);}}>Manga</Typography></MenuItem>
-                            </Box>
-                          </Box>
-                        </HoverMenu> */}
                       </Typography>
                     )}
                   </PopupState>
-                  
               </Box>
-                {/* <Button variant="contained">
-                  <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
-                </Button> */}
-                
-
 
               <Box 
+                id="user-wrap"
                 sx={{
                   display:"flex",
                   alignItems:"center",
@@ -408,7 +408,7 @@ export default function NavBar() {
                             placement === 'bottom-start' ? 'left top' : 'left bottom',
                         }}
                       >
-                        <Paper>
+                        <Paper sx={{backgroundColor: background, color: primaryMain}}>
                           <ClickAwayListener onClickAway={handleClose}>
                             <MenuList
                               autoFocusItem={openMenu}
@@ -444,9 +444,9 @@ export default function NavBar() {
                                       <>
                                         <MenuItem><Search/><span>Search</span></MenuItem>
                                         {theme.palette.mode === "dark" ? 
-                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}}><LightMode sx={{ color: dark }}/></IconButton><span>Light Mode</span></MenuItem>
+                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><LightMode/><span>Light Mode</span></MenuItem>
                                         :
-                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}}><Nightlight sx={{ color: dark }}/></IconButton><span>Dark Mode</span></MenuItem>
+                                        <MenuItem onClick={() => dispatch(setSiteTheme())}><Nightlight/><span>Dark Mode</span></MenuItem>
                                         }
                                         <MenuItem onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}}><PlayArrow/><span>Anime List</span></MenuItem>
                                         <MenuItem onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}}><AutoStories/><span>Manga List</span></MenuItem>
@@ -462,9 +462,9 @@ export default function NavBar() {
                                       <>
                                       <MenuItem><Search/><span>Search</span></MenuItem>
                                       {theme.palette.mode === "dark" ? 
-                                      <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}} ><LightMode sx={{ color: dark }}/></IconButton><span>Light Mode</span></MenuItem>
+                                      <MenuItem onClick={() => dispatch(setSiteTheme())}><LightMode /><span>Light Mode</span></MenuItem>
                                       :
-                                      <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}} ><Nightlight sx={{ color: dark }}/></IconButton><span>Dark Mode</span></MenuItem>
+                                      <MenuItem onClick={() => dispatch(setSiteTheme())}><Nightlight /><span>Dark Mode</span></MenuItem>
                                       }
                                       </>
                                     )}

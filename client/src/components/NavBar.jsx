@@ -5,16 +5,16 @@ import { useNavigate, Link  } from 'react-router-dom';
 import {setSiteTheme, setLogout } from '../states/index';
 import { 
   AppBar, Box, Typography, Toolbar, Avatar, IconButton, Button, useScrollTrigger, Slide, MenuList, Popper,
-  useTheme, MenuItem, Autocomplete, TextField, useMediaQuery, Paper, Grow, ClickAwayListener } from '@mui/material';
+  useTheme, MenuItem, Autocomplete, TextField, useMediaQuery, Paper, Fade, Grow, ClickAwayListener } from '@mui/material';
 import {Search, Menu, PlayArrow, AutoStories, Logout, Login, Settings, Person, LightMode, Nightlight, Home, Close } from "@mui/icons-material";
-import PopupState, {bindMenu, bindToggle} from "material-ui-popup-state";
+import PopupState, {bindHover, bindMenu, bindPopper, bindToggle} from "material-ui-popup-state";
 import HoverMenu from 'material-ui-popup-state/HoverMenu'
 import axios from 'axios';
 
 export default function NavBar() {
   const [users, setUsers] = useState([]); //Hold searched users
   const [openMenu, setOpenMenu] = useState(false) ;
-  const mobileScreen = useMediaQuery("(min-width: 320px)");
+  //const mobileScreen = useMediaQuery("(min-width: 320px)");
   const tabletScreen = useMediaQuery("(min-width: 630px)");
   const desktopScreen = useMediaQuery("(min-width: 1100px)");
   const dispatch = useDispatch();
@@ -31,15 +31,17 @@ export default function NavBar() {
   const primaryMain = theme.palette.primary.main
 
   const anchorRef = useRef(null);
-  const handleToggle = () => {
+  function handleToggle(){
     setOpenMenu((prevOpen) => !prevOpen);
   };
-  const handleClose = (event) => {
+
+  function handleClose(event){
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
     setOpenMenu(false);
   };
+
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault();
@@ -48,13 +50,15 @@ export default function NavBar() {
       setOpenMenu(false);
     }
   }
-  const handleResize = () => {
+
+  function handleResize(){
     if(user)
       return
     if (desktopScreen && openMenu) {
       setOpenMenu(false);
     } 
   }
+
   useEffect(()=>{
     console.log("useEffect");
     window.addEventListener("resize", handleResize)
@@ -63,6 +67,7 @@ export default function NavBar() {
       window.removeEventListener('resize', handleResize);
     };
   })
+
   const prevOpen = useRef(openMenu);
   useEffect(() => {
     if (prevOpen.current === true && openMenu === false) {
@@ -71,6 +76,14 @@ export default function NavBar() {
     prevOpen.current = openMenu;
   }, [openMenu]);
 
+
+  function handleLogOut(){
+    console.log("Logging Out");
+    setOpenMenu(false);
+    dispatch(setLogout())
+    //navigate(0)
+  }
+  
   async function handleChange(search){
     await axios.get(
       `http://localhost:5000/users/`,
@@ -90,7 +103,7 @@ export default function NavBar() {
   return (
     <>
       <Slide appear={false} direction="down" in={!trigger}>
-        <AppBar sx={{backgroundColor: alt}}>
+        <AppBar sx={{backgroundColor: background}}>
           <Toolbar >
             <Typography
               color="primary"
@@ -138,20 +151,101 @@ export default function NavBar() {
                   </>
                 )}
                 
-                <PopupState variant="popper" popupId="demoPopover">
+
+                {/* BROWSE MENU */}
+                <PopupState variant="popper" popupId="browsePopper">
                     {(popupState) => ( 
-                      <>
                         <Typography 
                           component={Link} 
-                          {...bindToggle(popupState)} 
+                          {...bindHover(popupState)} 
                           // onClick={() => {
                           //   navigate("/search/anime"); 
                           //   navigate(0);
                           // }}
-                          >
-                            Browse
-                          </Typography>
-                        <HoverMenu {...bindMenu(popupState)} sx={{"& .MuiPaper-root": {width:"175px", padding:"10px"}}}>
+                        >
+                          Browse
+                        
+                        <Popper {...bindPopper(popupState)} transition placement="bottom-start" sx={{width:'100%', width:"200px", marginTop:"5px", backgroundColor: background}}>
+                          {({ TransitionProps }) => (
+                            <Fade {...TransitionProps}>
+                              <Paper 
+                                sx={{
+                                  padding: "10px"
+                                }}
+                              >
+                                <Box display="flex" alignItems="center" flexDirection="column" >
+                                  {/* <Typography >The content of the Popper.</Typography> */}
+                                  <Box id="anime-links" 
+                                    sx={{
+                                      width:"100%",
+                                      "& a":{
+                                        color: primaryMain,
+                                        textDecoration:"none",
+                                      },
+                                      "& > div":{
+                                        display: "flex",
+                                        justifyContent:"space-evenly",
+                                        alignItems:"center",
+                                      }
+                                    }}
+                                  >
+                                    <Typography 
+                                      sx={{
+                                        display:"flex",
+                                        justifyContent:"space-around",
+                                        alignItems:"center",
+                                      }} 
+                                      component={Link} 
+                                      onClick={() => {
+                                        navigate("/search/anime"); 
+                                        navigate(0);}}
+                                    >
+                                      <PlayArrow/><span>Anime Search</span>
+                                    </Typography>
+                                    <Box id="secondary-anime-links">
+                                      <Typography fontSize={".9rem"} component={Link} to={`search/anime/trending`}>Trending</Typography>
+                                      <Typography fontSize={".9rem"} component={Link} to={`search/anime/popularity`}>Popular</Typography>
+                                    </Box>
+                                  </Box>
+                                  <Box id="manga-links" 
+                                    sx={{
+                                      width:"100%",
+                                      "& a":{
+                                        color: primaryMain,
+                                        textDecoration:"none",
+                                      },
+                                      "& > div":{
+                                        display: "flex",
+                                        justifyContent:"space-evenly",
+                                        alignItems:"center",
+                                      }
+                                    }}
+                                  >
+                                    <Typography 
+                                      sx={{
+                                        display:"flex",
+                                        justifyContent:"space-around",
+                                        alignItems:"center",
+                                      }} 
+                                      component={Link} 
+                                      onClick={() => {
+                                        navigate("/search/anime"); 
+                                        navigate(0);}}
+                                    >
+                                      <PlayArrow/><span>Manga Search</span>
+                                    </Typography>
+                                    <Box id="secondary-manga-links">
+                                      <Typography fontSize={".9rem"} component={Link} to={`search/manga/trending`}>Trending</Typography>
+                                      <Typography fontSize={".9rem"} component={Link} to={`search/manga/popularity`}>Popular</Typography>
+                                    </Box>
+                                  </Box>
+                                </Box>
+                              </Paper>
+                            </Fade>
+                          )}
+                        </Popper>
+
+                        {/* <HoverMenu {...bindMenu(popupState)} sx={{"& .MuiPaper-root": {width:"175px", padding:"10px"}}}>
                           <Box display="flex" alignItems="center" flexDirection="column">
                             <Box display="flex" alignItems="center">
                               <MenuItem><Typography onClick={() => {navigate("/search/anime"); navigate(0);}} display="flex" ><PlayArrow /></Typography></MenuItem>
@@ -162,10 +256,11 @@ export default function NavBar() {
                               <MenuItem ><Typography fontWeight="bold" sx={{textDecoration:"none", color:"inherit"}} fontSize="16px" onClick={() => {navigate("/search/manga"); navigate(0);}}>Manga</Typography></MenuItem>
                             </Box>
                           </Box>
-                        </HoverMenu>
-                      </>
+                        </HoverMenu> */}
+                      </Typography>
                     )}
                   </PopupState>
+                  
               </Box>
                 {/* <Button variant="contained">
                   <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
@@ -180,7 +275,6 @@ export default function NavBar() {
                   gap:"1rem",
                 }}
               >
-                  
                 {tabletScreen && 
                   <>
                     <IconButton onClick={() => dispatch(setSiteTheme())}>
@@ -283,6 +377,7 @@ export default function NavBar() {
                               autoFocusItem={openMenu}
                               id="composition-menu"
                               aria-labelledby="composition-button"
+                              onKeyDown={handleListKeyDown}
                             >
                               <Box id="menu-grid"
                                 sx={{
@@ -298,7 +393,7 @@ export default function NavBar() {
                                   },
                                   "span:first-of-type": {
                                     paddingTop: desktopScreen || (tabletScreen && !user) ? "0px" : "8px",
-                                    paddingLeft: desktopScreen || (tabletScreen && !user) ? "8px" : "0px"
+                                    paddingLeft: desktopScreen || (tabletScreen && !user) ? "10px" : "0px"
                                   }
                                   
                                 }}
@@ -310,7 +405,7 @@ export default function NavBar() {
                                     <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/><span>Edit Profile</span></MenuItem>
                                     {!tabletScreen && (
                                       <>
-                                        <MenuItem><Search/>&nbsp;Search</MenuItem>
+                                        <MenuItem><Search/><span>Search</span></MenuItem>
                                         {theme.palette.mode === "dark" ? 
                                         <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}}><LightMode sx={{ color: dark }}/></IconButton><span>Light Mode</span></MenuItem>
                                         :
@@ -320,7 +415,7 @@ export default function NavBar() {
                                         <MenuItem onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}}><AutoStories/><span>Manga List</span></MenuItem>
                                       </>
                                     )}
-                                    <MenuItem onClick={() => dispatch(setLogout())}><Logout/><span>Logout</span></MenuItem>
+                                    <MenuItem onClick={handleLogOut}><Logout/><span>Logout</span></MenuItem>
                                   </>
                                   :
                                   <>
@@ -328,7 +423,7 @@ export default function NavBar() {
                                     <MenuItem onClick={() => {navigate(`/auth`);}}><Login/><span>Login</span></MenuItem>
                                     {!tabletScreen && (
                                       <>
-                                      <MenuItem><Search/>Search</MenuItem>
+                                      <MenuItem><Search/><span>Search</span></MenuItem>
                                       {theme.palette.mode === "dark" ? 
                                       <MenuItem onClick={() => dispatch(setSiteTheme())}><IconButton sx={{padding:"0"}} ><LightMode sx={{ color: dark }}/></IconButton><span>Light Mode</span></MenuItem>
                                       :

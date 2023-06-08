@@ -1,11 +1,11 @@
 //Navagation bar
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, Link  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {setSiteTheme, setLogout } from '../states/index';
 import { 
   AppBar, Box, Typography, Toolbar, Avatar, IconButton, Button, useScrollTrigger, Slide, MenuList, Popper,
-  useTheme, MenuItem, Autocomplete, TextField, useMediaQuery, Paper, Fade, Grow, ClickAwayListener } from '@mui/material';
+  useTheme, MenuItem, Autocomplete, TextField, useMediaQuery, Paper, Fade, Grow, ClickAwayListener, Link } from '@mui/material';
 import {Search, Menu, PlayArrow, AutoStories, Logout, Login, Settings, Person, LightMode, Nightlight, Home, Close } from "@mui/icons-material";
 import PopupState, {bindHover, bindMenu, bindPopper, bindToggle} from "material-ui-popup-state";
 import HoverMenu from 'material-ui-popup-state/HoverMenu'
@@ -181,6 +181,10 @@ export default function NavBar() {
                                       "& a":{
                                         color: primaryMain,
                                         textDecoration:"none",
+                                        "&:hover": {
+                                          color: primaryLight,
+                                          cursor: "pointer",
+                                        },
                                       },
                                       "& > div":{
                                         display: "flex",
@@ -189,30 +193,49 @@ export default function NavBar() {
                                       }
                                     }}
                                   >
-                                    <Typography 
+                                    <Link 
                                       sx={{
                                         display:"flex",
                                         justifyContent:"space-around",
                                         alignItems:"center",
                                       }} 
-                                      component={Link} 
                                       onClick={() => {
                                         navigate("/search/anime"); 
-                                        navigate(0);}}
+                                        navigate(0);
+                                      }}
                                     >
                                       <PlayArrow/><span>Anime Search</span>
-                                    </Typography>
+                                    </Link>
                                     <Box id="secondary-anime-links">
-                                      <Typography fontSize={".9rem"} component={Link} to={`search/anime/trending`}>Trending</Typography>
-                                      <Typography fontSize={".9rem"} component={Link} to={`search/anime/popularity`}>Popular</Typography>
+                                      <Link 
+                                        fontSize={".9rem"} 
+                                        onClick={() => {
+                                          navigate('/search/anime/trending'); 
+                                          navigate(0);
+                                        }} 
+                                      > Trending
+                                      </Link>
+                                      <Link 
+                                        fontSize={".9rem"} 
+                                        onClick={() => {
+                                          navigate('/search/anime/popularity'); 
+                                          navigate(0);
+                                        }} 
+                                      > Popular
+                                      </Link>
                                     </Box>
                                   </Box>
+
                                   <Box id="manga-links" 
                                     sx={{
                                       width:"100%",
                                       "& a":{
                                         color: primaryMain,
                                         textDecoration:"none",
+                                        "&:hover": {
+                                          color: primaryLight,
+                                          cursor: "pointer",
+                                        },
                                       },
                                       "& > div":{
                                         display: "flex",
@@ -221,22 +244,36 @@ export default function NavBar() {
                                       }
                                     }}
                                   >
-                                    <Typography 
+                                    <Link 
                                       sx={{
                                         display:"flex",
                                         justifyContent:"space-around",
                                         alignItems:"center",
                                       }} 
-                                      component={Link} 
                                       onClick={() => {
-                                        navigate("/search/anime"); 
-                                        navigate(0);}}
+                                        navigate("/search/manga"); 
+                                        navigate(0);
+                                      }}
                                     >
-                                      <PlayArrow/><span>Manga Search</span>
-                                    </Typography>
+                                      <AutoStories/><span>Manga Search</span>
+                                    </Link>
                                     <Box id="secondary-manga-links">
-                                      <Typography fontSize={".9rem"} component={Link} to={`search/manga/trending`}>Trending</Typography>
-                                      <Typography fontSize={".9rem"} component={Link} to={`search/manga/popularity`}>Popular</Typography>
+                                      <Link 
+                                        fontSize={".9rem"} 
+                                        onClick={() => {
+                                          navigate('/search/manga/trending'); 
+                                          navigate(0);
+                                        }} 
+                                      > Trending
+                                      </Link>
+                                      <Link 
+                                        fontSize={".9rem"} 
+                                        onClick={() => {
+                                          navigate('/search/manga/popularity'); 
+                                          navigate(0);
+                                        }} 
+                                      > Popular
+                                      </Link>
                                     </Box>
                                   </Box>
                                 </Box>

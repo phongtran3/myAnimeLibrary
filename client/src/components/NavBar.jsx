@@ -316,9 +316,9 @@ export default function NavBar() {
                   <>
                     <IconButton onClick={() => dispatch(setSiteTheme())}>
                       {theme.palette.mode === "dark" ? (
-                        <Nightlight sx={{ fontSize: "25px" }} />
+                        <Nightlight sx={{color: primaryMain, fontSize: "25px" }} />
                       ) : (
-                        <LightMode sx={{ color: dark, fontSize: "25px" }} />
+                        <LightMode sx={{ color: primaryMain, fontSize: "25px" }} />
                       )}
                     </IconButton>
                     
@@ -337,20 +337,26 @@ export default function NavBar() {
                         onChange={(event, option) =>{
                           window.location.href = `http://localhost:3000/user/${option.userName}`
                         }}
-                        renderInput={(params) => <TextField {...params} label="Search Users" />}
+                        renderInput={(params) => <TextField variant="outlined"  {...params} label="Search Users" />}
                         sx={{
                           width:"200px",
+                          "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+                            borderColor: primaryLight
+                          },
+                          "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+                            borderColor: primaryMain
+                          },
                           '& .MuiAutocomplete-endAdornment':{ display: "none"},
                           '& .MuiFormLabel-root': {
-                            color: "black", 
+                            color: primaryMain, 
                           },
                           '& .MuiInputLabel-root.Mui-focused':{
-                            color: "black",
+                            color: primaryMain,
                           },
                         }}
                       /> : 
                       <IconButton>
-                        <Search sx={{ color: dark, fontSize: "25px" }}/>
+                        <Search sx={{ color: primaryMain, fontSize: "25px" }}/>
                       </IconButton>
                     }
                   </>

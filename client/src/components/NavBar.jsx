@@ -23,12 +23,12 @@ export default function NavBar() {
   const trigger = useScrollTrigger();
 
   const theme = useTheme();
-  const neutralLight = theme.palette.neutral.light;
-  const dark = theme.palette.neutral.dark;
-  const background = theme.palette.background.default;
-  const primaryLight = theme.palette.primary.light;
-  const alt = theme.palette.background.alt;
-  const primaryMain = theme.palette.primary.main
+  // const neutralLight = theme.palette.neutral.light;
+  // const dark = theme.palette.neutral.dark;
+  // const background = theme.palette.background.default;
+  // const primaryLight = theme.palette.primary.light;
+  // const alt = theme.palette.background.alt;
+  // const primaryMain = theme.palette.primary.main
 
   const anchorRef = useRef(null);
   function handleToggle(){
@@ -103,17 +103,17 @@ export default function NavBar() {
   return (
     <>
       <Slide appear={false} direction="down" in={!trigger}>
-        <AppBar sx={{backgroundColor: background}}>
+        <AppBar sx={{backgroundColor: '#9575CD'}}>
           <Toolbar >
             <Typography
-              color="primary"
+              color="#111111"
               fontWeight="bold" 
               fontSize="clamp(.5rem, 1.5rem, 2rem)"
               onClick={() => navigate("/")}
               sx={{
                 display: desktopScreen ? "inherit" : "none",
                 "&:hover": {
-                  color: primaryLight,
+                  color: '#673ab7',
                   cursor: "pointer",
                 },
               }}
@@ -130,12 +130,12 @@ export default function NavBar() {
                 "& > a": { 
                   padding:"15px 16px", 
                   textDecoration:"none", 
-                  color: primaryMain,
+                  color: '#111111',
                   fontWeight:"bold",
                   fontSize:"20px",
                   whiteSpace:"nowrap",
                   "&:hover": {
-                    color: primaryLight,
+                    color: '#673ab7',
                     cursor: "pointer",
                   },
                 },
@@ -180,7 +180,7 @@ export default function NavBar() {
                             <Fade {...TransitionProps}>
                               <Paper 
                                 sx={{
-                                  backgroundColor: background,
+                                  backgroundColor: '#d1c4e9',
                                   padding: "10px"
                                 }}
                               >
@@ -190,10 +190,10 @@ export default function NavBar() {
                                     sx={{
                                       width:"100%",
                                       "& a":{
-                                        color: primaryMain,
+                                        color: '#111111',
                                         textDecoration:"none",
                                         "&:hover": {
-                                          color: primaryLight,
+                                          color: '#673ab7',
                                           cursor: "pointer",
                                         },
                                       },
@@ -245,10 +245,10 @@ export default function NavBar() {
                                       marginTop:"10px",
                                       width:"100%",
                                       "& a":{
-                                        color: primaryMain,
+                                        color: '#111111',
                                         textDecoration:"none",
                                         "&:hover": {
-                                          color: primaryLight,
+                                          color: '#673ab7',
                                           cursor: "pointer",
                                         },
                                       },
@@ -316,9 +316,9 @@ export default function NavBar() {
                   <>
                     <IconButton onClick={() => dispatch(setSiteTheme())}>
                       {theme.palette.mode === "dark" ? (
-                        <Nightlight sx={{color: primaryMain, fontSize: "25px" }} />
+                        <Nightlight sx={{color: '#111111', fontSize: "30px" }} />
                       ) : (
-                        <LightMode sx={{ color: primaryMain, fontSize: "25px" }} />
+                        <LightMode sx={{ color: '#111111', fontSize: "30px" }} />
                       )}
                     </IconButton>
                     
@@ -341,22 +341,22 @@ export default function NavBar() {
                         sx={{
                           width:"200px",
                           "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-                            borderColor: primaryLight
+                            borderColor: '#111111'
                           },
                           "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-                            borderColor: primaryMain
+                            borderColor: '#673ab7'
                           },
                           '& .MuiAutocomplete-endAdornment':{ display: "none"},
                           '& .MuiFormLabel-root': {
-                            color: primaryMain, 
+                            color: '#111111', 
                           },
                           '& .MuiInputLabel-root.Mui-focused':{
-                            color: primaryMain,
+                            color: '#111111',
                           },
                         }}
                       /> : 
                       <IconButton>
-                        <Search sx={{ color: primaryMain, fontSize: "25px" }}/>
+                        <Search sx={{color: '#111111', fontSize: "30px" }}/>
                       </IconButton>
                     }
                   </>
@@ -387,11 +387,19 @@ export default function NavBar() {
                           aria-expanded={openMenu ? 'true' : undefined}
                           aria-haspopup="true"
                         >
-                          <Menu sx={{ color: primaryMain, width: 42, height: 42 }}/>
+                          <Menu sx={{ color: '#111111', width: 42, height: 42 }}/>
                         </IconButton> 
                         <Box>
-                          <Button  sx={{display: desktopScreen ? "block" : "none"}} variant="contained">
-                            <Typography fontWeight="bold" fontSize="16px" sx={{color:"white"}} component={Link} to="/auth">Login</Typography>
+                          <Button 
+                            sx={{
+                              display: desktopScreen ? "block" : "none",
+                              "&:hover": {
+                                backgroundColor: '#b39ddb',
+                              },
+                            }} 
+                            variant="contained"
+                          >
+                            <Typography fontWeight="bold" fontSize="16px" sx={{ color:'#111111' }} component={Link} to="/auth">Login</Typography>
                           </Button> 
                         </Box>
                     </>
@@ -414,7 +422,7 @@ export default function NavBar() {
                             placement === 'bottom-start' ? 'left top' : 'left bottom',
                         }}
                       >
-                        <Paper sx={{backgroundColor: background, color: primaryMain}}>
+                        <Paper sx={{backgroundColor: '#d1c4e9', color: '#111111'}}>
                           <ClickAwayListener onClickAway={handleClose}>
                             <MenuList
                               autoFocusItem={openMenu}

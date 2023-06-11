@@ -5,15 +5,18 @@ import { useNavigate } from 'react-router-dom';
 import {setSiteTheme, setLogout } from '../states/index';
 import { 
   AppBar, Box, Typography, Toolbar, Avatar, IconButton, Button, useScrollTrigger, Slide, MenuList, Popper,
-  useTheme, MenuItem, Autocomplete, TextField, useMediaQuery, Paper, Fade, Grow, ClickAwayListener, Link } from '@mui/material';
+  useTheme, MenuItem, Autocomplete, TextField, useMediaQuery, Paper, Fade, Grow, ClickAwayListener, Link,
+  Dialog, DialogContent, InputAdornment
+} from '@mui/material';
 import {Search, Menu, PlayArrow, AutoStories, Logout, Login, Settings, Person, LightMode, Nightlight, Home, Close } from "@mui/icons-material";
-import PopupState, {bindHover, bindMenu, bindPopper, bindToggle} from "material-ui-popup-state";
-import HoverMenu from 'material-ui-popup-state/HoverMenu'
+import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
 import axios from 'axios';
 
 export default function NavBar() {
   const [users, setUsers] = useState([]); //Hold searched users
   const [openMenu, setOpenMenu] = useState(false) ;
+  const [openDialog, setOpenDialog] = useState(false);
+
   //const mobileScreen = useMediaQuery("(min-width: 320px)");
   const tabletScreen = useMediaQuery("(min-width: 630px)");
   const desktopScreen = useMediaQuery("(min-width: 1100px)");
@@ -31,11 +34,11 @@ export default function NavBar() {
   // const primaryMain = theme.palette.primary.main
 
   const anchorRef = useRef(null);
-  function handleToggle(){
+  function handleOpenMenu(){
     setOpenMenu((prevOpen) => !prevOpen);
   };
 
-  function handleClose(event){
+  function handleCloseMenu(event){
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -84,6 +87,14 @@ export default function NavBar() {
     //navigate(0)
   }
   
+  function handleOpenDialog(){
+    setOpenDialog(true);
+  }
+
+  function handleCloseDialog(){
+    setOpenDialog(false);
+  }
+
   async function handleChange(search){
     await axios.get(
       `http://localhost:5000/users/`,
@@ -143,139 +154,138 @@ export default function NavBar() {
                 paddingLeft: desktopScreen ? "150px" : null
               }}
             > 
-              
-                {user && tabletScreen && (
-                  <>
-                  <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}} >Anime List</Typography>
-                  <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}} >Manga List</Typography>
-                  </>
-                )}
+              {user && tabletScreen && (
+                <>
+                <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}} >Anime List</Typography>
+                <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}} >Manga List</Typography>
+                </>
+              )}
                 
 
-                {/* BROWSE MENU */}
-                <PopupState variant="popper" popupId="browsePopper" >
-                    {(popupState) => ( 
-                        <Typography 
-                          component={Link} 
-                          {...bindHover(popupState)} 
-                          // onClick={() => {
-                          //   navigate("/search/anime"); 
-                          //   navigate(0);
-                          // }}
-                        >
-                          Browse
-                        <Popper 
-                          {...bindPopper(popupState)} 
-                          transition 
-                          placement="bottom-start" 
-                          sx={{
-                            width:'100%', 
-                            width:"250px", 
-                            marginTop:"5px", 
-                            zIndex:"1101"
-                          }}
-                        >
-                          {({ TransitionProps }) => (
-                            <Fade {...TransitionProps}>
-                              <Paper 
+              {/* BROWSE MENU */}
+              <PopupState variant="popper" popupId="browsePopper" >
+                  {(popupState) => ( 
+                      <Typography 
+                        component={Link} 
+                        {...bindHover(popupState)} 
+                        // onClick={() => {
+                        //   navigate("/search/anime"); 
+                        //   navigate(0);
+                        // }}
+                      >
+                        Browse
+                      <Popper 
+                        {...bindPopper(popupState)} 
+                        transition 
+                        placement="bottom-start" 
+                        sx={{
+                          width:'100%', 
+                          width:"250px", 
+                          marginTop:"5px", 
+                          zIndex:"1101"
+                        }}
+                      >
+                        {({ TransitionProps }) => (
+                          <Fade {...TransitionProps}>
+                            <Paper 
+                              sx={{
+                                backgroundColor: '#d1c4e9',
+                                padding: "10px"
+                              }}
+                            >
+                              <Box id="menu=wrapper"
                                 sx={{
-                                  backgroundColor: '#d1c4e9',
-                                  padding: "10px"
+                                  display:"flex",
+                                  alignItems:"center",
+                                  flexDirection:"column",
+                                  padding:"10px",
+                                  "& a": {
+                                    color: '#111111',
+                                    textDecoration:"none",
+                                    "&:hover": {
+                                      color: '#673ab7',
+                                      cursor: "pointer",
+                                    }
+                                  },
+                                  //Secondary link div
+                                  "& div > div":{
+                                    gap:"1.4rem",
+                                    display: "flex",
+                                    justifyContent:"flex-end",
+                                    alignItems:"center",
+                                  },
+                                  "& > div > a:first-of-type":{
+                                    fontSize:"1.2rem",
+                                    fontWeight:"600",
+                                    display:"flex",
+                                    justifyContent:"space-around",
+                                    alignItems:"center",
+                                  }
                                 }}
                               >
-                                <Box id="menu=wrapper"
-                                  sx={{
-                                    display:"flex",
-                                    alignItems:"center",
-                                    flexDirection:"column",
-                                    padding:"10px",
-                                    "& a": {
-                                      color: '#111111',
-                                      textDecoration:"none",
-                                      "&:hover": {
-                                        color: '#673ab7',
-                                        cursor: "pointer",
-                                      }
-                                    },
-                                    //Secondary link div
-                                    "& div > div":{
-                                      gap:"1.4rem",
-                                      display: "flex",
-                                      justifyContent:"flex-end",
-                                      alignItems:"center",
-                                    },
-                                    "& > div > a:first-of-type":{
-                                      fontSize:"1.2rem",
-                                      fontWeight:"600",
-                                      display:"flex",
-                                      justifyContent:"space-around",
-                                      alignItems:"center",
-                                    }
-                                  }}
-                                >
-                                  {/* <Typography >The content of the Popper.</Typography> */}
-                                  <Box id="anime-links" sx={{width:"100%",}} >
-                                    <Link 
+                                {/* <Typography >The content of the Popper.</Typography> */}
+                                <Box id="anime-links" sx={{width:"100%",}} >
+                                  <Link 
+                                    onClick={() => {
+                                      navigate("/search/anime"); 
+                                      navigate(0);
+                                    }}
+                                  >
+                                    <PlayArrow sx={{fontSize:"2rem"}}/><span>Anime Search</span>
+                                  </Link>
+                                  <Box id="secondary-anime-links">
+                                    <Link fontSize={".9rem"} 
                                       onClick={() => {
-                                        navigate("/search/anime"); 
+                                        navigate('/search/anime/trending'); 
                                         navigate(0);
-                                      }}
-                                    >
-                                      <PlayArrow sx={{fontSize:"2rem"}}/><span>Anime Search</span>
+                                      }} 
+                                    > Trending
                                     </Link>
-                                    <Box id="secondary-anime-links">
-                                      <Link fontSize={".9rem"} 
-                                        onClick={() => {
-                                          navigate('/search/anime/trending'); 
-                                          navigate(0);
-                                        }} 
-                                      > Trending
-                                      </Link>
-                                      <Link 
-                                        fontSize={".9rem"} 
-                                        onClick={() => {
-                                          navigate('/search/anime/popularity'); 
-                                          navigate(0);
-                                        }} 
-                                      > Popular
-                                      </Link>
-                                    </Box>
-                                  </Box>
-
-                                  <Box id="manga-links" sx={{marginTop:"10px", width:"100%",}}>
                                     <Link 
+                                      fontSize={".9rem"} 
                                       onClick={() => {
-                                        navigate("/search/manga"); 
+                                        navigate('/search/anime/popularity'); 
                                         navigate(0);
-                                      }}
-                                    >
-                                      <AutoStories sx={{fontSize:"2rem"}}/><span>Manga Search</span>
+                                      }} 
+                                    > Popular
                                     </Link>
-                                    <Box id="secondary-manga-links">
-                                      <Link fontSize={".9rem"} 
-                                        onClick={() => {
-                                          navigate('/search/manga/trending'); 
-                                          navigate(0);
-                                        }} 
-                                      > Trending
-                                      </Link>
-                                      <Link fontSize={".9rem"} 
-                                        onClick={() => {
-                                          navigate('/search/manga/popularity'); 
-                                          navigate(0);
-                                        }} 
-                                      > Popular
-                                      </Link>
-                                    </Box>
                                   </Box>
                                 </Box>
-                              </Paper>
-                            </Fade>
-                          )}
-                        </Popper>
-                      </Typography>
-                    )}
-                  </PopupState>
+
+                                <Box id="manga-links" sx={{marginTop:"10px", width:"100%",}}>
+                                  <Link 
+                                    onClick={() => {
+                                      navigate("/search/manga"); 
+                                      navigate(0);
+                                    }}
+                                  >
+                                    <AutoStories sx={{fontSize:"2rem"}}/><span>Manga Search</span>
+                                  </Link>
+                                  <Box id="secondary-manga-links">
+                                    <Link fontSize={".9rem"} 
+                                      onClick={() => {
+                                        navigate('/search/manga/trending'); 
+                                        navigate(0);
+                                      }} 
+                                    > Trending
+                                    </Link>
+                                    <Link fontSize={".9rem"} 
+                                      onClick={() => {
+                                        navigate('/search/manga/popularity'); 
+                                        navigate(0);
+                                      }} 
+                                    > Popular
+                                    </Link>
+                                  </Box>
+                                </Box>
+                              </Box>
+                            </Paper>
+                          </Fade>
+                        )}
+                      </Popper>
+                    </Typography>
+                  )}
+                </PopupState>
               </Box>
               
               {/* RIGHT SIDE USER MENU WRAP */}
@@ -298,6 +308,7 @@ export default function NavBar() {
                     </IconButton>
                     
                     {desktopScreen ?
+                      // SEARCH BAR
                       <Autocomplete 
                         freeSolo 
                         options={users || []}
@@ -312,7 +323,7 @@ export default function NavBar() {
                         onChange={(event, option) =>{
                           window.location.href = `http://localhost:3000/user/${option.userName}`
                         }}
-                        renderInput={(params) => <TextField variant="outlined"  {...params} label="Search Users" />}
+                        renderInput={(params) => <TextField variant="outlined" {...params} label="Search Users..." />}
                         sx={{
                           width:"200px",
                           "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
@@ -330,7 +341,7 @@ export default function NavBar() {
                           },
                         }}
                       /> : 
-                      <IconButton>
+                      <IconButton onClick={handleOpenDialog}>
                         <Search sx={{color: '#111111', fontSize: "30px" }}/>
                       </IconButton>
                     }
@@ -343,7 +354,7 @@ export default function NavBar() {
                   {user ? 
                     <IconButton
                       ref={anchorRef}
-                      onClick={handleToggle}
+                      onClick={handleOpenMenu}
                       id="composition-button"
                       aria-controls={openMenu ? 'composition-menu' : undefined}
                       aria-expanded={openMenu ? 'true' : undefined}
@@ -355,7 +366,7 @@ export default function NavBar() {
                     <>
                         <IconButton
                           ref={anchorRef}
-                          onClick={handleToggle}
+                          onClick={handleOpenMenu}
                           sx={{display: !desktopScreen ? "block" : "none"}}
                           id="composition-button"
                           aria-controls={openMenu ? 'composition-menu' : undefined}
@@ -399,7 +410,7 @@ export default function NavBar() {
                         }}
                       >
                         <Paper sx={{backgroundColor: '#d1c4e9', color: '#111111'}}>
-                          <ClickAwayListener onClickAway={handleClose}>
+                          <ClickAwayListener onClickAway={handleCloseMenu}>
                             <MenuList
                               autoFocusItem={openMenu}
                               id="composition-menu"
@@ -432,7 +443,7 @@ export default function NavBar() {
                                     <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/><span>Edit Profile</span></MenuItem>
                                     {!tabletScreen && (
                                       <>
-                                        <MenuItem><Search/><span>Search</span></MenuItem>
+                                        <MenuItem><Search onClick={handleOpenDialog}/><span>Search</span></MenuItem>
                                         {theme.palette.mode === "dark" ? 
                                         <MenuItem onClick={() => dispatch(setSiteTheme())}><LightMode/><span>Light Mode</span></MenuItem>
                                         :
@@ -450,7 +461,7 @@ export default function NavBar() {
                                     <MenuItem onClick={() => {navigate(`/auth`);}}><Login/><span>Login</span></MenuItem>
                                     {!tabletScreen && (
                                       <>
-                                      <MenuItem><Search/><span>Search</span></MenuItem>
+                                      <MenuItem onClick={handleOpenDialog}><Search /><span>Search</span></MenuItem>
                                       {theme.palette.mode === "dark" ? 
                                       <MenuItem onClick={() => dispatch(setSiteTheme())}><LightMode /><span>Light Mode</span></MenuItem>
                                       :
@@ -458,10 +469,9 @@ export default function NavBar() {
                                       }
                                       </>
                                     )}
-
                                   </>
                                 }
-                                <MenuItem onClick={handleClose}><Close/><span>Close</span></MenuItem>
+                                <MenuItem onClick={handleCloseMenu}><Close/><span>Close</span></MenuItem>
 
                               </Box>
                             </MenuList>
@@ -472,9 +482,68 @@ export default function NavBar() {
                   </Popper>}
                   </>
                 </Box>
-
               </Box>
           </Toolbar>
+          <Dialog 
+            open={openDialog} 
+            onClose={handleCloseDialog} 
+            fullWidth={true} 
+            maxWidth={"sm"} 
+            PaperProps={{
+              sx: {
+                position:"absolute",
+                top:"10%"
+              }
+            }}
+          >
+            <DialogContent sx={{backgroundColor: "#E0E0E0"}}>
+              <Autocomplete 
+                freeSolo  
+                options={users || []}
+                getOptionLabel={(option) => option.userName}
+                renderOption={(props, option) => (
+                  <Box component="li" {...props}>
+                    <Avatar src={`http://localhost:5000/assets/${option.picturePath}`}/>&nbsp;{option.userName}
+                  </Box>
+                )}
+                size='small'
+                onInputChange={(event) => {handleChange(event.target.value)}}
+                onChange={(event, option) =>{
+                  window.location.href = `http://localhost:3000/user/${option.userName}`
+                }}
+                renderInput={(params) => 
+                  <TextField 
+                    variant="outlined"  
+                    {...params} 
+                    label="Search Users..." 
+                    InputProps={{
+                      ...params.InputProps,
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Search sx={{color: '#111111', fontSize: "20px" }}/>
+                        </InputAdornment>
+                      )
+                    }}
+                  />}
+                sx={{
+                  width:"100%",
+                  "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+                    borderColor: '#111111'
+                  },
+                  "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+                    borderColor: '#673ab7'
+                  },
+                  '& .MuiAutocomplete-endAdornment':{ display: "none"},
+                  '& .MuiFormLabel-root': {
+                    color: '#111111', 
+                  },
+                  '& .MuiInputLabel-root.Mui-focused':{
+                    color: '#111111',
+                  },
+                }}
+              />
+            </DialogContent>
+          </Dialog>
         </AppBar>
       </Slide>
       <Toolbar />

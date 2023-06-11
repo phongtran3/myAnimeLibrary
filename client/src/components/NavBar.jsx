@@ -26,12 +26,12 @@ export default function NavBar() {
   const trigger = useScrollTrigger();
 
   const theme = useTheme();
-  // const neutralLight = theme.palette.neutral.light;
-  // const dark = theme.palette.neutral.dark;
-  // const background = theme.palette.background.default;
-  // const primaryLight = theme.palette.primary.light;
-  // const alt = theme.palette.background.alt;
-  // const primaryMain = theme.palette.primary.main
+  const neutralLight = theme.palette.neutral.light;
+  const dark = theme.palette.neutral.dark;
+  const background = theme.palette.background.default;
+  const primaryLight = theme.palette.primary.light;
+  const alt = theme.palette.background.alt;
+  const primaryMain = theme.palette.primary.main
 
   const anchorRef = useRef(null);
   function handleOpenMenu(){
@@ -110,6 +110,22 @@ export default function NavBar() {
     console.log(err);
     })
   }
+
+
+  const CustomPaper = (props) => {
+    return (
+    <Paper 
+      sx={{
+        backgroundColor: background,
+        "& li:hover":{
+          backgroundColor: '#673ab7',
+        }
+      }}
+      elevation={8} 
+      {...props} 
+     />
+    )
+  };
 
   return (
     <>
@@ -324,6 +340,7 @@ export default function NavBar() {
                           window.location.href = `http://localhost:3000/user/${option.userName}`
                         }}
                         renderInput={(params) => <TextField variant="outlined" {...params} label="Search Users..." />}
+                        PaperComponent={CustomPaper}
                         sx={{
                           width:"200px",
                           "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
@@ -333,13 +350,11 @@ export default function NavBar() {
                             borderColor: '#673ab7'
                           },
                           '& .MuiAutocomplete-endAdornment':{ display: "none"},
-                          '& .MuiFormLabel-root': {
+                          '& .MuiFormLabel-root, .MuiInputBase-root, .MuiInputLabel-root.Mui-focused,': {
                             color: '#111111', 
-                          },
-                          '& .MuiInputLabel-root.Mui-focused':{
-                            color: '#111111',
-                          },
+                          },                       
                         }}
+                        
                       /> : 
                       <IconButton onClick={handleOpenDialog}>
                         <Search sx={{color: '#111111', fontSize: "30px" }}/>
@@ -383,9 +398,10 @@ export default function NavBar() {
                                 backgroundColor: '#b39ddb',
                               },
                             }} 
+                            onClick={() => navigate('/auth')}
                             variant="contained"
                           >
-                            <Typography fontWeight="bold" fontSize="16px" sx={{ color:'#111111' }} component={Link} to="/auth">Login</Typography>
+                            <Typography fontWeight="bold" fontSize="16px" sx={{ color:'#111111' }}>Login</Typography>
                           </Button> 
                         </Box>
                     </>
@@ -458,7 +474,7 @@ export default function NavBar() {
                                   :
                                   <>
                                     {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/><span>Home</span></MenuItem>}
-                                    <MenuItem onClick={() => {navigate(`/auth`);}}><Login/><span>Login</span></MenuItem>
+                                    <MenuItem onClick={() => {navigate('/auth');}}><Login/><span>Login</span></MenuItem>
                                     {!tabletScreen && (
                                       <>
                                       <MenuItem onClick={handleOpenDialog}><Search /><span>Search</span></MenuItem>

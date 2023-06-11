@@ -39,8 +39,8 @@ export const themeSettings = (mode) => {
               light: colorTokens.grey[700],
             },
             background: {
-              default: colorTokens.grey[900],
-              alt: colorTokens.grey[800],
+              default: colorTokens.grey[800],
+              alt: colorTokens.grey[700],
             },
           }
         : {

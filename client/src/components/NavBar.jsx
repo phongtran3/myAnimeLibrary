@@ -164,7 +164,6 @@ export default function NavBar() {
                           // }}
                         >
                           Browse
-                        
                         <Popper 
                           {...bindPopper(popupState)} 
                           transition 
@@ -184,35 +183,39 @@ export default function NavBar() {
                                   padding: "10px"
                                 }}
                               >
-                                <Box display="flex" alignItems="center" flexDirection="column" padding="10px" >
-                                  {/* <Typography >The content of the Popper.</Typography> */}
-                                  <Box id="anime-links" 
-                                    sx={{
-                                      width:"100%",
-                                      "& a":{
-                                        color: '#111111',
-                                        textDecoration:"none",
-                                        "&:hover": {
-                                          color: '#673ab7',
-                                          cursor: "pointer",
-                                        },
-                                      },
-                                      "& > div":{
-                                        gap:"1.4rem",
-                                        display: "flex",
-                                        justifyContent:"flex-end",
-                                        alignItems:"center",
+                                <Box id="menu=wrapper"
+                                  sx={{
+                                    display:"flex",
+                                    alignItems:"center",
+                                    flexDirection:"column",
+                                    padding:"10px",
+                                    "& a": {
+                                      color: '#111111',
+                                      textDecoration:"none",
+                                      "&:hover": {
+                                        color: '#673ab7',
+                                        cursor: "pointer",
                                       }
-                                    }}
-                                  >
+                                    },
+                                    //Secondary link div
+                                    "& div > div":{
+                                      gap:"1.4rem",
+                                      display: "flex",
+                                      justifyContent:"flex-end",
+                                      alignItems:"center",
+                                    },
+                                    "& > div > a:first-of-type":{
+                                      fontSize:"1.2rem",
+                                      fontWeight:"600",
+                                      display:"flex",
+                                      justifyContent:"space-around",
+                                      alignItems:"center",
+                                    }
+                                  }}
+                                >
+                                  {/* <Typography >The content of the Popper.</Typography> */}
+                                  <Box id="anime-links" sx={{width:"100%",}} >
                                     <Link 
-                                      sx={{
-                                        fontSize:"1.2rem",
-                                        fontWeight:"600",
-                                        display:"flex",
-                                        justifyContent:"space-around",
-                                        alignItems:"center",
-                                      }} 
                                       onClick={() => {
                                         navigate("/search/anime"); 
                                         navigate(0);
@@ -221,8 +224,7 @@ export default function NavBar() {
                                       <PlayArrow sx={{fontSize:"2rem"}}/><span>Anime Search</span>
                                     </Link>
                                     <Box id="secondary-anime-links">
-                                      <Link 
-                                        fontSize={".9rem"} 
+                                      <Link fontSize={".9rem"} 
                                         onClick={() => {
                                           navigate('/search/anime/trending'); 
                                           navigate(0);
@@ -240,34 +242,8 @@ export default function NavBar() {
                                     </Box>
                                   </Box>
 
-                                  <Box id="manga-links" 
-                                    sx={{
-                                      marginTop:"10px",
-                                      width:"100%",
-                                      "& a":{
-                                        color: '#111111',
-                                        textDecoration:"none",
-                                        "&:hover": {
-                                          color: '#673ab7',
-                                          cursor: "pointer",
-                                        },
-                                      },
-                                      "& > div":{
-                                        gap:"1.4rem",
-                                        display: "flex",
-                                        justifyContent:"flex-end",
-                                        alignItems:"center",
-                                      }
-                                    }}
-                                  >
+                                  <Box id="manga-links" sx={{marginTop:"10px", width:"100%",}}>
                                     <Link 
-                                      sx={{
-                                        fontSize:"1.2rem",
-                                        fontWeight:"600",
-                                        display:"flex",
-                                        justifyContent:"space-around",
-                                        alignItems:"center",
-                                      }} 
                                       onClick={() => {
                                         navigate("/search/manga"); 
                                         navigate(0);
@@ -276,16 +252,14 @@ export default function NavBar() {
                                       <AutoStories sx={{fontSize:"2rem"}}/><span>Manga Search</span>
                                     </Link>
                                     <Box id="secondary-manga-links">
-                                      <Link 
-                                        fontSize={".9rem"} 
+                                      <Link fontSize={".9rem"} 
                                         onClick={() => {
                                           navigate('/search/manga/trending'); 
                                           navigate(0);
                                         }} 
                                       > Trending
                                       </Link>
-                                      <Link 
-                                        fontSize={".9rem"} 
+                                      <Link fontSize={".9rem"} 
                                         onClick={() => {
                                           navigate('/search/manga/popularity'); 
                                           navigate(0);
@@ -303,7 +277,8 @@ export default function NavBar() {
                     )}
                   </PopupState>
               </Box>
-
+              
+              {/* RIGHT SIDE USER MENU WRAP */}
               <Box 
                 id="user-wrap"
                 sx={{
@@ -405,6 +380,7 @@ export default function NavBar() {
                     </>
                   }
                   
+                  {/* ICON DROPDOWN MENU */}
                   {anchorRef && 
                   <Popper
                     anchorEl={anchorRef.current} 

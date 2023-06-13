@@ -527,6 +527,7 @@ export default function NavBar() {
                 onChange={(event, option) =>{
                   window.location.href = `http://localhost:3000/user/${option.userName}`
                 }}
+                PaperComponent={CustomPaper}
                 renderInput={(params) => 
                   <TextField 
                     variant="outlined"  

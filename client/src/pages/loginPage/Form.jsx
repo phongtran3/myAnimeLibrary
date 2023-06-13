@@ -160,14 +160,24 @@ const registerSchema = yup.object().shape({
                 setFieldValue,
                 resetForm,
                 }) => (
-                    <>
+                    <Box id='form-container'
+                        sx={{
+                            background:"#EDE7F6",
+                            marginLeft:"calc(2rem*-1)",
+                            padding: "2rem",
+                            borderRadius: "10px",
+                        }}
+                    >
                     <Typography 
                         variant="h6" 
-                        sx={{color: "white", 
+                        sx={{
+                            color: "white", 
                             display: "flex", 
                             justifyContent:"center", 
                             marginBottom:"10px" 
-                        }}> {!isLogin ? "Register" : "Login"}
+                        }}
+                    > 
+                        {!isLogin ? "Register" : "Login"}
                     </Typography>
                     {/* <Typography>{error ? error : ""}</Typography> */}
                     {error ? <Alert severity="error" sx={{marginBottom:"10px"}}> {error}</Alert> : null }
@@ -404,7 +414,7 @@ const registerSchema = yup.object().shape({
                             </Typography>
                         </Box>
                     </form>
-            </>
+            </Box>
             
             )}
         </Formik>

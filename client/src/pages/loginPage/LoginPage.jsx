@@ -3,6 +3,7 @@ import React from 'react'
 import {Box, useMediaQuery, Typography, Paper } from '@mui/material';
 import Form from './Form';
 import {Link } from "react-router-dom";
+import { BorderRight } from '@mui/icons-material';
 
 //Array of images for background. 
 //No copyright intended. All right goes to the orginal owner.
@@ -20,48 +21,53 @@ export default function LoginPage() {
   const isDesktopScreen = useMediaQuery("(min-width: 1000px)");
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundImage: `url(${backgroundImgs})`,
-        width: '100%',
-        height: '100%',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        opacity: '.75',
-    }}>
-    <Box
-        width="100%"
-        backgroundColor="transparent"
-        p=".5rem"
-        textAlign="center"
-        position="relative"
-      >
-        <Typography fontWeight="bold" fontSize="32px" color="primary" component={Link} to="/">
-          My Anime Library
-        </Typography>
+    <Box>
+      <Box width="100%" p=".5rem" textAlign="center" position="relative" id="navbar">
+        <Typography 
+          sx={{
+            textDecoration:"none",
+            "&:hover": {
+              color: '#b39ddb',
+              cursor: "pointer",
+            },
+          }} 
+          fontWeight="bold" 
+          fontSize="32px" 
+          color="primary" 
+          component={Link} 
+          to="/"
+          >
+            myAnimeLibrary
+         </Typography>
       </Box>
-    <Paper 
-        //p="1rem"
-        //m="auto"
-        //borderRadius="1.5rem"
-        elevation={12}
-        sx={{ 
-          backdropFilter: "blur(15px)",
-          // width: isDesktopScreen ? "40%" : "70%", 
-          padding: "1rem 2rem",
-          margin: "auto",
-          borderRadius:"1.5rem",
-          background: "transparent"
+
+
+      <Box id="form-card"
+        sx={{
+          display:"grid",
+          gridTemplateColumns: "auto 55%",
+          height: "850px",
+          width: "75%",
+          margin: "0 auto",
+          boxShadow: "4px 4px 12px 2px rgba(0, 0, 0, 0.6)"
         }}
-    >
-      <Form/>
-    </Paper>
+      >
+        <Box id="img">
+          <img 
+            style={{
+              width:"100%", 
+              height:"100%", 
+              objectFit:"cover",
+              borderRadius: "10px"
+            }} 
+            src={`https://i.pinimg.com/originals/bf/16/a6/bf16a658662656209bcaacaa76ca771a.jpg`} 
+          />
+        </Box>
+        <Form/>
+      </Box >
 
 
 
-    </div>
+    </Box>
   )
 }

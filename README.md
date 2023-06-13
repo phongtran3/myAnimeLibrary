@@ -21,7 +21,7 @@ Nodejs Express.js Mongodb JWT Mongoose
 - Follow/Unfollow Users (TBD)
 - Search Anime/Manga (x)
 - Add/Remove/Update Anime/Manga to User's collection (x)
-- Dark mode
+- Dark mode (x)
 - Infinite Scrolling (x)
 
 ## Disclaimer

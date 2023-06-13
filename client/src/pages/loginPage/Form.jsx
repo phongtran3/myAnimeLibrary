@@ -169,17 +169,17 @@ const registerSchema = yup.object().shape({
                         }}
                     >
                     <Typography 
-                        variant="h6" 
+                        variant="h3" 
                         sx={{
-                            color: "white", 
+                            color: "#111111", 
                             display: "flex", 
-                            justifyContent:"center", 
-                            marginBottom:"10px" 
+                            justifyContent:"flex-start", 
+                            marginBottom:"10px",
+                            fontWeight: "600"
                         }}
                     > 
-                        {!isLogin ? "Register" : "Login"}
+                        {!isLogin ? "Create Account" : "Login"}
                     </Typography>
-                    {/* <Typography>{error ? error : ""}</Typography> */}
                     {error ? <Alert severity="error" sx={{marginBottom:"10px"}}> {error}</Alert> : null }
                     {/* <Alert severity="error">{error ? error : ""}</Alert> */}
                     <form onSubmit={handleSubmit}>

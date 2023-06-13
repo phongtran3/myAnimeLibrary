@@ -21,7 +21,7 @@ export default function LoginPage() {
   const isDesktopScreen = useMediaQuery("(min-width: 1000px)");
 
   return (
-    <Box>
+    <Box sx={{backgroundColor: "#edf1f5"}}>
       <Box width="100%" p=".5rem" textAlign="center" position="relative" id="navbar">
         <Typography 
           sx={{
@@ -49,6 +49,7 @@ export default function LoginPage() {
           height: "850px",
           width: "75%",
           margin: "0 auto",
+          borderRadius:"10px",
           boxShadow: "4px 4px 12px 2px rgba(0, 0, 0, 0.6)"
         }}
       >

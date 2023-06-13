@@ -195,9 +195,7 @@ export default function NavBar() {
                         transition 
                         placement="bottom-start" 
                         sx={{
-                          width:'100%', 
                           width:"250px", 
-                          marginTop:"5px", 
                           zIndex:"1101"
                         }}
                       >

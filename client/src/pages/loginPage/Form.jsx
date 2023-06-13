@@ -381,19 +381,22 @@ const registerSchema = yup.object().shape({
                         </Box>
 
                         {/* BUTTONS */}
-                        <Box>
+                        <Box mt=".5rem">
                             <Button
                                 fullWidth
                                 type="submit"
                                 sx={{
-                                    m: "0",
+                                    fontWeight:"600",
                                     p: ".5rem",
-                                    backgroundColor: palette.primary.main,
-                                    color: palette.background.alt,
-                                    "&:hover": { color: palette.primary.dark, backgroundColor: palette.primary.light, },
+                                    backgroundColor: palette.primary.light,
+                                    color: "#111111",
+                                    "&:hover": { 
+                                        //color: palette.primary.dark, 
+                                        backgroundColor: palette.primary.main, 
+                                    },
                                 }}
                                 >
-                                {isLogin ? "LOGIN" : "REGISTER"}
+                                {isLogin ? "LOGIN" : "CREATE ACCOUNT"}
                             </Button>
                             <Typography
                                 onClick={() => {
@@ -402,11 +405,12 @@ const registerSchema = yup.object().shape({
                                     resetForm();
                                 }}
                                 sx={{
-                                    textDecoration: "underline",
-                                    color: palette.primary.main,
+                                    marginTop: "10px",
+                                    textDecoration: "none",
+                                    color: "#111111",
                                     "&:hover": {
                                     cursor: "pointer",
-                                    color: palette.primary.light,
+                                    color: palette.primary.main,
                                     },
                                 }}
                                 >

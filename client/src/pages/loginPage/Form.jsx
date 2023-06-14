@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { TextField, Typography, useTheme, Button, Box, InputAdornment, IconButton, Alert  } from "@mui/material";
+import { TextField, Typography, Button, Box, InputAdornment, IconButton, Alert  } from "@mui/material";
 import {Person, AccountCircle, Email, Lock, Visibility, VisibilityOff, EditOutlined} from "@mui/icons-material"
 import {Formik} from "formik";
 import * as yup from "yup";
@@ -31,7 +31,7 @@ const registerSchema = yup.object().shape({
     password: "",
     userName: "",
     picture: "",
-    confirmPassword: '',
+    confirmPassword: "",
 
   };
   
@@ -46,9 +46,9 @@ const registerSchema = yup.object().shape({
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [error, setError] = useState("");
+    const [pictureError, setPictureError] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { palette  } = useTheme();
     const handleShowPassword = () => setShowPassword(!showPassword);
     const handleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
@@ -143,10 +143,12 @@ const registerSchema = yup.object().shape({
         if(isLogin) await login(values, onSubmitProps);
         if(!isLogin) await register(values, onSubmitProps);
     }
+    //console.log(isLogin);
 
     return (
         <Formik
             onSubmit={handleFormSubmit}
+            enableReinitialize
             initialValues={isLogin ? loginInitalValues :registerInitalValues }
             validationSchema={isLogin ? loginSchema : registerSchema}
         >
@@ -159,17 +161,16 @@ const registerSchema = yup.object().shape({
                 handleSubmit,
                 setFieldValue,
                 resetForm,
-                }) => (
-                    <Box id='form-container'
-                        sx={{
-                            background:"#EDE7F6",
-                            marginLeft:"calc(2rem*-1)",
-                            padding: "2rem",
-                            borderRadius: "10px",
-                        }}
-                    >
-                    <Typography 
-                        variant="h3" 
+            }) => (
+                <Box id='form-container'
+                    sx={{
+                        background:"#EDE7F6",
+                        marginLeft:"calc(2rem*-1)",
+                        padding: "2rem",
+                        borderRadius: "10px",
+                    }}
+                >
+                    <Typography variant="h3" 
                         sx={{
                             color: "#111111", 
                             display: "flex", 
@@ -207,7 +208,7 @@ const registerSchema = yup.object().shape({
                                     label="First Name"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
-                                    value={values.firstName}
+                                    value={values.firstName || ""}
                                     name="firstName"
                                     error={ Boolean(touched.firstName) && Boolean(errors.firstName)}
                                     helperText={touched.firstName && errors.firstName}
@@ -226,7 +227,7 @@ const registerSchema = yup.object().shape({
                                     label="Last Name"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
-                                    value={values.lastName}
+                                    value={values.lastName || ""}
                                     name="lastName"
                                     error={Boolean(touched.lastName) && Boolean(errors.lastName)}
                                     helperText={touched.lastName && errors.lastName}
@@ -246,7 +247,7 @@ const registerSchema = yup.object().shape({
                                     label="Username"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
-                                    value={values.userName}
+                                    value={values.userName || ""}
                                     name="userName"
                                     error={Boolean(touched.userName) && Boolean(errors.userName)}
                                     helperText={touched.userName && errors.userName}
@@ -261,12 +262,14 @@ const registerSchema = yup.object().shape({
 
                                 />
                                 <Box
-                                    sx={{ gridColumn: "span 4" }}
-                                    border={`1px solid rgba(0, 0, 0, 0.23)`}
-                                    borderRadius="5px"
-                                    p=".75rem"
-                                    mb={'15px'}
-
+                                    sx={{
+                                        borderRadius:"5px",
+                                        padding:".75rem",
+                                        marginBottom:"10px",
+                                        gridColumn: "span 4", 
+                                        border:`1px solid ${pictureError ? "#d32f2f" : "rgba(0, 0, 0, 0.45)"}`
+                                    }}
+                                    id="dropzone-wrapper"
                                 >
                                     <Dropzone
                                         acceptedFiles=".jpg,.jpeg,.png"
@@ -276,20 +279,20 @@ const registerSchema = yup.object().shape({
                                     {({ getRootProps, getInputProps }) => (
                                     <Box
                                         {...getRootProps()}
-                                        border={`2px dashed ${palette.primary.main}`}
+                                        border={`2px dashed #673ab7`}
                                         p="1rem"
                                         sx={{ "&:hover": { cursor: "pointer" } }}
                                     >
-                                    <input {...getInputProps()} />
+                                    <input {...getInputProps()}  />
                                     {!values.picture ? (
-                                    <p>Add Picture Here</p>
+                                    <p style={{color: pictureError ? "#d32f2f" : "#111111"}}>Add Picture Here</p>
                                     ) : (
                                     <Box
                                         display="flex"
                                         justifyContent={"space-between"}
                                         alignItems={'center'}
                                     >
-                                        <Typography>{values.picture.name}</Typography>
+                                        <Typography sx={{overflow:"hidden", }}>{values.picture.name}</Typography>
                                         <EditOutlined />
                                     </Box>
                                     )}
@@ -297,7 +300,27 @@ const registerSchema = yup.object().shape({
                                     )}
                                     </Dropzone>
                                 </Box>
+
+                                {pictureError ? 
+                                    <p 
+                                        style={{
+                                            color:"#d32f2f",
+                                            fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+                                            fontSize: "0.75rem",
+                                            lineHeight: 1.66,
+                                            letterSpacing: "0.03333em",
+                                            textAlign: "left",
+                                            marginTop: "3px",
+                                            marginRight: "14px",
+                                            marginBottom: "5px",
+                                            marginLeft: "14px",
+                                        }}
+                                    >
+                                        required
+                                    </p>: null
+                                }
                                 </>
+                                
                             )}
 
                             <TextField
@@ -306,7 +329,7 @@ const registerSchema = yup.object().shape({
                                 label="Email"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.email}
+                                value={values.email || "" }
                                 name="email"
                                 error={Boolean(touched.email) && Boolean(errors.email)}
                                 helperText={touched.email && errors.email}
@@ -327,7 +350,7 @@ const registerSchema = yup.object().shape({
                                 type={showPassword ? 'text' : 'password'}
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.password}
+                                value={values.password || "" }
                                 name="password"
                                 error={Boolean(touched.password) && Boolean(errors.password)}
                                 helperText={touched.password && errors.password}
@@ -356,7 +379,7 @@ const registerSchema = yup.object().shape({
                                     type={showConfirmPassword ? 'text' : 'password'}
                                     onBlur={handleBlur}
                                     onChange={handleChange}
-                                    value={values.confirmPassword}
+                                    value={values.confirmPassword || "" }
                                     name="confirmPassword"
                                     error={Boolean(touched.confirmPassword) && Boolean(errors.confirmPassword)}
                                     helperText={touched.confirmPassword && errors.confirmPassword}
@@ -383,16 +406,20 @@ const registerSchema = yup.object().shape({
                         {/* BUTTONS */}
                         <Box mt=".5rem">
                             <Button
+                                onClick={()=>{
+                                    if(!values.picture) setPictureError("testing");
+                                    else setPictureError(null);
+                                }}
                                 fullWidth
                                 type="submit"
                                 sx={{
                                     fontWeight:"600",
                                     p: ".5rem",
-                                    backgroundColor: palette.primary.light,
+                                    backgroundColor: '#673ab7',
                                     color: "#111111",
                                     "&:hover": { 
                                         //color: palette.primary.dark, 
-                                        backgroundColor: palette.primary.main, 
+                                        backgroundColor: '#9575cd',
                                     },
                                 }}
                                 >
@@ -400,17 +427,19 @@ const registerSchema = yup.object().shape({
                             </Button>
                             <Typography
                                 onClick={() => {
-                                    setIsLogin(isLogin ? false : true )
-                                    setError(null);
+                                    setIsLogin(isLogin ? false : true );
                                     resetForm();
+                                    setError(null);
+                                    setPictureError(null);
                                 }}
                                 sx={{
+                                    width:"fit-content",
                                     marginTop: "10px",
                                     textDecoration: "none",
                                     color: "#111111",
                                     "&:hover": {
                                     cursor: "pointer",
-                                    color: palette.primary.main,
+                                    color: '#673ab7'
                                     },
                                 }}
                                 >
@@ -418,8 +447,7 @@ const registerSchema = yup.object().shape({
                             </Typography>
                         </Box>
                     </form>
-            </Box>
-            
+                </Box>
             )}
         </Formik>
     )

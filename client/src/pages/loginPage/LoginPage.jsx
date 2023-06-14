@@ -46,9 +46,11 @@ export default function LoginPage() {
         sx={{
           display:"grid",
           gridTemplateColumns: "auto 55%",
-          height: "850px",
-          width: "75%",
+          height: "800px",
+          //width: "75%",
+          width:"1000px",
           margin: "0 auto",
+          marginTop:"1rem",
           borderRadius:"10px",
           boxShadow: "4px 4px 12px 2px rgba(0, 0, 0, 0.6)"
         }}
@@ -61,9 +63,12 @@ export default function LoginPage() {
               objectFit:"cover",
               borderRadius: "10px"
             }} 
-            src={`https://i.pinimg.com/originals/bf/16/a6/bf16a658662656209bcaacaa76ca771a.jpg`} 
+            //src={`https://i.pinimg.com/originals/bf/16/a6/bf16a658662656209bcaacaa76ca771a.jpg`}
+            src='https://preview.redd.it/b7zeuido3f461.jpg?auto=webp&s=6f88b8678630d9e16afe422b0758e45cdb3c63b2'
+            //src={'https://w0.peakpx.com/wallpaper/245/1014/HD-wallpaper-sung-jin-woo-magenta-manhwa-tbate-anime-aesthetic-the-beginning-after-the-end-manga-purple-shadow-monarch.jpg'}
           />
         </Box>
+        
         <Form/>
       </Box >
 

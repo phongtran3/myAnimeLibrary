@@ -188,9 +188,9 @@ const registerSchema = yup.object().shape({
                             // display="flex"
                             // flexDirection={"column"}
                             sx={{
-                                "& .MuiInputBase-root": {background: `rgb(255,255,255, .94)`},
-                                "& .MuiInputBase-root:hover": {background: `rgb(255,255,255, .94)`},
-                                "& .MuiFilledInput-root.Mui-focused": {backgroundColor: `rgb(255,255,255, .94)`},
+                                "& .MuiInputBase-root": {background: "none"},
+                                "& .MuiInputBase-root:hover": {background: "none"},
+                                //"& .MuiFilledInput-root.Mui-focused": {backgroundColor: `rgb(255,255,255, .94)`},
                                 "& .MuiSvgIcon-root" :{color: 'black'},
                                 "& > div": { gridColumn: undefined }
                             
@@ -204,8 +204,9 @@ const registerSchema = yup.object().shape({
                                 <>
                                 <TextField
                                     autoComplete="off"
-                                    variant="filled"
+                                    variant="outlined"
                                     label="First Name"
+                                    placeholder="Name"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value={values.firstName || ""}
@@ -223,8 +224,9 @@ const registerSchema = yup.object().shape({
                                 />
                                 <TextField
                                     autoComplete="off"
-                                    variant="filled"
+                                    variant="outlined"
                                     label="Last Name"
+                                    placeholder="Name"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value={values.lastName || ""}
@@ -243,8 +245,9 @@ const registerSchema = yup.object().shape({
                                 />
                                 <TextField
                                     autoComplete="off"
-                                    variant="filled"
+                                    variant="outlined"
                                     label="Username"
+                                    placeholder="Username"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value={values.userName || ""}
@@ -265,7 +268,7 @@ const registerSchema = yup.object().shape({
                                     sx={{
                                         borderRadius:"5px",
                                         padding:".75rem",
-                                        marginBottom:"10px",
+                                        marginBottom: pictureError ? "10px" : null,
                                         gridColumn: "span 4", 
                                         border:`1px solid ${pictureError ? "#d32f2f" : "rgba(0, 0, 0, 0.45)"}`
                                     }}
@@ -310,10 +313,7 @@ const registerSchema = yup.object().shape({
                                             lineHeight: 1.66,
                                             letterSpacing: "0.03333em",
                                             textAlign: "left",
-                                            marginTop: "3px",
-                                            marginRight: "14px",
-                                            marginBottom: "5px",
-                                            marginLeft: "14px",
+                                            margin:"0px 14px 10px",
                                         }}
                                     >
                                         required
@@ -325,8 +325,9 @@ const registerSchema = yup.object().shape({
 
                             <TextField
                                 autoComplete="off"
-                                variant="filled"
+                                variant="outlined"
                                 label="Email"
+                                placeholder="email@email.com"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                                 value={values.email || "" }
@@ -345,8 +346,9 @@ const registerSchema = yup.object().shape({
 
                             <TextField
                                 autoComplete="off"
-                                variant="filled"
+                                variant="outlined"
                                 label="Password"
+                                placeholder="Password"
                                 type={showPassword ? 'text' : 'password'}
                                 onBlur={handleBlur}
                                 onChange={handleChange}
@@ -374,8 +376,9 @@ const registerSchema = yup.object().shape({
                             {!isLogin && (
                                 <TextField
                                     autoComplete="off"
-                                    variant="filled"
+                                    variant="outlined"
                                     label="Confirm Password"
+                                    placeholder="Confirm Password"
                                     type={showConfirmPassword ? 'text' : 'password'}
                                     onBlur={handleBlur}
                                     onChange={handleChange}

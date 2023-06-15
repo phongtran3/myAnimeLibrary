@@ -55,7 +55,7 @@ export default function LoginPage() {
           boxShadow: "4px 4px 12px 2px rgba(0, 0, 0, 0.6)"
         }}
       >
-        <Box id="img">
+        <Box id="img" sx={{width:"100%", height:"inherit"}}>
           <img 
             style={{
               width:"100%", 

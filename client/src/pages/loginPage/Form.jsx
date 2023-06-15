@@ -170,29 +170,47 @@ const registerSchema = yup.object().shape({
                         borderRadius: "10px",
                     }}
                 >
-                    <Typography variant="h3" 
-                        sx={{
-                            color: "#111111", 
-                            display: "flex", 
-                            justifyContent:"flex-start", 
-                            marginBottom:"10px",
-                            fontWeight: "600"
-                        }}
-                    > 
-                        {!isLogin ? "Create Account" : "Login"}
-                    </Typography>
+                    <Box>
+                        <Typography variant="h3" 
+                            sx={{
+                                color: "#111111", 
+                                display: "flex", 
+                                justifyContent:"flex-start", 
+                                fontWeight: "600"
+                            }}
+                        > 
+                            {!isLogin ? "Create Account" : "Login"}
+                        </Typography>
+                    {isLogin && <Typography>Welcome back!</Typography>}
+
+                    </Box>
+                    
                     {error ? <Alert severity="error" sx={{marginBottom:"10px"}}> {error}</Alert> : null }
                     {/* <Alert severity="error">{error ? error : ""}</Alert> */}
                     <form onSubmit={handleSubmit}>
                         <Box
+                            id='form-field-wrapper'
                             // display="flex"
                             // flexDirection={"column"}
                             sx={{
-                                "& .MuiInputBase-root": {background: "none"},
+                                marginTop:"3rem",
+                                "& .MuiInputBase-root": {
+                                    background: "none", 
+                                    height:"45px"
+                                },
+                                "& .MuiFormControl-root ":{
+                                    marginBottom:"1rem",
+                                },
+                                "& .MuiFormHelperText-root":{
+                                    marginTop: "0px",
+                                },
                                 "& .MuiInputBase-root:hover": {background: "none"},
                                 //"& .MuiFilledInput-root.Mui-focused": {backgroundColor: `rgb(255,255,255, .94)`},
                                 "& .MuiSvgIcon-root" :{color: 'black'},
-                                "& > div": { gridColumn: undefined }
+                                "& > div": {
+
+                                    gridColumn: undefined 
+                                }
                             
                             }}
                             display="grid"
@@ -220,7 +238,7 @@ const registerSchema = yup.object().shape({
                                         </InputAdornment>
                                         ),
                                     }}
-                                    sx={{marginBottom: '5px', gridColumn: "span 2" }}
+                                    sx={{marginBottom: '5px', gridColumn: "span 2",}}
                                 />
                                 <TextField
                                     autoComplete="off"
@@ -268,22 +286,23 @@ const registerSchema = yup.object().shape({
                                     sx={{
                                         borderRadius:"5px",
                                         padding:".75rem",
-                                        marginBottom: pictureError ? "10px" : null,
+                                        marginBottom: pictureError ? null: "1rem",
                                         gridColumn: "span 4", 
-                                        border:`1px solid ${pictureError ? "#d32f2f" : "rgba(0, 0, 0, 0.45)"}`
+                                        border:`1px solid ${pictureError && !values.picture? "#d32f2f" : "rgba(0, 0, 0, 0.45)"}`
                                     }}
                                     id="dropzone-wrapper"
                                 >
                                     <Dropzone
                                         acceptedFiles=".jpg,.jpeg,.png"
                                         multiple={false}
+                                        onChange={() => {console.log("Change")}}
                                         onDrop={(acceptedFiles) => setFieldValue("picture", acceptedFiles[0])}
                                     >
                                     {({ getRootProps, getInputProps }) => (
                                     <Box
                                         {...getRootProps()}
                                         border={`2px dashed #673ab7`}
-                                        p="1rem"
+                                        p=".5rem"
                                         sx={{ "&:hover": { cursor: "pointer" } }}
                                     >
                                     <input {...getInputProps()}  />
@@ -304,7 +323,7 @@ const registerSchema = yup.object().shape({
                                     </Dropzone>
                                 </Box>
 
-                                {pictureError ? 
+                                {pictureError && !values.picture ? 
                                     <p 
                                         style={{
                                             color:"#d32f2f",

@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { TextField, Typography, Button, Box, InputAdornment, IconButton, Alert  } from "@mui/material";
+import { TextField, Typography, Button, Box, InputAdornment, IconButton, Alert, useMediaQuery  } from "@mui/material";
 import {Person, AccountCircle, Email, Lock, Visibility, VisibilityOff, EditOutlined} from "@mui/icons-material"
 import {Formik} from "formik";
 import * as yup from "yup";
@@ -51,6 +51,9 @@ const registerSchema = yup.object().shape({
     const dispatch = useDispatch();
     const handleShowPassword = () => setShowPassword(!showPassword);
     const handleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+
+    const tabletScreen = useMediaQuery("(min-width: 630px)");
+    const desktopScreen = useMediaQuery("(min-width: 1040px)");
 
     async function login (values, onSubmitProps) {
         await axios.post(
@@ -170,7 +173,7 @@ const registerSchema = yup.object().shape({
                         borderRadius: "10px",
                     }}
                 >
-                    <Box>
+                    <Box mt={isLogin ? "20%" : null}>
                         <Typography variant="h3" 
                             sx={{
                                 color: "#111111", 
@@ -181,7 +184,7 @@ const registerSchema = yup.object().shape({
                         > 
                             {!isLogin ? "Create Account" : "Login"}
                         </Typography>
-                    {isLogin && <Typography>Welcome back!</Typography>}
+                    {isLogin && <Typography mt={".5rem"}>Welcome back!</Typography>}
 
                     </Box>
                     
@@ -198,23 +201,28 @@ const registerSchema = yup.object().shape({
                                     background: "none", 
                                     height:"45px"
                                 },
+
                                 "& .MuiFormControl-root ":{
                                     marginBottom:"1rem",
                                 },
                                 "& .MuiFormHelperText-root":{
                                     marginTop: "0px",
                                 },
-                                "& .MuiInputBase-root:hover": {background: "none"},
+                                "& .MuiInputBase-root:hover": {
+                                    background: "none",                             
+                                },
                                 //"& .MuiFilledInput-root.Mui-focused": {backgroundColor: `rgb(255,255,255, .94)`},
-                                "& .MuiSvgIcon-root" :{color: 'black'},
+                                "& .MuiSvgIcon-root" :{
+                                    color: 'black'
+                                },
                                 "& > div": {
-
                                     gridColumn: undefined 
                                 }
                             
                             }}
                             display="grid"
                             columnGap="10px"
+                            rowGap="5px"
                             gridTemplateColumns="repeat(4, minmax(0, 1fr))"
                             //background: rgb(255,255,255, .94)
                         >
@@ -286,9 +294,12 @@ const registerSchema = yup.object().shape({
                                     sx={{
                                         borderRadius:"5px",
                                         padding:".75rem",
-                                        marginBottom: pictureError ? null: "1rem",
+                                        marginBottom: pictureError && !values.picture ? null: "1rem",
                                         gridColumn: "span 4", 
-                                        border:`1px solid ${pictureError && !values.picture? "#d32f2f" : "rgba(0, 0, 0, 0.45)"}`
+                                        border:`1px solid ${pictureError && !values.picture ? "#d32f2f" : "rgba(0, 0, 0, 0.45)"}`,
+                                        "&:hover":{
+                                            borderColor: pictureError ? null : "rgba(0, 0, 0, 0.87)"
+                                        }
                                     }}
                                     id="dropzone-wrapper"
                                 >

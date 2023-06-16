@@ -149,6 +149,20 @@ const registerSchema = yup.object().shape({
     //console.log(isLogin);
 
     return (
+        <>
+        <Box id="img" sx={{width:"100%", height:"inherit"}}>
+          <img 
+            style={{
+              width:"100%", 
+              height:"100%", 
+              objectFit:"cover",
+              borderRadius: "10px"
+            }} 
+            src={isLogin ? 
+                'https://w0.peakpx.com/wallpaper/245/1014/HD-wallpaper-sung-jin-woo-magenta-manhwa-tbate-anime-aesthetic-the-beginning-after-the-end-manga-purple-shadow-monarch.jpg':
+                'https://w0.peakpx.com/wallpaper/52/58/HD-wallpaper-shinobu-kocho-anime-girl-butterfly-demon-slayer-shinobu-kocho.jpg'}
+          />
+        </Box>
         <Formik
             onSubmit={handleFormSubmit}
             enableReinitialize
@@ -483,6 +497,7 @@ const registerSchema = yup.object().shape({
                 </Box>
             )}
         </Formik>
+        </>
     )
   }
   

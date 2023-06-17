@@ -18,10 +18,17 @@ const Images =[
 
 export default function LoginPage() {
   const backgroundImgs= Images[Math.floor(Math.random() * Images.length)];
-  const isDesktopScreen = useMediaQuery("(min-width: 1000px)");
-
+  const tabletScreen = useMediaQuery("(min-width: 630px)");
+  const desktopScreen = useMediaQuery("(min-width: 1040px)");
   return (
-    <Box sx={{backgroundColor: "#edf1f5", width:"100%", height:"100%"}}>
+    <Box 
+      sx={{
+        //backgroundColor: "#edf1f5", 
+        background:"radial-gradient(circle at 10% 20%, rgb(186, 190, 245) 0%, rgb(192, 192, 245) 33.1%, rgb(218, 203, 246) 90%)",
+        width:"100%", 
+        height:"100%"
+      }}
+    >
       <Box width="100%" p=".5rem" textAlign="center" position="relative" id="navbar">
         <Typography 
           sx={{
@@ -45,14 +52,14 @@ export default function LoginPage() {
       <Box id="form-card"
         sx={{
           display:"grid",
-          gridTemplateColumns: "auto 55%",
+          gridTemplateColumns: !desktopScreen ? "auto" : "auto 55%",
           height: "800px",
-          //width: "75%",
-          width:"1000px",
+          width: desktopScreen ? "1000px" : tabletScreen ? "600px" : "100%",
+          maxWidth:"1000px",
           margin: "0 auto",
           marginTop:"2rem",
           borderRadius:"10px",
-          boxShadow: "4px 4px 12px 2px rgba(0, 0, 0, 0.6)"
+          boxShadow: tabletScreen ? "4px 4px 12px 2px rgba(0, 0, 0, 0.6)" : null
         }}
       >
       

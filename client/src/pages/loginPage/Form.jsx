@@ -150,7 +150,13 @@ const registerSchema = yup.object().shape({
 
     return (
         <>
-        <Box id="img" sx={{width:"100%", height:"inherit"}}>
+        <Box id="img" 
+            sx={{
+                width:"100%", 
+                height:"inherit",
+                display: desktopScreen ? "block": "none",
+            }}
+        >
           <img 
             style={{
               width:"100%", 
@@ -181,13 +187,22 @@ const registerSchema = yup.object().shape({
             }) => (
                 <Box id='form-container'
                     sx={{
-                        background:"#EDE7F6",
-                        marginLeft:"calc(2rem*-1)",
+                        background: tabletScreen ? "#EDE7F6" : null,
+                        marginLeft: !desktopScreen ? null : "calc(2rem*-1)",
                         padding: "2rem",
                         borderRadius: "10px",
                     }}
                 >
-                    <Box mt={isLogin ? "20%" : null}>
+                    <Box 
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: desktopScreen ? "flex-start" : "center",
+                            marginTop: isLogin ? "5rem" : null
+                        }}
+                    
+                    
+                    >
                         <Typography variant="h3" 
                             sx={{
                                 color: "#111111", 
@@ -210,7 +225,7 @@ const registerSchema = yup.object().shape({
                             // display="flex"
                             // flexDirection={"column"}
                             sx={{
-                                marginTop:"3rem",
+                                marginTop:"2rem",
                                 "& .MuiInputBase-root": {
                                     background: "none", 
                                     height:"45px"
@@ -260,7 +275,7 @@ const registerSchema = yup.object().shape({
                                         </InputAdornment>
                                         ),
                                     }}
-                                    sx={{marginBottom: '5px', gridColumn: "span 2",}}
+                                    sx={{marginBottom: '5px', gridColumn: tabletScreen ? "span 2": "span 4"}}
                                 />
                                 <TextField
                                     autoComplete="off"
@@ -280,7 +295,7 @@ const registerSchema = yup.object().shape({
                                         </InputAdornment>
                                         ),
                                     }}
-                                    sx={{marginBottom: '5px', gridColumn: "span 2" }}
+                                    sx={{marginBottom: '5px', gridColumn: tabletScreen ? "span 2": "span 4"}}
 
                                 />
                                 <TextField

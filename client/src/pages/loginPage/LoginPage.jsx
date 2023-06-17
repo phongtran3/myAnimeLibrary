@@ -26,7 +26,8 @@ export default function LoginPage() {
         //backgroundColor: "#edf1f5", 
         background:"radial-gradient(circle at 10% 20%, rgb(186, 190, 245) 0%, rgb(192, 192, 245) 33.1%, rgb(218, 203, 246) 90%)",
         width:"100%", 
-        height:"100%"
+        height:"100%",
+        overflow:"auto",
       }}
     >
       <Box width="100%" p=".5rem" textAlign="center" position="relative" id="navbar">
@@ -53,11 +54,10 @@ export default function LoginPage() {
         sx={{
           display:"grid",
           gridTemplateColumns: !desktopScreen ? "auto" : "auto 55%",
-          height: "800px",
+          height:"800px",
           width: desktopScreen ? "1000px" : tabletScreen ? "600px" : "100%",
           maxWidth:"1000px",
-          margin: "0 auto",
-          marginTop:"2rem",
+          margin: "2rem auto",
           borderRadius:"10px",
           boxShadow: tabletScreen ? "4px 4px 12px 2px rgba(0, 0, 0, 0.6)" : null
         }}

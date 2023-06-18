@@ -71,15 +71,19 @@ export default function Filter() {
       sx={{
         display: "flex",
         flexWrap:"wrap",
-        gap:"1rem",
+        gap:"1rem 2rem",
         "& > div":{
           flex:"1 0 250px",
           maxWidth: desktopScreen ? "250px" : null,
+        },
+        "& .MuiInputBase-input, .MuiInputBase-root ":{
+          cursor:"pointer",
         }
       }}
     >
         <TextField 
           placeholder='Search...'
+          label="Search"
           variant="outlined"
           value={searchTitle}
           onKeyDown={(e) => {if(e.key === 'Enter') searchMedia();}}
@@ -114,7 +118,7 @@ export default function Filter() {
           )}
           renderTags={(value, getTagProps) => {
             const numTags = value.length;
-            const limitTags = 1;
+            const limitTags = !tabletScreen ? 3 : 1;
             return (
               <>
               {value.slice(0, limitTags).map((option, index) => (

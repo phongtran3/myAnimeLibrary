@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import { useParams, useSearchParams, useNavigate  } from 'react-router-dom';
-import { Box, Button, TextField, Autocomplete, Chip} from '@mui/material'
+import { useParams, useSearchParams, useNavigate} from 'react-router-dom';
+import { Box, Button, TextField, Autocomplete, Chip, Checkbox, useMediaQuery} from '@mui/material'
 import { genreCollection, animeFormat, status, mangaFormat, sortCollection } from './FilterCollections';
 
-
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function Filter() {
   const [searchTitle, setSearchTitle] = useState('');
@@ -15,7 +18,8 @@ export default function Filter() {
 
   const navigate  = useNavigate();
   const params = useParams()
-
+  const tabletScreen = useMediaQuery("(min-width: 630px)");
+  const desktopScreen = useMediaQuery("(min-width: 1100px)");
   
 
   //console.log(sort);
@@ -62,8 +66,18 @@ export default function Filter() {
   }
 
   return (
-    <Box >
-        <h1>Filter</h1>
+    <>
+    <Box 
+      sx={{
+        display: "flex",
+        flexWrap:"wrap",
+        gap:"1rem",
+        "& > div":{
+          flex:"1 0 250px",
+          maxWidth: desktopScreen ? "250px" : null,
+        }
+      }}
+    >
         <TextField 
           placeholder='Search...'
           variant="outlined"
@@ -72,6 +86,7 @@ export default function Filter() {
           onChange={(e) => {setSearchTitle(e.target.value)}}
         />
 
+        {/* GENRES */}
         <Autocomplete 
           multiple 
           limitTags={2} 
@@ -83,13 +98,23 @@ export default function Filter() {
           }}
           disableCloseOnSelect
           getOptionLabel={(option) => option}
-          sx={{width: 500}}
+          renderOption={(props, option, { selected }) => (
+            <li {...props}>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 4 }}
+                checked={selected}
+              />
+              {option}
+            </li>
+          )}
           renderInput={(params) => (
               <TextField {...params} label={`Select Genre`}/>
           )}
           renderTags={(value, getTagProps) => {
             const numTags = value.length;
-            const limitTags = 3;
+            const limitTags = 1;
             return (
               <>
               {value.slice(0, limitTags).map((option, index) => (
@@ -122,7 +147,6 @@ export default function Filter() {
           isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          sx={{ width: 500 }}
           renderInput={(params) => <TextField {...params} label="Select Format" />}
         />
         {/* <TextField
@@ -132,7 +156,6 @@ export default function Filter() {
           select
           label="Select Format"
           defaultValue=""
-          sx={{width: 500}}
         >
           {animeFormat.map((option) => (
             <MenuItem key={option} value={option}>
@@ -159,7 +182,6 @@ export default function Filter() {
           isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          sx={{ width: 500 }}
           renderInput={(params) => <TextField {...params} label="Select Status" />}
         />
         {/* <TextField
@@ -169,7 +191,6 @@ export default function Filter() {
           select
           label="Select Status"
           defaultValue=""
-          sx={{width: 500}}
 
         >
           <MenuItem value="">Any</MenuItem>
@@ -193,11 +214,23 @@ export default function Filter() {
           isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          sx={{ width: 500 }}
           renderInput={(params) => <TextField {...params} label="Select Sorting" />}
         />
-
-        <Button onClick={searchMedia} variant="contained" >Filter</Button>
     </Box>
+    <Button 
+      sx={{
+        marginTop: "1rem", 
+        color: "#111111",
+        fontWeight:"600",
+        "&:hover": {
+          backgroundColor: '#b39ddb',
+        },
+      }} 
+      onClick={searchMedia} 
+      variant="contained"
+     >
+      Filter
+    </Button>
+  </>
   )
 }

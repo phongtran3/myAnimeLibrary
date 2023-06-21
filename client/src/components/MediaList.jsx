@@ -25,6 +25,9 @@ export default function MediaList({media}) {
               transform: "scale(1.05)"
         },
         gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))!important',
+        '@media (max-width: 545px)': {
+          gridTemplateColumns: 'repeat(auto-fill, minmax(185px, 1fr))!important',
+        },
         gap:"25px !important" ,
         "a:nth-child(5)": {
           '@media only screen and (min-width: 1020px) and (max-width: 1265px)':{

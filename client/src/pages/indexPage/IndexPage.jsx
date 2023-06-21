@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingMangaQuery } from './initalQuery';
-import { Box, Grid, CircularProgress, Typography, LinearProgress, useMediaQuery  } from '@mui/material';
+import { Box, Grid, CircularProgress, Typography, LinearProgress, useMediaQuery, useTheme } from '@mui/material';
 import MediaList from '../../components/MediaList';
 import NavBar from '../../components/NavBar';
 import BrowseFilter from '../../components/BrowseFilter';
@@ -14,9 +14,11 @@ export default function IndexPage() {
   const [popularAnime, setpopularAnime] = useState([]);
   const [trendingManga, setTrendingManga] = useState([]);
   const [popularManga, setpopularManga] = useState([]);
-
   const tabletScreen = useMediaQuery("(min-width: 630px)");
   const desktopScreen = useMediaQuery("(min-width: 1100px)");
+
+  const { palette } = useTheme();
+
   const variables = {
     page: 1,
     perPage: 6,
@@ -55,7 +57,22 @@ export default function IndexPage() {
   return (
     <>
     <NavBar />
-    <Box maxWidth="1520px" margin="2rem auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}> 
+    <Box 
+      maxWidth="1520px" 
+      margin="2rem auto"
+      paddingBottom="1rem"
+      sx={{
+        "& .MuiTypography-root":{
+          textDecoration: "none",
+          fontSize: "1.75rem",
+          fontWeight: "600",
+          color: "#111111",
+          "&:hover": {
+            color: '#673ab7',
+          },
+        }
+      }}
+    > 
       <Box margin="0 2rem 2rem">
         <h1>Filter</h1>
         <BrowseFilter />
@@ -64,36 +81,32 @@ export default function IndexPage() {
       {(isLoading) ? <LinearProgress /> : 
       <>
       {!trendingAnime.length ? <CircularProgress/> : 
-        <Box sx={{ width: 'auto', margin: '0rem 2rem'}}>
+        <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
           <Typography variant="h5" component={Link} to={`search/anime/trending`} >Trending Anime</Typography>
           <MediaList media={trendingAnime} />
         </Box>
        }
-      <hr></hr>
       
       {!popularAnime.length ? <CircularProgress/> : 
-      <Box sx={{ width: 'auto', margin: '0rem 2rem'}}>
+      <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
         <Typography variant="h5" component={Link} to={`search/anime/popularity`}>All Time Popular Anime</Typography>
         <MediaList media={popularAnime} />
       </Box>
       }
-      <hr></hr>
       
       {!trendingManga.length ? <CircularProgress/> : 
-      <Box sx={{ width: 'auto', margin: '0rem 2rem'}}>
+      <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
         <Typography variant="h5" component={Link} to={`search/manga/trending`}>Trending Manga</Typography>
         <MediaList media={trendingManga} />
       </Box>
       }
-      <hr></hr>
       
       {!popularManga.length ? <CircularProgress/> : 
-      <Box sx={{ width: 'auto', margin: '0rem 2rem'}}>
+      <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
         <Typography variant="h5" component={Link} to={`search/manga/popularity`}>All Time Popular Manga</Typography>
         <MediaList media={popularManga} />
       </Box>
       }
-      <hr></hr>
       </>
       }
     </Box>

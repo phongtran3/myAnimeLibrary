@@ -17,12 +17,11 @@ export default function MediaList({media}) {
       sx={{
         overflowY: "visible !important",
         textAlign: "center",
-        margin: "2rem 0",
+        marginTop: "0.5rem",
         '& > a':{
           transition: "transform 250ms"
         },
         '& > a:hover':{
-            //transform: "translateY(-15px)"
               transform: "scale(1.05)"
         },
         gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))!important',

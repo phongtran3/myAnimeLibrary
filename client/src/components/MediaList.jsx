@@ -13,34 +13,57 @@ export default function MediaList({media}) {
   //console.log(media);
   return (
     // Large screen gap 72 / small screen 48
-    <ImageList cols={5} gap={72} 
+    <ImageList 
       sx={{
+        overflowY: "visible !important",
         textAlign: "center",
-        padding: "2rem 0",
+        margin: "2rem 0",
         '& > a':{
           transition: "transform 250ms"
         },
         '& > a:hover':{
-            transform: "translateY(-15px)"
-        }
+            //transform: "translateY(-15px)"
+              transform: "scale(1.05)"
+        },
+        gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))!important',
+        gap:"25px !important" ,
+        "a:nth-child(5)": {
+          '@media only screen and (min-width: 1020px) and (max-width: 1265px)':{
+            display: "none"
+          }
+        },
+        "a:nth-child(6)": {
+          '@media only screen and (min-width: 1020px) and (max-width: 1510px)':{
+            display: "none"
+          }
+        },
       }}
       >
       {media.map(anime => (
         <PopupState key={anime.id} variant="popper" popupId="demoPopper" >
           {(popupState) => (
-            <ImageListItem key={anime.id} {...bindHover(popupState)} component={Link} to={anime.siteUrl} target="_blank" rel="noopener noreferrer" >
+            <ImageListItem 
+              sx={{ 
+                //width: "225px", 
+                minHeight: "320px !important" 
+              }}
+              key={anime.id} 
+              {...bindHover(popupState)} 
+              component={Link} 
+              to={anime.siteUrl} target="_blank" rel="noopener noreferrer" 
+            >
                 <img
                     src={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format`}
                     srcSet={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                     alt={anime.title.english === null ? anime.title.romaji : anime.title.english}
                     loading="lazy"
-                    style={{borderRadius: "0.375rem", width: "230px", height: "360px"}}
+                    style={{borderRadius: "0.375rem", width: "100%", height: "100%"}}
                 />
               <ImageListItemBar 
                 title={anime.title.english === null ? anime.title.romaji : anime.title.english} 
                 //position="below" 
                 //subtitle={anime.title.english === null ? anime.title.romaji : anime.title.english}
-                sx={{ maxWidth: "230px"}}
+                //sx={{ maxWidth: "230px"}}
               />
               <Box sx={{"& .MuiButtonBase-root": {width:"40px", height:"40px"}}}>
                 {user && <QuickAction 

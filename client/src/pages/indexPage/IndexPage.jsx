@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingMangaQuery } from './initalQuery';
-import { Box, Grid, CircularProgress, Typography, LinearProgress  } from '@mui/material';
+import { Box, Grid, CircularProgress, Typography, LinearProgress, useMediaQuery  } from '@mui/material';
 import MediaList from '../../components/MediaList';
 import NavBar from '../../components/NavBar';
 import BrowseFilter from '../../components/BrowseFilter';
@@ -15,10 +15,11 @@ export default function IndexPage() {
   const [trendingManga, setTrendingManga] = useState([]);
   const [popularManga, setpopularManga] = useState([]);
 
-
+  const tabletScreen = useMediaQuery("(min-width: 630px)");
+  const desktopScreen = useMediaQuery("(min-width: 1100px)");
   const variables = {
     page: 1,
-    perPage: 5,
+    perPage: 6,
   };
  
   useEffect(() => {
@@ -54,8 +55,8 @@ export default function IndexPage() {
   return (
     <>
     <NavBar />
-    <Box maxWidth="1520px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}> 
-      <Box margin="0 2.5rem">
+    <Box maxWidth="1520px" margin="2rem auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}> 
+      <Box margin="0 2rem 2rem">
         <h1>Filter</h1>
         <BrowseFilter />
       </Box>
@@ -63,34 +64,34 @@ export default function IndexPage() {
       {(isLoading) ? <LinearProgress /> : 
       <>
       {!trendingAnime.length ? <CircularProgress/> : 
-        <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '1rem 2.5rem',}}>
+        <Box sx={{ width: 'auto', margin: '0rem 2rem'}}>
           <Typography variant="h5" component={Link} to={`search/anime/trending`} >Trending Anime</Typography>
           <MediaList media={trendingAnime} />
-        </Grid>
+        </Box>
        }
       <hr></hr>
       
       {!popularAnime.length ? <CircularProgress/> : 
-      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '1rem 2.5rem',}}>
+      <Box sx={{ width: 'auto', margin: '0rem 2rem'}}>
         <Typography variant="h5" component={Link} to={`search/anime/popularity`}>All Time Popular Anime</Typography>
         <MediaList media={popularAnime} />
-      </Grid>
+      </Box>
       }
       <hr></hr>
       
       {!trendingManga.length ? <CircularProgress/> : 
-      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '1rem 2.5rem',}}>
+      <Box sx={{ width: 'auto', margin: '0rem 2rem'}}>
         <Typography variant="h5" component={Link} to={`search/manga/trending`}>Trending Manga</Typography>
         <MediaList media={trendingManga} />
-      </Grid>
+      </Box>
       }
       <hr></hr>
       
       {!popularManga.length ? <CircularProgress/> : 
-      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '1rem 2.5rem',}}>
+      <Box sx={{ width: 'auto', margin: '0rem 2rem'}}>
         <Typography variant="h5" component={Link} to={`search/manga/popularity`}>All Time Popular Manga</Typography>
         <MediaList media={popularManga} />
-      </Grid>
+      </Box>
       }
       <hr></hr>
       </>

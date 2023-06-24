@@ -158,6 +158,7 @@ const registerSchema = yup.object().shape({
             }}
         >
           <img 
+            alt="card"
             style={{
               width:"100%", 
               height:"100%", 

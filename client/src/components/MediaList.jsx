@@ -29,12 +29,12 @@ export default function MediaList({media}) {
           gridTemplateColumns: 'repeat(auto-fill, minmax(185px, 1fr))!important',
         },
         gap:"25px !important" ,
-        "a:nth-child(5)": {
+        "a:nth-of-type(5)": {
           '@media only screen and (min-width: 1020px) and (max-width: 1265px)':{
             display: "none"
           }
         },
-        "a:nth-child(6)": {
+        "a:nth-of-type(6)": {
           '@media only screen and (min-width: 1020px) and (max-width: 1510px)':{
             display: "none"
           }

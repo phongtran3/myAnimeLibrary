@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Card, CardContent, Avatar, Button, Typography, Box, Alert, Snackbar, ButtonBase   } from '@mui/material'
 import {Twitter, Instagram, YouTube, GitHub} from "@mui/icons-material";
 import { Link, useNavigate  } from 'react-router-dom';
@@ -8,18 +8,17 @@ import { setSiteUser } from '../states';
 
 import Follow from './Follow';
 
-export default function ProfileCard({user, setUser}) {
+export default function ProfileCard({user, setUser, loggedUser, followersArr, followingArr}) {
     const [openAlert, setOpenAlert] = useState(false);
     const [openFollows, setOpenFollows] = useState(false);
     const [type, setType] = useState("");
 
-    const loggedUser = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const isFollowing = loggedUser ? loggedUser.following.includes(user._id) : "";
-    //console.log(loggedUser)
+   
     async function handleFollowUnfollow(userId){
         console.log("Handle Click " + userId )
         if(!loggedUser){
@@ -60,7 +59,6 @@ export default function ProfileCard({user, setUser}) {
     }
 
     function handleFollowClose(){
-
         setOpenFollows(false);
     }
 
@@ -69,6 +67,10 @@ export default function ProfileCard({user, setUser}) {
         setType(select);
 
     }
+
+    useEffect(()=> {
+        console.log("profile card useeffect")
+    },[])
 
     return (
         <Card id="profile-card" sx={{maxWidth: 350, borderRadius: "12px", textAlign: "center"}}>
@@ -215,6 +217,7 @@ export default function ProfileCard({user, setUser}) {
                     user={user}
                     open={openFollows}
                     type={type}
+                    arr={type === "following" ? followingArr : followersArr}
                     handleClose={handleFollowClose}
                     handleFollowUnfollow={handleFollowUnfollow}
                 />

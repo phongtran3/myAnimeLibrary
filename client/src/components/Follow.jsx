@@ -1,45 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { useNavigate } from "react-router-dom";
 import { Avatar, Dialog, DialogContent, DialogTitle, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Button, Divider } from '@mui/material'
-import axios from 'axios'
-export default function Follow({open, handleClose, type, user, loggedUser, handleFollowUnfollow}) {
-    // const [followers, setFollowers] = useState([]);
-    // const [following, setFollowing] = useState([]);
-    const [array, setArray] = useState([]);
+export default function Follow({open, handleClose, type, loggedUser, handleFollowUnfollow, arr}) {
     const navigate = useNavigate(); 
-
-    async function getFollowers(){
-        //console.log(loggedUser);
-        await axios.get(`http://localhost:5000/users/${user._id}/follower`)
-        .then(res =>{
-            // setFollowers(res.data[0])
-            // setFollowing(res.data[1])
-            //Move logged in user to the top of the list
-            let arr = type === "following" ? res.data[1] : res.data[0];
-            let index = arr.findIndex(item => item._id === loggedUser._id);
-            if(index !== -1){
-              arr.unshift(arr.splice(index, 1)[0]);
-            }
-            setArray(arr)
-          }).catch(err => {
-            if (err.response){
-              console.log(err.response.data);
-            }
-          console.log(err);
-          }) 
-    }
-
-    useEffect(()=> {
-        getFollowers();
-    },[])
-
+    
     return (
         <Dialog maxWidth={'sm'} open={open} onClose={handleClose} sx={{'& .MuiPaper-root': {alignItems: "center"}}}>
             <DialogTitle>{type === "following" ? "Following" : "Followers"}</DialogTitle>
             <DialogContent >
-              {array.length !== 0 ?
+              {arr.length !== 0 ?
                 <List >
-                  {array.map((user) => 
+                  {arr.map((user) => 
                     <React.Fragment key={user._id}>
                       <ListItem 
                         key={user._id} 

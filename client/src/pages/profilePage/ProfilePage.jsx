@@ -10,21 +10,45 @@ import PreviewList from '../../components/PreviewList';
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
+  const [followersArr, setFollowersArr] = useState([]);
+  const [followingArr, setFollowingArr] = useState([]);
+
   const { userName } = useParams();
   const token = useSelector((state) => state.token);
+  const loggedUser = useSelector((state) => state.user);
 
   async function getUser(){
     await axios.get(
       `http://localhost:5000/users/${userName}`,
       {headers: { Authorization: `${token}` }}
     ).then(res =>{
-      //console.log(res);
+      axios.get(`http://localhost:5000/users/${res.data._id}/follower`)
+        .then(res =>{
+            //Move logged in user to the top of the list
+            let tempFollowingArr = res.data[1];
+            let tempFollowerArr = res.data[0]
+            let index = tempFollowingArr.findIndex(item => item._id === loggedUser._id);
+            if(index !== -1){
+              tempFollowingArr.unshift(tempFollowingArr.splice(index, 1)[0]);
+            }
+            index = tempFollowerArr.findIndex(item => item._id === loggedUser._id);
+            if(index !== -1){
+              tempFollowerArr.unshift(tempFollowerArr.splice(index, 1)[0]);
+            }
+            setFollowersArr(tempFollowerArr);
+            setFollowingArr(tempFollowingArr);
+          }).catch(err => {
+            if (err.response){
+              console.log(err.response.data);
+            }
+            console.log(err);
+          }) 
       setUser(res.data);
     }).catch(err => {
       if (err.response){
         console.log(err.response.data);
       }
-    console.log(err);
+      console.log(err);
     }) 
   }
 
@@ -47,7 +71,9 @@ export default function ProfilePage() {
       progress.push(user.mangas[i])
       
   }
-  console.log(user)
+  //console.log(user)
+  console.log(followersArr);
+  console.log(followingArr);
   return (
     <>
       <NavBar />
@@ -63,6 +89,10 @@ export default function ProfilePage() {
             <ProfileCard 
               user={user}
               setUser={setUser}
+              loggedUser={loggedUser}
+              followersArr={followersArr}
+              followingArr={followingArr}
+
             />
           </Box>
           {/* grid-auto-columns: minmax(8rem, auto);

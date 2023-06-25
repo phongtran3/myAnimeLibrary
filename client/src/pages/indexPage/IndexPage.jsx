@@ -55,61 +55,61 @@ export default function IndexPage() {
   const isLoading = (!trendingAnime.length && !popularAnime.length && !trendingManga.length && !popularManga.length) ? true : false;
   if (isLoading) return <LinearProgress />
   return (
-    <>
-    <NavBar />
-    <Box 
-      maxWidth="1520px" 
-      margin="2rem auto"
-      paddingBottom="1rem"
-      sx={{
-        "& .MuiTypography-root":{
-          textDecoration: "none",
-          fontSize: "1.75rem",
-          fontWeight: "600",
-          color: "#111111",
-          "&:hover": {
-            color: '#673ab7',
-          },
-        }
-      }}
-    > 
-      <Box margin="0 2rem 2rem">
-        <h1>Filter</h1>
-        <BrowseFilter />
-      </Box>
-
-      {(isLoading) ? <LinearProgress /> : 
-      <>
-      {!trendingAnime.length ? <CircularProgress/> : 
-        <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
-          <Typography variant="h5" component={Link} to={`search/anime/trending`} >Trending Anime</Typography>
-          <MediaList media={trendingAnime} />
+    <Box>
+      <NavBar />
+      <Box 
+        maxWidth="1520px" 
+        margin="2rem auto"
+        paddingBottom="1rem"
+        sx={{
+          "& .MuiTypography-root":{
+            textDecoration: "none",
+            fontSize: "1.75rem",
+            fontWeight: "600",
+            color: "#111111",
+            "&:hover": {
+              color: '#673ab7',
+            },
+          }
+        }}
+      > 
+        <Box margin="0 2rem 2rem">
+          <h1>Filter</h1>
+          <BrowseFilter />
         </Box>
-       }
-      
-      {!popularAnime.length ? <CircularProgress/> : 
-      <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
-        <Typography variant="h5" component={Link} to={`search/anime/popularity`}>All Time Popular Anime</Typography>
-        <MediaList media={popularAnime} />
+
+        {(isLoading) ? <LinearProgress /> : 
+        <>
+        {!trendingAnime.length ? <CircularProgress/> : 
+          <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
+            <Typography variant="h5" component={Link} to={`search/anime/trending`} >Trending Anime</Typography>
+            <MediaList media={trendingAnime} />
+          </Box>
+        }
+        
+        {!popularAnime.length ? <CircularProgress/> : 
+        <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
+          <Typography variant="h5" component={Link} to={`search/anime/popularity`}>All Time Popular Anime</Typography>
+          <MediaList media={popularAnime} />
+        </Box>
+        }
+        
+        {!trendingManga.length ? <CircularProgress/> : 
+        <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
+          <Typography variant="h5" component={Link} to={`search/manga/trending`}>Trending Manga</Typography>
+          <MediaList media={trendingManga} />
+        </Box>
+        }
+        
+        {!popularManga.length ? <CircularProgress/> : 
+        <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
+          <Typography variant="h5" component={Link} to={`search/manga/popularity`}>All Time Popular Manga</Typography>
+          <MediaList media={popularManga} />
+        </Box>
+        }
+        </>
+        }
       </Box>
-      }
-      
-      {!trendingManga.length ? <CircularProgress/> : 
-      <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
-        <Typography variant="h5" component={Link} to={`search/manga/trending`}>Trending Manga</Typography>
-        <MediaList media={trendingManga} />
-      </Box>
-      }
-      
-      {!popularManga.length ? <CircularProgress/> : 
-      <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
-        <Typography variant="h5" component={Link} to={`search/manga/popularity`}>All Time Popular Manga</Typography>
-        <MediaList media={popularManga} />
-      </Box>
-      }
-      </>
-      }
     </Box>
-    </>
   )
 }

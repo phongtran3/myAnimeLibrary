@@ -27,7 +27,7 @@ export const themeSettings = (mode) => {
         ? {
             //Palette for dark mode
             primary: {
-              dark: deepPurple[200],
+              dark: deepPurple[300],
               main: deepPurple[500],
               light: deepPurple[800],
             },

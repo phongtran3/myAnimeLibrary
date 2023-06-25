@@ -5,7 +5,7 @@ import ProfileCard from '../../components/ProfileCard'
 import { useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import axios from 'axios';
-import { Box, Typography, useMediaQuery} from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme} from "@mui/material";
 import PreviewList from '../../components/PreviewList';
 
 export default function ProfilePage() {
@@ -13,36 +13,43 @@ export default function ProfilePage() {
   const [followersArr, setFollowersArr] = useState([]);
   const [followingArr, setFollowingArr] = useState([]);
 
+  //const tabletScreen = useMediaQuery("(min-width: 630px)");
+  const desktopScreen = useMediaQuery("(min-width: 1100px)");
+
   const { userName } = useParams();
   const token = useSelector((state) => state.token);
   const loggedUser = useSelector((state) => state.user);
+  const { palette } = useTheme();
 
   async function getUser(){
     await axios.get(
       `http://localhost:5000/users/${userName}`,
       {headers: { Authorization: `${token}` }}
     ).then(res =>{
-      axios.get(`http://localhost:5000/users/${res.data._id}/follower`)
-        .then(res =>{
-            //Move logged in user to the top of the list
-            let tempFollowingArr = res.data[1];
-            let tempFollowerArr = res.data[0]
-            let index = tempFollowingArr.findIndex(item => item._id === loggedUser._id);
-            if(index !== -1){
-              tempFollowingArr.unshift(tempFollowingArr.splice(index, 1)[0]);
-            }
-            index = tempFollowerArr.findIndex(item => item._id === loggedUser._id);
-            if(index !== -1){
-              tempFollowerArr.unshift(tempFollowerArr.splice(index, 1)[0]);
-            }
-            setFollowersArr(tempFollowerArr);
-            setFollowingArr(tempFollowingArr);
-          }).catch(err => {
-            if (err.response){
-              console.log(err.response.data);
-            }
-            console.log(err);
-          }) 
+      if(loggedUser){
+        axios.get(`http://localhost:5000/users/${res.data._id}/follower`)
+          .then(res =>{
+              //Move logged in user to the top of the list
+              let tempFollowingArr = res.data[1];
+              let tempFollowerArr = res.data[0]
+              let index = tempFollowingArr.findIndex(item => item._id === loggedUser._id);
+              if(index !== -1){
+                tempFollowingArr.unshift(tempFollowingArr.splice(index, 1)[0]);
+              }
+              index = tempFollowerArr.findIndex(item => item._id === loggedUser._id);
+              if(index !== -1){
+                tempFollowerArr.unshift(tempFollowerArr.splice(index, 1)[0]);
+              }
+              setFollowersArr(tempFollowerArr);
+              setFollowingArr(tempFollowingArr);
+            
+            }).catch(err => {
+              if (err.response){
+                console.log(err.response.data);
+              }
+              console.log(err);
+            }) 
+        }
       setUser(res.data);
     }).catch(err => {
       if (err.response){
@@ -75,29 +82,33 @@ export default function ProfilePage() {
   console.log(followersArr);
   console.log(followingArr);
   return (
-    <>
+    <Box sx={{height:"100%", width:"100%"}}>
       <NavBar />
-      <Box id="content-container" margin="3em auto 0" maxWidth="1520px" padding="0 50px">
+      <Box id="content-container" margin="3em auto 0" maxWidth="1520px" padding="0 3rem 5rem">
         <Box id="content" 
-          display="grid"
+          display= {desktopScreen ? "grid" : "block"}
           gridTemplateColumns= "calc(40% - 30px) 60%"
           gap="30px"
         >
-        
           <Box id="section-1"> 
             {/* will rename id later */}
-            <ProfileCard 
-              user={user}
-              setUser={setUser}
-              loggedUser={loggedUser}
-              followersArr={followersArr}
-              followingArr={followingArr}
+              <ProfileCard 
+                user={user}
+                setUser={setUser}
+                loggedUser={loggedUser}
+                followersArr={followersArr}
+                followingArr={followingArr}
+                desktopScreen={desktopScreen}
+              />
 
-            />
           </Box>
           {/* grid-auto-columns: minmax(8rem, auto);
           grid-auto-flow: column; */}
-          <Box id="section-2" >
+          <Box id="section-2" 
+            sx={{
+              marginTop:"1rem",
+            }}
+          >
             <Box id="progress-list-preview-wrap" 
               sx={{
                 '& .MuiImageList-root:first-of-type': {
@@ -122,6 +133,6 @@ export default function ProfilePage() {
         </Box>
       
       </Box>
-    </>
+    </Box>
   )
 }

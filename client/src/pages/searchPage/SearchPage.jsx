@@ -57,12 +57,25 @@ export default function SearchPage() {
 
 
   return (
-    <>
+    <Box>
       <NavBar />
       <Toolbar id="back-to-top-anchor" />
-      <Box maxWidth="1520px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}>
-        <Box margin="0 2.5rem">
-          <BrowseFilter />
+
+      <Box 
+        maxWidth="1520px" 
+        margin="0 auto" 
+        sx={{
+          "& .MuiTypography-root":{
+            margin:".5em 0"
+            }
+        }}
+      >
+
+
+
+        <Box margin="0 2rem 2rem">
+            <h1>Filter</h1>
+            <BrowseFilter />
         </Box>
 
         {/* <Box margin="0 2.5rem">
@@ -75,8 +88,39 @@ export default function SearchPage() {
 
           })}
         </Box> */}
-      <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
-        {/* Large screen gap 72 / small screen 48 */}
+
+
+        <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
+          <ImageList 
+            sx={{
+              textAlign: "center", 
+              gap:"2rem !important",
+              gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr)) !important",
+              "& div":{
+                display:"flex",
+              }
+            }}
+          
+          
+          >
+            {aniMangas.map((item, index) => {
+              if (aniMangas.length - 10 === index + 1) {
+                return (
+                  <div ref={lastAniMangaEleRef} key={item.id}>
+                    <Card item={item} />
+                  </div>
+                )
+              } else {
+                return (
+                <div key={item.id}>
+                  <Card item={item} />
+                </div>)
+              }
+            })}
+          </ImageList>
+        </Box>
+      {/* <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
+        Large screen gap 72 / small screen 48
         <ImageList cols={5} sx={{textAlign: "center", gap:"20px 72px !important" }}>
           {aniMangas.map((item, index) => {
             if (aniMangas.length - 10 === index + 1) {
@@ -93,16 +137,17 @@ export default function SearchPage() {
             }
           })}
         </ImageList>
-      </Grid>
+      </Grid> */}
       <div>{loading && <LinearProgress />}</div>
 
       </Box>
+
       <ScrollToTop>  
         <Fab color="secondary" size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollToTop>   
 
-    </>
+    </Box>
   )
 }

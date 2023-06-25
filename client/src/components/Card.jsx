@@ -21,12 +21,10 @@ export default function Card({item}) {
                         srcSet={`${item.coverImage.large}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                         alt={item.title.english === null ? item.title.romaji : item.title.english}
                         loading="lazy"
-                        style={{borderRadius: "0.375rem", width: "230px", height: "360px"}}
+                        style={{borderRadius: "0.375rem", width: "100%", height: "100%"}}
                     />
                 <ImageListItemBar 
                     title={item.title.english === null ? item.title.romaji : item.title.english} 
-                    //position="below" 
-                    sx={{ maxWidth: "230px"}}
                 />
                 <Box sx={{"& .MuiButtonBase-root": {width:"40px", height:"40px"}}}>
                     {user && <QuickAction 

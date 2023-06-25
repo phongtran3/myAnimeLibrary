@@ -272,6 +272,52 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                 <Typography variant='h5' mt="1rem" fontWeight="bold" >{`${user.firstName} ${user.lastName}`}</Typography>
                 <Typography variant='subtitle1'>{`@${user.userName}`}</Typography>
 
+                <Box 
+                    sx={{
+                        marginTop:"1rem",
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "2em",
+                        alignItems: "center",
+                        marginBottom: "10px",
+                        '& > a':{
+                            transition: "transform 250ms"
+                        },
+                        '& > a:hover':{
+                            transform: "translateY(-2px)"
+                        }
+                }}>
+                    <Typography 
+                        sx={{color: "#00acee"}}
+                        rel="noopener noreferrer" 
+                        target="_blank" 
+                        component={Link} 
+                        to={`${user.socialMediaHandles.twitter}`}
+                    >{user.socialMediaHandles.twitter ? <Twitter/>:""}</Typography>
+                    <Typography 
+                        sx={{color: "black"}}
+                        rel="noopener noreferrer" 
+                        target="_blank" 
+                        component={Link} 
+                        to={`${user.socialMediaHandles.instagram}
+                    `}>{user.socialMediaHandles.instagram ? <Instagram/>: ""}</Typography>
+                    <Typography 
+                        sx={{color: "#eb3223"}}
+                        rel="noopener noreferrer" 
+                        target="_blank" 
+                        component={Link} 
+                        to={`${user.socialMediaHandles.youtube}`}
+                    >{user.socialMediaHandles.youtube ? <YouTube/>: ""}</Typography>
+                    <Typography 
+                        sx={{color: "black"}}
+                        rel="noopener noreferrer" 
+                        target="_blank" 
+                        component={Link} 
+                        to={`${user.socialMediaHandles.github}`}
+                    >{user.socialMediaHandles.github ? <GitHub/>: ""}</Typography>
+                    
+                </Box>
+
                 <Box id="profile-stats"
                     sx={{
                         marginTop:"1rem",

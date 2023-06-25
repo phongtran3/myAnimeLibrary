@@ -106,14 +106,14 @@ export default function ProfilePage() {
           grid-auto-flow: column; */}
           <Box id="section-2" 
             sx={{
-              marginTop:"1rem",
+              marginTop: desktopScreen ? null : "1rem",
             }}
           >
             <Box id="progress-list-preview-wrap" 
               sx={{
-                '& .MuiImageList-root:first-of-type': {
-                  gridAutoFlow: "column"
-                }
+                // '& .MuiImageList-root:first-of-type': {
+                //   gridAutoFlow: "column"
+                // }
               }}
             >
               <Typography variant="h6">In Progress</Typography>
@@ -121,7 +121,10 @@ export default function ProfilePage() {
             </Box>
 
             <Box id="anime-list-preview-wrap" mt="1em">
-              <Typography sx={{textDecoration: "none", color: "inherit"}} component={Link} to={`/user/${user.userName}/animelist`} variant="h6">Animes</Typography>
+              <Typography sx={{textDecoration: "none", color: "inherit"}} component={Link} to={`/user/${user.userName}/animelist`} variant="h6">
+                <h3>Animes</h3>
+                <div>View All</div>
+              </Typography>
               <PreviewList medium={user.animes.slice(-6)} />
             </Box>
 

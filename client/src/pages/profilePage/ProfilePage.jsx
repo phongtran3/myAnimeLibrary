@@ -107,16 +107,24 @@ export default function ProfilePage() {
           <Box id="section-2" 
             sx={{
               marginTop: desktopScreen ? null : "1rem",
+              "div:not(:first-of-type) > a":{
+                display:"flex",
+                alignItems:"center",
+                "& > h3:hover":{
+                    color: '#673ab7',
+                },
+                "& > div":{
+                  marginLeft: "auto",
+                  fontSize:"1rem",
+                  "&:hover": {
+                    color: '#673ab7',
+                  },
+                }
+              }
             }}
           >
-            <Box id="progress-list-preview-wrap" 
-              sx={{
-                // '& .MuiImageList-root:first-of-type': {
-                //   gridAutoFlow: "column"
-                // }
-              }}
-            >
-              <Typography variant="h6">In Progress</Typography>
+            <Box id="progress-list-preview-wrap">
+              <Typography variant="h5" fontWeight="bold">In Progress</Typography>
               <PreviewList medium={progress} />
             </Box>
 
@@ -129,7 +137,10 @@ export default function ProfilePage() {
             </Box>
 
             <Box id="manga-list-preview-wrap" mt="1em">
-              <Typography sx={{textDecoration: "none", color: "inherit"}} component={Link} to={`/user/${user.userName}/mangalist`} variant="h6">Mangas</Typography>
+              <Typography sx={{textDecoration: "none", color: "inherit"}} component={Link} to={`/user/${user.userName}/mangalist`} variant="h6">
+                <h3>Mangas</h3>
+                <div>View All</div>
+              </Typography>
               <PreviewList medium={user.mangas.slice(-6)} />
             </Box>
           </Box>

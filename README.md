@@ -18,7 +18,7 @@ Nodejs Express.js Mongodb JWT Mongoose
   - Display user's full Anime/Manga collection on their own page (x)
 - Edit User profile. (x)
 - Search User Accounts by Username (x)
-- Follow/Unfollow Users (TBD)
+- Follow/Unfollow Users (x)
 - Search Anime/Manga (x)
 - Add/Remove/Update Anime/Manga to User's collection (x)
 - Dark mode (x)

@@ -93,14 +93,19 @@ export default function SearchPage() {
         <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
           <ImageList 
             sx={{
+              overflowY: "visible !important",
               textAlign: "center", 
               gap:"2rem !important",
               gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr)) !important",
               "& div":{
                 display:"flex",
+                transition: "transform 250ms",
+                '&:hover':{
+                  transform: "scale(1.05)"
+                },
               }
             }}
-          
+   
           
           >
             {aniMangas.map((item, index) => {

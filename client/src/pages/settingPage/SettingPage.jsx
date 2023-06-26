@@ -3,17 +3,15 @@ import NavBar from '../../components/NavBar'
 import { useSelector, useDispatch } from "react-redux";
 import { setSiteUser } from '../../states/index';
 import Dropzone from "react-dropzone"; //File/image upload
-import { Box, useTheme, Typography, OutlinedInput, TextField, InputAdornment, IconButton, Button} from '@mui/material'
-import {Visibility, VisibilityOff, EditOutlined,} from "@mui/icons-material"
+import { Box, useTheme, Typography, OutlinedInput, TextField, InputAdornment, 
+  IconButton, Button, Avatar, Tab, Tabs } from '@mui/material'
+import {Visibility, VisibilityOff, EditOutlined, AccountCircle, Key, Logout} from "@mui/icons-material"
 import ConfirmPassword from '../../components/ConfirmPassword';
-import ProfileCard from '../../components/ProfileCard';
 import axios from 'axios';
 
 // import {Formik} from "formik";
 // import * as yup from "yup";
 // import { useNavigate } from "react-router-dom";
-
-
 
 
 export default function SettingPage() {
@@ -53,7 +51,7 @@ export default function SettingPage() {
       `http://localhost:5000/users/${userName}`,
       {headers: { Authorization: `${token}` }}
     ).then(res =>{
-      console.log(res);
+      console.log(res.data);
       setUser(res.data);
       setNewUserName(res.data.userName);
       setNewFirstName(res.data.firstName);
@@ -94,9 +92,9 @@ export default function SettingPage() {
     })
   }
 
-  console.log(user);
+  //console.log(user);
   //console.log(user.socialMediaHandles);
-  console.log(newSocialMedia);
+  //console.log(newSocialMedia);
 
   async function handleSave(){
     if(body.attribute === 'password' && newPassword !== newConfirmPassword){
@@ -149,13 +147,42 @@ export default function SettingPage() {
         gridTemplateColumns= "calc(40% - 30px) 60%"
         gap="30px"
       >
-        <Box id="section-1"> 
-          {/* will rename id later */}
-          <ProfileCard 
-            user={user}
-            setUser={setUser}
-          />
+
+        {/* will rename id later */}
+        <Box id="section-1"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems:"center",
+          }}
+        > 
+          <Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`http://localhost:5000/assets/${user.picturePath}`}/>
+          <Tabs  
+            id="tab-nav"
+            orientation="vertical"
+            sx={{
+              border:"1px solid black",
+              "& .MuiButtonBase-root ":{
+                flexDirection:"row",
+                justifyContent:"flex-start",
+                "& .MuiSvgIcon-root":{
+                  marginRight:"1rem",
+                }
+
+              }
+            }}
+          >
+            <Tab icon={<AccountCircle />} label="Account Setting" />
+            <Tab icon={<Key />} label="Change Password" />
+            <Tab icon={<Logout />} label="Logout" />
+
+          </Tabs>
+
+
+
         </Box>
+
+
         <Box id="section-2" sx={{ borderRadius: "4px", padding: "20px", background: "mediumpurple" }} >
           <Typography variant='h4' sx={{  color: "white", display: "flex",  justifyContent:"center", marginBottom:"10px"  }}>Edit Profile</Typography>
           

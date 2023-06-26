@@ -1,21 +1,22 @@
 import React, {useState, useEffect} from 'react'
 import NavBar from '../../components/NavBar'
 import { useSelector, useDispatch } from "react-redux";
-import { setSiteUser } from '../../states/index';
+import { setSiteUser, setLogout } from '../../states/index';
 import Dropzone from "react-dropzone"; //File/image upload
 import { Box, useTheme, Typography, OutlinedInput, TextField, InputAdornment, 
   IconButton, Button, Avatar, Tab, Tabs } from '@mui/material'
 import {Visibility, VisibilityOff, EditOutlined, AccountCircle, Key, Logout} from "@mui/icons-material"
 import ConfirmPassword from '../../components/ConfirmPassword';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 // import {Formik} from "formik";
 // import * as yup from "yup";
-// import { useNavigate } from "react-router-dom";
 
 
 export default function SettingPage() {
   const [open, setOpen] = useState(false);
+  const [tabValue, setTabValue] = useState(0);
   const [body, setBody] = useState({
     attribute:"",
     value:"",
@@ -37,6 +38,7 @@ export default function SettingPage() {
 
   const { palette  } = useTheme();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.token);
   const userName = useSelector((state) => state.user.userName);
 
@@ -91,6 +93,10 @@ export default function SettingPage() {
       value:""
     })
   }
+
+  function handleTabChange(event, newValue) {
+    setTabValue(newValue);
+  };
 
   //console.log(user);
   //console.log(user.socialMediaHandles);
@@ -160,6 +166,8 @@ export default function SettingPage() {
           <Tabs  
             id="tab-nav"
             orientation="vertical"
+            value={tabValue}
+            onChange={handleTabChange}
             sx={{
               border:"1px solid black",
               "& .MuiButtonBase-root ":{
@@ -174,7 +182,13 @@ export default function SettingPage() {
           >
             <Tab icon={<AccountCircle />} label="Account Setting" />
             <Tab icon={<Key />} label="Change Password" />
-            <Tab icon={<Logout />} label="Logout" />
+            <Tab icon={<Logout />} label="Logout" 
+              onClick={()=>{
+                console.log("Logging Out");
+                dispatch(setLogout());
+                navigate("/");
+              }}
+            />
 
           </Tabs>
 

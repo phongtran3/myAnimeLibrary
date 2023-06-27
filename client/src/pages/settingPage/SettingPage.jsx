@@ -210,7 +210,12 @@ export default function SettingPage() {
         </Box>
 
 
-        <Box id="section-2" sx={{ borderRadius: "4px", padding: "20px",}} >
+        <Box id="section-2" 
+          sx={{ 
+            borderRadius: "4px", 
+            padding: "20px",
+            }} 
+        >
           {/* ACCOUNT SETTING */}
           {tabValue === 0 && 
           <>
@@ -235,7 +240,7 @@ export default function SettingPage() {
                 },
                 //Individual section/textfield
                 "& > div":{
-                  marginBottom:"1rem",
+                  marginBottom:"1.5rem",
                   display:"flex",
                   alignItems:"center",
                   flexGrow:"1",
@@ -246,7 +251,6 @@ export default function SettingPage() {
                   "& .MuiButtonBase-root":{
                     textTransform: "none",
                   }
-
                 }
               }}
             >
@@ -348,7 +352,32 @@ export default function SettingPage() {
               </Box>
             </Box>
             
-            <Box id="external-links">
+            <Box id="external-links"
+              sx={{
+                display:"flex",
+                alignItems:"strech",
+                flexDirection:"column",
+                "& .MuiInputBase-root":{
+                  height:"50px",
+                  borderRadius:"8px",
+                },
+                //Individual section/textfield
+                "& > div":{
+                  marginBottom:"1.5rem",
+                  display:"flex",
+                  alignItems:"center",
+                  flexGrow:"1",
+                  "& .MuiFormControl-root":{
+                    flexGrow:"1",
+                    marginRight:"1.5rem",
+                  },
+                  "& .MuiButtonBase-root":{
+                    textTransform: "none",
+                    marginBottom:"25px",
+                  }
+                }
+              }}
+            >
               <Typography variant="h5" 
                 sx={{  
                   color: "#111111", 
@@ -359,6 +388,105 @@ export default function SettingPage() {
                 External Links
               </Typography>
               <hr style={{marginBottom:"1.5rem", border:"none", height:"1px", backgroundColor:"#111111"}}></hr>
+              <Box id="twitter">
+                  <TextField 
+                    placeholder='https://twitter.com/Crunchyroll'
+                    label="Twitter"
+                    value={newSocialMedia.twitter}
+                    variant="outlined"
+                    helperText="URL (required)"
+                    onChange={(e)=>{
+                      setNewSocialMedia(prev =>({
+                        ...prev,
+                        twitter: e.target.value.split(" ").join("")
+                      }))
+                    }}
+                  />
+                  {newSocialMedia.twitter !== user.socialMediaHandles.twitter ?
+                    <Button 
+                      variant='contained'
+                      name="socialMediaHandles"
+                      onClick={(e)=>{handleOpenPopover(e.target.name, newSocialMedia.twitter)}}
+                    >
+                      Save Twitter
+                    </Button> : ""
+                  }
+                </Box>
+
+                <Box id="instagram">
+                  <TextField 
+                    placeholder='https://www.instagram.com/nextshark/'
+                    label="Instagram"
+                    value={newSocialMedia.instagram}
+                    variant="outlined"
+                    helperText="URL (required)"
+                    onChange={(e)=>{
+                      setNewSocialMedia(prev =>({
+                        ...prev,
+                        instagram: e.target.value.split(" ").join("")
+                      }))
+                    }}
+                  />
+                  {newSocialMedia.instagram !== user.socialMediaHandles.instagram ?
+                    <Button 
+                      variant='contained'
+                      name="socialMediaHandles"
+                      onClick={(e)=>{handleOpenPopover(e.target.name, newSocialMedia.instagram)}}
+                    >
+                      Save Instagram
+                    </Button> : ""
+                  }
+                </Box>
+                
+                <Box id="youtube">
+                  <TextField 
+                    placeholder='https://www.youtube.com/@dreamylofi'
+                    label="Youtube"
+                    value={newSocialMedia.youtube}
+                    variant="outlined"
+                    helperText="URL (required)"
+                    onChange={(e)=>{
+                      setNewSocialMedia(prev =>({
+                        ...prev,
+                        youtube: e.target.value.split(" ").join("")
+                      }))
+                    }}
+                  />
+                  {newSocialMedia.youtube !== user.socialMediaHandles.youtube ?
+                    <Button 
+                      variant='contained'
+                      name="socialMediaHandles"
+                      onClick={(e)=>{handleOpenPopover(e.target.name, newSocialMedia.youtube)}}
+                    >
+                      Save Youtube
+                    </Button> : ""
+                  }
+                </Box>
+
+                <Box id="github">
+                  <TextField 
+                    placeholder='https://github.com/phongtran3'
+                    label="Github"
+                    value={newSocialMedia.github}
+                    variant="outlined"
+                    helperText="URL (required)"
+                    onChange={(e)=>{
+                      setNewSocialMedia(prev =>({
+                        ...prev,
+                        github: e.target.value.split(" ").join("")
+                      }))
+                    }}
+                  />
+                  {newSocialMedia.github !== user.socialMediaHandles.github ?
+                    <Button 
+                      variant='contained'
+                      name="socialMediaHandles"
+                      onClick={(e)=>{handleOpenPopover(e.target.name, newSocialMedia.github)}}
+                    >
+                      Save Github
+                    </Button> : ""
+                  }
+                </Box>
 
             </Box>
           </>

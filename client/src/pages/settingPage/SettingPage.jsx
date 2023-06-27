@@ -216,9 +216,31 @@ export default function SettingPage() {
           sx={{ 
             borderRadius: "4px", 
             margin:"0 1.5rem",
-
-            
-            }} 
+            "& .MuiButtonBase-root":{
+              textTransform: "none",
+            },
+            //Each Section
+            "& > div":{
+              display:"flex",
+              alignItems:"strech",
+              flexDirection:"column", 
+              "& .MuiInputBase-root":{
+                height:"50px",
+                borderRadius:"8px",
+              },
+              //Each textfield within the sections
+              "& > div":{
+                marginBottom:"1.5rem",
+                display:"flex",
+                alignItems:"center",
+                flexGrow:"1",
+                "& .MuiFormControl-root":{
+                  flexGrow:"1",
+                  marginRight:"1.5rem",
+                },
+              },
+            }
+          }} 
         >
           {/* ACCOUNT SETTING */}
           {tabValue === 0 && 
@@ -233,31 +255,7 @@ export default function SettingPage() {
               Account Settings
             </Typography>
 
-            <Box id="basic-info-section"
-              sx={{
-                display:"flex",
-                alignItems:"strech",
-                flexDirection:"column", 
-                "& .MuiInputBase-root":{
-                  height:"50px",
-                  borderRadius:"8px",
-                },
-                //Individual section/textfield
-                "& > div":{
-                  marginBottom:"1.5rem",
-                  display:"flex",
-                  alignItems:"center",
-                  flexGrow:"1",
-                  "& .MuiFormControl-root":{
-                    flexGrow:"1",
-                    marginRight:"1.5rem",
-                  },
-                  "& .MuiButtonBase-root":{
-                    textTransform: "none",
-                  }
-                }
-              }}
-            >
+            <Box id="basic-info-section">
               <Typography variant="h5" 
                 sx={{  
                   color: "#111111", 
@@ -358,27 +356,8 @@ export default function SettingPage() {
             
             <Box id="external-links"
               sx={{
-                display:"flex",
-                alignItems:"strech",
-                flexDirection:"column",
-                "& .MuiInputBase-root":{
-                  height:"50px",
-                  borderRadius:"8px",
-                },
-                //Individual section/textfield
-                "& > div":{
-                  marginBottom:"1.5rem",
-                  display:"flex",
-                  alignItems:"center",
-                  flexGrow:"1",
-                  "& .MuiFormControl-root":{
-                    flexGrow:"1",
-                    marginRight:"1.5rem",
-                  },
-                  "& .MuiButtonBase-root":{
-                    textTransform: "none",
-                    marginBottom:"25px",
-                  }
+                "& .MuiButtonBase-root":{
+                  marginBottom:"25px",
                 }
               }}
             >
@@ -494,7 +473,7 @@ export default function SettingPage() {
 
             </Box>
             
-            <Box>
+            <Box id="change-password"> 
               <Typography variant="h5" 
                   sx={{  
                     color: "#111111", 
@@ -544,13 +523,13 @@ export default function SettingPage() {
                   />
                 </Box>
                 {newPassword && newConfirmPassword ? 
-                  <Button 
+                  <Button
+                    sx={{marginRight:"1.5rem"}} 
                     variant='contained' 
                     name="password" 
                     onClick={(e)=>{handleOpenPopover(e.target.name, newConfirmPassword)}}
                   >Save Password</Button> : ""
                 }    
-
             </Box>
 
           </>

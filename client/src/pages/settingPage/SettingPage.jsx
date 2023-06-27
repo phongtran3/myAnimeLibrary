@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSiteUser, setLogout } from '../../states/index';
 import Dropzone from "react-dropzone"; //File/image upload
 import { Box, useTheme, Typography, OutlinedInput, TextField, InputAdornment, 
-  IconButton, Button, Avatar, Tab, Tabs, } from '@mui/material'
+  IconButton, Button, Avatar, Tab, Tabs, useMediaQuery } from '@mui/material'
 import {Visibility, VisibilityOff, EditOutlined, AccountCircle, Key, Logout} from "@mui/icons-material"
 import ConfirmPassword from '../../components/ConfirmPassword';
 import axios from 'axios';
@@ -32,20 +32,20 @@ export default function SettingPage() {
   const [newPicturePath, setNewPicturePath] = useState("")
   const [newSocialMedia, setNewSocialMedia] = useState({})
   const [files, setFiles] = useState([]);
-
-  
   const [error, setError] = useState(""); //JWT EXPIRED needs to be fixed
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showNewConfirmPassword, setShowNewConfirmPassword] = useState(false);
+  const handleShowNewPassword = () => setShowNewPassword(!showNewPassword);
+  const handleShowNewConfirmPassword = () => setShowNewConfirmPassword(!showNewConfirmPassword);
 
   const { palette  } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);
   const userName = useSelector((state) => state.user.userName);
+  const desktopScreen = useMediaQuery("(min-width: 1100px)");
 
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showNewConfirmPassword, setShowNewConfirmPassword] = useState(false);
-  const handleShowNewPassword = () => setShowNewPassword(!showNewPassword);
-  const handleShowNewConfirmPassword = () => setShowNewConfirmPassword(!showNewConfirmPassword);
+  
 
 
   async function getUser(){
@@ -159,7 +159,7 @@ export default function SettingPage() {
     >
 
       <Box id="content" 
-        display="grid"
+        display= {desktopScreen ? "grid" : "block"}
         gridTemplateColumns= "calc(40% - 30px) 60%"
         gap="30px"
         height="100%"
@@ -171,17 +171,19 @@ export default function SettingPage() {
             display: "flex",
             flexDirection: "column",
             alignItems:"center",
+            margin:"0 1.5rem",
           }}
         > 
           <Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`http://localhost:5000/assets/${user.picturePath}`}/>
           <Tabs  
             id="tab-nav"
-            orientation="vertical"
+            orientation= {desktopScreen ? "vertical" : null}
             value={tabValue}
+            variant="fullWidth"
             onChange={handleTabChange}
             sx={{
               margin:"1rem 0",
-              width:"250px",
+              width: desktopScreen ? "250px" : null,
               border:"1px solid black",
               "& .MuiButtonBase-root ":{
                 flexDirection:"row",
@@ -213,7 +215,7 @@ export default function SettingPage() {
         <Box id="section-2" 
           sx={{ 
             borderRadius: "4px", 
-            padding: "20px",
+            margin:"0 1.5rem",
             }} 
         >
           {/* ACCOUNT SETTING */}
@@ -491,7 +493,19 @@ export default function SettingPage() {
             </Box>
           </>
           }
-          
+          {tabValue === 1 && 
+          <>
+            <Typography variant='h4' 
+                sx={{  
+                  color: "#111111", 
+                  margin:"0 0 2rem 0!important;",
+                  fontWeight:"600",
+                }}
+              >
+                Change Password
+            </Typography>
+          </>
+          }
           <ConfirmPassword 
             open={open} 
             error={error}

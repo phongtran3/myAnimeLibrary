@@ -224,48 +224,66 @@ export default function SettingPage() {
               Account Settings
             </Typography>
 
-            <Typography variant="h5" sx={{  
-                color: "#111111", 
-                //margin:"0 0 2rem 0!important;",
-                fontWeight:"600",
-              }}
-            >
-              Basic Info
-            </Typography>
-            <hr style={{marginBottom:"1.5rem", border:"none", height:"1px", backgroundColor:"#111111"}}></hr>
             <Box id="basic-info-section"
               sx={{
                 display:"flex",
-                alignItems:"center",
+                alignItems:"strech",
+                flexDirection:"column",
                 "& .MuiInputBase-root":{
                   height:"50px",
                   borderRadius:"8px",
                 },
+                //Individual section/textfield
                 "& > div":{
+                  marginBottom:"1rem",
                   display:"flex",
                   alignItems:"center",
                   flexGrow:"1",
                   "& .MuiFormControl-root":{
                     flexGrow:"1",
                     marginRight:"1.5rem",
+                  },
+                  "& .MuiButtonBase-root":{
+                    textTransform: "none",
                   }
+
                 }
               }}
-            
             >
-              <Box className="userName-section"
-                sx={{
-                  // display:"flex",
-                  // alignItems:"center",
-                  // flexGrow:"1"
-                }}
-              >
-                {/* <OutlinedInput 
-                  value={newUserName} 
-                  onChange={(e)=>{
-                    setNewUserName(e.target.value.split(" ").join(""))
+              <Typography variant="h5" 
+                sx={{  
+                  color: "#111111", 
+                  //margin:"0 0 2rem 0!important;",
+                  fontWeight:"600",
                   }}
-                /> */}
+              >
+                Basic Info
+              </Typography>
+              <hr style={{marginBottom:"1.5rem", border:"none", height:"1px", backgroundColor:"#111111"}}></hr>
+
+              <Box className="firstName-section">
+                <TextField 
+                    placeholder='First Name'
+                    label="First Name"
+                    variant="outlined"
+                    value={newFirstName}
+                    onChange={(e)=>{setNewFirstName(e.target.value.split(" ").join(""))}}
+                  />
+                {newFirstName !== user.firstName ? <Button variant='contained' name="firstName" onClick={(e)=>{handleOpenPopover(e.target.name, newFirstName)}}>Save First Name</Button> : ""}
+              </Box>
+
+              <Box className="lastName-section">
+                <TextField 
+                  placeholder='Last Name'
+                  label="Last Name"
+                  variant="outlined"
+                  value={newLastName}
+                  onChange={(e)=>{setNewLastName(e.target.value.split(" ").join(""))}}
+                />
+                {newLastName !== user.lastName ? <Button variant='contained' name="lastName" onClick={(e)=>{handleOpenPopover(e.target.name, newLastName)}}>Save Last Name</Button> : ""}
+              </Box>
+
+              <Box className="userName-section">
                 <TextField 
                   placeholder='Username'
                   label="Username"
@@ -273,11 +291,76 @@ export default function SettingPage() {
                   value={newUserName}
                   onChange={(e)=>{setNewUserName(e.target.value.split(" ").join(""))}}
                 />
+                {newUserName !== user.userName ? <Button variant='contained' name="userName" onClick={(e)=>handleOpenPopover(e.target.name, newUserName)}>Save Username</Button> : ""}
               </Box>
-              {newUserName !== user.userName ? <Button variant='contained' name="userName" onClick={(e)=>handleOpenPopover(e.target.name, newUserName)}>Save Username</Button> : ""}
 
+              <Box className="email-section">
+                <TextField 
+                  placeholder='Email@email.com'
+                  label="Email"
+                  variant="outlined"
+                  value={newEmail}
+                  onChange={(e)=>{setNewEmail(e.target.value.split(" ").join(""))}}
+                />
+                  {newEmail !== user.email ? <Button variant='contained' name="email" onClick={(e)=>{handleOpenPopover(e.target.name, newEmail)}}>Save Email</Button> : ""}
+              </Box>
+
+              <Box className="profile-image-section">
+                <Dropzone
+                  acceptedFiles=".jpg,.jpeg,.png"
+                  multiple={false}
+                  onDrop={(acceptedFiles) => {
+                    setNewPicturePath(acceptedFiles[0]) //File object
+                    //handleOpenPopover("picturePath", acceptedFiles[0].name)
+                    handleOpenPopover("picturePath", acceptedFiles[0].name)
+                    //setBody({attribute: "picturePath", value: acceptedFiles[0].name})
+                    console.log(body);
+                    console.log(acceptedFiles)
+                  }}
+                >
+                  {({getRootProps, getInputProps }) => (
+                    <Box
+                        {...getRootProps()}
+                        sx={{ 
+                          padding:".75rem",
+                          "&:hover": { 
+                            cursor: "pointer" 
+                          },
+                          border:`2px dashed ${palette.primary.main}`,
+                          flexGrow: "1",
+                          marginRight:"1.5rem",
+                        }}
+                    >
+                      <input {...getInputProps()} />
+                      {!newPicturePath.name? (
+                        <p>Drop Image here or click to upload</p>
+                      ) : (
+                      <Box display="flex" justifyContent={"space-between"} alignItems={'center'}>
+                        <Typography>{newPicturePath.name ? newPicturePath.name : user.picturePath }</Typography>
+                        <Box display={"flex"} alignItems={"center"}>
+                          <EditOutlined />
+                        </Box>
+                      </Box>
+                      )}
+                    </Box>
+                  )}
+                </Dropzone>
+              </Box>
             </Box>
             
+            <Box id="external-links">
+              <Typography variant="h5" 
+                sx={{  
+                  color: "#111111", 
+                  //margin:"0 0 2rem 0!important;",
+                  fontWeight:"600",
+                  }}
+              >
+                External Links
+              </Typography>
+              <hr style={{marginBottom:"1.5rem", border:"none", height:"1px", backgroundColor:"#111111"}}></hr>
+
+            </Box>
           </>
           }
           

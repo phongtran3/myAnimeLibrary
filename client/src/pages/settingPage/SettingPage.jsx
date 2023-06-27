@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSiteUser, setLogout } from '../../states/index';
 import Dropzone from "react-dropzone"; //File/image upload
 import { Box, useTheme, Typography, OutlinedInput, TextField, InputAdornment, 
-  IconButton, Button, Avatar, Tab, Tabs } from '@mui/material'
+  IconButton, Button, Avatar, Tab, Tabs, } from '@mui/material'
 import {Visibility, VisibilityOff, EditOutlined, AccountCircle, Key, Logout} from "@mui/icons-material"
 import ConfirmPassword from '../../components/ConfirmPassword';
 import axios from 'axios';
@@ -96,6 +96,7 @@ export default function SettingPage() {
 
   function handleTabChange(event, newValue) {
     setTabValue(newValue);
+    console.log(newValue);
   };
 
   //console.log(user);
@@ -147,11 +148,21 @@ export default function SettingPage() {
   return (
     <>
     <NavBar />
-    <Box maxWidth="1520px" margin="2em auto" sx={{"& .MuiTypography-root":{margin:".5em 0"}}}>
+    <Box
+      sx={{
+        maxWidth:"1520px",
+        margin:"2rem auto",
+        height:"100%",
+        "& .MuiTypography-root":{
+          margin:".5em 0"}
+      }}
+    >
+
       <Box id="content" 
         display="grid"
         gridTemplateColumns= "calc(40% - 30px) 60%"
         gap="30px"
+        height="100%"
       >
 
         {/* will rename id later */}
@@ -169,10 +180,16 @@ export default function SettingPage() {
             value={tabValue}
             onChange={handleTabChange}
             sx={{
+              margin:"1rem 0",
+              width:"250px",
               border:"1px solid black",
               "& .MuiButtonBase-root ":{
                 flexDirection:"row",
                 justifyContent:"flex-start",
+                "&:hover":{
+                  background: "#b39ddb",
+                  color: "#673ab7",
+                },
                 "& .MuiSvgIcon-root":{
                   marginRight:"1rem",
                 }
@@ -189,243 +206,81 @@ export default function SettingPage() {
                 navigate("/");
               }}
             />
-
           </Tabs>
-
-
-
         </Box>
 
 
-        <Box id="section-2" sx={{ borderRadius: "4px", padding: "20px", background: "mediumpurple" }} >
-          <Typography variant='h4' sx={{  color: "white", display: "flex",  justifyContent:"center", marginBottom:"10px"  }}>Edit Profile</Typography>
-          
-          <Box className="userName-section">
-            <Typography variant='h6'>User Name</Typography>
-            <OutlinedInput 
-              value={newUserName} 
-              onChange={(e)=>{
-                setNewUserName(e.target.value.split(" ").join(""))
-              }}
-            />
-            {newUserName !== user.userName ? <Button variant='contained' name="userName" onClick={(e)=>handleOpenPopover(e.target.name, newUserName)}>Save Username</Button> : ""}
-          </Box>
-
-
-          <Box className="name-section">
-            <Typography variant='h6'>First Name</Typography>
-            <OutlinedInput 
-              value={newFirstName}
-              onChange={(e)=>{
-                setNewFirstName(e.target.value.split(" ").join(""))
-              }}
-            />
-            {newFirstName !== user.firstName ? <Button variant='contained' name="firstName" onClick={(e)=>{handleOpenPopover(e.target.name, newFirstName)}}>Save First Name</Button> : ""}
-
-            <Typography variant='h6'>Last Name</Typography>
-            <OutlinedInput 
-              value={newLastName}
-              onChange={(e)=>{
-                setNewLastName(e.target.value.split(" ").join(""))
-              }}
-            />
-            {newLastName !== user.lastName ? <Button variant='contained' name="lastName" onClick={(e)=>{handleOpenPopover(e.target.name, newLastName)}}>Save Last Name</Button> : ""}
-          </Box>
-
-          <Box className="email-section">
-            <Typography variant='h6'>Email</Typography>
-            <OutlinedInput 
-              type='email'
-              value={newEmail}
-              onChange={(e)=>{
-                setNewEmail(e.target.value.split(" ").join(""))
-              }}
-            />
-            {newEmail !== user.email ? <Button variant='contained' name="email" onClick={(e)=>{handleOpenPopover(e.target.name, newEmail)}}>Save Email</Button> : ""}
-          </Box>
-
-          <Box className="new-password-section">
-            <Typography variant='h6'>Change Password</Typography>
-            <OutlinedInput
-              type={showNewPassword ? "text": "password"}
-              placeholder='New password'
-              value={newPassword}
-              onChange={(e)=>{
-                setNewPassword(e.target.value.split(" ").join(""))
-              }}
-              endAdornment= {(
-                <InputAdornment position="end">
-                    <IconButton onClick={handleShowNewPassword}>
-                    {!showNewPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                </InputAdornment>
-                )}
-            />
-
-            <OutlinedInput
-              type={showNewConfirmPassword ? "text": "password"}
-              placeholder='Confirm new password'
-              value={newConfirmPassword}
-              onChange={(e)=>{
-                setNewConfirmPassword(e.target.value.split(" ").join(""))
-              }}
-              endAdornment= {(
-                <InputAdornment position="end">
-                    <IconButton onClick={handleShowNewConfirmPassword}>
-                    {!showNewConfirmPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                </InputAdornment>
-                )}
-            /> 
-            {newPassword && newConfirmPassword ? 
-              <Button 
-                variant='contained' 
-                name="password" 
-                onClick={(e)=>{handleOpenPopover(e.target.name, newConfirmPassword)}}
-              >Save Password</Button> : ""
-            }
-          </Box>
-          
-          <Box className="profile-image-section">
-            <Dropzone
-              acceptedFiles=".jpg,.jpeg,.png"
-              multiple={false}
-              onDrop={(acceptedFiles) => {
-                setNewPicturePath(acceptedFiles[0]) //File object
-                //handleOpenPopover("picturePath", acceptedFiles[0].name)
-                handleOpenPopover("picturePath", acceptedFiles[0].name)
-                //setBody({attribute: "picturePath", value: acceptedFiles[0].name})
-                console.log(body);
-                console.log(acceptedFiles)
+        <Box id="section-2" sx={{ borderRadius: "4px", padding: "20px",}} >
+          {/* ACCOUNT SETTING */}
+          {tabValue === 0 && 
+          <>
+            <Typography variant='h4' 
+              sx={{  
+                color: "#111111", 
+                margin:"0 0 2rem 0!important;",
+                fontWeight:"600",
               }}
             >
-              {({getRootProps, getInputProps }) => (
-                <Box
-                    {...getRootProps()}
-                    border={`2px dashed ${palette.primary.main}`}
-                    p="1rem"
-                    sx={{ "&:hover": { cursor: "pointer" } }}
-                >
-                  <input {...getInputProps()} />
-                  {!newPicturePath.name? (
-                    <p>Drop Image here or click to upload</p>
-                  ) : (
-                  <Box display="flex" justifyContent={"space-between"} alignItems={'center'}>
-                    <Typography>{newPicturePath.name ? newPicturePath.name : user.picturePath }</Typography>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <EditOutlined />
-                    </Box>
-                  </Box>
-                  )}
-                </Box>
-              )}
-            </Dropzone>
-          </Box>
+              Account Settings
+            </Typography>
 
-
-          {/* {newEmail !== user.email ? <Button variant='contained' name="email" onClick={(e)=>{handleOpenPopover(e.target.name, newEmail)}}>Save Email</Button> : ""} */}
-          
-          <Box className="social-media-section">
-            <Typography variant='h6'>Social Media</Typography>
-            <Box display="flex" alignItems="center">
-                <Typography variant='subtitle1'>Twitter </Typography>
-                  <TextField 
-                    value={newSocialMedia.twitter}
-                    variant="outlined"
-                    helperText="URL (required)"
-                    onChange={(e)=>{
-                      setNewSocialMedia(prev =>({
-                        ...prev,
-                        twitter: e.target.value.split(" ").join("")
-                      }))
-                    }}
-                  />
-                  {newSocialMedia.twitter !== user.socialMediaHandles.twitter ?
-                    <Button 
-                      variant='contained'
-                      name="socialMediaHandles"
-                      onClick={(e)=>{handleOpenPopover(e.target.name, newSocialMedia.twitter)}}
-                    >
-                      Save Twitter
-                    </Button> : ""
+            <Typography variant="h5" sx={{  
+                color: "#111111", 
+                //margin:"0 0 2rem 0!important;",
+                fontWeight:"600",
+              }}
+            >
+              Basic Info
+            </Typography>
+            <hr style={{marginBottom:"1.5rem", border:"none", height:"1px", backgroundColor:"#111111"}}></hr>
+            <Box id="basic-info-section"
+              sx={{
+                display:"flex",
+                alignItems:"center",
+                "& .MuiInputBase-root":{
+                  height:"50px",
+                  borderRadius:"8px",
+                },
+                "& > div":{
+                  display:"flex",
+                  alignItems:"center",
+                  flexGrow:"1",
+                  "& .MuiFormControl-root":{
+                    flexGrow:"1",
+                    marginRight:"1.5rem",
                   }
-
-
-            </Box>
-
-            <Box display="flex" alignItems="center">
-              <Typography variant='subtitle1'>Instagram</Typography>
-                <TextField 
-                  value={newSocialMedia.instagram}
-                  variant="outlined"
-                  helperText="URL (required)"
-                  onChange={(e)=>{
-                    setNewSocialMedia(prev =>({
-                      ...prev,
-                      instagram: e.target.value.split(" ").join("")
-                    }))
-                  }}
-                />
-                {newSocialMedia.instagram !== user.socialMediaHandles.instagram ?
-                  <Button 
-                    variant='contained'
-                    name="socialMediaHandles"
-                    onClick={(e)=>{handleOpenPopover(e.target.name, newSocialMedia.instagram)}}
-                  >
-                    Save Instagram
-                  </Button> : ""
                 }
-            </Box>
-
-            <Box display="flex" alignItems="center">
-              <Typography variant='subtitle1'>Youtube</Typography>
-                <TextField 
-                  value={newSocialMedia.youtube}
-                  variant="outlined"
-                  helperText="URL (required)"
+              }}
+            
+            >
+              <Box className="userName-section"
+                sx={{
+                  // display:"flex",
+                  // alignItems:"center",
+                  // flexGrow:"1"
+                }}
+              >
+                {/* <OutlinedInput 
+                  value={newUserName} 
                   onChange={(e)=>{
-                    setNewSocialMedia(prev =>({
-                      ...prev,
-                      youtube: e.target.value.split(" ").join("")
-                    }))
+                    setNewUserName(e.target.value.split(" ").join(""))
                   }}
-                />
-                {newSocialMedia.youtube !== user.socialMediaHandles.youtube ?
-                  <Button 
-                    variant='contained'
-                    name="socialMediaHandles"
-                    onClick={(e)=>{handleOpenPopover(e.target.name, newSocialMedia.youtube)}}
-                  >
-                    Save Youtube
-                  </Button> : ""
-                }
-            </Box>
-
-            <Box display="flex" alignItems="center">
-              <Typography variant='subtitle1'>Github</Typography>
+                /> */}
                 <TextField 
-                  value={newSocialMedia.github}
+                  placeholder='Username'
+                  label="Username"
                   variant="outlined"
-                  helperText="URL (required)"
-                  onChange={(e)=>{
-                    setNewSocialMedia(prev =>({
-                      ...prev,
-                      github: e.target.value.split(" ").join("")
-                    }))
-                  }}
+                  value={newUserName}
+                  onChange={(e)=>{setNewUserName(e.target.value.split(" ").join(""))}}
                 />
-                {newSocialMedia.github !== user.socialMediaHandles.github ?
-                  <Button 
-                    variant='contained'
-                    name="socialMediaHandles"
-                    onClick={(e)=>{handleOpenPopover(e.target.name, newSocialMedia.github)}}
-                  >
-                    Save Github
-                  </Button> : ""
-                }
-            </Box>
-          </Box>
+              </Box>
+              {newUserName !== user.userName ? <Button variant='contained' name="userName" onClick={(e)=>handleOpenPopover(e.target.name, newUserName)}>Save Username</Button> : ""}
 
+            </Box>
+            
+          </>
+          }
+          
           <ConfirmPassword 
             open={open} 
             error={error}

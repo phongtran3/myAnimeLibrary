@@ -175,7 +175,7 @@ export default function SettingPage() {
             margin:"0 1.5rem",
           }}
         > 
-          <Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`http://localhost:5000/assets/${user.picturePath}`}/>
+          <a href={`/user/${user.userName}`}><Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`http://localhost:5000/assets/${user.picturePath}`}/></a>
           <Tabs  
             id="tab-nav"
             orientation= {desktopScreen ? "vertical" : null}

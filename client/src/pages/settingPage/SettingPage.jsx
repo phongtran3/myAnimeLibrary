@@ -152,17 +152,18 @@ export default function SettingPage() {
       sx={{
         maxWidth:"1520px",
         margin:"2rem auto",
-        height:"100%",
-        "& .MuiTypography-root":{
-          margin:".5em 0"}
+        paddingBottom:"3rem",
+
       }}
     >
 
       <Box id="content" 
-        display= {desktopScreen ? "grid" : "block"}
-        gridTemplateColumns= "calc(40% - 30px) 60%"
-        gap="30px"
-        height="100%"
+        sx={{
+          display: desktopScreen ? "grid" : "block",
+          gridTemplateColumns: "calc(40% - 30px) 60%",
+          gap:"30px",
+          height:"100%"
+        }}
       >
 
         {/* will rename id later */}
@@ -200,7 +201,6 @@ export default function SettingPage() {
             }}
           >
             <Tab icon={<AccountCircle />} label="Account Setting" />
-            <Tab icon={<Key />} label="Change Password" />
             <Tab icon={<Logout />} label="Logout" 
               onClick={()=>{
                 console.log("Logging Out");
@@ -216,6 +216,8 @@ export default function SettingPage() {
           sx={{ 
             borderRadius: "4px", 
             margin:"0 1.5rem",
+
+            
             }} 
         >
           {/* ACCOUNT SETTING */}
@@ -235,7 +237,7 @@ export default function SettingPage() {
               sx={{
                 display:"flex",
                 alignItems:"strech",
-                flexDirection:"column",
+                flexDirection:"column", 
                 "& .MuiInputBase-root":{
                   height:"50px",
                   borderRadius:"8px",
@@ -491,20 +493,68 @@ export default function SettingPage() {
                 </Box>
 
             </Box>
+            
+            <Box>
+              <Typography variant="h5" 
+                  sx={{  
+                    color: "#111111", 
+                    //margin:"0 0 2rem 0!important;",
+                    fontWeight:"600",
+                    }}
+                >
+                  Change Password
+                </Typography>
+                <hr style={{marginBottom:"1.5rem", border:"none", height:"1px", backgroundColor:"#111111"}}></hr>
+
+                <Box className="new-password-section">
+                  <TextField 
+                    placeholder='New password'
+                    type={showNewPassword ? "text": "password"}
+                    label="Password"
+                    value={newPassword}
+                    variant="outlined"
+                    onChange={(e)=>{setNewPassword(e.target.value.split(" ").join(""))}}
+                    InputProps={{
+                      endAdornment: 
+                      <InputAdornment position="end">
+                          <IconButton onClick={handleShowNewPassword}>
+                          {!showNewPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                      </InputAdornment>
+                    }}
+                  />
+                </Box>
+
+                <Box>
+                  <TextField 
+                    placeholder='Confirm new password'
+                    type={showNewConfirmPassword ? "text": "password"}
+                    label="Confirm New Password"
+                    value={newConfirmPassword}
+                    variant="outlined"
+                    onChange={(e)=>{setNewConfirmPassword(e.target.value.split(" ").join(""))}}
+                    InputProps={{
+                      endAdornment: 
+                      <InputAdornment position="end">
+                          <IconButton onClick={handleShowNewConfirmPassword}>
+                          {!showNewConfirmPassword  ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                      </InputAdornment>
+                    }}
+                  />
+                </Box>
+                {newPassword && newConfirmPassword ? 
+                  <Button 
+                    variant='contained' 
+                    name="password" 
+                    onClick={(e)=>{handleOpenPopover(e.target.name, newConfirmPassword)}}
+                  >Save Password</Button> : ""
+                }    
+
+            </Box>
+
           </>
-          }
-          {tabValue === 1 && 
-          <>
-            <Typography variant='h4' 
-                sx={{  
-                  color: "#111111", 
-                  margin:"0 0 2rem 0!important;",
-                  fontWeight:"600",
-                }}
-              >
-                Change Password
-            </Typography>
-          </>
+          
           }
           <ConfirmPassword 
             open={open} 

@@ -68,7 +68,12 @@ export default function ListPage() {
   console.log(userList);
   console.log(filters);
 
-
+  console.log(!(userList[7].userStatus === 'WATCHING' || userList[7].userStatus === 'READING') &&
+  ((filters.genres.length === 7 ? true : filters.genres.every(v => userList[7].genres.includes(v))) &&
+  (filters.format === "" ? true : userList[7].format === filters.format.toUpperCase()) &&
+  (userList[7].title.toLowerCase().includes(filters.query.toLowerCase())) &&
+  (filters.status === "" ? true : userList[7].status === filters.status.toUpperCase()) 
+  ))
 
   return (
     <>
@@ -94,6 +99,7 @@ export default function ListPage() {
               display:"flex",
               flexDirection:"column",
               alignItems:"center",
+             
             }}
           > 
             {/* <h1>Filter</h1> */}
@@ -104,11 +110,20 @@ export default function ListPage() {
 
           {/* (item.userStatus === 'COMPLETED') &&  */}
           <Box id="section-2">
-            <Box className="list-wrapper">
+            <Box className="list-wrapper"
+              sx={{
+
+              }}
+            >
+              <Typography variant='h6'>{type ==='anime' ? "Watching" : "Reading"}</Typography>
               {userList.some(item => item['userStatus'] === 'WATCHING' || item['userStatus'] === 'READING')  &&  
               <>
-                <Typography variant='h6'>{type ==='anime' ? "Watching" : "Reading"}</Typography>
-                <ImageList cols={6} sx={{textAlign: "center", gap:"20px 20px !important" }}>
+                <ImageList cols={6} 
+                  sx={{
+                    textAlign: "center", 
+                    gap:"20px 20px !important",
+                                        
+                  }}>
                   {userList.filter(item => (item.userStatus === 'WATCHING' || item.userStatus === 'READING') &&
                       ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
                       (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
@@ -121,15 +136,14 @@ export default function ListPage() {
                           return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
                         else
                           return a.title.localeCompare(b.title);
-
                       }).map((item) => (
                           <Card2 user={user} key={item._id} item={item}/>
-                        
                       ))
                     }
 
                   </ImageList>
-              </>}
+              </>
+              }
             </Box>
             
             <hr></hr>

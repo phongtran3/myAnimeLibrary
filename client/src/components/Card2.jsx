@@ -88,7 +88,6 @@ export default function Card2({item, user}) {
 
     }
     return (
-        
         <ImageListItem 
             onMouseEnter={(e) => showBtn(e)}
             onMouseLeave={(e) => hideBtn(e)}

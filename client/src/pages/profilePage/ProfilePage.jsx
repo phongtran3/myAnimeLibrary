@@ -123,12 +123,21 @@ export default function ProfilePage() {
               }
             }}
           >
-            <Box id="progress-list-preview-wrap">
+            <Box id="progress-list-preview-wrap"
+              sx={{
+                display: !progress.length ? "none" : null
+              }}
+            >
               <Typography variant="h5" fontWeight="bold">In Progress</Typography>
               <PreviewList medium={progress} />
             </Box>
 
-            <Box id="anime-list-preview-wrap" mt="1em">
+            <Box id="anime-list-preview-wrap"
+              sx={{
+                marginTop:"1rem",
+                display: !user.animes.length ? "none" : null
+              }}
+            >
               <Typography sx={{textDecoration: "none", color: "inherit"}} component={Link} to={`/user/${user.userName}/animelist`} variant="h6">
                 <h3>Animes</h3>
                 <div>View All</div>
@@ -136,7 +145,12 @@ export default function ProfilePage() {
               <PreviewList medium={user.animes.slice(-6)} />
             </Box>
 
-            <Box id="manga-list-preview-wrap" mt="1em">
+            <Box id="manga-list-preview-wrap" 
+              sx={{
+                marginTop:"1rem",
+                display: !user.mangas.length ? "none" : null
+              }}
+            >
               <Typography sx={{textDecoration: "none", color: "inherit"}} component={Link} to={`/user/${user.userName}/mangalist`} variant="h6">
                 <h3>Mangas</h3>
                 <div>View All</div>

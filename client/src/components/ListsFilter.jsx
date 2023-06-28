@@ -140,7 +140,6 @@ export default function ListsFilter({type, filters, setFilters}) {
           //isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          // sx={{ width: 500 }}
           renderInput={(params) => <TextField {...params} label="Select Sorting" />}
         />
     </Box>

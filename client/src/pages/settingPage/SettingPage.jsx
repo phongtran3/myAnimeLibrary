@@ -10,10 +10,6 @@ import ConfirmPassword from '../../components/ConfirmPassword';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
-// import {Formik} from "formik";
-// import * as yup from "yup";
-
-
 export default function SettingPage() {
   const [open, setOpen] = useState(false);
   const [tabValue, setTabValue] = useState(0);
@@ -64,7 +60,7 @@ export default function SettingPage() {
       if (err.response){
         console.log(err.response.data);
       }
-    console.log(err);
+      console.log(err);
     }) 
   }
 
@@ -96,7 +92,6 @@ export default function SettingPage() {
 
   function handleTabChange(event, newValue) {
     setTabValue(newValue);
-    console.log(newValue);
   };
 
   //console.log(user);
@@ -108,8 +103,8 @@ export default function SettingPage() {
       //console.log("New passwords do not match")
       setError("New passwords do not match")
     }else{
-      console.log("Password Match")
-      console.log(body);
+      //console.log("Password Match")
+      //console.log(body);
       const formData = new FormData();
       for (let value in body) {
         formData.append(value, body[value]);
@@ -121,7 +116,7 @@ export default function SettingPage() {
         formData, 
         {headers: { "Content-Type": "multipart/form-data", Authorization: `${token}`}}
       ).then(res =>{
-        console.log(res);
+        //console.log(res);
         setUser(res.data)
         dispatch(setSiteUser({
           user: res.data,
@@ -203,7 +198,6 @@ export default function SettingPage() {
             <Tab icon={<AccountCircle />} label="Account Setting" />
             <Tab icon={<Logout />} label="Logout" 
               onClick={()=>{
-                console.log("Logging Out");
                 dispatch(setLogout());
                 navigate("/");
               }}
@@ -320,8 +314,8 @@ export default function SettingPage() {
                     //handleOpenPopover("picturePath", acceptedFiles[0].name)
                     handleOpenPopover("picturePath", acceptedFiles[0].name)
                     //setBody({attribute: "picturePath", value: acceptedFiles[0].name})
-                    console.log(body);
-                    console.log(acceptedFiles)
+                    //console.log(body);
+                    //console.log(acceptedFiles)
                   }}
                 >
                   {({getRootProps, getInputProps }) => (

@@ -9,14 +9,14 @@ import axios from 'axios';
 const mangaFormat = ["MANGA", "ONE_SHOT", "NOVEL"];
 
 export default function Card2({item, user}) {
-    console.log(item)
+    //console.log(item)
     const type = mangaFormat.indexOf(item.format) > -1 ? "manga" : "anime";
     const userStatuses = [
         mangaFormat.indexOf(item.format) > -1 ? "READING" : "WATCHING",
         "COMPLETED",
         "PLANNING"
     ]
-    const [displayEditBtn, setDisplayEditBtn] = useState(true);
+    const [displayEditBtn, setDisplayEditBtn] = useState(false);
     const [open, setOpen] = useState(false);
     const [userStatus, setUserStatus] = useState(item.userStatus)
 
@@ -90,8 +90,8 @@ export default function Card2({item, user}) {
     return (
         
         <ImageListItem 
-            //onMouseEnter={(e) => showBtn(e)}
-            //onMouseLeave={(e) => hideBtn(e)}
+            onMouseEnter={(e) => showBtn(e)}
+            onMouseLeave={(e) => hideBtn(e)}
         >
             <img
                 src={`${item.coverImage}?w=164&h=164&fit=crop&auto=format`}

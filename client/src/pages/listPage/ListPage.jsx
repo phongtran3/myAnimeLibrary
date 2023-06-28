@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-import { Box, Typography, ImageList, ImageListItemBar, useMediaQuery} from "@mui/material";
+import { Box, Typography, ImageList, ImageListItemBar, useMediaQuery, Avatar} from "@mui/material";
 import axios from 'axios';
 import NavBar from '../../components/NavBar'
-import ProfileCard from '../../components/ProfileCard'
 import ListsFilter from '../../components/ListsFilter';
 import Card2 from '../../components/Card2';
 
@@ -22,6 +21,7 @@ export default function ListPage() {
   const { userName, list } = useParams();
   const token = useSelector((state) => state.token);
   const type = list === 'animelist' ? 'anime' : 'manga'
+  const desktopScreen = useMediaQuery("(min-width: 1100px)");
 
   async function getUser(){
     await axios.get(
@@ -73,16 +73,35 @@ export default function ListPage() {
   return (
     <>
       <NavBar />
-      <Box id="content-container" margin="3em auto 0" maxWidth="1520px" padding="0 50px">
+      <Box id="content-container" 
+        sx={{
+          maxWidth:"1520px",
+          margin:"3rem auto",
+          height:"100%",
+        }}
+      >
         <Box id="content" 
-            display="grid"
-            gridTemplateColumns= "calc(20% - 30px) 80%"
-            gap="30px"
+          sx={{
+            display: desktopScreen ? "grid" : "block",
+            gridTemplateColumns:"calc(30% - 30px) 70%",
+            gap:"30px",
+            margin:"2rem",
+
+          }}
         >
-          <Box id="section-1"> 
-            <h1>List Page</h1>
+          <Box id="section-1"
+            sx={{
+              display:"flex",
+              flexDirection:"column",
+              alignItems:"center",
+            }}
+          > 
+            {/* <h1>Filter</h1> */}
+            <a href={`/user/${user.userName}`}><Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`http://localhost:5000/assets/${user.picturePath}`}/></a>
+
             <ListsFilter type={type} filters={filters} setFilters={setFilters} />
           </Box>
+
           {/* (item.userStatus === 'COMPLETED') &&  */}
           <Box id="section-2">
             <Box className="list-wrapper">

@@ -1,7 +1,11 @@
 import React from 'react'
-import { Box, Typography, useMediaQuery, TextField, Autocomplete, Chip} from "@mui/material";
+import { Box, Typography, useMediaQuery, TextField, Autocomplete, Chip, Checkbox} from "@mui/material";
 import { genreCollection, animeFormat, status, mangaFormat } from './FilterCollections';
 
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const sortCollection = ["Title", "Last Added"]
 
 
@@ -21,10 +25,22 @@ export default function ListsFilter({type, filters, setFilters}) {
   }
 
   return (
-    <Box>
-      <h1>Filter</h1>
+    <Box id="filter"
+      sx={{
+        width:"100%",
+        margin:"1rem",
+        display:"flex",
+        flexWrap:"wrap",
+        gap:"1rem",
+        "& > div":{
+          flex:"1 0 250px",
+        },
+      }}
+
+    >
       <TextField 
           placeholder='Search...'
+          label="Search"
           variant="outlined"
           value={filters.query}
           onChange={(e) => {setFilters(prevState =>({
@@ -44,7 +60,6 @@ export default function ListsFilter({type, filters, setFilters}) {
           //isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          // sx={{ width: 500 }}
           renderInput={(params) => <TextField {...params} label="Select Format" />}
         />
 
@@ -62,7 +77,6 @@ export default function ListsFilter({type, filters, setFilters}) {
           //isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          // sx={{ width: 500 }}
           renderInput={(params) => <TextField {...params} label="Select Status" />}
         />
 
@@ -80,7 +94,17 @@ export default function ListsFilter({type, filters, setFilters}) {
           }}
           disableCloseOnSelect
           getOptionLabel={(option) => option}
-          // sx={{width: 500}}
+          renderOption={(props, option, { selected }) => (
+            <li {...props}>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 4 }}
+                checked={selected}
+              />
+              {option}
+            </li>
+          )}
           renderInput={(params) => (
               <TextField {...params} label={`Select Genre`}/>
           )}

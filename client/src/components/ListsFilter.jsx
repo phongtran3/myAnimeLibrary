@@ -23,7 +23,7 @@ export default function ListsFilter({type, filters, setFilters}) {
       format: temp
     }));
   }
-
+  
   return (
     <Box id="filter"
       sx={{

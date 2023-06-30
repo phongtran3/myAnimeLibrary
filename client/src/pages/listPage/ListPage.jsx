@@ -10,6 +10,10 @@ import Card2 from '../../components/Card2';
 
 export default function ListPage() {
   const [user, setUser] = useState(null);
+  const [watching, setWatching] = useState([]);
+  const [completed, setCompleted] = useState([]);
+  const [planning, setPlanning] = useState([]);
+
   const [filters, setFilters] = useState({
     query: '',
     format:'',
@@ -31,6 +35,15 @@ export default function ListPage() {
       console.log(res.data);
       setUser(res.data);
       //console.log(type);
+      if (type === 'anime'){
+        setWatching(res.data.animes.filter(anime => anime.userStatus === 'WATCHING'))
+        setCompleted(res.data.animes.filter(anime => anime.userStatus === 'COMPLETED'))
+        setPlanning(res.data.animes.filter(anime => anime.userStatus === 'PLANNING'))
+      }else{
+        setWatching(res.data.mangas.filter(manga => manga.userStatus === 'READING'))
+        setCompleted(res.data.mangas.filter(manga => manga.userStatus === 'COMPLETED'))
+        setPlanning(res.data.mangas.filter(manga => manga.userStatus === 'PLANNING'))
+      }
       setUserList(type === 'anime' ? res.data.animes : res.data.mangas);
     }).catch(err => {
       if (err.response){
@@ -46,34 +59,32 @@ export default function ListPage() {
   if (!user) {
     return null;
   }
-  //const {firstName, lastName, animes, mangas, picturePath } = user.data;
-  //const progress = [];
-  //const planning = []
-  // if (type === 'anime'){
-  //     const progress = animes.filter(anime => anime.userStatus === 'WATCHING')
-  //     const completed = animes.filter(anime => anime.userStatus === 'COMPLETED')
-  //     const planning = animes.filter(anime => anime.userStatus === 'PLANNING')
-  //     console.log(progress);
-  //     console.log(planning);
-  //     console.log(completed);
-  // }else{
-  //   const progress = mangas.filter(manga => manga.userStatus === 'READING')
-  //   const completed = mangas.filter(manga => manga.userStatus === 'COMPLETED')
-  //   const planning = mangas.filter(manga => manga.userStatus === 'PLANNING')
-  //   console.log(progress);
-  //   console.log(planning);
-  //   console.log(completed);
-  // }
 
+  function returnFilterArray(array){
+    return array.filter(item => (
+      (filters.status === "" ? true : item.status === filters.status.toUpperCase()) && 
+      (filters.format === "" ? true : item.format === filters.format.toUpperCase()) &&
+      (filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
+      (item.title.toLowerCase().includes(filters.query.toLowerCase()))
+      ))
+
+  }
   console.log(userList);
   console.log(filters);
 
-  console.log(!(userList[7].userStatus === 'WATCHING' || userList[7].userStatus === 'READING') &&
-  ((filters.genres.length === 7 ? true : filters.genres.every(v => userList[7].genres.includes(v))) &&
+  console.log((userList[7].userStatus === 'WATCHING' || userList[7].userStatus === 'READING') &&
+  ((filters.genres.length === 0 ? true : filters.genres.every(v => userList[7].genres.includes(v))) &&
   (filters.format === "" ? true : userList[7].format === filters.format.toUpperCase()) &&
   (userList[7].title.toLowerCase().includes(filters.query.toLowerCase())) &&
   (filters.status === "" ? true : userList[7].status === filters.status.toUpperCase()) 
   ))
+  
+  const watchingArr = returnFilterArray(watching);
+  const completedArr = returnFilterArray(completed);
+  const planningArr = returnFilterArray(planning);
+  console.log(watchingArr);
+  console.log(completedArr);
+  console.log(planningArr);
 
   return (
     <>
@@ -105,7 +116,14 @@ export default function ListPage() {
             {/* <h1>Filter</h1> */}
             <a href={`/user/${user.userName}`}><Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`http://localhost:5000/assets/${user.picturePath}`}/></a>
 
-            <ListsFilter type={type} filters={filters} setFilters={setFilters} />
+            <ListsFilter 
+              type={type} 
+              filters={filters} 
+              setFilters={setFilters} 
+              setCompleted={setCompleted} 
+              setWatching={setWatching} 
+              setPlanning={setPlanning}
+            />
           </Box>
 
           {/* (item.userStatus === 'COMPLETED') &&  */}

@@ -97,7 +97,6 @@ export default function Card2({item, user}) {
                 srcSet={`${item.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                 alt={item.title}
                 loading="lazy"
-                style={{borderRadius: "0.375rem"}}
             />
             <Link
                 rel="noopener noreferrer" 

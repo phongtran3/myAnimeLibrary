@@ -122,12 +122,20 @@ export default function ListPage() {
 
           <Box id="section-2"
             sx={{
-              "& div":{
+              padding:"0 1rem",
+              "& > div":{
+                marginBottom:"1.5rem",
+                "& > h6":{
+                  marginBottom:"1rem",
+                },
                 "& .MuiImageList-root ":{
                   gridTemplateColumns:"repeat(auto-fill, minmax(130px, 1fr)) !important",
                   '@media (max-width: 510px)': {
                     gridTemplateColumns: 'repeat(auto-fill, minmax(115px, 1fr))!important',
                   },
+                },
+                "& .MuiImageListItemBar-titleWrap":{
+                  padding:"0.5rem",
                 }
               }
             }}
@@ -137,10 +145,11 @@ export default function ListPage() {
             <Box className="list-wrapper">
               <Typography variant='h6'>{type ==='anime' ? "Watching" : "Reading"}</Typography>
               <>
-                <ImageList cols={6} 
+                <ImageList
                   sx={{
                     textAlign: "center", 
-                    gap:"20px 20px !important",
+                    gap:"20px !important"
+                    
                   }}
                 >
                   {watchingArr.map(item =>  <Card2 user={user} key={item._id} item={item}/>)}
@@ -153,10 +162,11 @@ export default function ListPage() {
               <Box className="list-wrapper">
                 <Typography variant='h6'>Completed</Typography>
                 <>
-                  <ImageList cols={6} 
+                  <ImageList
                     sx={{
                       textAlign: "center", 
-                      gap:"20px 20px !important",
+                      gap:"20px !important"
+                      
                     }}
                   >
                     {completedArr.map(item =>  <Card2 user={user} key={item._id} item={item}/>)}
@@ -169,10 +179,11 @@ export default function ListPage() {
               <Box className="list-wrapper">
                 <Typography variant='h6'>Planning</Typography>
                 <>
-                  <ImageList cols={6} 
+                  <ImageList
                     sx={{
                       textAlign: "center", 
-                      gap:"20px 20px !important",
+                      gap:"20px !important"
+                      
                     }}
                   >
                     {planningArr.map(item =>  <Card2 user={user} key={item._id} item={item}/>)}

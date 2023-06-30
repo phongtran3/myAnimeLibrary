@@ -109,9 +109,7 @@ export default function ListPage() {
              
             }}
           > 
-            {/* <h1>Filter</h1> */}
             <a href={`/user/${user.userName}`}><Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`http://localhost:5000/assets/${user.picturePath}`}/></a>
-
             <ListsFilter 
               type={type} 
               filters={filters} 
@@ -122,7 +120,19 @@ export default function ListPage() {
             />
           </Box>
 
-          <Box id="section-2">
+          <Box id="section-2"
+            sx={{
+              "& div":{
+                "& .MuiImageList-root ":{
+                  gridTemplateColumns:"repeat(auto-fill, minmax(130px, 1fr)) !important",
+                  '@media (max-width: 510px)': {
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(115px, 1fr))!important',
+                  },
+                }
+              }
+            }}
+          
+          >
             {watchingArr.length > 0 &&
             <Box className="list-wrapper">
               <Typography variant='h6'>{type ==='anime' ? "Watching" : "Reading"}</Typography>

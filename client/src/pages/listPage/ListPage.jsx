@@ -66,25 +66,21 @@ export default function ListPage() {
       (filters.format === "" ? true : item.format === filters.format.toUpperCase()) &&
       (filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
       (item.title.toLowerCase().includes(filters.query.toLowerCase()))
-      ))
-
+      )).sort(function(a,b) {
+        if(filters.sort === 'Title'){
+          return a.title.localeCompare(b.title)
+        }else if (filters.sort === 'Last Added')
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        else
+          return a.title.localeCompare(b.title);
+      })
   }
   console.log(userList);
   console.log(filters);
 
-  console.log((userList[7].userStatus === 'WATCHING' || userList[7].userStatus === 'READING') &&
-  ((filters.genres.length === 0 ? true : filters.genres.every(v => userList[7].genres.includes(v))) &&
-  (filters.format === "" ? true : userList[7].format === filters.format.toUpperCase()) &&
-  (userList[7].title.toLowerCase().includes(filters.query.toLowerCase())) &&
-  (filters.status === "" ? true : userList[7].status === filters.status.toUpperCase()) 
-  ))
-  
   const watchingArr = returnFilterArray(watching);
   const completedArr = returnFilterArray(completed);
   const planningArr = returnFilterArray(planning);
-  console.log(watchingArr);
-  console.log(completedArr);
-  console.log(planningArr);
 
   return (
     <>
@@ -126,99 +122,55 @@ export default function ListPage() {
             />
           </Box>
 
-          {/* (item.userStatus === 'COMPLETED') &&  */}
           <Box id="section-2">
-            <Box className="list-wrapper"
-              sx={{
-
-              }}
-            >
+            {watchingArr.length > 0 &&
+            <Box className="list-wrapper">
               <Typography variant='h6'>{type ==='anime' ? "Watching" : "Reading"}</Typography>
-              {userList.some(item => item['userStatus'] === 'WATCHING' || item['userStatus'] === 'READING')  &&  
               <>
                 <ImageList cols={6} 
                   sx={{
                     textAlign: "center", 
                     gap:"20px 20px !important",
-                                        
-                  }}>
-                  {userList.filter(item => (item.userStatus === 'WATCHING' || item.userStatus === 'READING') &&
-                      ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
-                      (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
-                      (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
-                      (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
-                      )).sort(function(a,b) {
-                        if(filters.sort === 'Title'){
-                          return a.title.localeCompare(b.title)
-                        }else if (filters.sort === 'Last Added')
-                          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-                        else
-                          return a.title.localeCompare(b.title);
-                      }).map((item) => (
-                          <Card2 user={user} key={item._id} item={item}/>
-                      ))
-                    }
-
+                  }}
+                >
+                  {watchingArr.map(item =>  <Card2 user={user} key={item._id} item={item}/>)}
                   </ImageList>
               </>
-              }
             </Box>
-            
-            <hr></hr>
+            }
 
-            <Box className="list-wrapper">
-              {userList.some(item => item['userStatus'] === 'COMPLETED')  &&  
-              <>
+            {completedArr.length > 0 &&
+              <Box className="list-wrapper">
                 <Typography variant='h6'>Completed</Typography>
-                  <ImageList cols={6} sx={{textAlign: "center", gap:"20px 20px !important" }}>
-                    {userList.filter(item => (item.userStatus === 'COMPLETED') &&
-                        ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
-                        (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
-                        (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
-                        (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
-                        )).sort(function(a,b) {
-                          if(filters.sort === 'Title'){
-                            return a.title.localeCompare(b.title)
-                          }else if (filters.sort === 'Last Added')
-                            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-                          else
-                            return a.title.localeCompare(b.title);
-                        }).map((item) => (
-                          <Card2 user={user} key={item._id} item={item}/>
-                      ))
-                    }
-                  </ImageList>
-              </>
-              }
-            </Box>
+                <>
+                  <ImageList cols={6} 
+                    sx={{
+                      textAlign: "center", 
+                      gap:"20px 20px !important",
+                    }}
+                  >
+                    {completedArr.map(item =>  <Card2 user={user} key={item._id} item={item}/>)}
+                    </ImageList>
+                </>
+              </Box>
+            }
             
-            <hr></hr>
-            
-            <Box className="list-wrapper">
-              {userList.some(item => item['userStatus'] === 'PLANNING')  &&  
-              <>
+            {planningArr.length > 0 &&
+              <Box className="list-wrapper">
                 <Typography variant='h6'>Planning</Typography>
-                <ImageList cols={6} sx={{textAlign: "center", gap:"20px 20px !important" }}>
-                  {userList.filter(item => (item.userStatus === 'PLANNING') &&
-                      ((filters.genres.length === 0 ? true : filters.genres.every(v => item.genres.includes(v))) &&
-                      (filters.format === '' ? true : item.format === filters.format.toUpperCase()) &&
-                      (item.title.toLowerCase().includes(filters.query.toLowerCase())) &&
-                      (filters.status === '' ? true : item.status === filters.status.toUpperCase()) 
-                      )).sort(function(a,b) {
-                        if(filters.sort === 'Title'){
-                          return a.title.localeCompare(b.title)
-                        }else if (filters.sort === 'Last Added')
-                          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-                        else
-                          return a.title.localeCompare(b.title);
-                      }).map((item) => (
-                        <Card2 user={user} key={item._id} item={item}/>
-                    ))
-                  }
-                </ImageList>
-              </>
-              }
-            </Box>
+                <>
+                  <ImageList cols={6} 
+                    sx={{
+                      textAlign: "center", 
+                      gap:"20px 20px !important",
+                    }}
+                  >
+                    {planningArr.map(item =>  <Card2 user={user} key={item._id} item={item}/>)}
+                    </ImageList>
+                </>
+              </Box>
+            }
+
           </Box>
         </Box>
       </Box>

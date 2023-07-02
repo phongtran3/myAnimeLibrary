@@ -97,7 +97,7 @@ export default function SearchPage() {
               textAlign: "center", 
               gap:"2rem !important",
               gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr)) !important",
-              "& div":{
+              "& > div":{
                 display:"flex",
                 transition: "transform 250ms",
                 '&:hover':{

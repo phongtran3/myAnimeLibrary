@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
 import {Box, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade } from '@mui/material';
 import {SentimentNeutral, SentimentSatisfiedAlt, SentimentVeryDissatisfied } from "@mui/icons-material";
@@ -8,14 +8,47 @@ import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 
 export default function Card({item}) {
+    const [displayQuickAction, setDisplayQuickAction] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    function showBtn(e){
+        e.preventDefault();
+        setDisplayQuickAction(true);
+    }
+    function hideBtn(e){
+        console.log("test")
+        e.preventDefault();
+        setDisplayQuickAction(false);
+
+    }
+
+    function handleOpen(){
+        setOpen(true);
+    }
+    function handleClose(){
+        setOpen(false);
+    }
+
     const user = useSelector((state) => state.user);
     const params = useParams();
     const type = params.media;
 
     return (
-        <PopupState key={item.id} variant="popper" popupId="demoPopper" >
+        <PopupState 
+            key={item.id} 
+            variant="popper" 
+            popupId="demoPopper"
+        >
             {(popupState) => (
-                <ImageListItem key={item.id} {...bindHover(popupState)} component={Link} to={item.siteUrl}>
+                <ImageListItem 
+                    onMouseEnter={(e) => showBtn(e)}
+                    onMouseLeave={(e) => hideBtn(e)}
+                    key={item.id}
+                    {...bindHover(popupState)} 
+                    component={Link} 
+                    to={item.siteUrl}
+                    target="_blank" rel="noopener noreferrer" 
+                >
                     <img
                         src={`${item.coverImage.large}?w=164&h=164&fit=crop&auto=format`}
                         srcSet={`${item.coverImage.large}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
@@ -27,14 +60,16 @@ export default function Card({item}) {
                     title={item.title.english === null ? item.title.romaji : item.title.english} 
                 />
                 <Box sx={{"& .MuiButtonBase-root": {width:"40px", height:"40px"}}}>
-                    {user && <QuickAction 
-                    title={item.title.english === null ? item.title.romaji : item.title.english}
-                    genres={item.genres}
-                    format={item.format}
-                    coverImage={item.coverImage.large}
-                    siteUrl={item.siteUrl}
-                    status={item.status}
-                />}
+                    {user && displayQuickAction ?
+                    <QuickAction 
+                        title={item.title.english === null ? item.title.romaji : item.title.english}
+                        genres={item.genres}
+                        format={item.format}
+                        coverImage={item.coverImage.large}
+                        siteUrl={item.siteUrl}
+                        status={item.status}
+                    />
+                     : ""}
                 </Box>
                     <Popper {...bindPopper(popupState)} transition placement="right-start" sx={{width:'100%', maxWidth:'280px', minWidth:'250px'}}>
                     {({ TransitionProps }) => (

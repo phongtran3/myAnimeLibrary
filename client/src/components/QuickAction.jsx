@@ -53,8 +53,9 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
   return (
        <SpeedDial
         ariaLabel="quick action"
-        sx={{ position: 'absolute', bottom: "55px", right: "5px"}}
+        sx={{ position: 'absolute', bottom: "50px", right: "0px"}}
         icon={<SpeedDialIcon openIcon={<ExpandMore />} />}
+        onClick={(e)=>{e.preventDefault()}}
       >
         {actions.map((action) => (
           <SpeedDialAction

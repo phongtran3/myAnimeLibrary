@@ -91,11 +91,13 @@ export default function Card2({item, user}) {
         <ImageListItem 
             onMouseEnter={(e) => showBtn(e)}
             onMouseLeave={(e) => hideBtn(e)}
+            
         >
             <img
                 src={`${item.coverImage}?w=164&h=164&fit=crop&auto=format`}
                 srcSet={`${item.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                 alt={item.title}
+                
                 loading="lazy"
             />
             <Link

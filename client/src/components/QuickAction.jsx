@@ -53,7 +53,18 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
   return (
        <SpeedDial
         ariaLabel="quick action"
-        sx={{ position: 'absolute', bottom: "50px", right: "0px"}}
+        sx={{ 
+          position: 'absolute', 
+          bottom: "50px", 
+          right: "0px",
+          "& .MuiButtonBase-root":{
+            width:"40px",
+            height:"40px"
+          },
+          "& .MuiSpeedDial-actions":{
+            paddingBottom:"40px",
+          }
+        }}
         icon={<SpeedDialIcon openIcon={<ExpandMore />} />}
         onClick={(e)=>{e.preventDefault()}}
       >
@@ -62,7 +73,7 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
             key={action.name}
             icon={action.icon}
             tooltipTitle={action.name}
-            onClick={(event) => {addToList(action.value, event)}}            
+            onClick={(event) => {addToList(action.value, event)}}         
           />
         ))}
       </SpeedDial>

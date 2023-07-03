@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 //import {Card, Typography, CardMedia, Button, ButtonBase} from "@mui/material"
 import {Box, ImageList, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade } from '@mui/material';
 import {SentimentNeutral, SentimentSatisfiedAlt, SentimentVeryDissatisfied } from "@mui/icons-material";
@@ -10,7 +10,19 @@ import { Link } from 'react-router-dom';
 
 export default function MediaList({media}) {
   const user = useSelector((state) => state.user);
-  //console.log(media);
+  const [displayQuickAction, setDisplayQuickAction] = useState(false);
+
+  function showBtn(e){
+    e.preventDefault();
+    setDisplayQuickAction(true);
+  }
+  function hideBtn(e){
+    console.log("test")
+    e.preventDefault();
+    setDisplayQuickAction(false);
+  }
+
+  console.log("test");
   return (
     // Large screen gap 72 / small screen 48
     <ImageList 
@@ -45,12 +57,14 @@ export default function MediaList({media}) {
         <PopupState key={anime.id} variant="popper" popupId="demoPopper" >
           {(popupState) => (
             <ImageListItem 
+            onMouseEnter={(e) => showBtn(e)}
+            onMouseLeave={(e) => hideBtn(e)}
               sx={{ 
                 //width: "225px", 
                 minHeight: "320px !important" 
               }}
               key={anime.id} 
-              {...bindHover(popupState)} 
+              //{...bindHover(popupState)} 
               component={Link} 
               to={anime.siteUrl} target="_blank" rel="noopener noreferrer" 
             >
@@ -67,23 +81,25 @@ export default function MediaList({media}) {
                 //subtitle={anime.title.english === null ? anime.title.romaji : anime.title.english}
                 //sx={{ maxWidth: "230px"}}
               />
-              <Box sx={{"& .MuiButtonBase-root": {width:"40px", height:"40px"}}}>
-                {user && <QuickAction 
-                  title={anime.title.english === null ? anime.title.romaji : anime.title.english}
-                  genres={anime.genres}
-                  format={anime.format}
-                  coverImage={anime.coverImage.large}
-                  siteUrl={anime.siteUrl}
-                  status={anime.status}
-              />}
-              </Box>
+              {user && displayQuickAction && 
+                <Box sx={{"& .MuiButtonBase-root": {width:"40px", height:"40px"}}}>
+                  <QuickAction 
+                    title={anime.title.english === null ? anime.title.romaji : anime.title.english}
+                    genres={anime.genres}
+                    format={anime.format}
+                    coverImage={anime.coverImage.large}
+                    siteUrl={anime.siteUrl}
+                    status={anime.status}
+                  />
+                </Box>
+              }
                 <Popper {...bindPopper(popupState)} transition placement="right-start" sx={{width:'100%', maxWidth:'280px', minWidth:'250px'}}>
                   {({ TransitionProps }) => (
                     <Fade {...TransitionProps}  >
                       {/* May create seperate jsx component */}
                       <Paper elevation={6} 
                         sx={{
-                          margin:"0 5px",
+                          margin:"0 1rem",
                           padding: "10px"
                         }}
                       >

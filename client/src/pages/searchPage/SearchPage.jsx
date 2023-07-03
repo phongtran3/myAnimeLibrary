@@ -105,8 +105,6 @@ export default function SearchPage() {
                 },
               }
             }}
-   
-          
           >
             {aniMangas.map((item, index) => {
               if (aniMangas.length - 10 === index + 1) {

@@ -63,6 +63,8 @@ export default function IndexPage() {
         paddingBottom="1rem"
         sx={{
           "& .MuiTypography-root":{
+            display:"flex",
+            alignItems:"center",
             textDecoration: "none",
             fontSize: "1.75rem",
             fontWeight: "600",
@@ -70,6 +72,10 @@ export default function IndexPage() {
             "&:hover": {
               color: '#673ab7',
             },
+            "& > div":{
+              fontSize: "1rem",
+              marginLeft: "auto",
+            }
           }
         }}
       > 
@@ -82,28 +88,40 @@ export default function IndexPage() {
         <>
         {!trendingAnime.length ? <CircularProgress/> : 
           <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
-            <Typography variant="h5" component={Link} to={`search/anime/trending`} >Trending Anime</Typography>
+            <Typography component={Link} to={`search/anime/trending`}>
+              <span>Trending Anime</span>
+              <div>View All</div>
+            </Typography>
             <MediaList media={trendingAnime} />
           </Box>
         }
         
         {!popularAnime.length ? <CircularProgress/> : 
         <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
-          <Typography variant="h5" component={Link} to={`search/anime/popularity`}>All Time Popular Anime</Typography>
+          <Typography component={Link} to={`search/anime/popularity`}>
+            <span>All Time Popular Anime</span>
+            <div>View All</div>
+          </Typography>
           <MediaList media={popularAnime} />
         </Box>
         }
         
         {!trendingManga.length ? <CircularProgress/> : 
         <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
-          <Typography variant="h5" component={Link} to={`search/manga/trending`}>Trending Manga</Typography>
+          <Typography component={Link} to={`search/manga/trending`}>
+            <span>Trending Manga</span>
+            <div>View All</div>
+          </Typography>
           <MediaList media={trendingManga} />
         </Box>
         }
         
         {!popularManga.length ? <CircularProgress/> : 
         <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
-          <Typography variant="h5" component={Link} to={`search/manga/popularity`}>All Time Popular Manga</Typography>
+          <Typography component={Link} to={`search/manga/popularity`}>
+            <span>All Time Popular Manga</span>
+            <div>View All</div>
+          </Typography>
           <MediaList media={popularManga} />
         </Box>
         }

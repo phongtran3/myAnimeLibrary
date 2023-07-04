@@ -16,6 +16,15 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
       name: format === 'MANGA' || format === 'NOVEL' || format === 'ONE_SHOT' ? 'Add to reading' : 'Add to watching', 
       value: format === 'MANGA' || format === 'NOVEL' || format === 'ONE_SHOT' ? "READING" :"WATCHING" }, //Watching
   ]; 
+
+  const compltedActions = [
+    { icon: <Schedule />, name: 'Add to planning', value: "PLANNING" }, //Planning
+    { icon: <PlayArrow />, 
+      name: format === 'MANGA' || format === 'NOVEL' || format === 'ONE_SHOT' ? 'Add to reading' : 'Add to watching', 
+      value: format === 'MANGA' || format === 'NOVEL' || format === 'ONE_SHOT' ? "READING" :"WATCHING" 
+    }, //Watching
+  ]; 
+
   const token = useSelector((state) => state.token);
   const { _id } = useSelector((state) => state.user);
 
@@ -26,6 +35,7 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
       url = `http://localhost:5000/manga`
     else
       url = `http://localhost:5000/anime`
+      
     const body = {
       "userId": _id,
       "title": title,
@@ -68,14 +78,42 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
         icon={<SpeedDialIcon openIcon={<ExpandMore />} />}
         onClick={(e)=>{e.preventDefault()}}
       >
-        {actions.map((action) => (
+        {status === "NOT_YET_RELEASED" ? 
           <SpeedDialAction
-            key={action.name}
-            icon={action.icon}
-            tooltipTitle={action.name}
-            onClick={(event) => {addToList(action.value, event)}}         
+            key={'Add to planning'}
+            icon={<Schedule />}
+            tooltipTitle={'Add to planning'}
+            onClick={(event) => {addToList("PLANNING", event)}}         
           />
-        ))}
+        :
+          status === "RELEASING" ?
+            compltedActions.map((action) => (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+                onClick={(event) => {addToList(action.value, event)}}         
+              />
+            ))
+            :
+            actions.map((action) => (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+                onClick={(event) => {addToList(action.value, event)}}         
+              />
+            ))
+        }
+        
       </SpeedDial>
   )
 }
+
+
+// <SpeedDialAction
+//           key={'Add to planning'}
+//           icon={<Schedule />}
+//           tooltipTitle={'Add to planning'}
+//           onClick={(event) => {addToList("PLANNING", event)}}         
+//           />

@@ -94,9 +94,9 @@ export default function useAniMangaSearch(pageNumber) {
         }
       }
     `;
-    console.log(query);
+    //console.log(query);
     const fetchData = async () => {
-      console.log("fetch data");
+      //console.log("fetch data");
       await axios
         .post("https://graphql.anilist.co", { query, variables })
         .then((res) => {

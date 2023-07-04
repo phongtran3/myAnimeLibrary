@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
-import {Box, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade } from '@mui/material';
+import {Box, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade, useMediaQuery } from '@mui/material';
 import {SentimentNeutral, SentimentSatisfiedAlt, SentimentVeryDissatisfied } from "@mui/icons-material";
 import QuickAction from './QuickAction';
 import { useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 
 export default function Card({item}) {
     const [displayQuickAction, setDisplayQuickAction] = useState(false);
+    const tabletScreen = useMediaQuery("(min-width: 630px)");
 
     function showBtn(e){
         e.preventDefault();
@@ -62,6 +63,7 @@ export default function Card({item}) {
                     </Popper>
                 
                 }
+                {tabletScreen && 
                 <Popper {...bindPopper(popupState)} transition placement="right-start" sx={{width:'100%', maxWidth:'280px', minWidth:'250px'}}>
                 {({ TransitionProps }) => (
                     <Fade {...TransitionProps}  >
@@ -99,6 +101,7 @@ export default function Card({item}) {
                     </Fade>
                 )}
                 </Popper>
+                }
                 
             </ImageListItem>
             )}

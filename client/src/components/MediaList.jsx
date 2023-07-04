@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 //import {Card, Typography, CardMedia, Button, ButtonBase} from "@mui/material"
-import {Box, ImageList, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade } from '@mui/material';
+import {Box, ImageList, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade, useMediaQuery } from '@mui/material';
 import {SentimentNeutral, SentimentSatisfiedAlt, SentimentVeryDissatisfied } from "@mui/icons-material";
 // import HoverPopover from "material-ui-popup-state/HoverPopover";
 import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 export default function MediaList({media}) {
   const user = useSelector((state) => state.user);
   const [displayQuickAction, setDisplayQuickAction] = useState(false);
+  const tabletScreen = useMediaQuery("(min-width: 630px)");
 
   function showBtn(e){
     e.preventDefault();
@@ -91,7 +92,9 @@ export default function MediaList({media}) {
                   />
                 </Popper>
               }
-                <Popper {...bindPopper(popupState)} transition placement="right-start" sx={{width:'100%', maxWidth:'280px', minWidth:'250px'}}>
+              
+              {tabletScreen &&  
+              <Popper {...bindPopper(popupState)} transition placement="right-start" sx={{width:'100%', maxWidth:'280px', minWidth:'250px'}}>
                   {({ TransitionProps }) => (
                     <Fade {...TransitionProps}  >
                       {/* May create seperate jsx component */}
@@ -120,8 +123,8 @@ export default function MediaList({media}) {
                       </Paper>
                     </Fade>
                   )}
-                </Popper>
-            
+              </Popper>
+              }
           </ImageListItem>
          )}
       </PopupState>

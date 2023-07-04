@@ -70,25 +70,10 @@ export default function SearchPage() {
             }
         }}
       >
-
-
-
         <Box margin="0 2rem 2rem">
             <h1>Filter</h1>
             <BrowseFilter />
         </Box>
-
-        {/* <Box margin="0 2.5rem">
-          {aniMangas.map((aniManga, index) => {
-            if (aniMangas.length === index + 1) {
-              return <div ref={lastAniMangaEleRef} key={aniManga.id}>{aniManga.title.english === null ? aniManga.title.romaji : aniManga.title.english}</div>
-            } else {
-              return <div key={aniManga.id}>{aniManga.title.english === null ? aniManga.title.romaji : aniManga.title.english}</div>
-            }
-
-          })}
-        </Box> */}
-
 
         <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
           <ImageList 
@@ -122,25 +107,6 @@ export default function SearchPage() {
             })}
           </ImageList>
         </Box>
-      {/* <Grid container justifyContent="flexStart" alignItems="stretch" spacing={4} sx={{ width: 'auto', margin: '0 2.5rem',}}>
-        Large screen gap 72 / small screen 48
-        <ImageList cols={5} sx={{textAlign: "center", gap:"20px 72px !important" }}>
-          {aniMangas.map((item, index) => {
-            if (aniMangas.length - 10 === index + 1) {
-              return (
-                <div ref={lastAniMangaEleRef} key={item.id}>
-                  <Card item={item} />
-                </div>
-              )
-            } else {
-              return (
-              <div key={item.id}>
-                <Card item={item} />
-              </div>)
-            }
-          })}
-        </ImageList>
-      </Grid> */}
       <div>{loading && <LinearProgress />}</div>
 
       </Box>

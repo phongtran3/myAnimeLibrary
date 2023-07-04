@@ -15,7 +15,6 @@ export default function Card({item}) {
         setDisplayQuickAction(true);
     }
     function hideBtn(e){
-        console.log("test")
         e.preventDefault();
         setDisplayQuickAction(false);
     }
@@ -23,8 +22,6 @@ export default function Card({item}) {
     const user = useSelector((state) => state.user);
     const params = useParams();
     const type = params.media;
-
-    console.log(displayQuickAction);
 
     return (
         <PopupState 

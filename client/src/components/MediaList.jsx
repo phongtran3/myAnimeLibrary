@@ -17,12 +17,10 @@ export default function MediaList({media}) {
     setDisplayQuickAction(true);
   }
   function hideBtn(e){
-    console.log("test")
     e.preventDefault();
     setDisplayQuickAction(false);
   }
 
-  console.log("test");
   return (
     // Large screen gap 72 / small screen 48
     <ImageList 
@@ -30,12 +28,12 @@ export default function MediaList({media}) {
         overflowY: "visible !important",
         textAlign: "center",
         marginTop: "0.5rem",
-        '& > a':{
-          transition: "transform 250ms"
-        },
-        '& > a:hover':{
-              transform: "scale(1.05)"
-        },
+        // '& > a':{
+        //   transition: "transform 250ms"
+        // },
+        // '& > a:hover':{
+        //       transform: "scale(1.05)"
+        // },
         gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))!important',
         '@media (max-width: 545px)': {
           gridTemplateColumns: 'repeat(auto-fill, minmax(185px, 1fr))!important',
@@ -64,7 +62,7 @@ export default function MediaList({media}) {
                 minHeight: "320px !important" 
               }}
               key={anime.id} 
-              //{...bindHover(popupState)} 
+              {...bindHover(popupState)} 
               component={Link} 
               to={anime.siteUrl} target="_blank" rel="noopener noreferrer" 
             >
@@ -82,7 +80,7 @@ export default function MediaList({media}) {
                 //sx={{ maxWidth: "230px"}}
               />
               {user && displayQuickAction && 
-                <Box sx={{"& .MuiButtonBase-root": {width:"40px", height:"40px"}}}>
+                <Popper placement="bottom-end" {...bindPopper(popupState)} >
                   <QuickAction 
                     title={anime.title.english === null ? anime.title.romaji : anime.title.english}
                     genres={anime.genres}
@@ -91,7 +89,7 @@ export default function MediaList({media}) {
                     siteUrl={anime.siteUrl}
                     status={anime.status}
                   />
-                </Box>
+                </Popper>
               }
                 <Popper {...bindPopper(popupState)} transition placement="right-start" sx={{width:'100%', maxWidth:'280px', minWidth:'250px'}}>
                   {({ TransitionProps }) => (

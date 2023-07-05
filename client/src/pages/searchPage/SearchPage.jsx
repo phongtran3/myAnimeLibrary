@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react'
 import PropTypes from "prop-types";
 import BrowseFilter from '../../components/BrowseFilter';
 import NavBar from '../../components/NavBar'
-import { Box, ImageList, LinearProgress, useScrollTrigger, Fab, Zoom, Toolbar, Grid } from '@mui/material';
+import { Box, ImageList, LinearProgress, useScrollTrigger, Fab, Zoom, Toolbar, Alert, Snackbar } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useAniMangaSearch from './useAniMangaSearch';
 import Card from '../../components/Card';
@@ -10,6 +10,7 @@ import Card from '../../components/Card';
 export default function SearchPage() {
   const [pageNumber, setPageNumber] = useState(1)
   const {loading, hasNextPage, aniMangas} = useAniMangaSearch(pageNumber);
+  const [alert, setAlert] = useState("");
   //console.log(aniMangas);
   //console.log(hasNextPage);
   //console.log(pageNumber);
@@ -55,12 +56,11 @@ export default function SearchPage() {
   ScrollToTop.propTypes = {children: PropTypes.element.isRequired};
 
 
-
+  console.log(alert);
   return (
     <Box>
       <NavBar />
       <Toolbar id="back-to-top-anchor" />
-
       <Box 
         maxWidth="1520px" 
         margin="0 auto" 
@@ -70,6 +70,33 @@ export default function SearchPage() {
             }
         }}
       >
+        <Snackbar 
+          open={alert != "" ? true : false} 
+          autoHideDuration={3000}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          onClose={(e,reason) => {
+            if (reason === 'clickaway') {
+              return;
+            }
+            setAlert("")
+          }}
+        >
+          <Alert 
+          onClose={(e,reason) => {
+            if (reason === 'clickaway') {
+              return;
+            }
+            setAlert("")
+          }} severity="success" sx={{ width: '100%' }}>{alert}</Alert>
+        </Snackbar>
+
+        {/* {alert && 
+        
+
+        <Alert severity='success'>yes</Alert>
+        
+        } */}
+        
         <Box margin="0 2rem 2rem">
             <h1>Filter</h1>
             <BrowseFilter />
@@ -95,13 +122,13 @@ export default function SearchPage() {
               if (aniMangas.length - 10 === index + 1) {
                 return (
                   <div ref={lastAniMangaEleRef} key={item.id}>
-                    <Card item={item} />
+                    <Card item={item} setAlert={setAlert} />
                   </div>
                 )
               } else {
                 return (
                 <div key={item.id}>
-                  <Card item={item} />
+                  <Card item={item} setAlert={setAlert} />
                 </div>)
               }
             })}

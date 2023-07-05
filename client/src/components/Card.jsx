@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 
-export default function Card({item}) {
+export default function Card({item, setAlert}) {
     const [displayQuickAction, setDisplayQuickAction] = useState(false);
     const tabletScreen = useMediaQuery("(min-width: 630px)");
 
@@ -53,6 +53,7 @@ export default function Card({item}) {
                 {user && displayQuickAction &&
                     <Popper placement="bottom-end" {...bindPopper(popupState)} >
                             <QuickAction 
+                                setAlert={setAlert}
                                 title={item.title.english === null ? item.title.romaji : item.title.english}
                                 genres={item.genres}
                                 format={item.format}

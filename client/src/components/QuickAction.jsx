@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {SpeedDial, SpeedDialAction } from '@mui/material';
 import {PlayArrow, Check, Schedule, ExpandMore} from "@mui/icons-material";
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
@@ -7,7 +7,8 @@ import axios from 'axios';
 import { useSelector  } from "react-redux";
 // const dispatch = useDispatch();
 
-export default function QuickAction({title, genres, format, coverImage, siteUrl, status}) {
+export default function QuickAction({title, genres, format, coverImage, siteUrl, status, setAlert}) {
+
   //Default actions
   const actions = [
     { icon: <Schedule />, name: 'Add to planning', value: "PLANNING" }, //Planning
@@ -29,6 +30,7 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
   const { _id } = useSelector((state) => state.user);
 
   async function addToList(value, event){
+    let list = value.charAt(0).toUpperCase() + value.substr(1).toLowerCase()
     event.preventDefault()
     let url;
     if(format === 'MANGA' || format === 'NOVEL' || format === 'ONE_SHOT')
@@ -50,7 +52,8 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
     await axios.post(url, {data: body}, {headers: { Authorization: `${token}` }},)
     .then(res => {
         console.log("Adding to list");
-        console.log(res);
+        console.log(res.data);
+        setAlert(`${title} added to ${list} list`)
     }).catch(err => {
         if (err.response){
             console.log(err.response.data);
@@ -59,7 +62,6 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
         console.log(err);
     })
   }
-
   return (
        <SpeedDial
         ariaLabel="quick action"
@@ -105,7 +107,6 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
               />
             ))
         }
-        
       </SpeedDial>
   )
 }

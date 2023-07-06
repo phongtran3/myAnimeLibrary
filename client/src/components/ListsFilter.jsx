@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography, useMediaQuery, TextField, Autocomplete, Chip, Checkbox} from "@mui/material";
+import { Box, TextField, Autocomplete, Chip, Checkbox} from "@mui/material";
 import { genreCollection, animeFormat, status, mangaFormat } from './FilterCollections';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';

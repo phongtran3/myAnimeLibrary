@@ -3,14 +3,24 @@ import NavBar from '../../components/NavBar'
 import { useSelector, useDispatch } from "react-redux";
 import { setSiteUser, setLogout } from '../../states/index';
 import Dropzone from "react-dropzone"; //File/image upload
-import { Box, useTheme, Typography, OutlinedInput, TextField, InputAdornment, 
+import { Box, useTheme, Typography, TextField, InputAdornment, Switch, 
   IconButton, Button, Avatar, Tab, Tabs, useMediaQuery } from '@mui/material'
-import {Visibility, VisibilityOff, EditOutlined, AccountCircle, Key, Logout} from "@mui/icons-material"
+import {Visibility, VisibilityOff, EditOutlined, AccountCircle, Logout} from "@mui/icons-material"
 import ConfirmPassword from '../../components/ConfirmPassword';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 export default function SettingPage() {
+  const { palette  } = useTheme();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.token);
+  const loggedUser = useSelector((state) => state.user);
+  console.log(loggedUser);
+  //const userName = useSelector((state) => state.user.userName);
+  const desktopScreen = useMediaQuery("(min-width: 1100px)");
+
+  //const [checked, setChecked] = useState(loggedUser.isAdult)
   const [open, setOpen] = useState(false);
   const [tabValue, setTabValue] = useState(0);
   const [body, setBody] = useState({
@@ -34,15 +44,7 @@ export default function SettingPage() {
   const handleShowNewPassword = () => setShowNewPassword(!showNewPassword);
   const handleShowNewConfirmPassword = () => setShowNewConfirmPassword(!showNewConfirmPassword);
 
-  const { palette  } = useTheme();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const token = useSelector((state) => state.token);
-
-  const loggedUser = useSelector((state) => state.user);
-  console.log(loggedUser);
-  //const userName = useSelector((state) => state.user.userName);
-  const desktopScreen = useMediaQuery("(min-width: 1100px)");
+  
 
   
 
@@ -125,7 +127,7 @@ export default function SettingPage() {
         formData, 
         {headers: { "Content-Type": "multipart/form-data", Authorization: `${token}`}}
       ).then(res =>{
-        //console.log(res);
+        console.log(res.data);
         setUser(res.data)
         dispatch(setSiteUser({
           user: res.data,
@@ -145,10 +147,8 @@ export default function SettingPage() {
         console.log(err);
       })
     }
-
-    
   }
-  
+
   return (
     <>
     <NavBar />
@@ -354,6 +354,18 @@ export default function SettingPage() {
                     </Box>
                   )}
                 </Dropzone>
+              </Box>
+
+              <Box>
+                <Switch 
+                  defaultChecked={loggedUser.isAdult}
+                  //checked={checked}
+                  labelplacement="end"
+                  name="isAdult"
+                  label="18+ Content"
+                  onChange={(e)=> handleOpenPopover(e.target.name, e.target.checked)}
+                />
+                <Typography fontWeight={600} color={"#673ab7"}>18+ Content</Typography>
               </Box>
             </Box>
             

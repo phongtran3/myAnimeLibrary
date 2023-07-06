@@ -246,7 +246,6 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                     '& > .MuiButtonBase-root':{
                         marginTop: "1rem",
                         background: '#673AB7',
-                        padding:"10px",
                         color:"#111111",
                         fontWeight:"600",
                         fontSize: "1rem",

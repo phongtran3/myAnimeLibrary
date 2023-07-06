@@ -21,12 +21,10 @@ export default function SearchPage() {
   //console.log(observer);
 
   const lastAniMangaEleRef = useCallback(node => {
-    //console.log("last ele");
     if (loading) return
     if (observer.current) observer.current.disconnect()
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && hasNextPage) {
-        //console.log("Visable")
         setPageNumber(prevPageNumber => prevPageNumber + 1)
       }
     })
@@ -57,10 +55,6 @@ export default function SearchPage() {
   }
   ScrollToTop.propTypes = {children: PropTypes.element.isRequired};
 
-
-  console.log(alert);
-
-
   const array = loggedUser && loggedUser.isAdult || !loggedUser ? 
       aniMangas.reduce(function(filtered, item){
         if(!item.isAdult){
@@ -70,13 +64,7 @@ export default function SearchPage() {
     }, []) 
     : 
     aniMangas;
-
-
-  
-  
-
   //console.log(array);
-
 
   return (
     <Box>

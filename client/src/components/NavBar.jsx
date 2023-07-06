@@ -84,7 +84,7 @@ export default function NavBar() {
     console.log("Logging Out");
     setOpenMenu(false);
     dispatch(setLogout())
-    //navigate(0)
+    navigate("/")
   }
   
   function handleOpenDialog(){

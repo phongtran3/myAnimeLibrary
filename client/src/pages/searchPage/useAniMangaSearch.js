@@ -84,6 +84,7 @@ export default function useAniMangaSearch(pageNumber) {
               coverImage {
                 large
               }
+              isAdult
               siteUrl
               format
               status

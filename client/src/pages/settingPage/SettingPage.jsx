@@ -38,34 +38,43 @@ export default function SettingPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);
-  const userName = useSelector((state) => state.user.userName);
+
+  const loggedUser = useSelector((state) => state.user);
+  console.log(loggedUser);
+  //const userName = useSelector((state) => state.user.userName);
   const desktopScreen = useMediaQuery("(min-width: 1100px)");
 
   
 
 
-  async function getUser(){
-    await axios.get(
-      `http://localhost:5000/users/${userName}`,
-      {headers: { Authorization: `${token}` }}
-    ).then(res =>{
-      console.log(res.data);
-      setUser(res.data);
-      setNewUserName(res.data.userName);
-      setNewFirstName(res.data.firstName);
-      setNewLastName(res.data.lastName);
-      setNewEmail(res.data.email);
-      setNewSocialMedia(res.data.socialMediaHandles)
-    }).catch(err => {
-      if (err.response){
-        console.log(err.response.data);
-      }
-      console.log(err);
-    }) 
-  }
+  // async function getUser(){
+  //   await axios.get(
+  //     `http://localhost:5000/users/${userName}`,
+  //     {headers: { Authorization: `${token}` }}
+  //   ).then(res =>{
+  //     console.log(res.data);
+  //     setUser(res.data);
+  //     setNewUserName(res.data.userName);
+  //     setNewFirstName(res.data.firstName);
+  //     setNewLastName(res.data.lastName);
+  //     setNewEmail(res.data.email);
+  //     setNewSocialMedia(res.data.socialMediaHandles)
+  //   }).catch(err => {
+  //     if (err.response){
+  //       console.log(err.response.data);
+  //     }
+  //     console.log(err);
+  //   }) 
+  // }
 
   useEffect(() => {
-    getUser();
+    //getUser();
+    setUser(loggedUser);
+    setNewUserName(loggedUser.userName);
+    setNewFirstName(loggedUser.firstName);
+    setNewLastName(loggedUser.lastName);
+    setNewEmail(loggedUser.email);
+    setNewSocialMedia(loggedUser.socialMediaHandles)
     return () => files.forEach(file => URL.revokeObjectURL(file.preview));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

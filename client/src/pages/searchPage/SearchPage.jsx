@@ -57,6 +57,13 @@ export default function SearchPage() {
 
 
   console.log(alert);
+  const array = aniMangas.reduce(function(filtered, item){
+    if(!item.isAdult){
+      filtered.push(item)
+    }
+    return filtered
+  }, [])
+  //console.log(array);
   return (
     <Box>
       <NavBar />

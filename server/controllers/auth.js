@@ -33,6 +33,7 @@ async function register(req, res) {
       },
       following: [],
       followers: [],
+      isAdult: true,
     });
 
     //user.socialMediaHandles.set("github", "phongtran3");

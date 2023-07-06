@@ -69,6 +69,10 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: [],
   },
+  isAdult: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

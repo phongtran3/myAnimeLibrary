@@ -10,8 +10,8 @@ import { useParams } from "react-router-dom";
 export default function Card({item, setAlert}) {
     const [displayQuickAction, setDisplayQuickAction] = useState(false);
     const tabletScreen = useMediaQuery("(min-width: 630px)");
-    console.log(item.isAdult);
-    
+    //console.log(item.isAdult);
+
     function showBtn(e){
         e.preventDefault();
         setDisplayQuickAction(true);

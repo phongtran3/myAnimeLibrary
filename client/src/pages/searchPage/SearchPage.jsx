@@ -6,11 +6,13 @@ import { Box, ImageList, LinearProgress, useScrollTrigger, Fab, Zoom, Toolbar, A
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useAniMangaSearch from './useAniMangaSearch';
 import Card from '../../components/Card';
+import { useSelector } from "react-redux";
 
 export default function SearchPage() {
   const [pageNumber, setPageNumber] = useState(1)
   const {loading, hasNextPage, aniMangas} = useAniMangaSearch(pageNumber);
   const [alert, setAlert] = useState("");
+  const loggedUser = useSelector((state) => state.user);
   //console.log(aniMangas);
   //console.log(hasNextPage);
   //console.log(pageNumber);
@@ -57,13 +59,25 @@ export default function SearchPage() {
 
 
   console.log(alert);
-  const array = aniMangas.reduce(function(filtered, item){
-    if(!item.isAdult){
-      filtered.push(item)
-    }
-    return filtered
-  }, [])
+
+
+  const array = loggedUser && loggedUser.isAdult || !loggedUser ? 
+      aniMangas.reduce(function(filtered, item){
+        if(!item.isAdult){
+          filtered.push(item)
+        }
+        return filtered
+    }, []) 
+    : 
+    aniMangas;
+
+
+  
+  
+
   //console.log(array);
+
+
   return (
     <Box>
       <NavBar />
@@ -125,8 +139,8 @@ export default function SearchPage() {
               }
             }}
           >
-            {aniMangas.map((item, index) => {
-              if (aniMangas.length - 10 === index + 1) {
+            {array.map((item, index) => {
+              if (array.length - 10 === index + 1) {
                 return (
                   <div ref={lastAniMangaEleRef} key={item.id}>
                     <Card item={item} setAlert={setAlert} />

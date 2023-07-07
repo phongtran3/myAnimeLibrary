@@ -55,15 +55,14 @@ export default function SearchPage() {
   }
   ScrollToTop.propTypes = {children: PropTypes.element.isRequired};
 
-  const array = loggedUser && loggedUser.isAdult || !loggedUser ? 
+  const array = loggedUser && loggedUser.isAdult ? aniMangas :  
       aniMangas.reduce(function(filtered, item){
         if(!item.isAdult){
           filtered.push(item)
         }
         return filtered
-    }, []) 
-    : 
-    aniMangas;
+      }, [])
+
   //console.log(array);
 
   return (

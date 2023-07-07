@@ -105,6 +105,7 @@ export default function Filter() {
           renderOption={(props, option, { selected }) => (
             <li {...props}>
               <Checkbox
+                id="checkbox-popper"
                 icon={icon}
                 checkedIcon={checkedIcon}
                 style={{ marginRight: 4 }}

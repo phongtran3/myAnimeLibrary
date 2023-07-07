@@ -20,7 +20,7 @@ export default function SettingPage() {
   //const userName = useSelector((state) => state.user.userName);
   const desktopScreen = useMediaQuery("(min-width: 1100px)");
 
-  //const [checked, setChecked] = useState(loggedUser.isAdult)
+  const [checked, setChecked] = useState(loggedUser.isAdult)
   const [open, setOpen] = useState(false);
   const [tabValue, setTabValue] = useState(0);
   const [body, setBody] = useState({
@@ -358,8 +358,8 @@ export default function SettingPage() {
 
               <Box>
                 <Switch 
-                  defaultChecked={loggedUser.isAdult}
-                  //checked={checked}
+                  //defaultChecked={loggedUser.isAdult}
+                  checked={checked}
                   labelplacement="end"
                   name="isAdult"
                   label="18+ Content"

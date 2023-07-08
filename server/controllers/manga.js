@@ -14,19 +14,27 @@ async function addManga(req, res) {
       format,
     } = req.body.data;
     const user = await User.findById(userId); //May have to change
-    console.log(req.body.data);
+    //console.log(req.body.data);
     //console.log(genres);
     // console.log(user);
-    const mangaObj = {
-      title,
-      genres,
-      format,
-      coverImage,
-      siteUrl,
-      userStatus,
-      status,
-    };
-    user.mangas.push(mangaObj);
+    let index = user.mangas.findIndex((anime) => anime.title === title);
+    console.log(index);
+    if (index < -1) {
+      //manga is not in the list and needs to be added
+      const mangaObj = {
+        title,
+        genres,
+        format,
+        coverImage,
+        siteUrl,
+        userStatus,
+        status,
+      };
+      user.mangas.push(animeObj);
+    } else {
+      //manga is in the list and userStatus needs to updated
+      user.mangas[index].userStatus = userStatus;
+    }
     await user.save();
     res.status(201).json(user.manga);
   } catch (error) {

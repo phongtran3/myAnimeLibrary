@@ -17,17 +17,25 @@ async function addAnime(req, res) {
     //console.log(req.body.data);
     //console.log(genres);
     // console.log(user);
-    const animeObj = {
-      title,
-      genres,
-      format,
-      coverImage,
-      siteUrl,
-      userStatus,
-      status,
-    };
-    //console.log(animeObj.status);
-    user.animes.push(animeObj);
+    let index = user.animes.findIndex((anime) => anime.title === title);
+    console.log(index);
+    if (index < -1) {
+      //anime is not in the list and needs to be added
+      const animeObj = {
+        title,
+        genres,
+        format,
+        coverImage,
+        siteUrl,
+        userStatus,
+        status,
+      };
+      user.animes.push(animeObj);
+    } else {
+      //anime is in the list and userStatus needs to updated
+      user.animes[index].userStatus = userStatus;
+    }
+
     await user.save();
     res.status(201).json(user.animes);
   } catch (error) {

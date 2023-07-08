@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 
 export default function MediaList({media}) {
+  const [alert, setAlert] = useState("");
+
   const user = useSelector((state) => state.user);
   const [displayQuickAction, setDisplayQuickAction] = useState(false);
   const tabletScreen = useMediaQuery("(min-width: 630px)");
@@ -83,6 +85,7 @@ export default function MediaList({media}) {
               {user && displayQuickAction && 
                 <Popper placement="bottom-end" {...bindPopper(popupState)} >
                   <QuickAction 
+                    setAlert={setAlert}
                     title={anime.title.english === null ? anime.title.romaji : anime.title.english}
                     genres={anime.genres}
                     format={anime.format}

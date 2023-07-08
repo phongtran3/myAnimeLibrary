@@ -95,14 +95,24 @@ export default function MediaList({media, setAlert}) {
               }
               
               {tabletScreen &&  
-              <Popper {...bindPopper(popupState)} transition placement="right-start" sx={{width:'100%', maxWidth:'280px', minWidth:'250px'}}>
+              <Popper 
+                {...bindPopper(popupState)} 
+                transition 
+                placement="right-start" 
+                sx={{
+                  margin:"0 1rem !important",
+                  width:'100%', 
+                  maxWidth:'280px', 
+                  minWidth:'290px',
+                }}
+              >
                   {({ TransitionProps }) => (
                     <Fade {...TransitionProps}  >
                       {/* May create seperate jsx component */}
                       <Paper elevation={6} 
                         sx={{
-                          margin:"0 1rem",
-                          padding: "10px"
+                          //margin:"0 1rem",
+                          padding: "15px"
                         }}
                       >
                         <Box sx={{display: 'flex', justifyContent:'space-between', alignItems:'center'}}>

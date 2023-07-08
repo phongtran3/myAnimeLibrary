@@ -98,6 +98,7 @@ export default function ListPage() {
             gridTemplateColumns:"calc(30% - 30px) 70%",
             gap:"30px",
             margin:"2rem",
+            paddingBottom:"1rem",
 
           }}
         >
@@ -124,7 +125,7 @@ export default function ListPage() {
             sx={{
               padding:"0 1rem",
               "& > div":{
-                marginBottom:"1.5rem",
+                ":not(:last-child)": {marginBottom:"1.5rem",},
                 "& > h6":{
                   marginBottom:"1rem",
                 },
@@ -166,7 +167,6 @@ export default function ListPage() {
                     sx={{
                       textAlign: "center", 
                       gap:"20px !important"
-                      
                     }}
                   >
                     {completedArr.map(item =>  <Card2 user={user} key={item._id} item={item}/>)}
@@ -183,7 +183,6 @@ export default function ListPage() {
                     sx={{
                       textAlign: "center", 
                       gap:"20px !important"
-                      
                     }}
                   >
                     {planningArr.map(item =>  <Card2 user={user} key={item._id} item={item}/>)}

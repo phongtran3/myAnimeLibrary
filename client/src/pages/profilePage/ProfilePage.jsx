@@ -85,7 +85,8 @@ export default function ProfilePage() {
     <Box sx={{height:"100%", width:"100%"}}>
       <NavBar />
       <Box id="content-container" margin="3em auto 0" maxWidth="1520px" padding="0 3rem 5rem">
-        <Box id="content" 
+        <Box 
+          id="content" 
           display= {desktopScreen ? "grid" : "block"}
           gridTemplateColumns= "calc(40% - 30px) 60%"
           gap="30px"

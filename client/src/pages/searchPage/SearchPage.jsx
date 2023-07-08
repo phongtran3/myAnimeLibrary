@@ -79,8 +79,12 @@ export default function SearchPage() {
         }}
       >
         <Snackbar 
+          id="snackbar"
           open={alert != "" ? true : false} 
           autoHideDuration={3000}
+          sx={{
+            top:"5rem !important",
+          }}
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           onClose={(e,reason) => {
             if (reason === 'clickaway') {
@@ -90,12 +94,17 @@ export default function SearchPage() {
           }}
         >
           <Alert 
-          onClose={(e,reason) => {
-            if (reason === 'clickaway') {
-              return;
-            }
-            setAlert("")
-          }} severity="success" sx={{ width: '100%' }}>{alert}</Alert>
+            onClose={(e,reason) => {
+              if (reason === 'clickaway') {
+                return;
+              }
+              setAlert("")
+            }} 
+            severity="success" 
+            sx={{ width: '100%' }}
+        >
+          {alert}
+        </Alert>
         </Snackbar>
 
         {/* {alert && 

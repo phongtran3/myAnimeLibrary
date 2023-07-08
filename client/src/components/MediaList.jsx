@@ -8,9 +8,7 @@ import QuickAction from './QuickAction';
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 
-export default function MediaList({media}) {
-  const [alert, setAlert] = useState("");
-
+export default function MediaList({media, setAlert}) {
   const user = useSelector((state) => state.user);
   const [displayQuickAction, setDisplayQuickAction] = useState(false);
   const tabletScreen = useMediaQuery("(min-width: 630px)");

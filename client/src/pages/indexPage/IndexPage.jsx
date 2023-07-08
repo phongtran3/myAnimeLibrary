@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingMangaQuery } from './initalQuery';
-import { Box, Grid, CircularProgress, Typography, LinearProgress, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Grid, CircularProgress, Typography, LinearProgress, useMediaQuery, useTheme, Alert, Snackbar} from '@mui/material';
 import MediaList from '../../components/MediaList';
 import NavBar from '../../components/NavBar';
 import BrowseFilter from '../../components/BrowseFilter';
@@ -14,6 +14,7 @@ export default function IndexPage() {
   const [popularAnime, setpopularAnime] = useState([]);
   const [trendingManga, setTrendingManga] = useState([]);
   const [popularManga, setpopularManga] = useState([]);
+  const [alert, setAlert] = useState("");
   const tabletScreen = useMediaQuery("(min-width: 630px)");
   const desktopScreen = useMediaQuery("(min-width: 1100px)");
 
@@ -57,6 +58,35 @@ export default function IndexPage() {
   return (
     <Box>
       <NavBar />
+      <Snackbar 
+          id="snackbar"
+          open={alert != "" ? true : false} 
+          autoHideDuration={3000}
+          sx={{
+            top:"5rem !important",
+          }}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          onClose={(e,reason) => {
+            if (reason === 'clickaway') {
+              return;
+            }
+            setAlert("")
+          }}
+        >
+          <Alert 
+            onClose={(e,reason) => {
+              if (reason === 'clickaway') {
+                return;
+              }
+              setAlert("")
+            }} 
+            severity="success" 
+            sx={{ width: '100%' }}
+        >
+          {alert}
+        </Alert>
+        </Snackbar>
+
       <Box 
         maxWidth="1520px" 
         margin="2rem auto"
@@ -92,7 +122,7 @@ export default function IndexPage() {
               <span>Trending Anime</span>
               <div>View All</div>
             </Typography>
-            <MediaList media={trendingAnime} />
+            <MediaList setAlert={setAlert} media={trendingAnime} />
           </Box>
         }
         
@@ -102,7 +132,7 @@ export default function IndexPage() {
             <span>All Time Popular Anime</span>
             <div>View All</div>
           </Typography>
-          <MediaList media={popularAnime} />
+          <MediaList setAlert={setAlert} media={popularAnime} />
         </Box>
         }
         
@@ -112,7 +142,7 @@ export default function IndexPage() {
             <span>Trending Manga</span>
             <div>View All</div>
           </Typography>
-          <MediaList media={trendingManga} />
+          <MediaList setAlert={setAlert} media={trendingManga} />
         </Box>
         }
         
@@ -122,7 +152,7 @@ export default function IndexPage() {
             <span>All Time Popular Manga</span>
             <div>View All</div>
           </Typography>
-          <MediaList media={popularManga} />
+          <MediaList setAlert={setAlert} media={popularManga} />
         </Box>
         }
         </>

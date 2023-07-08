@@ -19,7 +19,7 @@ async function addAnime(req, res) {
     // console.log(user);
     let index = user.animes.findIndex((anime) => anime.title === title);
     console.log(index);
-    if (index < -1) {
+    if (index <= -1) {
       //anime is not in the list and needs to be added
       const animeObj = {
         title,

@@ -66,45 +66,79 @@ export default function Card({item, setAlert}) {
                 
                 }
                 {tabletScreen && 
-                <Popper {...bindPopper(popupState)} transition placement="right-start" sx={{width:'100%', maxWidth:'280px', minWidth:'250px'}}>
-                {({ TransitionProps }) => (
+                <Popper 
+                    {...bindPopper(popupState)} 
+                    transition 
+                    placement="right-start" 
+                    sx={{
+                    margin:"0 1rem !important",
+                    width:'100%', 
+                    maxWidth:'300px', 
+                    minWidth:'290px',
+                    }}
+                >
+                  {({ TransitionProps }) => (
                     <Fade {...TransitionProps}  >
-                    {/* May create seperate jsx component */}
-                    <Paper elevation={6} 
+                      {/* May create seperate jsx component */}
+                      <Paper elevation={6} 
                         sx={{
-                        margin:"0 1rem",
-                        padding: "10px"
-                        }}>
-                        <Box sx={{display: 'flex', justifyContent:'space-between', alignItems:'center'}}>
-                            <Typography variant='subtitle2' width='190px'>{item.title.english === null ? item.title.romaji : item.title.english}</Typography>
-                            {item.averageScore > 75 ? <SentimentSatisfiedAlt/> : item.averageScore > 60 ? <SentimentNeutral /> : item.averageScore !== null ? <SentimentVeryDissatisfied/> : null}
-                            <Typography variant='subtitle2' fontWeight="600">{item.averageScore && `${item.averageScore}%`}</Typography>
+                          //margin:"0 1rem",
+                          padding: "15px",
+                          "& div > .MuiTypography-root ":{
+                            display: "inline-block"
+                          },
+                          "& div > span":{
+                            fontSize: "0.875rem",
+                          }
+                        }}
+                      >
+                        <Box id="title" >
+                          <Typography sx={{color: "#673ab7", fontWeight: "600"}}>{item.title.english === null ? item.title.romaji : item.title.english}</Typography>
                         </Box>
-                        <Box>
-                            <Typography variant='body2' mt="5px">{item.format === 'TV' ? "TV Show" : item.format} {item.episodes ? `\u2022 ${item.episodes} Episodes` : null} {item.duration ? `\u2022 ${item.duration} Minutes` : null}</Typography>
+
+                        {item.averageScore &&
+                        <Box id="score">
+                           <Typography variant='body2'> Average Score: </Typography> <span>{item.averageScore}%</span>
                         </Box>
-                        <Typography variant='body2' mt="5px">Status: {item.status[0] + item.status.slice(1).toLowerCase()}</Typography>
-                        <Box>
-                            {item.genres.length > 0 ? 
-                            (<Typography variant="body2" mt="5px">
-                            Genre: {item.genres.map(genre => 
-                                <a key={genre} 
-                                    //href={item.siteUrl} 
-                                    href={`http://localhost:3000/search/${type}?genres=${genre}`}
-                                    style= {{textDecoration: 'none'}}
-                                >
-                                    {genre}
-                                </a>
-                                ).reduce((prev,curr) => [prev, ', ', curr])}
-                            </Typography>) : null
-                            }
+                        }
+
+                        <Box id="format">
+                          <Typography variant='body2' sx={{display:"inline-block"}}>Format: </Typography> <span>{item.format === 'TV' ? "TV Show" : item.format}</span>
                         </Box>
-                    </Paper>
+                        
+                        {item.episodes && 
+                          <Box id="episodes">
+                            <Typography variant='body2'>Episodes: </Typography> <span>{item.episodes} Episodes</span>
+                          </Box>
+                        }
+
+                        {item.duration &&
+                        <Box id="duration">
+                          <Typography variant='body2'>Duration: </Typography> <span>{item.duration} Minutes</span>
+                        </Box>
+                        }
+
+                        <Box id="status">
+                          <Typography variant='body2'>Status: </Typography> <span>{item.status[0] + item.status.slice(1).toLowerCase()}</span>
+                        </Box>
+
+                        <Box id="genre">
+                          {item.genres.length > 0 ? 
+                            (<Typography variant="body2">
+                            Genre: <span>
+                              {item.genres.map(genre => <a key={genre} href={`http://localhost:3000/search/item?genres=${genre}`} 
+                              style={{textDecoration: 'none', color: "#673ab7"}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
+                            </span>
+                            </Typography>
+                            
+                            ) : null
+                          }
+                        </Box>
+                      </Paper>
                     </Fade>
-                )}
-                </Popper>
+                  )}
+              </Popper>
                 }
-                
             </ImageListItem>
             )}
         </PopupState>

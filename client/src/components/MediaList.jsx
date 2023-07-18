@@ -121,12 +121,8 @@ export default function MediaList({media, setAlert}) {
                           }
                         }}
                       >
-                        <Box id="title" sx={{display: 'flex', justifyContent:'flex-start', alignItems:'center'}}>
-                          <Typography>{anime.title.english === null ? anime.title.romaji : anime.title.english}</Typography>
-                          {/* <Box id="rating" sx={{marginLeft: "auto", display: "flex"}}>
-                            {anime.averageScore > 75 ? <SentimentSatisfiedAlt/> : anime.averageScore > 60 ? <SentimentNeutral /> : anime.averageScore !== null ? <SentimentVeryDissatisfied/> : null}
-                            <Typography ml="5px" fontWeight="600">{anime.averageScore && `${anime.averageScore}%`}</Typography>
-                          </Box> */}
+                        <Box id="title" >
+                          <Typography sx={{color: "#673ab7", fontWeight: "600"}}>{anime.title.english === null ? anime.title.romaji : anime.title.english}</Typography>
                         </Box>
 
                         {anime.averageScore &&
@@ -160,7 +156,7 @@ export default function MediaList({media, setAlert}) {
                             (<Typography variant="body2">
                             Genre: <span>
                               {anime.genres.map(genre => <a key={genre} href={`http://localhost:3000/search/anime?genres=${genre}`} 
-                              style={{textDecoration: 'none'}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
+                              style={{textDecoration: 'none', color: "#673ab7"}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
                             </span>
                             </Typography>
                             

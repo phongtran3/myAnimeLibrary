@@ -1,8 +1,5 @@
 import React, {useState} from 'react'
-//import {Card, Typography, CardMedia, Button, ButtonBase} from "@mui/material"
 import {Box, ImageList, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade, useMediaQuery } from '@mui/material';
-import {SentimentNeutral, SentimentSatisfiedAlt, SentimentVeryDissatisfied } from "@mui/icons-material";
-// import HoverPopover from "material-ui-popup-state/HoverPopover";
 import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
 import QuickAction from './QuickAction';
 import { useSelector } from "react-redux";
@@ -101,9 +98,7 @@ export default function MediaList({media, setAlert}) {
                 placement="right-start" 
                 sx={{
                   margin:"0 1rem !important",
-                  width:'100%', 
                   maxWidth:'300px', 
-                  minWidth:'290px',
                 }}
               >
                   {({ TransitionProps }) => (

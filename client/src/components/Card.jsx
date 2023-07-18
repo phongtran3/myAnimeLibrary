@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
 import {Box, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade, useMediaQuery } from '@mui/material';
-import {SentimentNeutral, SentimentSatisfiedAlt, SentimentVeryDissatisfied } from "@mui/icons-material";
 import QuickAction from './QuickAction';
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
@@ -72,9 +71,7 @@ export default function Card({item, setAlert}) {
                     placement="right-start" 
                     sx={{
                     margin:"0 1rem !important",
-                    width:'100%', 
                     maxWidth:'300px', 
-                    minWidth:'290px',
                     }}
                 >
                   {({ TransitionProps }) => (

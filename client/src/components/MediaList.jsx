@@ -102,7 +102,7 @@ export default function MediaList({media, setAlert}) {
                 sx={{
                   margin:"0 1rem !important",
                   width:'100%', 
-                  maxWidth:'280px', 
+                  maxWidth:'300px', 
                   minWidth:'290px',
                 }}
               >
@@ -112,23 +112,59 @@ export default function MediaList({media, setAlert}) {
                       <Paper elevation={6} 
                         sx={{
                           //margin:"0 1rem",
-                          padding: "15px"
+                          padding: "15px",
+                          "& div > .MuiTypography-root ":{
+                            display: "inline-block"
+                          },
+                          "& div > span":{
+                            fontSize: "0.875rem",
+                          }
                         }}
                       >
-                        <Box sx={{display: 'flex', justifyContent:'space-between', alignItems:'center'}}>
-                          <Typography variant='subtitle2' width='190px'>{anime.title.english === null ? anime.title.romaji : anime.title.english}</Typography>
-                          {anime.averageScore > 75 ? <SentimentSatisfiedAlt/> : anime.averageScore > 60 ? <SentimentNeutral /> : anime.averageScore !== null ? <SentimentVeryDissatisfied/> : null}
-                          <Typography variant='subtitle2' fontWeight="600">{anime.averageScore && `${anime.averageScore}%`}</Typography>
+                        <Box id="title" sx={{display: 'flex', justifyContent:'flex-start', alignItems:'center'}}>
+                          <Typography>{anime.title.english === null ? anime.title.romaji : anime.title.english}</Typography>
+                          {/* <Box id="rating" sx={{marginLeft: "auto", display: "flex"}}>
+                            {anime.averageScore > 75 ? <SentimentSatisfiedAlt/> : anime.averageScore > 60 ? <SentimentNeutral /> : anime.averageScore !== null ? <SentimentVeryDissatisfied/> : null}
+                            <Typography ml="5px" fontWeight="600">{anime.averageScore && `${anime.averageScore}%`}</Typography>
+                          </Box> */}
                         </Box>
-                        <Box>
-                          <Typography variant='body2' mt="5px">{anime.format === 'TV' ? "TV Show" : anime.format} {anime.episodes ? `\u2022 ${anime.episodes} Episodes` : null} {anime.duration ? `\u2022 ${anime.duration} Minutes` : null}</Typography>
+
+                        {anime.averageScore &&
+                        <Box id="score">
+                           <Typography variant='body2'> Average Score: </Typography> <span>{anime.averageScore}%</span>
                         </Box>
-                        <Typography variant='body2' mt="5px">Status: {anime.status[0] + anime.status.slice(1).toLowerCase()}</Typography>
-                        <Box>
+                        }
+
+                        <Box id="format">
+                          <Typography variant='body2' sx={{display:"inline-block"}}>Format: </Typography> <span>{anime.format === 'TV' ? "TV Show" : anime.format}</span>
+                        </Box>
+                        
+                        {anime.episodes && 
+                          <Box id="episodes">
+                            <Typography variant='body2'>Episodes: </Typography> <span>{anime.episodes} Episodes</span>
+                          </Box>
+                        }
+
+                        {anime.duration &&
+                        <Box id="duration">
+                          <Typography variant='body2'>Duration: </Typography> <span>{anime.duration} Minutes</span>
+                        </Box>
+                        }
+
+                        <Box id="status">
+                          <Typography variant='body2'>Status: </Typography> <span>{anime.status[0] + anime.status.slice(1).toLowerCase()}</span>
+                        </Box>
+
+                        <Box id="genre">
                           {anime.genres.length > 0 ? 
-                            (<Typography variant="body2" mt="5px">
-                            Genre: {anime.genres.map(genre => <a key={genre} href={`http://localhost:3000/search/anime?genres=${genre}`} style={{textDecoration: 'none'}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
-                            </Typography>) : null
+                            (<Typography variant="body2">
+                            Genre: <span>
+                              {anime.genres.map(genre => <a key={genre} href={`http://localhost:3000/search/anime?genres=${genre}`} 
+                              style={{textDecoration: 'none'}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
+                            </span>
+                            </Typography>
+                            
+                            ) : null
                           }
                         </Box>
                       </Paper>

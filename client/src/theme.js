@@ -1,4 +1,4 @@
-import { deepPurple, gray } from "@mui/material/colors";
+import { deepPurple, grey } from "@mui/material/colors";
 
 export const colorTokens = {
   grey: {
@@ -27,20 +27,20 @@ export const themeSettings = (mode) => {
         ? {
             //Palette for dark mode
             primary: {
-              dark: deepPurple[300],
+              dark: deepPurple[200],
               main: deepPurple[500],
               light: deepPurple[800],
             },
             neutral: {
-              dark: colorTokens.grey[100],
-              main: colorTokens.grey[200],
-              mediumMain: colorTokens.grey[300],
-              medium: colorTokens.grey[400],
-              light: colorTokens.grey[700],
+              dark: grey[100],
+              main: grey[200],
+              mediumMain: grey[300],
+              medium: grey[400],
+              light: grey[700],
             },
             background: {
-              default: colorTokens.grey[800],
-              alt: colorTokens.grey[700],
+              default: grey[900],
+              alt: grey[800],
             },
           }
         : {
@@ -48,18 +48,18 @@ export const themeSettings = (mode) => {
             primary: {
               dark: deepPurple[700],
               main: deepPurple[500],
-              light: deepPurple[300],
+              light: deepPurple[50],
             },
             neutral: {
-              dark: colorTokens.grey[700],
-              main: colorTokens.grey[500],
-              mediumMain: colorTokens.grey[400],
-              medium: colorTokens.grey[300],
-              light: colorTokens.grey[50],
+              dark: grey[700],
+              main: grey[500],
+              mediumMain: grey[400],
+              medium: grey[300],
+              light: grey[50],
             },
             background: {
-              default: colorTokens.grey[10],
-              alt: colorTokens.grey[0],
+              default: grey[100],
+              alt: grey[50],
             },
           }),
     },

@@ -113,6 +113,7 @@ export default function NavBar() {
   }
 
 
+  //Drop down menu for search bar (desktop)
   const CustomPaper = (props) => {
     return (
     <Paper 

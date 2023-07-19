@@ -98,9 +98,9 @@ export default function IndexPage() {
             textDecoration: "none",
             fontSize: "1.75rem",
             fontWeight: "600",
-            color: "#111111",
+            color: palette.neutral.dark,
             "&:hover": {
-              color: '#673ab7',
+              color: palette.primary.main,
             },
             "& > div":{
               fontSize: "1rem",

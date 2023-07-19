@@ -11,6 +11,7 @@ import {
 import {Search, Menu, PlayArrow, AutoStories, Logout, Login, Settings, Person, LightMode, Nightlight, Home, Close } from "@mui/icons-material";
 import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
 import axios from 'axios';
+import { red } from '@mui/material/colors';
 
 export default function NavBar() {
   const [users, setUsers] = useState([]); //Hold searched users
@@ -340,16 +341,17 @@ export default function NavBar() {
                         renderInput={(params) => <TextField variant="outlined" {...params} label="Search Users..." />}
                         PaperComponent={CustomPaper}
                         sx={{
+                          backgroundColor:"#424242",
                           width:"200px",
-                          "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-                            borderColor: '#111111'
+                          ".MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "#e0e0e0"
                           },
                           "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-                            borderColor: '#673ab7'
+                            borderColor: "#e0e0e0"
                           },
-                          '& .MuiAutocomplete-endAdornment':{ display: "none"},
-                          '& .MuiFormLabel-root, .MuiInputBase-root, .MuiInputLabel-root.Mui-focused,': {
-                            color: '#111111', 
+                          '.MuiAutocomplete-endAdornment':{ display: "none"},
+                          '.MuiFormLabel-root, .MuiInputBase-root, .MuiInputLabel-root.Mui-focused,': {
+                            color: '#e0e0e0', 
                           },                       
                         }}
                         
@@ -391,10 +393,10 @@ export default function NavBar() {
                         <Box>
                           <Button 
                             sx={{
-                              backgroundColor:"#7C4CD1",
+                              backgroundColor:"#673ab7",
                               display: desktopScreen ? "block" : "none",
                               "&:hover": {
-                                backgroundColor: '#b39ddb',
+                                backgroundColor: '#7e57c2',
                               },
                             }} 
                             onClick={() => navigate('/auth')}
@@ -447,6 +449,9 @@ export default function NavBar() {
                                   "span:first-of-type": {
                                     paddingTop: desktopScreen || (tabletScreen && !user) ? "0px" : "8px",
                                     paddingLeft: desktopScreen || (tabletScreen && !user) ? "10px" : "0px"
+                                  },
+                                  "& .MuiButtonBase-root:hover":{
+                                    color:"#b39ddb"
                                   }
                                   
                                 }}

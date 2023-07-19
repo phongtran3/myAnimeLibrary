@@ -70,7 +70,7 @@ export default function Card({item, setAlert}) {
                     transition 
                     placement="right-start" 
                     sx={{
-                    margin:"0 1rem !important",
+                    //margin:"0 1rem !important",
                     maxWidth:'300px', 
                     }}
                 >
@@ -79,14 +79,14 @@ export default function Card({item, setAlert}) {
                       {/* May create seperate jsx component */}
                       <Paper elevation={6} 
                         sx={{
-                          //margin:"0 1rem",
-                          padding: "15px",
-                          "& div > .MuiTypography-root ":{
-                            display: "inline-block"
-                          },
-                          "& div > span":{
-                            fontSize: "0.875rem",
-                          }
+                            margin:"0 1rem !important",
+                            padding: "15px",
+                            "& div > .MuiTypography-root ":{
+                                display: "inline-block"
+                            },
+                            "& div > span":{
+                                fontSize: "0.875rem",
+                            }
                         }}
                       >
                         <Box id="title" >

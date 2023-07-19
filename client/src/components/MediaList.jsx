@@ -97,7 +97,7 @@ export default function MediaList({media, setAlert}) {
                 transition 
                 placement="right-start" 
                 sx={{
-                  margin:"0 1rem !important",
+                  //margin:"0 1rem !important",
                   maxWidth:'300px', 
                 }}
               >
@@ -106,7 +106,7 @@ export default function MediaList({media, setAlert}) {
                       {/* May create seperate jsx component */}
                       <Paper elevation={6} 
                         sx={{
-                          //margin:"0 1rem",
+                          margin:"0 1rem !important",
                           padding: "15px",
                           "& div > .MuiTypography-root ":{
                             display: "inline-block"

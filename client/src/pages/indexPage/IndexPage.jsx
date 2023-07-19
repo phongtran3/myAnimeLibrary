@@ -110,7 +110,6 @@ export default function IndexPage() {
         }}
       > 
         <Box margin="0 2rem 2rem">
-          <h1>Filter</h1>
           <BrowseFilter />
         </Box>
 

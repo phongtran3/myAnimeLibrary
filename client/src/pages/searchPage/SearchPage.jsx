@@ -106,16 +106,8 @@ export default function SearchPage() {
           {alert}
         </Alert>
         </Snackbar>
-
-        {/* {alert && 
-        
-
-        <Alert severity='success'>yes</Alert>
-        
-        } */}
         
         <Box margin="0 2rem 2rem">
-            <h1>Filter</h1>
             <BrowseFilter />
         </Box>
 

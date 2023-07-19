@@ -130,17 +130,17 @@ export default function NavBar() {
   return (
     <>
       <Slide appear={false} direction="down" in={!trigger}>
-        <AppBar sx={{backgroundColor: '#9575CD'}}>
+        <AppBar sx={{backgroundColor: '#212121'}}>
           <Toolbar >
             <Typography
-              color="#111111"
+              color="#e0e0e0"
               fontWeight="bold" 
               fontSize="clamp(.5rem, 1.5rem, 2rem)"
               onClick={() => navigate("/")}
               sx={{
                 display: desktopScreen ? "inherit" : "none",
                 "&:hover": {
-                  color: '#673ab7',
+                  color: '#b39ddb',
                   cursor: "pointer",
                 },
               }}
@@ -157,12 +157,12 @@ export default function NavBar() {
                 "& > a": { 
                   padding:"15px 16px", 
                   textDecoration:"none", 
-                  color: '#111111',
+                  color: '#e0e0e0',
                   fontWeight:"bold",
                   fontSize:"20px",
                   whiteSpace:"nowrap",
                   "&:hover": {
-                    color: '#673ab7',
+                    color: '#b39ddb',
                     cursor: "pointer",
                   },
                 },
@@ -203,7 +203,7 @@ export default function NavBar() {
                           <Fade {...TransitionProps}>
                             <Paper 
                               sx={{
-                                backgroundColor: '#d1c4e9',
+                                backgroundColor: '#424242',
                                 padding: "10px"
                               }}
                             >
@@ -214,10 +214,10 @@ export default function NavBar() {
                                   flexDirection:"column",
                                   padding:"10px",
                                   "& a": {
-                                    color: '#111111',
+                                    color: '#e0e0e0',
                                     textDecoration:"none",
                                     "&:hover": {
-                                      color: '#673ab7',
+                                      color: '#b39ddb',
                                       cursor: "pointer",
                                     }
                                   },
@@ -315,9 +315,9 @@ export default function NavBar() {
                   <>
                     <IconButton onClick={() => dispatch(setSiteTheme())}>
                       {theme.palette.mode === "dark" ? (
-                        <Nightlight sx={{color: '#111111', fontSize: "30px" }} />
+                        <Nightlight sx={{color: '#e0e0e0', fontSize: "30px" }} />
                       ) : (
-                        <LightMode sx={{ color: '#111111', fontSize: "30px" }} />
+                        <LightMode sx={{ color: '#e0e0e0', fontSize: "30px" }} />
                       )}
                     </IconButton>
                     
@@ -355,7 +355,7 @@ export default function NavBar() {
                         
                       /> : 
                       <IconButton onClick={handleOpenDialog}>
-                        <Search sx={{color: '#111111', fontSize: "30px" }}/>
+                        <Search sx={{color: '#e0e0e0', fontSize: "30px" }}/>
                       </IconButton>
                     }
                   </>
@@ -386,11 +386,12 @@ export default function NavBar() {
                           aria-expanded={openMenu ? 'true' : undefined}
                           aria-haspopup="true"
                         >
-                          <Menu sx={{ color: '#111111', width: 42, height: 42 }}/>
+                          <Menu sx={{ color: '#e0e0e0', width: 42, height: 42 }}/>
                         </IconButton> 
                         <Box>
                           <Button 
                             sx={{
+                              backgroundColor:"#7C4CD1",
                               display: desktopScreen ? "block" : "none",
                               "&:hover": {
                                 backgroundColor: '#b39ddb',
@@ -399,7 +400,7 @@ export default function NavBar() {
                             onClick={() => navigate('/auth')}
                             variant="contained"
                           >
-                            <Typography fontWeight="bold" fontSize="16px" sx={{ color:'#111111' }}>Login</Typography>
+                            <Typography fontWeight="bold" fontSize="16px" sx={{ color:'#e0e0e0' }}>Login</Typography>
                           </Button> 
                         </Box>
                     </>
@@ -423,7 +424,7 @@ export default function NavBar() {
                             placement === 'bottom-start' ? 'left top' : 'left bottom',
                         }}
                       >
-                        <Paper sx={{backgroundColor: '#d1c4e9', color: '#111111'}}>
+                        <Paper sx={{backgroundColor: '#424242', color: '#e0e0e0'}}>
                           <ClickAwayListener onClickAway={handleCloseMenu}>
                             <MenuList
                               autoFocusItem={openMenu}
@@ -535,7 +536,7 @@ export default function NavBar() {
                       ...params.InputProps,
                       startAdornment: (
                         <InputAdornment position="start">
-                          <Search sx={{color: '#111111', fontSize: "20px" }}/>
+                          <Search sx={{color: '#e0e0e0', fontSize: "20px" }}/>
                         </InputAdornment>
                       )
                     }}

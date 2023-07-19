@@ -224,6 +224,7 @@ export default function Filter() {
     </Box>
     <Button 
       sx={{
+        backgroundColor:"#7C4CD1",
         marginTop: "1rem", 
         color: "#111111",
         fontWeight:"600",

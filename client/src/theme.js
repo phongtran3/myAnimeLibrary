@@ -1,4 +1,4 @@
-import { deepPurple } from "@mui/material/colors";
+import { deepPurple, gray } from "@mui/material/colors";
 
 export const colorTokens = {
   grey: {

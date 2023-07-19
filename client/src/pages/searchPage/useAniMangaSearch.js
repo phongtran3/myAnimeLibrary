@@ -39,6 +39,7 @@ export default function useAniMangaSearch(pageNumber) {
   const [loading, setLoading] = useState(true);
   const [hasNextPage, sethasNextPage] = useState(false);
   const [aniMangas, setAniMangas] = useState([]);
+  const [header, setHeader] = useState("");
 
   const variables = {
     page: pageNumber,
@@ -54,8 +55,8 @@ export default function useAniMangaSearch(pageNumber) {
     // console.log(format);
     // console.log(status);
     // console.log(genres);
-    // console.log(sort);
-    // console.log(type);
+    console.log(sort);
+    console.log(type);
     setLoading(true);
     const query = `
       query ($page: Int, $perPage: Int, ${

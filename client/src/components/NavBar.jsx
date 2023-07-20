@@ -403,7 +403,7 @@ export default function NavBar() {
                             onClick={() => navigate('/auth')}
                             variant="contained"
                           >
-                            <Typography fontWeight="bold" fontSize="16px" sx={{ color:'#e0e0e0' }}>Login</Typography>
+                            <Typography fontWeight="bold" fontSize="16px" sx={{ color:'#fafafa' }}>Login</Typography>
                           </Button> 
                         </Box>
                     </>

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useParams, useSearchParams, useNavigate} from 'react-router-dom';
-import { Box, Button, TextField, Autocomplete, Chip, Checkbox, useMediaQuery} from '@mui/material'
+import { Box, Button, TextField, Autocomplete, Chip, Checkbox, useMediaQuery, useTheme} from '@mui/material'
 import { genreCollection, animeFormat, status, mangaFormat, sortCollection } from './FilterCollections';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -18,6 +18,7 @@ export default function Filter() {
 
   const navigate  = useNavigate();
   const params = useParams()
+  const { palette } = useTheme();
   const tabletScreen = useMediaQuery("(min-width: 630px)");
   const desktopScreen = useMediaQuery("(min-width: 1100px)");
   
@@ -78,7 +79,17 @@ export default function Filter() {
         },
         "& .MuiInputBase-input, .MuiInputBase-root ":{
           cursor:"pointer",
+        },
+        "& .MuiFormLabel-root":{
+          color: palette.neutral.dark,
+        },
+        "& .MuiOutlinedInput-notchedOutline":{
+          boxShadow:"rgba(100, 100, 111, 0.2) 0px 3px 4px 0px",
+          borderRadius:"8px",
+          borderColor:"transparent",
+          background: palette.neutral.light
         }
+
       }}
     >
         <TextField 
@@ -88,6 +99,10 @@ export default function Filter() {
           value={searchTitle}
           onKeyDown={(e) => {if(e.key === 'Enter') searchMedia();}}
           onChange={(e) => {setSearchTitle(e.target.value)}}
+          // sx={{
+          // boxShadow:"rgba(100, 100, 111, 0.2) 0px 3px 4px 0px",
+          //   borderRadius:"8px",
+          // }}
         />
 
         {/* GENRES */}
@@ -224,12 +239,12 @@ export default function Filter() {
     </Box>
     <Button 
       sx={{
-        backgroundColor:"#7C4CD1",
+        backgroundColor: palette.primary.main,
         marginTop: "1rem", 
-        color: "#111111",
+        color: "#fafafa",
         fontWeight:"600",
         "&:hover": {
-          backgroundColor: '#b39ddb',
+          backgroundColor: "#7e57c2"
         },
       }} 
       onClick={searchMedia} 

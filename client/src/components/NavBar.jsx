@@ -11,7 +11,7 @@ import {
 import {Search, Menu, PlayArrow, AutoStories, Logout, Login, Settings, Person, LightMode, Nightlight, Home, Close } from "@mui/icons-material";
 import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
 import axios from 'axios';
-import { red } from '@mui/material/colors';
+
 
 export default function NavBar() {
   const [users, setUsers] = useState([]); //Hold searched users

@@ -59,10 +59,7 @@ app.use("/manga", mangaRouter);
 const PORT = process.env.PORT || 5001;
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(process.env.CONNECTION_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.CONNECTION_URL)
   .then(() =>
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
   )

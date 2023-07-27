@@ -132,7 +132,7 @@ export default function NavBar() {
   return (
     <>
       <Slide appear={false} direction="down" in={!trigger}>
-        <AppBar sx={{backgroundColor: '#212121'}}>
+        <AppBar id="header" sx={{backgroundColor: '#212121'}}>
           <Toolbar >
             <Typography
               color="#e0e0e0"

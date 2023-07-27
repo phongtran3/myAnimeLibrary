@@ -25,7 +25,8 @@
         "mongoose": "^6.9.1",
         "morgan": "^1.10.0",
         "multer": "^1.4.4",
-        "multer-gridfs-storage": "^5.0.2"
+        "multer-gridfs-storage": "^5.0.2",
+        "npm-cli": "^0.1.0"
     },
     "devDependencies": {
         "dotenv": "^16.0.3",

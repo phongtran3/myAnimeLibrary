@@ -72,10 +72,12 @@ export default function Filter() {
       sx={{
         display: "flex",
         flexWrap:"wrap",
-        gap:"1rem 2rem",
+        gap:"1rem 1.5rem",
         "& > div":{
           flex:"1 0 250px",
           maxWidth: desktopScreen ? "250px" : null,
+          background: palette.neutral.light,
+          borderRadius:"8px",
         },
         "& .MuiInputBase-input, .MuiInputBase-root ":{
           cursor:"pointer",
@@ -87,7 +89,6 @@ export default function Filter() {
           boxShadow:"rgba(100, 100, 111, 0.2) 0px 3px 4px 0px",
           borderRadius:"8px",
           borderColor:"transparent",
-          background: palette.neutral.light
         }
 
       }}

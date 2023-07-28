@@ -76,25 +76,24 @@ export default function Filter() {
         "& > div":{
           flex:"1 0 250px",
           maxWidth: desktopScreen ? "250px" : null,
-          background: palette.neutral.light,
+          //background: palette.neutral.light,
           borderRadius:"8px",
         },
         "& .MuiInputBase-input, .MuiInputBase-root ":{
           cursor:"pointer",
         },
-        "& .MuiFormLabel-root":{
-          //color: palette.neutral.dark,
-        },
         "& .MuiOutlinedInput-notchedOutline":{
-          boxShadow:"rgba(100, 100, 111, 0.2) 0px 3px 4px 0px",
+          //boxShadow:"rgba(100, 100, 111, 0.2) 0px 3px 4px 0px",
           borderRadius:"8px",
-          borderColor:"transparent",
+          borderWidth:"2px",
+          //borderColor:"rgba(255, 255, 255, 0.5)",
+          //borderColor:"transparent",
         },
         "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
           //borderColor: "#e0e0e0"
           borderColor: palette.neutral.dark,
         },
-        "& .MuiFormLabel-root .MuiInputBase-root, .MuiInputLabel-root.Mui-focused,": {
+        "& .MuiFormLabel-root, .MuiInputBase-root, .MuiInputLabel-root.Mui-focused": {
           //color: '#e0e0e0', 
           color: palette.neutral.dark,
         }

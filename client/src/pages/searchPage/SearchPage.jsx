@@ -119,7 +119,7 @@ export default function SearchPage() {
               gap:"3rem 2rem !important",
               gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr)) !important",
               "& > div":{
-                display:"flex",
+                //display:"flex",
                 transition: "transform 250ms",
                 // '&:hover':{
                 //   transform: "scale(1.05)"

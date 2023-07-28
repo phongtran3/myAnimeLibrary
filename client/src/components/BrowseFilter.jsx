@@ -175,7 +175,16 @@ export default function Filter() {
           isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          renderInput={(params) => <TextField {...params} label="Select Format" />}
+          renderInput={(params) => 
+            <TextField 
+              {...params} 
+              label="Select Format" 
+              inputProps={{
+                ...params.inputProps,
+                readOnly: true,
+              }}
+            />
+        }
         />
         {/* <TextField
           value={searchFormat}
@@ -210,7 +219,16 @@ export default function Filter() {
           isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          renderInput={(params) => <TextField {...params} label="Select Status" />}
+          renderInput={(params) => 
+            <TextField 
+            {...params} 
+            label="Select Status" 
+            inputProps={{
+              ...params.inputProps,
+              readOnly: true,
+            }}
+            />
+          }
         />
         {/* <TextField
           value={searchStatus} 
@@ -242,7 +260,16 @@ export default function Filter() {
           isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          renderInput={(params) => <TextField {...params} label="Select Sorting" />}
+          renderInput={(params) => 
+            <TextField 
+              {...params} 
+              label="Select Sorting"
+              inputProps={{
+                ...params.inputProps,
+                readOnly: true,
+              }} 
+            />
+          }
         />
     </Box>
     <Button 

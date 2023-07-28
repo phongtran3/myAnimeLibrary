@@ -214,7 +214,7 @@ const registerSchema = yup.object().shape({
                         > 
                             {!isLogin ? "Create Account" : "Login"}
                         </Typography>
-                    {isLogin && <Typography mt={".5rem"}>Welcome back!</Typography>}
+                    {isLogin && <Typography color="#111111" mt={".5rem"}>Welcome back!</Typography>}
 
                     </Box>
                     

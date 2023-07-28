@@ -33,6 +33,7 @@ export default function LoginPage() {
       <Box width="100%" p=".5rem" textAlign="center" position="relative" id="navbar">
         <Typography 
           sx={{
+            color: "#111111", 
             textDecoration:"none",
             "&:hover": {
               color: '#b39ddb',

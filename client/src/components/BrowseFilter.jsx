@@ -83,14 +83,21 @@ export default function Filter() {
           cursor:"pointer",
         },
         "& .MuiFormLabel-root":{
-          color: palette.neutral.dark,
+          //color: palette.neutral.dark,
         },
         "& .MuiOutlinedInput-notchedOutline":{
           boxShadow:"rgba(100, 100, 111, 0.2) 0px 3px 4px 0px",
           borderRadius:"8px",
           borderColor:"transparent",
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          //borderColor: "#e0e0e0"
+          borderColor: palette.neutral.dark,
+        },
+        "& .MuiFormLabel-root .MuiInputBase-root, .MuiInputLabel-root.Mui-focused,": {
+          //color: '#e0e0e0', 
+          color: palette.neutral.dark,
         }
-
       }}
     >
         <TextField 

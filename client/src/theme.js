@@ -58,7 +58,7 @@ export const themeSettings = (mode) => {
               light: grey[50],
             },
             background: {
-              default: grey[100],
+              default: grey[200],
               alt: grey[50],
             },
           }),

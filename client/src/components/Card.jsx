@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
-import {Box, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade, useMediaQuery } from '@mui/material';
+import {Box, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade, useMediaQuery, useTheme } from '@mui/material';
 import QuickAction from './QuickAction';
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 
-export default function Card({item, setAlert}) {
+export default function Card({item, setAlert, mode}) {
     const [displayQuickAction, setDisplayQuickAction] = useState(false);
     const tabletScreen = useMediaQuery("(min-width: 630px)");
     //console.log(item.isAdult);
@@ -21,7 +21,10 @@ export default function Card({item, setAlert}) {
     }
 
     const user = useSelector((state) => state.user);
+
     const params = useParams();
+    const { palette } = useTheme();
+
     const type = params.media;
 
     return (
@@ -79,18 +82,37 @@ export default function Card({item, setAlert}) {
                       {/* May create seperate jsx component */}
                       <Paper elevation={6} 
                         sx={{
+                            background: palette.background.alt,
                             margin:"0 1rem !important",
                             padding: "15px",
-                            "& div > .MuiTypography-root ":{
+                            "& div":{
+                              ".MuiTypography-root":{
                                 display: "inline-block"
-                            },
-                            "& div > span":{
+                              },
+                              "span":{
                                 fontSize: "0.875rem",
+                              }
+                            },
+                            "& div:not(:first-of-type)":{
+                              ".MuiTypography-root ":{
+                                color: mode === "dark" ? palette.neutral.medium : "#212121",
+                              },
+                              "span":{
+                                color: palette.neutral.dark,
+                                fontWeight:"600",
+                              }
+                            },
+                            "div:last-child":{
+                              "& a":{
+                                "&:hover":{
+                                  color:"#d1c4e9 !important",
+                                }
+                              }
                             }
                         }}
                       >
                         <Box id="title" >
-                          <Typography sx={{color: "#673ab7", fontWeight: "600"}}>{item.title.english === null ? item.title.romaji : item.title.english}</Typography>
+                          <Typography sx={{color: palette.primary.dark, fontWeight: "600"}}>{item.title.english === null ? item.title.romaji : item.title.english}</Typography>
                         </Box>
 
                         {item.averageScore &&
@@ -100,7 +122,7 @@ export default function Card({item, setAlert}) {
                         }
 
                         <Box id="format">
-                          <Typography variant='body2' sx={{display:"inline-block"}}>Format: </Typography> <span>{item.format === 'TV' ? "TV Show" : item.format}</span>
+                          <Typography variant='body2' >Format: </Typography> <span>{item.format === 'TV' ? "TV Show" : item.format}</span>
                         </Box>
                         
                         {item.episodes && 
@@ -123,8 +145,8 @@ export default function Card({item, setAlert}) {
                           {item.genres.length > 0 ? 
                             (<Typography variant="body2">
                             Genre: <span>
-                              {item.genres.map(genre => <a key={genre} href={`http://localhost:3000/search/item?genres=${genre}`} 
-                              style={{textDecoration: 'none', color: "#673ab7"}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
+                              {item.genres.map(genre => <a key={genre} href={`http://localhost:3000/search/${type}?genres=${genre}`} 
+                              style={{textDecoration: 'none', color: palette.primary.dark}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
                             </span>
                             </Typography>
                             

@@ -20,7 +20,7 @@ export default function Filter() {
   const params = useParams()
   const { palette } = useTheme();
   const tabletScreen = useMediaQuery("(min-width: 630px)");
-  const desktopScreen = useMediaQuery("(min-width: 1100px)");
+  const desktopScreen = useMediaQuery("(min-width: 1150px)");
   
 
   //console.log(sort);

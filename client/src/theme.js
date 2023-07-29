@@ -46,6 +46,7 @@ export const themeSettings = (mode) => {
         : {
             // palette values for light mode
             primary: {
+              extraDark: deepPurple[900],
               dark: deepPurple[800],
               main: deepPurple[500],
               light: deepPurple[200],

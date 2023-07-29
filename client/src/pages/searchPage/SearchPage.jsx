@@ -13,6 +13,8 @@ export default function SearchPage() {
   const {loading, hasNextPage, aniMangas} = useAniMangaSearch(pageNumber);
   const [alert, setAlert] = useState("");
   const loggedUser = useSelector((state) => state.user);
+  const mode = useSelector((state) => state.mode);
+  
   //console.log(aniMangas);
   //console.log(hasNextPage);
   //console.log(pageNumber);
@@ -119,7 +121,7 @@ export default function SearchPage() {
               gap:"3rem 2rem !important",
               gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr)) !important",
               "& > div":{
-                //display:"flex",
+                display:"flex",
                 transition: "transform 250ms",
                 // '&:hover':{
                 //   transform: "scale(1.05)"
@@ -131,13 +133,13 @@ export default function SearchPage() {
               if (array.length - 10 === index + 1) {
                 return (
                   <div ref={lastAniMangaEleRef} key={item.id}>
-                    <Card item={item} setAlert={setAlert} />
+                    <Card mode={mode} item={item} setAlert={setAlert} />
                   </div>
                 )
               } else {
                 return (
                 <div key={item.id}>
-                  <Card item={item} setAlert={setAlert} />
+                  <Card mode={mode} item={item} setAlert={setAlert} />
                 </div>)
               }
             })}

@@ -124,18 +124,23 @@ export default function Filter() {
           }}
           disableCloseOnSelect
           getOptionLabel={(option) => option}
-          renderOption={(props, option, { selected }) => (
-            <li {...props}>
-              <Checkbox
-                id="checkbox-popper"
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 4 }}
-                checked={selected}
-              />
-              {option}
-            </li>
-          )}
+          sx={{
+            "div > .MuiInputBase-root":{
+              paddingRight:"39px !important",
+            }
+          }}
+          // renderOption={(props, option, { selected }) => (
+          //   <li {...props}>
+          //     <Checkbox
+          //       id="checkbox-popper"
+          //       icon={icon}
+          //       checkedIcon={checkedIcon}
+          //       style={{ marginRight: 4 }}
+          //       checked={selected}
+          //     />
+          //     {option}
+          //   </li>
+          // )}
           renderInput={(params) => (
               <TextField {...params} label={`Select Genre`}/>
           )}

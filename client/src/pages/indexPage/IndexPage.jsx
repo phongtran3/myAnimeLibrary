@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingMangaQuery } from './initalQuery';
-import { Box, Grid, CircularProgress, Typography, LinearProgress, useMediaQuery, useTheme, Alert, Snackbar} from '@mui/material';
-import MediaList from '../../components/MediaList';
+import { Box, ImageList, Typography, LinearProgress, useTheme, Alert, Snackbar} from '@mui/material';
+//import MediaList from '../../components/MediaList';
 import NavBar from '../../components/NavBar';
 import BrowseFilter from '../../components/BrowseFilter';
+import Card from '../../components/Card';
 import {Link} from 'react-router-dom';
-
-
+import { useSelector } from "react-redux";
 
 export default function IndexPage() {
   const [trendingAnime, setTrendingAnime] = useState([]);
@@ -15,10 +15,9 @@ export default function IndexPage() {
   const [trendingManga, setTrendingManga] = useState([]);
   const [popularManga, setpopularManga] = useState([]);
   const [alert, setAlert] = useState("");
-  const tabletScreen = useMediaQuery("(min-width: 630px)");
-  const desktopScreen = useMediaQuery("(min-width: 1100px)");
 
   const { palette } = useTheme();
+  const mode = useSelector((state) => state.mode);
 
   const variables = {
     page: 1,
@@ -88,10 +87,11 @@ export default function IndexPage() {
         </Snackbar>
 
       <Box 
-        maxWidth="1520px" 
-        margin="2rem auto"
-        paddingBottom="1rem"
+        id="content"
         sx={{
+          maxWidth:"1520px",
+          margin:"2rem auto",
+          paddingBottom:"1rem",
           "& .MuiTypography-root":{
             display:"flex",
             alignItems:"center",
@@ -107,6 +107,7 @@ export default function IndexPage() {
               marginLeft: "auto",
             }
           }
+
         }}
       > 
         <Box id="filter-wrapper" margin="0 2rem 2rem">
@@ -114,47 +115,84 @@ export default function IndexPage() {
         </Box>
 
         {(isLoading) ? <LinearProgress /> : 
-        <>
-        {!trendingAnime.length ? <CircularProgress/> : 
+        <Box 
+          id="search-content"
+          sx={{
+            "& div > ul":{
+              //background:"red" //test
+              overflowY: "visible !important",
+              textAlign: "center",
+              marginTop: "0.5rem",
+              gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))!important',
+              '@media (max-width: 545px)': {
+                gridTemplateColumns: 'repeat(auto-fill, minmax(185px, 1fr))!important',
+              },
+              gap:"25px !important" ,
+              "a:nth-of-type(5)": {
+                '@media only screen and (min-width: 1020px) and (max-width: 1265px)':{
+                  display: "none"
+                }
+              },
+              "a:nth-of-type(6)": {
+                '@media only screen and (min-width: 1020px) and (max-width: 1510px)':{
+                  display: "none"
+                }
+              },
+            }
+          }}
+        >
           <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
             <Typography component={Link} to={`search/anime/trending`}>
               <span>Trending Anime</span>
               <div>View All</div>
             </Typography>
-            <MediaList setAlert={setAlert} media={trendingAnime} />
+            {/* <MediaList setAlert={setAlert} media={trendingAnime} /> */}
+            <ImageList>
+              {trendingAnime.map(anime => {
+                return <Card key={anime.id} type={"anime"} mode={mode} setAlert={setAlert} item={anime} />
+              })}
+            </ImageList>
           </Box>
-        }
-        
-        {!popularAnime.length ? <CircularProgress/> : 
-        <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
-          <Typography component={Link} to={`search/anime/popularity`}>
-            <span>All Time Popular Anime</span>
-            <div>View All</div>
-          </Typography>
-          <MediaList setAlert={setAlert} media={popularAnime} />
+
+          <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
+            <Typography component={Link} to={`search/anime/popularity`}>
+              <span>All Time Popular Anime</span>
+              <div>View All</div>
+            </Typography>
+            {/* <MediaList setAlert={setAlert} media={trendingAnime} /> */}
+            <ImageList>
+              {popularAnime.map(anime => {
+                return <Card key={anime.id} type={"anime"} mode={mode} setAlert={setAlert} item={anime} />
+              })}
+            </ImageList>
+          </Box>
+
+          <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
+            <Typography component={Link} to={`search/manga/trending`}>
+              <span>Trending Manga</span>
+              <div>View All</div>
+            </Typography>
+            {/* <MediaList setAlert={setAlert} media={trendingAnime} /> */}
+            <ImageList>
+              {trendingManga.map(anime => {
+                return <Card key={anime.id} type={"manga"} mode={mode} setAlert={setAlert} item={anime} />
+              })}
+            </ImageList>
+          </Box>
+          
+          <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
+            <Typography component={Link} to={`search/manga/popularity`}>
+              <span>All Time Popular Manga</span>
+              <div>View All</div>
+            </Typography>
+            {/* <MediaList setAlert={setAlert} media={trendingAnime} /> */}
+            <ImageList>
+              {popularManga.map(anime => {
+                return <Card key={anime.id} type={"manga"} mode={mode} setAlert={setAlert} item={anime} />
+              })}
+            </ImageList>
+          </Box>
         </Box>
-        }
-        
-        {!trendingManga.length ? <CircularProgress/> : 
-        <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
-          <Typography component={Link} to={`search/manga/trending`}>
-            <span>Trending Manga</span>
-            <div>View All</div>
-          </Typography>
-          <MediaList setAlert={setAlert} media={trendingManga} />
-        </Box>
-        }
-        
-        {!popularManga.length ? <CircularProgress/> : 
-        <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
-          <Typography component={Link} to={`search/manga/popularity`}>
-            <span>All Time Popular Manga</span>
-            <div>View All</div>
-          </Typography>
-          <MediaList setAlert={setAlert} media={popularManga} />
-        </Box>
-        }
-        </>
         }
       </Box>
     </Box>

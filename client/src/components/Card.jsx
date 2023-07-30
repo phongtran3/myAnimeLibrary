@@ -4,12 +4,12 @@ import {Box, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade, 
 import QuickAction from './QuickAction';
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
-import { useParams } from "react-router-dom";
 
-export default function Card({item, setAlert, mode}) {
+export default function Card({item, setAlert, mode, type}) {
     const [displayQuickAction, setDisplayQuickAction] = useState(false);
     const tabletScreen = useMediaQuery("(min-width: 630px)");
-    //console.log(item.isAdult);
+    const user = useSelector((state) => state.user);
+    const { palette } = useTheme();
 
     function showBtn(e){
         e.preventDefault();
@@ -19,13 +19,6 @@ export default function Card({item, setAlert, mode}) {
         e.preventDefault();
         setDisplayQuickAction(false);
     }
-
-    const user = useSelector((state) => state.user);
-
-    const params = useParams();
-    const { palette } = useTheme();
-
-    const type = params.media;
 
     return (
         <PopupState 
@@ -83,7 +76,7 @@ export default function Card({item, setAlert, mode}) {
                       <Paper elevation={6} 
                         sx={{
                             background: palette.background.alt,
-                            margin:"0 1rem !important",
+                            margin:"0 .5rem !important",
                             padding: "15px",
                             "& div":{
                               ".MuiTypography-root":{

@@ -7,6 +7,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useAniMangaSearch from './useAniMangaSearch';
 import Card from '../../components/Card';
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 export default function SearchPage() {
   const [pageNumber, setPageNumber] = useState(1)
@@ -14,6 +15,8 @@ export default function SearchPage() {
   const [alert, setAlert] = useState("");
   const loggedUser = useSelector((state) => state.user);
   const mode = useSelector((state) => state.mode);
+  const params = useParams();
+  const type = params.media;
   
   //console.log(aniMangas);
   //console.log(hasNextPage);
@@ -133,13 +136,13 @@ export default function SearchPage() {
               if (array.length - 10 === index + 1) {
                 return (
                   <div ref={lastAniMangaEleRef} key={item.id}>
-                    <Card mode={mode} item={item} setAlert={setAlert} />
+                    <Card type={type} mode={mode} item={item} setAlert={setAlert} />
                   </div>
                 )
               } else {
                 return (
                 <div key={item.id}>
-                  <Card mode={mode} item={item} setAlert={setAlert} />
+                  <Card type={type} mode={mode} item={item} setAlert={setAlert} />
                 </div>)
               }
             })}

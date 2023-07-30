@@ -20,13 +20,10 @@ export default function App() {
   return (
     <div className="app">
       <BrowserRouter>
-        <Routes>
-          <Route path="/auth" element={<LoginPage />} />
-        </Routes>
-
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
+            <Route path="/auth" element={<LoginPage />} />
             <Route path="/" element={<IndexPage />} />
             {/* <Route path="/home" element={<HomePage />} /> */}
             <Route

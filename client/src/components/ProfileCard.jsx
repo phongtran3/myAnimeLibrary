@@ -224,18 +224,6 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                         </Alert> 
                     }
                 </Snackbar>
-
-                {openFollows && 
-                    <Follow 
-                        loggedUser={loggedUser}
-                        user={user}
-                        open={openFollows}
-                        type={type}
-                        arr={type === "following" ? followingArr : followersArr}
-                        handleClose={handleFollowClose}
-                        handleFollowUnfollow={handleFollowUnfollow}
-                    />
-                }
             </Card>
             :
             <Box 
@@ -266,7 +254,7 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                 {loggedUser && loggedUser.userName  === user.userName ? 
                     <Button onClick={() => {navigate('/settings')}}>Edit Profile</Button> 
                     : 
-                    <Button onClick={(e) => handleFollowUnfollow(user._id)}>{isFollowing ? "Following" : "Unfollow"}</Button>
+                    <Button onClick={(e) => handleFollowUnfollow(user._id)}>{isFollowing ? "Unfollow" : "Follow"}</Button>
                 }
                 <Typography variant='h5' mt="1rem" fontWeight="bold" >{`${user.firstName} ${user.lastName}`}</Typography>
                 <Typography variant='subtitle1'>{`@${user.userName}`}</Typography>
@@ -363,8 +351,10 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                     </ButtonBase>
                     <ButtonBase component="div" 
                         onClick={() => {
-                            if(loggedUser)
+                            if(loggedUser){
+                                console.log("open");
                                 handleFollowOpen("follower");
+                            }
                             else
                                 setOpenAlert(true);
                         }}
@@ -373,9 +363,19 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                         <Typography variant='subtitle1'>Followers</Typography>
                     </ButtonBase>
                 </Box>
-
             </Box>
         }
+            {openFollows && 
+                <Follow 
+                    loggedUser={loggedUser}
+                    user={user}
+                    open={openFollows}
+                    type={type}
+                    arr={type === "following" ? followingArr : followersArr}
+                    handleClose={handleFollowClose}
+                    handleFollowUnfollow={handleFollowUnfollow}
+                />
+            }
         </>
     )
 }

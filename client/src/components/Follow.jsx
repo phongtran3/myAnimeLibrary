@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Avatar, Dialog, DialogContent, DialogTitle, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Button, Divider } from '@mui/material'
 export default function Follow({open, handleClose, type, loggedUser, handleFollowUnfollow, arr}) {
     const navigate = useNavigate(); 
-    
     return (
         <Dialog maxWidth={'sm'} open={open} onClose={handleClose} sx={{'& .MuiPaper-root': {alignItems: "center"}}}>
             <DialogTitle>{type === "following" ? "Following" : "Followers"}</DialogTitle>

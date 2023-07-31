@@ -197,7 +197,6 @@ export default function NavBar() {
                         transition 
                         placement="bottom-start" 
                         sx={{
-                          width:"250px", 
                           zIndex:"1101"
                         }}
                       >
@@ -205,8 +204,8 @@ export default function NavBar() {
                           <Fade {...TransitionProps}>
                             <Paper 
                               sx={{
-                                backgroundColor: '#424242',
-                                padding: "10px"
+                                background: '#424242',
+                                padding: "10px 15px"
                               }}
                             >
                               <Box id="menu=wrapper"
@@ -214,7 +213,6 @@ export default function NavBar() {
                                   display:"flex",
                                   alignItems:"center",
                                   flexDirection:"column",
-                                  padding:"10px",
                                   "& a": {
                                     color: '#e0e0e0',
                                     textDecoration:"none",
@@ -231,6 +229,7 @@ export default function NavBar() {
                                     alignItems:"center",
                                   },
                                   "& > div > a:first-of-type":{
+                                    gap:"1rem",
                                     fontSize:"1.2rem",
                                     fontWeight:"600",
                                     display:"flex",
@@ -250,7 +249,7 @@ export default function NavBar() {
                                     <PlayArrow sx={{fontSize:"2rem"}}/><span>Anime Search</span>
                                   </Link>
                                   <Box id="secondary-anime-links">
-                                    <Link fontSize={".9rem"} 
+                                    <Link fontSize={".75rem"} 
                                       onClick={() => {
                                         navigate('/search/anime/trending'); 
                                         navigate(0);
@@ -258,7 +257,7 @@ export default function NavBar() {
                                     > Trending
                                     </Link>
                                     <Link 
-                                      fontSize={".9rem"} 
+                                      fontSize={".75rem"} 
                                       onClick={() => {
                                         navigate('/search/anime/popularity'); 
                                         navigate(0);
@@ -278,14 +277,14 @@ export default function NavBar() {
                                     <AutoStories sx={{fontSize:"2rem"}}/><span>Manga Search</span>
                                   </Link>
                                   <Box id="secondary-manga-links">
-                                    <Link fontSize={".9rem"} 
+                                    <Link fontSize={".75rem"} 
                                       onClick={() => {
                                         navigate('/search/manga/trending'); 
                                         navigate(0);
                                       }} 
                                     > Trending
                                     </Link>
-                                    <Link fontSize={".9rem"} 
+                                    <Link fontSize={".75rem"} 
                                       onClick={() => {
                                         navigate('/search/manga/popularity'); 
                                         navigate(0);

@@ -114,6 +114,7 @@ export default function Filter() {
 
         {/* GENRES */}
         <Autocomplete 
+          disablePortal
           multiple 
           limitTags={2} 
           id="checkboxes-genres" 
@@ -127,7 +128,7 @@ export default function Filter() {
           sx={{
             "div > .MuiInputBase-root":{
               paddingRight:"39px !important",
-            }
+            },
           }}
           // renderOption={(props, option, { selected }) => (
           //   <li {...props}>

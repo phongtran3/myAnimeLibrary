@@ -3,7 +3,6 @@ import React from 'react'
 import {Box, useMediaQuery, Typography, Paper } from '@mui/material';
 import Form from './Form';
 import {Link } from "react-router-dom";
-import { BorderRight } from '@mui/icons-material';
 
 //Array of images for background. 
 //No copyright intended. All right goes to the orginal owner.

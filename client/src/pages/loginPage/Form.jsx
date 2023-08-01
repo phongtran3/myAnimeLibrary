@@ -223,24 +223,30 @@ const registerSchema = yup.object().shape({
                     <form onSubmit={handleSubmit}>
                         <Box
                             id='form-field-wrapper'
-                            // display="flex"
-                            // flexDirection={"column"}
                             sx={{
                                 marginTop:"2rem",
+                                "& .MuiFormControl-root ":{
+                                    marginBottom:"1rem",
+                                },
+                                "& .MuiFormLabel-root, .MuiInputBase-input":{
+                                    color:"#111111",
+                                },
+                                "& .MuiOutlinedInput-notchedOutline":{
+                                    borderColor: "#111111",
+                                },
+                                "& .MuiInputBase-root.MuiOutlinedInput-root:not(.Mui-error):not(.Mui-focused):hover .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "#9e9e9e",
+                                },
                                 "& .MuiInputBase-root": {
                                     background: "none", 
                                     height:"45px"
                                 },
-
-                                "& .MuiFormControl-root ":{
-                                    marginBottom:"1rem",
-                                },
                                 "& .MuiFormHelperText-root":{
                                     marginTop: "0px",
                                 },
-                                "& .MuiInputBase-root:hover": {
-                                    background: "none",                             
-                                },
+                                // "& .MuiInputBase-root:hover": {
+                                //     background: "none",                             
+                                // },
                                 //"& .MuiFilledInput-root.Mui-focused": {backgroundColor: `rgb(255,255,255, .94)`},
                                 "& .MuiSvgIcon-root" :{
                                     color: 'black'
@@ -248,7 +254,6 @@ const registerSchema = yup.object().shape({
                                 "& > div": {
                                     gridColumn: undefined 
                                 }
-                            
                             }}
                             display="grid"
                             columnGap="10px"
@@ -276,7 +281,7 @@ const registerSchema = yup.object().shape({
                                         </InputAdornment>
                                         ),
                                     }}
-                                    sx={{marginBottom: '5px', gridColumn: tabletScreen ? "span 2": "span 4"}}
+                                    sx={{gridColumn: tabletScreen ? "span 2": "span 4"}}
                                 />
                                 <TextField
                                     autoComplete="off"
@@ -296,7 +301,7 @@ const registerSchema = yup.object().shape({
                                         </InputAdornment>
                                         ),
                                     }}
-                                    sx={{marginBottom: '5px', gridColumn: tabletScreen ? "span 2": "span 4"}}
+                                    sx={{gridColumn: tabletScreen ? "span 2": "span 4"}}
 
                                 />
                                 <TextField
@@ -317,7 +322,7 @@ const registerSchema = yup.object().shape({
                                         </InputAdornment>
                                         ),
                                     }}
-                                    sx={{marginBottom: '5px', gridColumn: "span 4" }}
+                                    sx={{gridColumn: "span 4" }}
 
                                 />
                                 <Box
@@ -355,7 +360,7 @@ const registerSchema = yup.object().shape({
                                         justifyContent={"space-between"}
                                         alignItems={'center'}
                                     >
-                                        <Typography sx={{overflow:"hidden", }}>{values.picture.name}</Typography>
+                                        <Typography sx={{color:"#111111", overflow:"hidden", }}>{values.picture.name}</Typography>
                                         <EditOutlined />
                                     </Box>
                                     )}
@@ -401,7 +406,7 @@ const registerSchema = yup.object().shape({
                                     </InputAdornment>
                                     ),
                                 }}
-                                sx={{marginBottom: '5px', gridColumn: "span 4" }}
+                                sx={{gridColumn: "span 4" }}
                             />
 
                             <TextField
@@ -430,7 +435,7 @@ const registerSchema = yup.object().shape({
                                     </InputAdornment>
                                     ),
                                 }}
-                                sx={{marginBottom: '5px', gridColumn: "span 4" }}
+                                sx={{gridColumn: "span 4" }}
                             />
 
                             {!isLogin && (
@@ -460,7 +465,7 @@ const registerSchema = yup.object().shape({
                                         </InputAdornment>
                                         ),
                                     }}
-                                    sx={{marginBottom: '5px', gridColumn: "span 4" }}
+                                    sx={{gridColumn: "span 4" }}
                                 />
                             )}
 

@@ -235,7 +235,11 @@ const registerSchema = yup.object().shape({
                                     borderColor: "#111111",
                                 },
                                 "& .MuiInputBase-root.MuiOutlinedInput-root:not(.Mui-error):not(.Mui-focused):hover .MuiOutlinedInput-notchedOutline": {
-                                    borderColor: "#9e9e9e",
+                                    borderColor: "#bdbdbd",
+                                    borderWidth:"2px",
+                                },
+                                "& .MuiInputBase-root.MuiOutlinedInput-root.Mui-error:hover .MuiOutlinedInput-notchedOutline":{
+                                    borderWidth:"2px",
                                 },
                                 "& .MuiInputBase-root": {
                                     background: "none", 
@@ -331,9 +335,9 @@ const registerSchema = yup.object().shape({
                                         padding:".75rem",
                                         marginBottom: pictureError && !values.picture ? null: "1rem",
                                         gridColumn: "span 4", 
-                                        border:`1px solid ${pictureError && !values.picture ? "#d32f2f" : "rgba(0, 0, 0, 0.45)"}`,
+                                        border:`1px solid ${pictureError && !values.picture ? "#d32f2f" : "#111111"}`,
                                         "&:hover":{
-                                            borderColor: pictureError ? null : "rgba(0, 0, 0, 0.87)"
+                                            borderColor: pictureError ? null : "#bdbdbd",
                                         }
                                     }}
                                     id="dropzone-wrapper"

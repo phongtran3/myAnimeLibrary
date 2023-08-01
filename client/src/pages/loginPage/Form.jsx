@@ -338,6 +338,7 @@ const registerSchema = yup.object().shape({
                                         border:`1px solid ${pictureError && !values.picture ? "#d32f2f" : "#111111"}`,
                                         "&:hover":{
                                             borderColor: pictureError ? null : "#bdbdbd",
+                                            boxShadow:"0 0 1px #bdbdbd"
                                         }
                                     }}
                                     id="dropzone-wrapper"

@@ -5,7 +5,6 @@ import { Link, useNavigate  } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { setSiteUser } from '../states';
-
 import Follow from './Follow';
 
 export default function ProfileCard({user, setUser, loggedUser, followersArr, followingArr, desktopScreen}) {
@@ -74,8 +73,24 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
     return (
         <>
             {desktopScreen ?
-            <Card id="profile-card" sx={{maxWidth: 350, borderRadius: "12px", textAlign: "center", margin:"0 auto"}}>
-                <CardContent>
+            <Card id="profile-card" 
+                sx={{
+                    background: palette.background.alt,
+                    maxWidth: "350px", 
+                    borderRadius: "12px", 
+                    textAlign: "center", 
+                    margin:"0 auto",
+                    boxShadow:"rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;",
+                }}
+            >
+                <CardContent
+                    id="profile-content"
+                    sx={{
+                        ".MuiTypography-root":{
+                            color: palette.neutral.dark,
+                        }
+                    }}
+                >
                     <Avatar sx={{ width: 150, height: 150, margin: "1em auto 0" }} src={`http://localhost:5000/assets/${user.picturePath}`}/>
                     <Typography variant='h5' mt="0.5em" fontWeight="bold" >{`${user.firstName} ${user.lastName}`}</Typography>
                     <Typography variant='subtitle1'>{`@${user.userName}`}</Typography>
@@ -132,6 +147,7 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                         display: "flex",
                         flexWrap: "wrap",
                         "& > a, div": { 
+                            background: palette.neutral.medium,
                             padding:"10px 15px",
                             textDecoration:"none", 
                             color:"inherit",
@@ -140,25 +156,30 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                             justifyContent: "center",
                             flexDirection: "column",
                             flexBasis: "50%",
-                            background: "#ECEFF1",
-                            borderBottom: "1px solid #ddd",
+                            //background: "#ECEFF1",
+                            borderBottom: "1px solid #9e9e9e",
                             cursor: "pointer",
                             '&:hover':{
-                                background: "#CFD8DC",
+                                //background: "#CFD8DC",
+                                background: "#b39ddb",
                             }
+                        },
+                        ".MuiTypography-root":{
+                            color: "#111111",
                         }
                     }}
-                >
-                    <Box component={Link} to={`/user/${user.userName}/animelist`} sx={{borderRight:"1px solid #ddd", borderTop:"1px solid #ddd"}}>
+                >   
+                {/* borderTop:"1px solid #9e9e9e"*/}
+                    <Box component={Link} to={`/user/${user.userName}/animelist`} sx={{borderRight:"1px solid #9e9e9e", }}>
                         <Typography variant='h6'>{user.animes.length}</Typography>
                         <Typography variant='subtitle1'>Animes</Typography>
                     </Box>
 
-                    <Box component={Link} to={`/user/${user.userName}/mangalist`} sx={{borderTop:"1px solid #ddd"}}>
+                    <Box component={Link} to={`/user/${user.userName}/mangalist`} sx={{}}>
                         <Typography  variant='h6'>{user.mangas.length}</Typography>
                         <Typography variant='subtitle1'>Mangas</Typography>
                     </Box>
-                    <ButtonBase component="div" sx={{borderRight:"1px solid #ddd"}} 
+                    <ButtonBase component="div" sx={{borderRight:"1px solid #9e9e9e"}} 
                         onClick={() => {
                             if(loggedUser)
                                 handleFollowOpen("following");

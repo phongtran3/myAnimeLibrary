@@ -338,7 +338,6 @@ const registerSchema = yup.object().shape({
                                         border:`1px solid ${pictureError && !values.picture ? "#d32f2f" : "#111111"}`,
                                         "&:hover":{
                                             borderColor:"transparent",
-                                            //borderColor: pictureError ? null : "#bdbdbd",
                                             boxShadow:`0 0 0 2px ${pictureError && !values.picture ? "#d32f2f" : "#bdbdbd"}`
                                         }
                                     }}

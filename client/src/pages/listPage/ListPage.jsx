@@ -75,8 +75,8 @@ export default function ListPage() {
           return a.title.localeCompare(b.title);
       })
   }
-  console.log(userList);
-  console.log(filters);
+  //console.log(userList);
+  //console.log(filters);
 
   const watchingArr = returnFilterArray(watching);
   const completedArr = returnFilterArray(completed);
@@ -140,7 +140,6 @@ export default function ListPage() {
                 }
               }
             }}
-          
           >
             {watchingArr.length > 0 &&
             <Box className="list-wrapper">

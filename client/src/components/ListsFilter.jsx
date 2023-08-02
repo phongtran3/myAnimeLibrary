@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, TextField, Autocomplete, Chip, Checkbox} from "@mui/material";
+import { Box, TextField, Autocomplete, Chip, Checkbox, useTheme} from "@mui/material";
 import { genreCollection, animeFormat, status, mangaFormat } from './FilterCollections';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -10,6 +10,7 @@ const sortCollection = ["Title", "Last Added"]
 
 
 export default function ListsFilter({type, filters, setFilters}) {
+  const { palette } = useTheme();
 
   function handleNewFormatInput(event, newInputValue){
     let temp;
@@ -34,7 +35,22 @@ export default function ListsFilter({type, filters, setFilters}) {
         gap:"1rem",
         "& > div":{
           flex:"1 0 250px",
+          ".MuiInputBase-root":{
+            borderRadius: "8px",
+          }
         },
+        "& .MuiInputBase-input":{
+          cursor:"pointer",
+        },
+        "& .MuiOutlinedInput-notchedOutline":{
+          borderWidth:"2px",
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          borderColor: palette.neutral.dark,
+        },
+        "& .MuiFormLabel-root, .MuiInputBase-root, .MuiInputLabel-root.Mui-focused": {
+          color: palette.neutral.dark,
+        }
       }}
 
     >
@@ -49,6 +65,52 @@ export default function ListsFilter({type, filters, setFilters}) {
           }))}}
       />
 
+      {/*GENRES */}
+      <Autocomplete 
+        multiple 
+        limitTags={2} 
+        id="checkboxes-genres" 
+        options={genreCollection} 
+        //value={searchGenre} 
+        onChange={(e, newValue) => {setFilters(prevState => ({
+            ...prevState,
+            genres: newValue
+          }));
+        }}
+        disableCloseOnSelect
+        getOptionLabel={(option) => option}
+        // renderOption={(props, option, { selected }) => (
+        //   <li {...props}>
+        //     <Checkbox
+        //       icon={icon}
+        //       checkedIcon={checkedIcon}
+        //       style={{ marginRight: 4 }}
+        //       checked={selected}
+        //     />
+        //     {option}
+        //   </li>
+        // )}
+        renderInput={(params) => (
+            <TextField {...params} label={`Select Genre`}/>
+        )}
+        renderTags={(value, getTagProps) => {
+          const numTags = value.length;
+          const limitTags = 3;
+          return (
+            <>
+            {value.slice(0, limitTags).map((option, index) => (
+                <Chip
+                {...getTagProps({ index })}
+                key={index}
+                label={option}
+                />
+            ))}
+            {numTags > limitTags && ` +${numTags - limitTags}`}
+            </>
+          );
+        }}
+      />    
+
       {/*FORMAT */}
       <Autocomplete
           options={type === 'anime' ? animeFormat : mangaFormat}
@@ -60,7 +122,15 @@ export default function ListsFilter({type, filters, setFilters}) {
           //isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          renderInput={(params) => <TextField {...params} label="Select Format" />}
+          renderInput={(params) => 
+            <TextField {...params} 
+              label="Select Format" 
+              inputProps={{
+                ...params.inputProps,
+                readOnly: true,
+              }}
+            />
+          }
         />
 
       {/*STATUS */}
@@ -77,54 +147,16 @@ export default function ListsFilter({type, filters, setFilters}) {
           //isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          renderInput={(params) => <TextField {...params} label="Select Status" />}
+          renderInput={(params) => 
+            <TextField {...params} 
+              label="Select Status" 
+              inputProps={{
+                ...params.inputProps,
+                readOnly: true,
+              }}
+            />
+          }
         />
-
-        {/*GENRES */}
-        <Autocomplete 
-          multiple 
-          limitTags={2} 
-          id="checkboxes-genres" 
-          options={genreCollection} 
-          //value={searchGenre} 
-          onChange={(e, newValue) => {setFilters(prevState => ({
-              ...prevState,
-              genres: newValue
-            }));
-          }}
-          disableCloseOnSelect
-          getOptionLabel={(option) => option}
-          renderOption={(props, option, { selected }) => (
-            <li {...props}>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 4 }}
-                checked={selected}
-              />
-              {option}
-            </li>
-          )}
-          renderInput={(params) => (
-              <TextField {...params} label={`Select Genre`}/>
-          )}
-          renderTags={(value, getTagProps) => {
-            const numTags = value.length;
-            const limitTags = 3;
-            return (
-              <>
-              {value.slice(0, limitTags).map((option, index) => (
-                  <Chip
-                  {...getTagProps({ index })}
-                  key={index}
-                  label={option}
-                  />
-              ))}
-              {numTags > limitTags && ` +${numTags - limitTags}`}
-              </>
-            );
-          }}
-        />    
 
       {/*SORT */}
       <Autocomplete
@@ -140,7 +172,15 @@ export default function ListsFilter({type, filters, setFilters}) {
           //isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
-          renderInput={(params) => <TextField {...params} label="Select Sorting" />}
+          renderInput={(params) => 
+            <TextField {...params} 
+              label="Select Sorting" 
+              inputProps={{
+                ...params.inputProps,
+                readOnly: true,
+              }}
+            />
+          }
         />
     </Box>
   )

@@ -3,10 +3,10 @@ import { useParams, useSearchParams, useNavigate} from 'react-router-dom';
 import { Box, Button, TextField, Autocomplete, Chip, Checkbox, useMediaQuery, useTheme} from '@mui/material'
 import { genreCollection, animeFormat, status, mangaFormat, sortCollection } from './FilterCollections';
 
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+// import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+// import CheckBoxIcon from '@mui/icons-material/CheckBox';
+// const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+// const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function Filter() {
   const [searchTitle, setSearchTitle] = useState('');

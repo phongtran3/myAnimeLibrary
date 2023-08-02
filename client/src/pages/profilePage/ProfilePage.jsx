@@ -112,13 +112,16 @@ export default function ProfilePage() {
                 display:"flex",
                 alignItems:"center",
                 "& > h3:hover":{
-                    color: '#673ab7',
+                    //color: '#673ab7',
+                    color: palette.primary.dark
                 },
                 "& > div":{
                   marginLeft: "auto",
                   fontSize:"1rem",
                   "&:hover": {
-                    color: '#673ab7',
+                    //color: '#673ab7',
+                    color: palette.primary.dark,
+                    fontWeight: "600",
                   },
                 }
               }

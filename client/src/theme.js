@@ -52,14 +52,14 @@ export const themeSettings = (mode) => {
               light: deepPurple[200],
             },
             neutral: {
-              dark: grey[700],
+              dark: grey[800],
               main: grey[500],
               mediumMain: grey[400],
               medium: grey[300],
               light: grey[50],
             },
             background: {
-              default: grey[200],
+              default: grey[100],
               alt: grey[50],
             },
           }),

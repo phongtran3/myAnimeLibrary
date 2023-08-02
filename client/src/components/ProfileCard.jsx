@@ -247,7 +247,9 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                 </Snackbar>
             </Card>
             :
+            //NON DESKTOP
             <Box 
+                id="profile-content"
                 sx={{
                     display:"flex",
                     flexDirection:"column",
@@ -264,11 +266,10 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                         '&:hover':{
                             background:"#9575CD"
                         },
-                        // '&:hover:before':{
-                        //     content:'"Test"',
-                        // }
                     },
-                    
+                    "& > .MuiTypography-root":{
+                        color: palette.neutral.dark,
+                    }
                 }}
             >
                 <Avatar sx={{ width: 150, height: 150, margin: "0 auto" }} src={`http://localhost:5000/assets/${user.picturePath}`}/>
@@ -325,7 +326,31 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                     >{user.socialMediaHandles.github ? <GitHub/>: ""}</Typography>
                     
                 </Box>
-
+                {/* sx={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        "& > a, div": { 
+                            background: palette.neutral.medium,
+                            padding:"10px 15px",
+                            textDecoration:"none", 
+                            color:"inherit",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexDirection: "column",
+                            flexBasis: "50%",
+                            //background: "#ECEFF1",
+                            borderBottom: "1px solid #9e9e9e",
+                            cursor: "pointer",
+                            '&:hover':{
+                                //background: "#CFD8DC",
+                                background: "#b39ddb",
+                            }
+                        },
+                        ".MuiTypography-root":{
+                            color: "#111111",
+                        }
+                    }} */}
                 <Box id="profile-stats"
                     sx={{
                         marginTop:"1rem",
@@ -341,25 +366,28 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                             justifyContent: "center",
                             flexDirection: "column",
                             flexBasis: "50%",
-                            background: "#ECEFF1",
-                            borderBottom: "1px solid #ddd",
+                            background: palette.neutral.medium,
+                            borderBottom: "1px solid #9e9e9e",
                             cursor: "pointer",
                             '&:hover':{
-                                background: "#CFD8DC",
+                                background: "#b39ddb",
                             }
+                        },
+                        ".MuiTypography-root":{
+                            color: "#111111",
                         }
                     }}
                 >
-                    <Box component={Link} to={`/user/${user.userName}/animelist`} sx={{borderRight:"1px solid #ddd", borderTop:"1px solid #ddd"}}>
+                    <Box component={Link} to={`/user/${user.userName}/animelist`} sx={{borderLeft: "1px solid #9e9e9e", borderRight:"1px solid #9e9e9e", borderTop:"1px solid #9e9e9e"}}>
                         <Typography variant='h6'>{user.animes.length}</Typography>
                         <Typography variant='subtitle1'>Animes</Typography>
                     </Box>
 
-                    <Box component={Link} to={`/user/${user.userName}/mangalist`} sx={{borderTop:"1px solid #ddd"}}>
+                    <Box component={Link} to={`/user/${user.userName}/mangalist`} sx={{borderRight:"1px solid #9e9e9e", borderTop:"1px solid #9e9e9e"}}>
                         <Typography  variant='h6'>{user.mangas.length}</Typography>
                         <Typography variant='subtitle1'>Mangas</Typography>
                     </Box>
-                    <ButtonBase component="div" sx={{borderRight:"1px solid #ddd"}} 
+                    <ButtonBase component="div" sx={{borderLeft: "1px solid #9e9e9e", borderRight:"1px solid #9e9e9e"}} 
                         onClick={() => {
                             if(loggedUser)
                                 handleFollowOpen("following");
@@ -371,6 +399,9 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                         <Typography variant='subtitle1'>Following</Typography>
                     </ButtonBase>
                     <ButtonBase component="div" 
+                        sx={{
+                            borderRight:"1px solid #9e9e9e",
+                        }}
                         onClick={() => {
                             if(loggedUser){
                                 console.log("open");

@@ -149,7 +149,7 @@ export default function Card2({item, user}) {
                                     // ".MuiTypography-root":{
                                     //     padding: "0",
                                     // },
-                                    ".MuiDialogContent-root:not(:first-child)":{
+                                    ".MuiDialogContent-root:not(:first-of-type)":{
                                         gap: "1.5rem",
                                         padding: "0 1.5rem 1rem",
                                         ".MuiTypography-root":{

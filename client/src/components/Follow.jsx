@@ -1,17 +1,37 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 import { Avatar, Dialog, DialogContent, DialogTitle, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Button, Divider } from '@mui/material'
+import { useSelector } from "react-redux";
+
 export default function Follow({open, handleClose, type, loggedUser, handleFollowUnfollow, arr}) {
     const navigate = useNavigate(); 
+    const mode = useSelector((state) => state.mode);
     return (
-        <Dialog maxWidth={'sm'} open={open} onClose={handleClose} sx={{'& .MuiPaper-root': {alignItems: "center"}}}>
+        <Dialog 
+          maxWidth={'sm'} 
+          open={open} 
+          onClose={handleClose} 
+          sx={{
+            "& .MuiPaper-root": {
+              alignItems: "center",
+              overflowY:"unset",
+            },
+          }}
+        >
             <DialogTitle>{type === "following" ? "Following" : "Followers"}</DialogTitle>
-            <DialogContent >
+            <DialogContent 
+              sx={{
+                "& .MuiButtonBase-root.MuiListItemButton-root:hover":{
+                  backgroundColor: mode === "light" ? "rgba(0, 0, 0, 0.1)" : null
+                },
+              }}
+            >
               {arr.length !== 0 ?
                 <List >
                   {arr.map((user) => 
                     <React.Fragment key={user._id}>
                       <ListItem 
+                        id="item"
                         key={user._id} 
                         // secondaryAction={
                         //   <Button variant="contained"  size="small" aria-label={type === "following" ? "Following" : "Unfollow"}>

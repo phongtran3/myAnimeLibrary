@@ -137,10 +137,27 @@ export default function Card2({item, user}) {
                     <Dialog open={open} onClose={handleClose} id="edit"
                         sx={{
                             ".MuiDialog-paper:first-of-type": {
-                                minWidth:"700px",
+                                //minWidth:"630px",
                                 //maxWidth:"1000px",
                                 //backgroundColor: "lightgray",
-                                flexDirection: "row"
+                                flexDirection: "row",
+                                '@media (max-width: 630px)': {
+                                    minWidth: "unset",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    overflowY: "visible",
+                                    // ".MuiTypography-root":{
+                                    //     padding: "0",
+                                    // },
+                                    ".MuiDialogContent-root:not(:first-child)":{
+                                        gap: "1.5rem",
+                                        padding: "0 1.5rem 1rem",
+                                        ".MuiTypography-root":{
+                                            padding: "0",
+                                        },
+                                    }
+
+                                },
                             },
                         }}    
                     >

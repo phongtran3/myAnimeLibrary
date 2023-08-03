@@ -1,15 +1,19 @@
 import React, {useState} from 'react'
 import { useSelector } from "react-redux";
 
-import {ImageListItem , ImageListItemBar, IconButton , Link, Autocomplete} from '@mui/material';
+import {  
+    ImageListItem, ImageListItemBar, IconButton , Link, Autocomplete, 
+    ClickAwayListener, Button, Dialog, DialogActions, DialogContent, DialogTitle, 
+    DialogContentText, TextField, Alert, useTheme 
+} from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField, Alert  } from '@mui/material'
 import axios from 'axios';
 
 const mangaFormat = ["MANGA", "ONE_SHOT", "NOVEL"];
 
 export default function Card2({item, user}) {
     //console.log(item)
+    const { palette } = useTheme();
     const type = mangaFormat.indexOf(item.format) > -1 ? "manga" : "anime";
     const userStatuses = [
         mangaFormat.indexOf(item.format) > -1 ? "READING" : "WATCHING",
@@ -30,7 +34,6 @@ export default function Card2({item, user}) {
     function hideBtn(e){
         e.preventDefault();
         setDisplayEditBtn(false);
-
     }
 
     function handleOpen(){
@@ -38,6 +41,8 @@ export default function Card2({item, user}) {
     }
     function handleClose(){
         setOpen(false);
+        setUserStatus(item.userStatus);
+        setDisplayEditBtn(false);
     }
 
     async function handleDelete(){
@@ -85,8 +90,9 @@ export default function Card2({item, user}) {
               }
               console.log(err);
         })
-
     }
+
+    
     return (
         <ImageListItem 
             onMouseEnter={(e) => showBtn(e)}
@@ -116,11 +122,11 @@ export default function Card2({item, user}) {
                         position: "absolute",
                         height: "30px",
                         width: "30px",
-                        backgroundColor: "purple",
+                        backgroundColor: "#673ab7",
                         right: "10px",
                         top: "10px",
                         '&:hover':{
-                            backgroundColor: "lightpink"
+                            backgroundColor: "#9575cd"
                         }                    
                     }}
                     onClick={handleOpen}
@@ -128,46 +134,83 @@ export default function Card2({item, user}) {
                     <MoreHorizIcon />
                 </IconButton > : ""}
 
-                <Dialog open={open} onClose={handleClose} id="edit"
-                    sx={{
-                        ".MuiDialog-paper:first-of-type": {
-                            minWidth:"700px",
-                            //maxWidth:"1000px",
-                            backgroundColor: "lightgray",
-                            flexDirection: "row"
-                        },
-                    }}    
-                >
-                    <DialogContent sx={{flex:"0 0 auto"}}>
-                        <img 
-                            src={`${item.coverImage}?w=164&h=164&fit=crop&auto=format`}
-                            srcSet={`${item.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                            alt={item.title}
-                        />
-                    </DialogContent>
-                    <DialogContent sx={{display:"flex", flexDirection:"column"}}>
-                        <DialogTitle sx={{padding: "0 0 24px 0"}}>{item.title}</DialogTitle>
-                        <Autocomplete
-                            options={userStatuses}
-                            getOptionLabel={(option) => option}
-                            defaultValue=""
-                            value={userStatus ? userStatus : null} 
-                            inputValue={userStatus ? userStatus : ""}
-                            onInputChange={(event, newInputValue) => {
-                                setUserStatus(newInputValue);
-                            }}
-                            disablePortal
-                            id="user-status"
-                            //sx={{ width: 500 }}
-                            renderInput={(params) => <TextField {...params} label="Status" />}
+                    <Dialog open={open} onClose={handleClose} id="edit"
+                        sx={{
+                            ".MuiDialog-paper:first-of-type": {
+                                minWidth:"700px",
+                                //maxWidth:"1000px",
+                                //backgroundColor: "lightgray",
+                                flexDirection: "row"
+                            },
+                        }}    
+                    >
+                        <DialogContent sx={{flex:"0 0 auto"}}>
+                            <img 
+                                src={`${item.coverImage}?w=164&h=164&fit=crop&auto=format`}
+                                srcSet={`${item.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                alt={item.title}
                             />
-                            <DialogActions sx={{alignItems:"flex-end", marginTop:"auto", padding:"0"}}>
+                        </DialogContent>
+                        <DialogContent 
+                            sx={{
+                                display:"flex", 
+                                flexDirection:"column",
+                                "& .MuiInputBase-input":{
+                                    cursor:"pointer",
+                                },
+                                "& .MuiOutlinedInput-notchedOutline":{
+                                    borderWidth:"2px",
+                                },
+                                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: palette.neutral.dark,
+                                },
+                                "& .MuiFormLabel-root, .MuiInputBase-root, .MuiInputLabel-root.Mui-focused": {
+                                    color: palette.neutral.dark,
+                                }
+                            }}
+                        >
+                            <DialogTitle sx={{padding: "0 0 24px 0"}}>{item.title}</DialogTitle>
+                            <Autocomplete
+                                options={userStatuses}
+                                getOptionLabel={(option) => option}
+                                defaultValue=""
+                                value={userStatus ? userStatus : null} 
+                                inputValue={userStatus ? userStatus : ""}
+                                onInputChange={(event, newInputValue) => {
+                                    setUserStatus(newInputValue);
+                                }}
+                                disablePortal
+                                id="user-status"
+                                renderInput={(params) => 
+                                    <TextField {...params} 
+                                      label="Status" 
+                                      inputProps={{
+                                        ...params.inputProps,
+                                        readOnly: true,
+                                      }}
+                                    />
+                                }
+                            />
+                            <DialogActions 
+                                sx={{
+                                    alignItems:"flex-end", 
+                                    marginTop:"auto", 
+                                    padding:"0",
+                                    ".MuiButtonBase-root":{
+                                        color: palette.primary.dark,
+                                        "&:hover":{
+                                            backgroundColor:"rgba(103, 58, 183, 0.5);"
+                                        }
+                                    },
+                                    
+                                }}
+                            >
+                                <Button onClick={handleClose}>Cancel</Button>
                                 <Button onClick={handleDelete}>Delete</Button>
                                 <Button onClick={handleUpdate}>Save</Button>
                             </DialogActions>
-                    </DialogContent>
-                    
-                </Dialog>
+                        </DialogContent>
+                    </Dialog>
         </ImageListItem>
     )
 }

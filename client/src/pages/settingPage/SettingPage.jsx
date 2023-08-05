@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSiteUser, setLogout } from '../../states/index';
 import Dropzone from "react-dropzone"; //File/image upload
 import { Box, useTheme, Typography, TextField, InputAdornment, Switch, 
-  IconButton, Button, Avatar, Tab, Tabs, useMediaQuery } from '@mui/material'
+  IconButton, Button, Avatar, Tab, Tabs, useMediaQuery} from '@mui/material'
 import {Visibility, VisibilityOff, EditOutlined, AccountCircle, Logout} from "@mui/icons-material"
 import ConfirmPassword from '../../components/ConfirmPassword';
 import axios from 'axios';
@@ -189,18 +189,24 @@ export default function SettingPage() {
             sx={{
               margin:"1rem 0",
               width: desktopScreen ? "250px" : null,
-              border:"1px solid black",
-              "& .MuiButtonBase-root ":{
+              border: `1px solid ${palette.primary.dark}`,
+              "& .MuiButtonBase-root":{
                 flexDirection:"row",
                 justifyContent:"flex-start",
                 "&:hover":{
-                  background: "#b39ddb",
-                  color: "#673ab7",
+                  background: palette.primary.light,
+                  //color: `${palette.primary.light} !important`,
                 },
                 "& .MuiSvgIcon-root":{
                   marginRight:"1rem",
                 }
-
+              },
+              "& .MuiButtonBase-root.Mui-selected":{
+                color: palette.primary.dark
+              },
+              ".MuiTabs-indicator":{
+                backgroundColor: palette.primary.dark,
+                width: "4px",
               }
             }}
           >
@@ -219,6 +225,9 @@ export default function SettingPage() {
           sx={{ 
             borderRadius: "4px", 
             margin:"0 1.5rem",
+            "& h4,h5":{
+              color: palette.neutral.dark,
+            },
             "& .MuiButtonBase-root":{
               textTransform: "none",
             },
@@ -231,6 +240,12 @@ export default function SettingPage() {
                 height:"50px",
                 borderRadius:"8px",
               },
+              "hr":{
+                marginBottom:"1.5rem", 
+                border:"none", 
+                height:"1px", 
+                backgroundColor: palette.neutral.main
+              },
               //Each textfield within the sections
               "& > div":{
                 marginBottom:"1.5rem",
@@ -240,6 +255,12 @@ export default function SettingPage() {
                 "& .MuiFormControl-root":{
                   flexGrow:"1",
                   marginRight:"1.5rem",
+                  ".MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: palette.primary.dark
+                  },
+                  ".MuiInputLabel-root.Mui-focused":{
+                    color: palette.primary.dark
+                  },
                 },
               },
             }
@@ -268,7 +289,7 @@ export default function SettingPage() {
               >
                 Basic Info
               </Typography>
-              <hr style={{marginBottom:"1.5rem", border:"none", height:"1px", backgroundColor:"#111111"}}></hr>
+              <hr style={{}}></hr>
 
               <Box className="firstName-section">
                 <TextField 
@@ -335,7 +356,7 @@ export default function SettingPage() {
                           "&:hover": { 
                             cursor: "pointer" 
                           },
-                          border:`2px dashed ${palette.primary.main}`,
+                          border:`2px dashed ${palette.primary.dark}`,
                           flexGrow: "1",
                           marginRight:"1.5rem",
                         }}
@@ -365,7 +386,7 @@ export default function SettingPage() {
                   label="18+ Content"
                   onChange={(e)=> handleOpenPopover(e.target.name, e.target.checked)}
                 />
-                <Typography fontWeight={600} color={"#673ab7"}>18+ Content</Typography>
+                <Typography fontWeight={600} color={"#9575cd"}>18+ Content</Typography>
               </Box>
             </Box>
             
@@ -385,7 +406,7 @@ export default function SettingPage() {
               >
                 External Links
               </Typography>
-              <hr style={{marginBottom:"1.5rem", border:"none", height:"1px", backgroundColor:"#111111"}}></hr>
+              <hr></hr>
               <Box id="twitter">
                   <TextField 
                     placeholder='https://twitter.com/Crunchyroll'
@@ -498,7 +519,7 @@ export default function SettingPage() {
                 >
                   Change Password
                 </Typography>
-                <hr style={{marginBottom:"1.5rem", border:"none", height:"1px", backgroundColor:"#111111"}}></hr>
+                <hr></hr>
 
                 <Box className="new-password-section">
                   <TextField 

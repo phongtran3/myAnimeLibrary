@@ -218,7 +218,19 @@ const registerSchema = yup.object().shape({
 
                     </Box>
                     
-                    {error ? <Alert severity="error" sx={{marginBottom:"10px"}}> {error}</Alert> : null }
+                    {error ? 
+                        <Alert variant="outlined" severity="error" 
+                            sx={{
+                                margin:".75rem 0",
+                                borderWidth: "2px",
+                                color:"#b71c1c",
+                                fontWeight: "600",
+                            }}
+                        > 
+                            {error}
+                        </Alert> 
+                        : null 
+                    }
                     {/* <Alert severity="error">{error ? error : ""}</Alert> */}
                     <form onSubmit={handleSubmit}>
                         <Box

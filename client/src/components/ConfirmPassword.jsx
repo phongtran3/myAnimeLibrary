@@ -1,8 +1,11 @@
-import React from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField, Alert  } from '@mui/material'
-
+import React, {useState} from 'react'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField, Alert, IconButton, InputAdornment  } from '@mui/material'
+import {Visibility, VisibilityOff} from "@mui/icons-material"
 
 export default function ConfirmPassword({open, handleClose, setBody, handleSave, error, palette}) {
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const handleShowCurrentPassword = () => setShowCurrentPassword(!showCurrentPassword);
+
   return (
     <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Confirm Current Password</DialogTitle>
@@ -22,7 +25,7 @@ export default function ConfirmPassword({open, handleClose, setBody, handleSave,
             margin="dense"
             id="name"
             label="Current Password"
-            type="password"
+            type={showCurrentPassword ? "text": "password"}
             fullWidth
             variant="standard"
             onKeyDown={(e) => {
@@ -33,6 +36,14 @@ export default function ConfirmPassword({open, handleClose, setBody, handleSave,
               ...prev,
               currentPassword: e.target.value}
             ))}
+            InputProps={{
+              endAdornment: 
+              <InputAdornment position="end">
+                  <IconButton onClick={handleShowCurrentPassword}>
+                  {!showCurrentPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+              </InputAdornment>
+            }}
           />
           {error ? 
             <Alert 

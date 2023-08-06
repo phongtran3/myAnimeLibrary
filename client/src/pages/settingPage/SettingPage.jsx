@@ -15,6 +15,7 @@ export default function SettingPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);
+  
   const loggedUser = useSelector((state) => state.user);
   console.log(loggedUser);
   //const userName = useSelector((state) => state.user.userName);
@@ -577,6 +578,7 @@ export default function SettingPage() {
             handleClose={handleClose} 
             setBody={setBody}
             handleSave={handleSave}
+            palette={palette}
           />
 
         </Box>

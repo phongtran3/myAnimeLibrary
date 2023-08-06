@@ -521,17 +521,15 @@ export default function NavBar() {
             <DialogContent 
               sx={{
                 backgroundColor: palette.background.default
-
               }}
-            
             >
               <Autocomplete 
-                freeSolo  
                 options={users || []}
+                autoHighlight
                 getOptionLabel={(option) => option.userName}
                 renderOption={(props, option) => (
                   <Box component="li" {...props}>
-                    <Avatar src={`http://localhost:5000/assets/${option.picturePath}`}/>&nbsp;{option.userName}
+                    <Avatar sx={{marginRight: "1rem"}} src={`http://localhost:5000/assets/${option.picturePath}`}/>&nbsp;{option.userName}
                   </Box>
                 )}
                 size='small'
@@ -558,17 +556,20 @@ export default function NavBar() {
                   width:"100%",
                   "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
                     borderColor: palette.neutral.dark,
-                    borderWidth:"2px",
+                    borderWidth: "2px",
                   },
-                  "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+                  ".MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: `${palette.primary.main} !important`
+                  },
+                  ".MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":{
                     borderColor: palette.primary.dark,
                   },
                   '& .MuiAutocomplete-endAdornment':{ display: "none"},
                   '& .MuiFormLabel-root': {
                     color: palette.neutral.dark,
                   },
-                  '& .MuiInputLabel-root.Mui-focused':{
-                    //color: '#111111',
+                  ".MuiInputLabel-root.Mui-focused":{
+                    color: palette.primary.dark,
                   },
                 }}
               />

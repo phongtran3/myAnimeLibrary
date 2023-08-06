@@ -56,7 +56,7 @@ export const themeSettings = (mode) => {
               main: grey[500],
               mediumMain: grey[400],
               medium: grey[300],
-              light: grey[50],
+              light: grey[100],
             },
             background: {
               default: grey[100],

@@ -26,13 +26,13 @@ export default function NavBar() {
   const user = useSelector((state) => state.user);
   const trigger = useScrollTrigger();
 
-  const theme = useTheme();
-  const neutralLight = theme.palette.neutral.light;
-  const dark = theme.palette.neutral.dark;
-  const background = theme.palette.background.default;
-  const primaryLight = theme.palette.primary.light;
-  const alt = theme.palette.background.alt;
-  const primaryMain = theme.palette.primary.main
+  const { palette } = useTheme();
+  const neutralLight = palette.neutral.light;
+  const dark = palette.neutral.dark;
+  const background = palette.background.default;
+  const primaryLight = palette.primary.light;
+  const alt = palette.background.alt;
+  const primaryMain = palette.primary.main
 
   const anchorRef = useRef(null);
   function handleOpenMenu(){
@@ -89,6 +89,7 @@ export default function NavBar() {
   }
   
   function handleOpenDialog(){
+    console.log("open");
     setOpenDialog(true);
   }
 
@@ -315,7 +316,7 @@ export default function NavBar() {
                 {tabletScreen && 
                   <>
                     <IconButton onClick={() => dispatch(setSiteTheme())}>
-                      {theme.palette.mode === "dark" ? (
+                      {palette.mode === "dark" ? (
                         <Nightlight sx={{color: '#e0e0e0', fontSize: "30px" }} />
                       ) : (
                         <LightMode sx={{ color: '#e0e0e0', fontSize: "30px" }} />
@@ -463,8 +464,8 @@ export default function NavBar() {
                                     <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/><span>Edit Profile</span></MenuItem>
                                     {!tabletScreen && (
                                       <>
-                                        <MenuItem><Search onClick={handleOpenDialog}/><span>Search</span></MenuItem>
-                                        {theme.palette.mode === "dark" ? 
+                                        <MenuItem onClick={handleOpenDialog}><Search /><span>Search</span></MenuItem>
+                                        {palette.mode === "dark" ? 
                                         <MenuItem onClick={() => dispatch(setSiteTheme())}><LightMode/><span>Light Mode</span></MenuItem>
                                         :
                                         <MenuItem onClick={() => dispatch(setSiteTheme())}><Nightlight/><span>Dark Mode</span></MenuItem>
@@ -482,7 +483,7 @@ export default function NavBar() {
                                     {!tabletScreen && (
                                       <>
                                       <MenuItem onClick={handleOpenDialog}><Search /><span>Search</span></MenuItem>
-                                      {theme.palette.mode === "dark" ? 
+                                      {palette.mode === "dark" ? 
                                       <MenuItem onClick={() => dispatch(setSiteTheme())}><LightMode /><span>Light Mode</span></MenuItem>
                                       :
                                       <MenuItem onClick={() => dispatch(setSiteTheme())}><Nightlight /><span>Dark Mode</span></MenuItem>
@@ -504,6 +505,7 @@ export default function NavBar() {
                 </Box>
               </Box>
           </Toolbar>
+
           <Dialog 
             open={openDialog} 
             onClose={handleCloseDialog} 
@@ -516,7 +518,13 @@ export default function NavBar() {
               }
             }}
           >
-            <DialogContent sx={{backgroundColor: "#E0E0E0"}}>
+            <DialogContent 
+              sx={{
+                backgroundColor: palette.background.default
+
+              }}
+            
+            >
               <Autocomplete 
                 freeSolo  
                 options={users || []}
@@ -541,7 +549,7 @@ export default function NavBar() {
                       ...params.InputProps,
                       startAdornment: (
                         <InputAdornment position="start">
-                          <Search sx={{color: '#e0e0e0', fontSize: "20px" }}/>
+                          <Search sx={{color: palette.neutral.dark, fontSize: "20px" }}/>
                         </InputAdornment>
                       )
                     }}
@@ -549,17 +557,18 @@ export default function NavBar() {
                 sx={{
                   width:"100%",
                   "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-                    borderColor: '#111111'
+                    borderColor: palette.neutral.dark,
+                    borderWidth:"2px",
                   },
                   "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-                    borderColor: '#673ab7'
+                    borderColor: palette.primary.dark,
                   },
                   '& .MuiAutocomplete-endAdornment':{ display: "none"},
                   '& .MuiFormLabel-root': {
-                    color: '#111111', 
+                    color: palette.neutral.dark,
                   },
                   '& .MuiInputLabel-root.Mui-focused':{
-                    color: '#111111',
+                    //color: '#111111',
                   },
                 }}
               />

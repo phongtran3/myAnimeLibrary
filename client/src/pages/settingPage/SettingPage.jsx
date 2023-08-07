@@ -249,7 +249,7 @@ export default function SettingPage() {
               },
               //Each textfield within the sections
               "& > div":{
-                marginBottom:"1.5rem",
+                marginBottom:"1rem",
                 display:"flex",
                 alignItems:"center",
                 flexGrow:"1",
@@ -264,7 +264,22 @@ export default function SettingPage() {
                   },
                 },
               },
-            }
+            },
+            '@media (max-width: 440px)': {
+                "& > div":{
+                  //Sections
+                  "& > div":{
+                    flexDirection:"column",
+                    alignItems: "flex-start",
+                    ".MuiFormControl-root":{
+                      width: "100%"
+                    },
+                  },
+                },
+                ".MuiBox-root  > .MuiButtonBase-root":{
+                  margin: ".5rem 0"
+                },
+            },
           }} 
         >
           {/* ACCOUNT SETTING */}
@@ -378,7 +393,12 @@ export default function SettingPage() {
                 </Dropzone>
               </Box>
 
-              <Box>
+              <Box
+                sx={{
+                  flexDirection:"row !important",
+                  alignItems:"center !important",
+                }}
+              >
                 <Switch 
                   //defaultChecked={loggedUser.isAdult}
                   checked={checked}

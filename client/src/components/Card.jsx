@@ -108,7 +108,7 @@ export default function Card({item, setAlert, mode, type}) {
                             "div:last-child":{
                               "& a":{
                                 "&:hover":{
-                                  color:"#d1c4e9 !important",
+                                  color:`${mode === "dark" ? "#d1c4e9" : "#b39ddb"} !important`,
                                 }
                               }
                             }

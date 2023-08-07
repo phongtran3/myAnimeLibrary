@@ -59,7 +59,7 @@ export default function IndexPage() {
       <NavBar />
       <Snackbar 
           id="snackbar"
-          open={alert != "" ? true : false} 
+          open={alert !== "" ? true : false} 
           autoHideDuration={3000}
           sx={{
             top:"5rem !important",

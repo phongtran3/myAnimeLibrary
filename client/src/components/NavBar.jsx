@@ -326,7 +326,7 @@ export default function NavBar() {
                     {desktopScreen ?
                       // SEARCH BAR
                       <Autocomplete 
-                        freeSolo 
+                        autoHighlight
                         options={users || []}
                         getOptionLabel={(option) => option.userName}
                         renderOption={(props, option) => (

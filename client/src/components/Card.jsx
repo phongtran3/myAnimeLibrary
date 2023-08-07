@@ -47,7 +47,17 @@ export default function Card({item, setAlert, mode, type}) {
                     title={item.title.english === null ? item.title.romaji : item.title.english} 
                 />
                 {user && displayQuickAction &&
-                    <Popper placement="bottom-end" {...bindPopper(popupState)} >
+                    <Popper 
+                      placement="bottom-end" 
+                      //disablePortal
+                      modifiers={[
+                        {
+                          name: 'flip',
+                          enabled: false
+                        },
+                      ]}
+                      {...bindPopper(popupState)} 
+                    >
                             <QuickAction 
                                 setAlert={setAlert}
                                 title={item.title.english === null ? item.title.romaji : item.title.english}
@@ -64,9 +74,9 @@ export default function Card({item, setAlert, mode, type}) {
                 <Popper 
                     {...bindPopper(popupState)} 
                     transition 
+                    //disablePortal
                     placement="right-start" 
                     sx={{
-                    //margin:"0 1rem !important",
                     maxWidth:'300px', 
                     }}
                 >

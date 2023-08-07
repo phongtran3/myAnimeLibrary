@@ -1,15 +1,9 @@
 import React from 'react'
-import { Box, TextField, Autocomplete, Chip, Checkbox, useTheme} from "@mui/material";
+import { Box, TextField, Autocomplete, Chip, useTheme} from "@mui/material";
 import { genreCollection, animeFormat, status, mangaFormat } from './FilterCollections';
 
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
-const sortCollection = ["Title", "Last Added"]
-
-
 export default function ListsFilter({type, filters, setFilters}) {
+  const sortCollection = ["Title", "Last Added"]
   const { palette } = useTheme();
 
   function handleNewFormatInput(event, newInputValue){

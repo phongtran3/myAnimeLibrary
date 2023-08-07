@@ -1,10 +1,8 @@
 import React from 'react'
-import {ImageList, ImageListItem, Paper, Popper, Fade, Typography, Link, ImageListItemBar} from "@mui/material";
-import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
+import {ImageList, ImageListItem, Link, ImageListItemBar} from "@mui/material";
+import PopupState, {bindHover} from "material-ui-popup-state";
 
 export default function PreviewList({medium}) {
-    
-
   return (
     <ImageList 
         gap={20} 

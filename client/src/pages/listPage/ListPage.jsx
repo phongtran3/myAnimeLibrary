@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-import { Box, Typography, ImageList, ImageListItemBar, useMediaQuery, Avatar} from "@mui/material";
+import { Box, Typography, ImageList, useMediaQuery, Avatar} from "@mui/material";
 import axios from 'axios';
 import NavBar from '../../components/NavBar'
 import ListsFilter from '../../components/ListsFilter';
@@ -21,7 +21,7 @@ export default function ListPage() {
     genres: [],
     sort: ''
   });
-  const [userList, setUserList] = useState([]);
+  //const [userList, setUserList] = useState([]);
   const { userName, list } = useParams();
   const token = useSelector((state) => state.token);
   const type = list === 'animelist' ? 'anime' : 'manga'
@@ -44,7 +44,7 @@ export default function ListPage() {
         setCompleted(res.data.mangas.filter(manga => manga.userStatus === 'COMPLETED'))
         setPlanning(res.data.mangas.filter(manga => manga.userStatus === 'PLANNING'))
       }
-      setUserList(type === 'anime' ? res.data.animes : res.data.mangas);
+      //setUserList(type === 'anime' ? res.data.animes : res.data.mangas);
     }).catch(err => {
       if (err.response){
         console.log(err.response.data);

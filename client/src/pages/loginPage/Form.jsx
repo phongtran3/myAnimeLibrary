@@ -82,25 +82,6 @@ const registerSchema = yup.object().shape({
             }
             console.log(err);
         })
-        // const loggedInResponse = await fetch("http://localhost:5000/auth/login", {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify(values),
-        // });
-        // const loggedIn = await loggedInResponse.json();
-        // onSubmitProps.resetForm();
-        // console.log(loggedIn)
-        // console.log(loggedIn.status)
-        // if (loggedIn) {
-        //     dispatch(
-        //         setLogin({
-        //         user: loggedIn.user,
-        //         token: loggedIn.token,
-        //         })
-        //     );
-        //     console.log(loggedIn)
-        //     navigate("/");  
-        // }
     }
 
     async function register (values, onSubmitProps) {
@@ -125,18 +106,6 @@ const registerSchema = yup.object().shape({
                 }
                 console.log(err);
             })
-
-        // const savedUserResponse = await fetch( "http://localhost:5000/auth/register", {
-        //         method: "POST",
-        //         body: formData,
-        //     }
-        // );
-        // const savedUser = await savedUserResponse.json();
-        // console.log(savedUser)
-        // onSubmitProps.resetForm();
-        // if (savedUser) {
-        //     setIsLogin("false");
-        // }
     }
 
 

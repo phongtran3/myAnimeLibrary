@@ -1,24 +1,40 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
-import { Avatar, Dialog, DialogContent, DialogTitle, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Button, Divider } from '@mui/material'
+import { Avatar, Dialog, DialogContent, DialogTitle, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Button, 
+  Divider, useMediaQuery, IconButton, } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from "react-redux";
 
 export default function Follow({open, handleClose, type, loggedUser, handleFollowUnfollow, arr}) {
     const navigate = useNavigate(); 
     const mode = useSelector((state) => state.mode);
+    const fullScreen = useMediaQuery('(max-width:500px)');
     return (
         <Dialog 
-          maxWidth={'sm'} 
+          maxWidth={'xs'} 
           open={open} 
+          fullScreen={fullScreen}
           onClose={handleClose} 
           sx={{
             "& .MuiPaper-root": {
               alignItems: "center",
-              overflowY:"unset",
             },
           }}
         >
-            <DialogTitle>{type === "following" ? "Following" : "Followers"}</DialogTitle>
+            <DialogTitle>
+              {type === "following" ? "Following" : "Followers"}
+              <IconButton
+                aria-label="close"
+                onClick={handleClose} 
+                sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </DialogTitle>
             <DialogContent 
               sx={{
                 "& .MuiButtonBase-root.MuiListItemButton-root:hover":{
@@ -49,7 +65,7 @@ export default function Follow({open, handleClose, type, loggedUser, handleFollo
                         </ListItemButton>
                         {loggedUser._id !== user._id &&
                           <Button 
-                            sx={{marginLeft: "5rem"}} 
+                            sx={{marginLeft: fullScreen ? "1rem" : "5rem"}} 
                             variant="contained"  
                             size="small" 
                             aria-label={type === "following" ? "Following" : "Unfollow"}

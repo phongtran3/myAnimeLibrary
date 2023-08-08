@@ -72,6 +72,22 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
 
     return (
         <>
+            <Snackbar 
+                open={openAlert} 
+                autoHideDuration={2000}
+                onClose={(event, reason) => handleCloseAlert(reason)} 
+                anchorOrigin={{vertical: 'top', horizontal:'center'}}
+                
+            >
+                {!loggedUser ?
+                    <Alert onClose={(event, reason) => handleCloseAlert(reason)} severity='error'>
+                        Unauthorized. Please log in to follow user.
+                    </Alert> : 
+                    <Alert onClose={(event, reason) => handleCloseAlert(reason)} severity='success'>
+                        Successfully {isFollowing ? "Followed" : "Unfollowed"} User.
+                    </Alert> 
+                }
+            </Snackbar>
             {desktopScreen ?
             <Card id="profile-card" 
                 sx={{
@@ -229,7 +245,7 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                     }
                 </Box>
 
-                <Snackbar 
+                {/* <Snackbar 
                     open={openAlert} 
                     autoHideDuration={2000}
                     onClose={(event, reason) => handleCloseAlert(reason)} 
@@ -244,7 +260,7 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                             Successfully {isFollowing ? "Followed" : "Unfollowed"} User.
                         </Alert> 
                     }
-                </Snackbar>
+                </Snackbar> */}
             </Card>
             :
             //NON DESKTOP

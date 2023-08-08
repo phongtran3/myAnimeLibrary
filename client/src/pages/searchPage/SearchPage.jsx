@@ -123,9 +123,12 @@ export default function SearchPage() {
               textAlign: "center", 
               gap:"3rem 2rem !important",
               gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr)) !important",
+              '@media (max-width: 500px)': {
+                gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))!important',
+              },
               "& > div":{
                 display:"flex",
-                transition: "transform 250ms",
+                //transition: "transform 250ms",
                 // '&:hover':{
                 //   transform: "scale(1.05)"
                 // },

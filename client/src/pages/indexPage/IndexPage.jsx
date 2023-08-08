@@ -118,6 +118,16 @@ export default function IndexPage() {
         <Box 
           id="search-content"
           sx={{
+            '@media (max-width: 545px)': {
+              ".MuiTypography-root":{
+                "span":{
+                  fontSize:"1rem",
+                },
+                "div":{
+                  fontSize:".75rem",
+                }
+              }
+            },
             "& div > ul":{
               //background:"red" //test
               overflowY: "visible !important",
@@ -125,7 +135,7 @@ export default function IndexPage() {
               marginTop: "0.5rem",
               gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))!important',
               '@media (max-width: 545px)': {
-                gridTemplateColumns: 'repeat(auto-fill, minmax(185px, 1fr))!important',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(105px, 1fr))!important',
               },
               gap:"25px !important" ,
               "a:nth-of-type(5)": {

@@ -32,18 +32,25 @@ export default function IndexPage() {
           const getPopularAnime = await axios.post('https://graphql.anilist.co', { query: popularAnimeQuery, variables })
           const getTrendingManga = await axios.post('https://graphql.anilist.co', { query: trendingMangaQuery, variables })
           const getPopularManga = await axios.post('https://graphql.anilist.co', { query: popularMangaQuery, variables })
-          Promise.all([getTrendingAnime,getPopularAnime,getTrendingManga,getPopularManga])
-            .then(res => {
-              setTrendingAnime(res[0].data.data.Page.media)
-              setpopularAnime(res[1].data.data.Page.media)
-              setTrendingManga(res[2].data.data.Page.media)
-              setpopularManga(res[3].data.data.Page.media)
-            })
-            .catch(err =>{
-              console.log(err)
-            })
-        }
-      fetchData();
+          
+          const results = await Promise.all([getTrendingAnime, getPopularAnime, getTrendingManga, getPopularManga]);
+            setTrendingAnime(results[0].data.data.Page.media);
+            setpopularAnime(results[1].data.data.Page.media);
+            setTrendingManga(results[2].data.data.Page.media);
+            setpopularManga(results[3].data.data.Page.media);
+          }
+          // Promise.all([getTrendingAnime,getPopularAnime,getTrendingManga,getPopularManga])
+          //   .then(res => {
+          //     setTrendingAnime(res[0].data.data.Page.media)
+          //     setpopularAnime(res[1].data.data.Page.media)
+          //     setTrendingManga(res[2].data.data.Page.media)
+          //     setpopularManga(res[3].data.data.Page.media)
+          //   })
+          //   .catch(err =>{
+          //     console.log(err)
+          //   })
+        
+        fetchData();
     }catch(error){
       console.log("error: " + error.message);
     }
@@ -51,8 +58,8 @@ export default function IndexPage() {
 
   console.log("index render");
   //console.log(trendingAnime[1]);
-
-  const isLoading = (!trendingAnime.length && !popularAnime.length && !trendingManga.length && !popularManga.length) ? true : false;
+  const isLoading = !trendingAnime.length && !popularAnime.length && !trendingManga.length && !popularManga.length
+  
   if (isLoading) return <LinearProgress />
   return (
     <Box>

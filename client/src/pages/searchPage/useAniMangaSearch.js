@@ -83,6 +83,7 @@ export default function useAniMangaSearch(pageNumber) {
               }
               genres
               coverImage {
+                extraLarge
                 large
               }
               isAdult

@@ -19,8 +19,8 @@ export default function Card({item, setAlert, mode, type}) {
         e.preventDefault();
         setDisplayQuickAction(false);
     }
-
-    return (
+    console.log(item.coverImage.extraLarge);
+    return (  
         <PopupState 
             key={item.id} 
             variant="popper" 
@@ -37,8 +37,8 @@ export default function Card({item, setAlert, mode, type}) {
                     target="_blank" rel="noopener noreferrer" 
                 >
                     <img
-                        src={`${item.coverImage.large}?w=164&h=164&fit=crop&auto=format`}
-                        srcSet={`${item.coverImage.large}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        src={item.coverImage.extraLarge}
+                        srcSet={item.coverImage.extraLarge}
                         alt={item.title.english === null ? item.title.romaji : item.title.english}
                         loading="lazy"
                         style={{borderRadius: "0.375rem", width: "100%", height: "100%"}}

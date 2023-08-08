@@ -9,6 +9,7 @@ query ($page: Int, $perPage: Int) {
         }
         genres
         coverImage {
+            extraLarge
             large
         }
         siteUrl
@@ -33,6 +34,7 @@ query ($page: Int, $perPage: Int) {
         }
         genres
         coverImage {
+            extraLarge
             large
         }
         siteUrl
@@ -57,6 +59,7 @@ query ($page: Int, $perPage: Int) {
         }
         genres
         coverImage {
+            extraLarge
             large
         }
         siteUrl
@@ -80,6 +83,7 @@ query ($page: Int, $perPage: Int) {
         }
         genres
         coverImage {
+            extraLarge
             large
         }
         format

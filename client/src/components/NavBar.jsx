@@ -187,10 +187,10 @@ export default function NavBar() {
                       <Typography 
                         component={Link} 
                         {...bindHover(popupState)} 
-                        // onClick={() => {
-                        //   navigate("/search/anime"); 
-                        //   navigate(0);
-                        // }}
+                        onClick={() => {
+                          navigate("/search/anime"); 
+                          navigate(0);
+                        }}
                       >
                         Browse
                       <Popper 

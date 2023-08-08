@@ -19,7 +19,6 @@ export default function Card({item, setAlert, mode, type}) {
         e.preventDefault();
         setDisplayQuickAction(false);
     }
-    console.log(item.coverImage.extraLarge);
     return (  
         <PopupState 
             key={item.id} 

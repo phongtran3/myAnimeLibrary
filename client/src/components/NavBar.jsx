@@ -99,7 +99,7 @@ export default function NavBar() {
 
   async function handleChange(search){
     await axios.get(
-      `http://localhost:5000/users/`,
+      `https://myanimelibrary.onrender.com/users/`,
       {params: {"search": search},
       headers: {"Content-Type": "application/json", 'Accept': 'application/json',}},
     ).then(res =>{
@@ -184,6 +184,7 @@ export default function NavBar() {
               {/* BROWSE MENU */}
               <PopupState variant="popper" popupId="browsePopper" >
                   {(popupState) => ( 
+                    <>
                       <Typography 
                         component={Link} 
                         {...bindHover(popupState)} 
@@ -193,6 +194,8 @@ export default function NavBar() {
                         }}
                       >
                         Browse
+                      </Typography>
+
                       <Popper 
                         {...bindPopper(popupState)} 
                         transition 
@@ -299,7 +302,7 @@ export default function NavBar() {
                           </Fade>
                         )}
                       </Popper>
-                    </Typography>
+                      </>
                   )}
                 </PopupState>
               </Box>
@@ -331,13 +334,13 @@ export default function NavBar() {
                         getOptionLabel={(option) => option.userName}
                         renderOption={(props, option) => (
                           <Box component="li" {...props}>
-                            <Avatar src={`http://localhost:5000/assets/${option.picturePath}`}/>&nbsp;{option.userName}
+                            <Avatar src={`https://myanimelibrary.onrender.com/assets/${option.picturePath}`}/>&nbsp;{option.userName}
                           </Box>
                         )}
                         size='small'
                         onInputChange={(event) => {handleChange(event.target.value)}}
                         onChange={(event, option) =>{
-                          window.location.href = `http://localhost:3000/user/${option.userName}`
+                          window.location.href = `https://myanimelibrary.onrender.com/user/${option.userName}`
                         }}
                         renderInput={(params) => <TextField variant="outlined" {...params} label="Search Users..." />}
                         PaperComponent={CustomPaper}
@@ -376,7 +379,7 @@ export default function NavBar() {
                       aria-expanded={openMenu ? 'true' : undefined}
                       aria-haspopup="true"
                     >
-                      <Avatar sx={{ width: 56, height: 56 }} src={`http://localhost:5000/assets/${user.picturePath}`}/>
+                      <Avatar sx={{ width: 56, height: 56 }} src={`https://myanimelibrary.onrender.com/assets/${user.picturePath}`}/>
                     </IconButton>
                   :
                     <>
@@ -529,13 +532,13 @@ export default function NavBar() {
                 getOptionLabel={(option) => option.userName}
                 renderOption={(props, option) => (
                   <Box component="li" {...props}>
-                    <Avatar sx={{marginRight: "1rem"}} src={`http://localhost:5000/assets/${option.picturePath}`}/>&nbsp;{option.userName}
+                    <Avatar sx={{marginRight: "1rem"}} src={`https://myanimelibrary.onrender.com/assets/${option.picturePath}`}/>&nbsp;{option.userName}
                   </Box>
                 )}
                 size='small'
                 onInputChange={(event) => {handleChange(event.target.value)}}
                 onChange={(event, option) =>{
-                  window.location.href = `http://localhost:3000/user/${option.userName}`
+                  window.location.href = `https://myanimelibrary.onrender.com/user/${option.userName}`
                 }}
                 PaperComponent={CustomPaper}
                 renderInput={(params) => 

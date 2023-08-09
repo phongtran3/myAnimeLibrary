@@ -51,7 +51,7 @@ export default function Card2({item, user}) {
             "itemId": item._id
         }
         await axios.patch(
-            `http://localhost:5000/${type}/${user._id}/remove`,
+            `https://myanimelibrary.onrender.com/${type}/${user._id}/remove`,
             {data: body},
             {headers: { Authorization: `${token}`}}
         ).then(res =>{
@@ -75,7 +75,7 @@ export default function Card2({item, user}) {
             "itemId": item._id
         }
         await axios.patch(
-            `http://localhost:5000/${type}/${user._id}/update`,
+            `https://myanimelibrary.onrender.com/${type}/${user._id}/update`,
             {data: body},
             {headers: { Authorization: `${token}`}}
         ).then(res =>{

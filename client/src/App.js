@@ -36,6 +36,10 @@ export default function App() {
     }
   }, [dispatch, token]);
 
+  useEffect(() => {
+    document.title = "myAnimeLibrary";
+  }, []);
+
   function handleClose(event, reason) {
     if (reason === "clickaway") {
       return;

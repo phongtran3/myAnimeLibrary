@@ -55,8 +55,8 @@ export default function useAniMangaSearch(pageNumber) {
     // console.log(format);
     // console.log(status);
     // console.log(genres);
-    console.log(sort);
-    console.log(type);
+    //console.log(sort);
+    //console.log(type);
     setLoading(true);
     const query = `
       query ($page: Int, $perPage: Int, ${
@@ -103,7 +103,7 @@ export default function useAniMangaSearch(pageNumber) {
       await axios
         .post("https://graphql.anilist.co", { query, variables })
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           //console.log(res.data.data.Page.pageInfo.hasNextPage);
           setAniMangas((prevAniMangas) => {
             return [

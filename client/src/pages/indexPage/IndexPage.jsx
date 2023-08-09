@@ -56,7 +56,6 @@ export default function IndexPage() {
     }
   }, [])
 
-  console.log("index render");
   //console.log(trendingAnime[1]);
   const isLoading = !trendingAnime.length && !popularAnime.length && !trendingManga.length && !popularManga.length
   

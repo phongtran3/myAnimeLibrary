@@ -64,7 +64,7 @@ export default function NavBar() {
   }
 
   useEffect(()=>{
-    console.log("useEffect");
+    //console.log("useEffect");
     window.addEventListener("resize", handleResize)
 
     return () => {
@@ -82,14 +82,14 @@ export default function NavBar() {
 
 
   function handleLogOut(){
-    console.log("Logging Out");
+    //console.log("Logging Out");
     setOpenMenu(false);
     dispatch(setLogout())
     navigate("/")
   }
   
   function handleOpenDialog(){
-    console.log("open");
+    //console.log("open");
     setOpenDialog(true);
   }
 

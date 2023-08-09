@@ -17,8 +17,8 @@ export default function SearchPage() {
   const mode = useSelector((state) => state.mode);
   const params = useParams();
   const type = params.media;
-  console.log(isAdult);
-  console.log(aniMangas);
+  //console.log(isAdult);
+  //console.log(aniMangas);
   //console.log(hasNextPage);
   //console.log(pageNumber);
 
@@ -67,7 +67,7 @@ export default function SearchPage() {
         }
         return filtered
       }, [])
-
+    
   //console.log(array);
   return (
     <Box>
@@ -126,7 +126,7 @@ export default function SearchPage() {
           
           :
           
-          aniMangas.length === 0 ?
+          array.length === 0 ?
             <Box
               display="flex"
               justifyContent="center"
@@ -146,10 +146,6 @@ export default function SearchPage() {
               },
               "& > div":{
                 display:"flex",
-                //transition: "transform 250ms",
-                // '&:hover':{
-                //   transform: "scale(1.05)"
-                // },
               }
             }}
           >

@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import { popularAnimeQuery, trendingAnimeQuery, popularMangaQuery, trendingMangaQuery } from './initalQuery';
 import { Box, ImageList, Typography, LinearProgress, useTheme, Alert, Snackbar} from '@mui/material';
-//import MediaList from '../../components/MediaList';
 import NavBar from '../../components/NavBar';
+import Footer from '../../components/Footer';
 import BrowseFilter from '../../components/BrowseFilter';
 import Card from '../../components/Card';
 import {Link} from 'react-router-dom';
@@ -39,24 +39,12 @@ export default function IndexPage() {
             setTrendingManga(results[2].data.data.Page.media);
             setpopularManga(results[3].data.data.Page.media);
           }
-          // Promise.all([getTrendingAnime,getPopularAnime,getTrendingManga,getPopularManga])
-          //   .then(res => {
-          //     setTrendingAnime(res[0].data.data.Page.media)
-          //     setpopularAnime(res[1].data.data.Page.media)
-          //     setTrendingManga(res[2].data.data.Page.media)
-          //     setpopularManga(res[3].data.data.Page.media)
-          //   })
-          //   .catch(err =>{
-          //     console.log(err)
-          //   })
-        
         fetchData();
     }catch(error){
       console.log("error: " + error.message);
     }
   }, [])
 
-  //console.log(trendingAnime[1]);
   const isLoading = !trendingAnime.length && !popularAnime.length && !trendingManga.length && !popularManga.length
   
   if (isLoading) return <LinearProgress />
@@ -97,7 +85,7 @@ export default function IndexPage() {
         sx={{
           maxWidth:"1520px",
           margin:"2rem auto",
-          paddingBottom:"1rem",
+          //paddingBottom:"1rem",
           "& .MuiTypography-root":{
             display:"flex",
             alignItems:"center",
@@ -211,6 +199,7 @@ export default function IndexPage() {
         </Box>
         }
       </Box>
+      <Footer/>
     </Box>
   )
 }

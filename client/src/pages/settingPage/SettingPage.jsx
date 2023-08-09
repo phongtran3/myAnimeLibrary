@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import NavBar from '../../components/NavBar'
+import Footer from '../../components/Footer';
 import { useSelector, useDispatch } from "react-redux";
 import { setSiteUser, setLogout } from '../../states/index';
 import Dropzone from "react-dropzone"; //File/image upload
@@ -126,7 +127,7 @@ export default function SettingPage() {
   }
 
   return (
-    <>
+    <Box>
     <NavBar />
     <Box
       sx={{
@@ -579,6 +580,7 @@ export default function SettingPage() {
         </Box>
       </Box>
     </Box>
-    </>
+    <Footer/>
+    </Box>
   )
 }

@@ -6,7 +6,7 @@ import axios from 'axios';
 import NavBar from '../../components/NavBar'
 import ListsFilter from '../../components/ListsFilter';
 import Card2 from '../../components/Card2';
-
+import Footer from '../../components/Footer';
 
 export default function ListPage() {
   const [user, setUser] = useState(null);
@@ -83,7 +83,7 @@ export default function ListPage() {
   const planningArr = returnFilterArray(planning);
 
   return (
-    <>
+    <Box>
       <NavBar />
       <Box id="content-container" 
         sx={{
@@ -98,8 +98,7 @@ export default function ListPage() {
             gridTemplateColumns:"calc(30% - 30px) 70%",
             gap:"30px",
             margin:"2rem",
-            paddingBottom:"1rem",
-
+            //paddingBottom:"1rem",
           }}
         >
           <Box id="section-1"
@@ -193,7 +192,8 @@ export default function ListPage() {
           </Box>
         </Box>
       </Box>
-    </>
+      <Footer/>
+    </Box>
   )
 }
 

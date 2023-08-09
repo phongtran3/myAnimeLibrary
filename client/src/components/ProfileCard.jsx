@@ -133,6 +133,7 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                         component={Link} 
                         to={`${user.socialMediaHandles.twitter}`}
                     >{user.socialMediaHandles.twitter ? <Twitter/>:""}</Typography>
+
                     <Typography 
                         sx={{color: "black"}}
                         rel="noopener noreferrer" 
@@ -140,6 +141,7 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                         component={Link} 
                         to={`${user.socialMediaHandles.instagram}
                     `}>{user.socialMediaHandles.instagram ? <Instagram/>: ""}</Typography>
+                    
                     <Typography 
                         sx={{color: "#eb3223"}}
                         rel="noopener noreferrer" 
@@ -147,6 +149,7 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                         component={Link} 
                         to={`${user.socialMediaHandles.youtube}`}
                     >{user.socialMediaHandles.youtube ? <YouTube/>: ""}</Typography>
+                    
                     <Typography 
                         sx={{color: "black"}}
                         rel="noopener noreferrer" 

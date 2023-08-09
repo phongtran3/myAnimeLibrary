@@ -2,6 +2,7 @@
 import React, {useState, useEffect} from 'react'
 import NavBar from '../../components/NavBar'
 import ProfileCard from '../../components/ProfileCard'
+import Footer from '../../components/Footer';
 import { useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import axios from 'axios';
@@ -163,8 +164,8 @@ export default function ProfilePage() {
             </Box>
           </Box>
         </Box>
-      
       </Box>
+      <Footer/>
     </Box>
   )
 }

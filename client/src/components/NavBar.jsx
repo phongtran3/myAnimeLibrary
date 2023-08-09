@@ -148,6 +148,7 @@ export default function NavBar() {
                 fontSize:"clamp(.5rem, 1.5rem, 2rem)",
                 textDecoration:"none",
               }}
+              to={"/"}
               onClick={() => navigate("/")}
             > 
               myAnimeLibrary
@@ -177,8 +178,8 @@ export default function NavBar() {
             > 
               {user && tabletScreen && (
                 <>
-                <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}} >Anime List</Typography>
-                <Typography component={Link} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}} >Manga List</Typography>
+                <Typography component={Link} to={`/user/${user.userName}/animelist`} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}} >Anime List</Typography>
+                <Typography component={Link} to={`/user/${user.userName}/mangalist`} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}} >Manga List</Typography>
                 </>
               )}
                 
@@ -479,9 +480,10 @@ export default function NavBar() {
                               >
                                 {user ? 
                                   <>
-                                    {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/><span>Home</span></MenuItem>}
-                                    <MenuItem onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/><span>Profile</span></MenuItem>
-                                    <MenuItem onClick={() => {navigate('/settings'); navigate(0)}}><Settings/><span>Edit Profile</span></MenuItem>
+                                    {!desktopScreen && 
+                                    <MenuItem component={Link} to={`/`} onClick={() => {navigate(`/`); navigate(0);}}><Home/><span>Home</span></MenuItem>}
+                                    <MenuItem component={Link} to={`/user/${user.userName}`} onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/><span>Profile</span></MenuItem>
+                                    <MenuItem component={Link} to={'/settings'} onClick={() => {navigate('/settings'); navigate(0)}}><Settings/><span>Edit Profile</span></MenuItem>
                                     {!tabletScreen && (
                                       <>
                                         <MenuItem onClick={handleOpenDialog}><Search /><span>Search</span></MenuItem>
@@ -490,8 +492,8 @@ export default function NavBar() {
                                         :
                                         <MenuItem onClick={() => dispatch(setSiteTheme())}><Nightlight/><span>Dark Mode</span></MenuItem>
                                         }
-                                        <MenuItem onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}}><PlayArrow/><span>Anime List</span></MenuItem>
-                                        <MenuItem onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}}><AutoStories/><span>Manga List</span></MenuItem>
+                                        <MenuItem component={Link} to={`/user/${user.userName}/animelist`} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}}><PlayArrow/><span>Anime List</span></MenuItem>
+                                        <MenuItem component={Link} to={`/user/${user.userName}/mangalist`} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}}><AutoStories/><span>Manga List</span></MenuItem>
                                       </>
                                     )}
                                     <MenuItem onClick={handleLogOut}><Logout/><span>Logout</span></MenuItem>
@@ -499,7 +501,7 @@ export default function NavBar() {
                                   :
                                   <>
                                     {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/><span>Home</span></MenuItem>}
-                                    <MenuItem onClick={() => {navigate('/auth');}}><Login/><span>Login</span></MenuItem>
+                                    <MenuItem component={Link} to={'/auth'} onClick={() => {navigate('/auth');}}><Login/><span>Login</span></MenuItem>
                                     {!tabletScreen && (
                                       <>
                                       <MenuItem onClick={handleOpenDialog}><Search /><span>Search</span></MenuItem>

@@ -29,7 +29,7 @@ export default function ListPage() {
 
   async function getUser(){
     await axios.get(
-      `http://localhost:5000/users/${userName}`,
+      `https://myanimelibrary.onrender.com/users/${userName}`,
       {headers: { Authorization: `${token}` }}
     ).then(res =>{
       console.log(res.data);
@@ -110,7 +110,7 @@ export default function ListPage() {
              
             }}
           > 
-            <a href={`/user/${user.userName}`}><Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`http://localhost:5000/assets/${user.picturePath}`}/></a>
+            <a href={`/user/${user.userName}`}><Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`https://myanimelibrary.onrender.com/assets/${user.picturePath}`}/></a>
             <ListsFilter 
               type={type} 
               filters={filters} 

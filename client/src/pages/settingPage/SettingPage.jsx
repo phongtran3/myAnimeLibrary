@@ -124,7 +124,7 @@ export default function SettingPage() {
       if(body.attribute === 'picturePath') formData.append('picture', newPicturePath);
       
       await axios.patch(
-        `http://localhost:5000/users/${user._id}/update`, 
+        `https://myanimelibrary.onrender.com/users/${user._id}/update`, 
         formData, 
         {headers: { "Content-Type": "multipart/form-data", Authorization: `${token}`}}
       ).then(res =>{

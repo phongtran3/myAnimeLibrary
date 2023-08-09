@@ -340,6 +340,7 @@ export default function NavBar() {
                         onInputChange={(event) => {handleChange(event.target.value)}}
                         onChange={(event, option) =>{
                           navigate(`/user/${option.userName}`);
+                          navigate(0);
                         }}
                         renderInput={(params) => <TextField variant="outlined" {...params} label="Search Users..." />}
                         PaperComponent={CustomPaper}
@@ -538,6 +539,7 @@ export default function NavBar() {
                 onInputChange={(event) => {handleChange(event.target.value)}}
                 onChange={(event, option) =>{
                   navigate(`/user/${option.userName}`);
+                  navigate(0);
                 }}
                 PaperComponent={CustomPaper}
                 renderInput={(params) => 

@@ -16,7 +16,6 @@ import ListPage from "./pages/listPage/ListPage";
 import SettingPage from "./pages/settingPage/SettingPage";
 
 export default function App() {
-  console.log("app render");
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 

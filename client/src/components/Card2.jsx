@@ -12,7 +12,6 @@ import axios from 'axios';
 const mangaFormat = ["MANGA", "ONE_SHOT", "NOVEL"];
 
 export default function Card2({item, user}) {
-    //console.log(item)
     const { palette } = useTheme();
     const type = mangaFormat.indexOf(item.format) > -1 ? "manga" : "anime";
     const userStatuses = [
@@ -46,7 +45,6 @@ export default function Card2({item, user}) {
     }
 
     async function handleDelete(){
-        console.log("Deleting");
         const body = {
             "itemId": item._id
         }
@@ -61,15 +59,12 @@ export default function Card2({item, user}) {
             window.location.reload();
         }).catch(err =>{
             if (err.response){
-                console.log(err.response.data);
                 //setError(err.response.data.message);
               }
-              console.log(err);
         })
     }
 
     async function handleUpdate(){
-        console.log("Saving");
         const body = {
             "userStatus": userStatus,
             "itemId": item._id
@@ -79,16 +74,13 @@ export default function Card2({item, user}) {
             {data: body},
             {headers: { Authorization: `${token}`}}
         ).then(res =>{
-            console.log(res);
             setOpen(false);
             window.location.reload();
 
         }).catch(err =>{
             if (err.response){
-                console.log(err.response.data);
                 //setError(err.response.data.message);
               }
-              console.log(err);
         })
     }
 

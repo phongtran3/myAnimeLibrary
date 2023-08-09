@@ -32,9 +32,7 @@ export default function ListPage() {
       `https://myanimelibrary.onrender.com/users/${userName}`,
       {headers: { Authorization: `${token}` }}
     ).then(res =>{
-      console.log(res.data);
       setUser(res.data);
-      //console.log(type);
       if (type === 'anime'){
         setWatching(res.data.animes.filter(anime => anime.userStatus === 'WATCHING'))
         setCompleted(res.data.animes.filter(anime => anime.userStatus === 'COMPLETED'))
@@ -49,7 +47,6 @@ export default function ListPage() {
       if (err.response){
         console.log(err.response.data);
       }
-    console.log(err);
     }) 
   }
   useEffect(() => {
@@ -75,13 +72,9 @@ export default function ListPage() {
           return a.title.localeCompare(b.title);
       })
   }
-  //console.log(userList);
-  //console.log(filters);
-
   const watchingArr = returnFilterArray(watching);
   const completedArr = returnFilterArray(completed);
   const planningArr = returnFilterArray(planning);
-
   return (
     <Box>
       <NavBar />

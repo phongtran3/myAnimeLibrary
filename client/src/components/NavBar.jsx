@@ -107,9 +107,7 @@ export default function NavBar() {
       setUsers(res.data);
     }).catch(err => {
       if (err.response){
-        console.log(err.response.data);
       }
-    console.log(err);
     })
   }
 

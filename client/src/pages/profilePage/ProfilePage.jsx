@@ -48,7 +48,6 @@ export default function ProfilePage() {
               if (err.response){
                 console.log(err.response.data);
               }
-              console.log(err);
             }) 
         }
       setUser(res.data);
@@ -56,7 +55,6 @@ export default function ProfilePage() {
       if (err.response){
         console.log(err.response.data);
       }
-      console.log(err);
     }) 
   }
 
@@ -79,9 +77,6 @@ export default function ProfilePage() {
       progress.push(user.mangas[i])
       
   }
-  //console.log(user)
-  console.log(followersArr);
-  console.log(followingArr);
   return (
     <Box sx={{height:"100%", width:"100%"}}>
       <NavBar />

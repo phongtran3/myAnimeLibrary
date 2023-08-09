@@ -18,7 +18,6 @@ export default function SettingPage() {
   const token = useSelector((state) => state.token);
   
   const loggedUser = useSelector((state) => state.user);
-  console.log(loggedUser);
   //const userName = useSelector((state) => state.user.userName);
   const desktopScreen = useMediaQuery("(min-width: 1100px)");
 
@@ -104,7 +103,6 @@ export default function SettingPage() {
         formData, 
         {headers: { "Content-Type": "multipart/form-data", Authorization: `${token}`}}
       ).then(res =>{
-        console.log(res.data);
         setUser(res.data)
         dispatch(setSiteUser({
           user: res.data,
@@ -121,7 +119,6 @@ export default function SettingPage() {
           console.log(err.response.data);
           setError(err.response.data.message);
         }
-        console.log(err);
       })
     }
   }

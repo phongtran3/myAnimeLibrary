@@ -29,7 +29,6 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                 {data: null},
                 {headers: { Authorization: `${token}`, "Content-Type": "application/json",}}
             ).then(res => {
-                console.log(res.data)
                 if(openFollows){
                     if(loggedUser._id === user._id)
                         setUser(res.data[0])
@@ -47,7 +46,6 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                 if (err.response){
                     console.log(err.response.data);
                 }
-                console.log(err);
             })
         }
     }
@@ -65,10 +63,6 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
         setType(select);
 
     }
-
-    useEffect(()=> {
-        console.log("profile card useeffect")
-    },[])
 
     return (
         <>
@@ -423,7 +417,6 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                         }}
                         onClick={() => {
                             if(loggedUser){
-                                console.log("open");
                                 handleFollowOpen("follower");
                             }
                             else

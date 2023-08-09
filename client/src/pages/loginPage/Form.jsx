@@ -64,8 +64,6 @@ const registerSchema = yup.object().shape({
             }}
         )   
         .then(res => {
-            console.log("logging in");
-            console.log(res);
             onSubmitProps.resetForm();
             dispatch(
                 setLogin({
@@ -77,10 +75,8 @@ const registerSchema = yup.object().shape({
         })
         .catch(err => {
             if (err.response){
-                console.log(err.response.data);
                 setError(err.response.data.message);
             }
-            console.log(err);
         })
     }
 
@@ -90,21 +86,15 @@ const registerSchema = yup.object().shape({
             formData.append(value, values[value]);
         }
         formData.append('picturePath', values.picture.name);
-        console.log(formData);
-        console.log(values);
         await axios.post("https://myanimelibrary.onrender.com/auth/register", formData)
             .then(res => {
-                console.log("registering");
-                console.log(res);
                 onSubmitProps.resetForm();
                 setIsLogin("false");
 
             }).catch(err => {
                 if (err.response){
-                    console.log(err.response.data);
                     setError(err.response.data.message);
                 }
-                console.log(err);
             })
     }
 
@@ -115,8 +105,6 @@ const registerSchema = yup.object().shape({
         if(isLogin) await login(values, onSubmitProps);
         if(!isLogin) await register(values, onSubmitProps);
     }
-    //console.log(isLogin);
-
     return (
         <>
         <Box id="img" 
@@ -327,7 +315,6 @@ const registerSchema = yup.object().shape({
                                     <Dropzone
                                         acceptedFiles=".jpg,.jpeg,.png"
                                         multiple={false}
-                                        onChange={() => {console.log("Change")}}
                                         onDrop={(acceptedFiles) => setFieldValue("picture", acceptedFiles[0])}
                                     >
                                     {({ getRootProps, getInputProps }) => (

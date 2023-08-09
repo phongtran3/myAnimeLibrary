@@ -51,15 +51,11 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
     
     await axios.post(url, {data: body}, {headers: { Authorization: `${token}` }},)
     .then(res => {
-        console.log("Adding to list");
-        console.log(res.data);
         setAlert(`${title} added to ${list} list`)
     }).catch(err => {
         if (err.response){
             console.log(err.response.data);
-            // setError(err.response.data.message);
         }
-        console.log(err);
     })
   }
   return (

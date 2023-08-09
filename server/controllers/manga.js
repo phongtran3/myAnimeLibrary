@@ -18,7 +18,6 @@ async function addManga(req, res) {
     //console.log(genres);
     // console.log(user);
     let index = user.mangas.findIndex((anime) => anime.title === title);
-    console.log(index);
     if (index < -1) {
       //manga is not in the list and needs to be added
       const mangaObj = {
@@ -44,7 +43,6 @@ async function addManga(req, res) {
 
 async function removeManga(req, res) {
   try {
-    console.log("removing manga");
     const { id } = req.params;
     const { itemId } = req.body.data;
     const user = await User.findById(id);
@@ -61,7 +59,6 @@ async function removeManga(req, res) {
 
 async function updateManga(req, res) {
   try {
-    console.log("updating manga");
     const { id } = req.params;
     const { itemId, userStatus } = req.body.data;
 

@@ -18,7 +18,6 @@ async function addAnime(req, res) {
     //console.log(genres);
     // console.log(user);
     let index = user.animes.findIndex((anime) => anime.title === title);
-    console.log(index);
     if (index <= -1) {
       //anime is not in the list and needs to be added
       const animeObj = {
@@ -53,12 +52,10 @@ async function removeAnime(req, res) {
     //const animeToDelete = user.animes.find((x) => x.id === itemId);
     //console.log(animeToDelete);
 
-    console.log(user.animes);
     user.animes.splice(
       user.animes.findIndex((el) => el.id === itemId),
       1
     );
-    console.log(user.animes);
     await user.save();
     res.status(201).json(user.animes);
   } catch (error) {
@@ -68,7 +65,6 @@ async function removeAnime(req, res) {
 
 async function updateAnime(req, res) {
   try {
-    console.log("Updating Anime");
     const { id } = req.params;
     const { itemId, userStatus } = req.body.data;
 

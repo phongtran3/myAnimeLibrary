@@ -29,4 +29,4 @@ const animeSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("UserAnime", animeSchema);
+//module.exports = mongoose.model("UserAnime", animeSchema);

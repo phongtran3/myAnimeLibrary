@@ -25,4 +25,4 @@ const mangaSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("userManga", mangaSchema);
+//module.exports = mongoose.model("userManga", mangaSchema);

@@ -33,7 +33,7 @@ async function register(req, res) {
       },
       following: [],
       followers: [],
-      isAdult: true,
+      isAdult: false,
     });
 
     //user.socialMediaHandles.set("github", "phongtran3");
@@ -41,10 +41,8 @@ async function register(req, res) {
 
     user.password = undefined;
     res.status(201).json(newUser);
-    console.log("register try");
   } catch (error) {
     res.status(500).json({ error: error.message });
-    console.log("register catch");
   }
 }
 

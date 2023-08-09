@@ -283,6 +283,7 @@ export default function NavBar() {
 
                                 <Box id="manga-links" sx={{marginTop:"10px", width:"100%",}}>
                                   <Typography 
+                                    to={"/search/manga"}
                                     component={Link} 
                                     onClick={() => {
                                       navigate("/search/manga"); 

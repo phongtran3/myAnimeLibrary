@@ -4,6 +4,7 @@ import { Avatar, Dialog, DialogContent, DialogTitle, List, ListItem, ListItemAva
   Divider, useMediaQuery, IconButton, } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
 export default function Follow({open, handleClose, type, loggedUser, handleFollowUnfollow, arr}) {
     const navigate = useNavigate(); 
@@ -57,7 +58,7 @@ export default function Follow({open, handleClose, type, loggedUser, handleFollo
                       >
                         {/* onClick={(e) => handleFollowUnfollow(e.target.textContent)} */}
                         
-                        <ListItemButton onClick={()=>{navigate(`/user/${user.userName}`); navigate(0)}}>
+                        <ListItemButton component={Link} to={`/user/${user.userName}`} onClick={()=>{navigate(`/user/${user.userName}`); navigate(0)}}>
                           <ListItemAvatar>
                             <Avatar alt="profile picture" src={`https://myanimelibrary.onrender.com/assets/${user.picturePath}`}/>
                           </ListItemAvatar>

@@ -351,7 +351,7 @@ export default function NavBar() {
                         getOptionLabel={(option) => option.userName}
                         renderOption={(props, option) => (
                           <Box component="li" {...props}>
-                            <Avatar src={`https://myanimelibrary.onrender.com/assets/${option.picturePath}`}/>&nbsp;{option.userName}
+                            <Avatar sx={{marginRight: "1rem"}} src={`https://myanimelibrary.onrender.com/assets/${option.picturePath}`}/>&nbsp;{option.userName}
                           </Box>
                         )}
                         size='small'

@@ -237,7 +237,7 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                     }}
                 >
                     {loggedUser && loggedUser.userName  === user.userName ? 
-                        <Button onClick={() => {navigate('/settings')}}>Edit Profile</Button> 
+                        <Button component={Link} to={'/settings'} onClick={() => {navigate('/settings')}}>Edit Profile</Button> 
                         : 
                         <Button onClick={(e) => handleFollowUnfollow(user._id)} >
                             {isFollowing ? "Unfollow" : "Follow"}

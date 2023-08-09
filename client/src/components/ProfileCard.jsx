@@ -25,7 +25,7 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
         }
         else {
             await axios.patch(
-                `http://localhost:5000/users/${loggedUser._id}/${userId}`,
+                `https://myanimelibrary.onrender.com/users/${loggedUser._id}/${userId}`,
                 {data: null},
                 {headers: { Authorization: `${token}`, "Content-Type": "application/json",}}
             ).then(res => {
@@ -107,7 +107,7 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                         }
                     }}
                 >
-                    <Avatar sx={{ width: 150, height: 150, margin: "1em auto 0" }} src={`http://localhost:5000/assets/${user.picturePath}`}/>
+                    <Avatar sx={{ width: 150, height: 150, margin: "1em auto 0" }} src={`https://myanimelibrary.onrender.com/assets/${user.picturePath}`}/>
                     <Typography variant='h5' mt="0.5em" fontWeight="bold" >{`${user.firstName} ${user.lastName}`}</Typography>
                     <Typography variant='subtitle1'>{`@${user.userName}`}</Typography>
                 </CardContent>
@@ -288,7 +288,7 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                     }
                 }}
             >
-                <Avatar sx={{ width: 150, height: 150, margin: "0 auto" }} src={`http://localhost:5000/assets/${user.picturePath}`}/>
+                <Avatar sx={{ width: 150, height: 150, margin: "0 auto" }} src={`https://myanimelibrary.onrender.com/assets/${user.picturePath}`}/>
                 {loggedUser && loggedUser.userName  === user.userName ? 
                     <Button onClick={() => {navigate('/settings')}}>Edit Profile</Button> 
                     : 

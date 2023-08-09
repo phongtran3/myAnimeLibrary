@@ -34,9 +34,9 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
     event.preventDefault()
     let url;
     if(format === 'MANGA' || format === 'NOVEL' || format === 'ONE_SHOT')
-      url = `http://localhost:5000/manga`
+      url = `https://myanimelibrary.onrender.com/manga`
     else
-      url = `http://localhost:5000/anime`
+      url = `https://myanimelibrary.onrender.com/anime`
       
     const body = {
       "userId": _id,

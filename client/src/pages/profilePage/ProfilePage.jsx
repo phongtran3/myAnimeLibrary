@@ -23,11 +23,11 @@ export default function ProfilePage() {
 
   async function getUser(){
     await axios.get(
-      `http://localhost:5000/users/${userName}`,
+      `https://myanimelibrary.onrender.com/users/${userName}`,
       {headers: { Authorization: `${token}` }}
     ).then(res =>{
       if(loggedUser){
-        axios.get(`http://localhost:5000/users/${res.data._id}/follower`)
+        axios.get(`https://myanimelibrary.onrender.com/users/${res.data._id}/follower`)
           .then(res =>{
               //Move logged in user to the top of the list
               let tempFollowingArr = res.data[1];

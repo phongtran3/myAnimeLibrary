@@ -147,7 +147,7 @@ export default function Card({item, setAlert, mode, type}) {
                           {item.genres.length > 0 ? 
                             (<Typography variant="body2">
                             Genre: <span>
-                              {item.genres.map(genre => <a key={genre} href={`http://localhost:3000/search/${type}?genres=${genre}`} 
+                              {item.genres.map(genre => <a key={genre} href={`https://myanimelibrary.onrender.com/search/${type}?genres=${genre}`} 
                               style={{textDecoration: 'none', color: palette.primary.dark}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
                             </span>
                             </Typography>

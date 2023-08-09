@@ -150,7 +150,7 @@ export default function MediaList({media, setAlert}) {
                           {anime.genres.length > 0 ? 
                             (<Typography variant="body2">
                             Genre: <span>
-                              {anime.genres.map(genre => <a key={genre} href={`http://localhost:3000/search/anime?genres=${genre}`} 
+                              {anime.genres.map(genre => <a key={genre} href={`https://myanimelibrary.onrender.com/search/anime?genres=${genre}`} 
                               style={{textDecoration: 'none', color: "#673ab7"}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
                             </span>
                             </Typography>

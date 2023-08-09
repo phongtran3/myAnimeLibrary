@@ -59,7 +59,7 @@ export default function Follow({open, handleClose, type, loggedUser, handleFollo
                         
                         <ListItemButton onClick={()=>{navigate(`/user/${user.userName}`); navigate(0)}}>
                           <ListItemAvatar>
-                            <Avatar alt="profile picture" src={`http://localhost:5000/assets/${user.picturePath}`}/>
+                            <Avatar alt="profile picture" src={`https://myanimelibrary.onrender.com/assets/${user.picturePath}`}/>
                           </ListItemAvatar>
                           <ListItemText primary={user.userName} secondary={`${user.firstName} ${user.lastName}`}/>
                         </ListItemButton>

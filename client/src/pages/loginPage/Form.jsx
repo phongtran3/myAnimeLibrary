@@ -57,7 +57,7 @@ const registerSchema = yup.object().shape({
 
     async function login (values, onSubmitProps) {
         await axios.post(
-            "http://localhost:5000/auth/login",
+            "https://myanimelibrary.onrender.com/auth/login",
             JSON.stringify(values), 
             {headers: { 
                 "Content-Type": "application/json",
@@ -92,7 +92,7 @@ const registerSchema = yup.object().shape({
         formData.append('picturePath', values.picture.name);
         console.log(formData);
         console.log(values);
-        await axios.post("http://localhost:5000/auth/register", formData)
+        await axios.post("https://myanimelibrary.onrender.com/auth/register", formData)
             .then(res => {
                 console.log("registering");
                 console.log(res);

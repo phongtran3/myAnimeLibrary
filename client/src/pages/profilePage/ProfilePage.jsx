@@ -80,7 +80,14 @@ export default function ProfilePage() {
   return (
     <Box sx={{height:"100%", width:"100%"}}>
       <NavBar />
-      <Box id="content-container" margin="3em auto 0" maxWidth="1520px" padding="0 3rem 5rem">
+      <Box 
+        id="content-container" 
+        sx={{
+          margin:"3em auto 0",
+          maxWidth:"1520px",
+          height:"100%",
+        }}
+      >
         <Box 
           id="content" 
           display= {desktopScreen ? "grid" : "block"}

@@ -76,12 +76,12 @@ export default function ListPage() {
   const completedArr = returnFilterArray(completed);
   const planningArr = returnFilterArray(planning);
   return (
-    <Box>
+    <Box sx={{height:"100%"}}>
       <NavBar />
       <Box id="content-container" 
         sx={{
           maxWidth:"1520px",
-          margin:"3rem auto",
+          margin:"3rem auto 0 ",
           height:"100%",
         }}
       >
@@ -90,7 +90,7 @@ export default function ListPage() {
             display: desktopScreen ? "grid" : "block",
             gridTemplateColumns:"calc(30% - 30px) 70%",
             gap:"30px",
-            margin:"2rem",
+            margin:"0 2rem",
             //paddingBottom:"1rem",
           }}
         >

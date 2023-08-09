@@ -4,12 +4,14 @@ import {Box, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade, 
 import QuickAction from './QuickAction';
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Card({item, setAlert, mode, type}) {
     const [displayQuickAction, setDisplayQuickAction] = useState(false);
     const tabletScreen = useMediaQuery("(min-width: 630px)");
     const user = useSelector((state) => state.user);
     const { palette } = useTheme();
+    const navigate = useNavigate();
 
     function showBtn(e){
         e.preventDefault();
@@ -147,8 +149,14 @@ export default function Card({item, setAlert, mode, type}) {
                           {item.genres.length > 0 ? 
                             (<Typography variant="body2">
                             Genre: <span>
-                              {item.genres.map(genre => <a key={genre} href={`https://myanimelibrary.onrender.com/search/${type}?genres=${genre}`} 
-                              style={{textDecoration: 'none', color: palette.primary.dark}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
+                              {item.genres.map(genre => <Typography 
+                                component={Link} 
+                                key={genre} 
+                                onClick={() => {
+                                  navigate(`/search/${type}?genres=${genre}`); 
+                                  navigate(0);
+                                }} to={`/search/${type}?genres=${genre}`} 
+                              style={{textDecoration: 'none', color: palette.primary.dark}}>{genre}</Typography> ).reduce((prev,curr) => [prev, ', ', curr])}
                             </span>
                             </Typography>
                             

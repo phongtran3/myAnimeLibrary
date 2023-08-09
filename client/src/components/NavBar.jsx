@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import {setSiteTheme, setLogout } from '../states/index';
 import { 
   AppBar, Box, Typography, Toolbar, Avatar, IconButton, Button, useScrollTrigger, Slide, MenuList, Popper,
-  useTheme, MenuItem, Autocomplete, TextField, useMediaQuery, Paper, Fade, Grow, ClickAwayListener, Link,
+  useTheme, MenuItem, Autocomplete, TextField, useMediaQuery, Paper, Fade, Grow, ClickAwayListener,
   Dialog, DialogContent, InputAdornment
 } from '@mui/material';
 import {Search, Menu, PlayArrow, AutoStories, Logout, Login, Settings, Person, LightMode, Nightlight, Home, Close } from "@mui/icons-material";
 import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
 
 export default function NavBar() {
   const [users, setUsers] = useState([]); //Hold searched users
@@ -136,17 +136,19 @@ export default function NavBar() {
         <AppBar id="header" sx={{backgroundColor: '#212121'}}>
           <Toolbar >
             <Typography
-              color="#e0e0e0"
-              fontWeight="bold" 
-              fontSize="clamp(.5rem, 1.5rem, 2rem)"
-              onClick={() => navigate("/")}
+              component={Link}
               sx={{
                 display: desktopScreen ? "inherit" : "none",
                 "&:hover": {
                   color: '#b39ddb',
                   cursor: "pointer",
                 },
+                color:"#e0e0e0",
+                fontWeight:"600",
+                fontSize:"clamp(.5rem, 1.5rem, 2rem)",
+                textDecoration:"none",
               }}
+              onClick={() => navigate("/")}
             > 
               myAnimeLibrary
             </Typography>
@@ -188,6 +190,7 @@ export default function NavBar() {
                       <Typography 
                         component={Link} 
                         {...bindHover(popupState)} 
+                        to={"/search/anime"}
                         onClick={() => {
                           navigate("/search/anime"); 
                           navigate(0);
@@ -243,57 +246,71 @@ export default function NavBar() {
                               >
                                 {/* <Typography >The content of the Popper.</Typography> */}
                                 <Box id="anime-links" sx={{width:"100%",}} >
-                                  <Link 
+                                  <Typography 
+                                    component={Link} 
+                                    to={"/search/anime"}
                                     onClick={() => {
                                       navigate("/search/anime"); 
                                       navigate(0);
                                     }}
                                   >
                                     <PlayArrow sx={{fontSize:"2rem"}}/><span>Anime Search</span>
-                                  </Link>
+                                  </Typography>
                                   <Box id="secondary-anime-links">
-                                    <Link fontSize={".75rem"} 
+                                    <Typography 
+                                      component={Link} 
+                                      fontSize={".75rem"} 
+                                      to={"/search/anime/trending"}
                                       onClick={() => {
                                         navigate('/search/anime/trending'); 
                                         navigate(0);
                                       }} 
                                     > Trending
-                                    </Link>
-                                    <Link 
+                                    </Typography>
+                                    <Typography 
+                                      component={Link} 
+                                      to={"/search/anime/popularity"}
                                       fontSize={".75rem"} 
                                       onClick={() => {
                                         navigate('/search/anime/popularity'); 
                                         navigate(0);
                                       }} 
                                     > Popular
-                                    </Link>
+                                    </Typography>
                                   </Box>
                                 </Box>
 
                                 <Box id="manga-links" sx={{marginTop:"10px", width:"100%",}}>
-                                  <Link 
+                                  <Typography 
+                                    component={Link} 
                                     onClick={() => {
                                       navigate("/search/manga"); 
                                       navigate(0);
                                     }}
                                   >
                                     <AutoStories sx={{fontSize:"2rem"}}/><span>Manga Search</span>
-                                  </Link>
+                                  </Typography>
                                   <Box id="secondary-manga-links">
-                                    <Link fontSize={".75rem"} 
+                                    <Typography 
+                                      to={'/search/manga/trending'}
+                                      component={Link} 
+                                      fontSize={".75rem"} 
                                       onClick={() => {
                                         navigate('/search/manga/trending'); 
                                         navigate(0);
                                       }} 
                                     > Trending
-                                    </Link>
-                                    <Link fontSize={".75rem"} 
+                                    </Typography>
+                                    <Typography 
+                                      to={'/search/manga/popularity'}
+                                      component={Link} 
+                                      fontSize={".75rem"} 
                                       onClick={() => {
                                         navigate('/search/manga/popularity'); 
                                         navigate(0);
                                       }} 
                                     > Popular
-                                    </Link>
+                                    </Typography>
                                   </Box>
                                 </Box>
                               </Box>

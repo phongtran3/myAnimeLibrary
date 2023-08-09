@@ -39,6 +39,7 @@ export default function useAniMangaSearch(pageNumber) {
   const [loading, setLoading] = useState(true);
   const [hasNextPage, sethasNextPage] = useState(false);
   const [aniMangas, setAniMangas] = useState([]);
+  const [isAdult, setIsAdult] = useState(false);
   const [header, setHeader] = useState("");
 
   const variables = {
@@ -54,9 +55,10 @@ export default function useAniMangaSearch(pageNumber) {
     // console.log(search);
     // console.log(format);
     // console.log(status);
-    // console.log(genres);
+    //console.log(genres);
     //console.log(sort);
     //console.log(type);
+    if (genres.includes("Hentai")) setIsAdult(true);
     setLoading(true);
     const query = `
       query ($page: Int, $perPage: Int, ${
@@ -120,5 +122,5 @@ export default function useAniMangaSearch(pageNumber) {
     fetchData();
   }, [queryParam, pageNumber]);
 
-  return { loading, aniMangas, hasNextPage };
+  return { loading, aniMangas, hasNextPage, isAdult };
 }

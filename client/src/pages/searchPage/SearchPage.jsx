@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react'
 import PropTypes from "prop-types";
 import BrowseFilter from '../../components/BrowseFilter';
 import NavBar from '../../components/NavBar'
-import { Box, ImageList, LinearProgress, useScrollTrigger, Fab, Zoom, Toolbar, Alert, Snackbar } from '@mui/material';
+import { Box, ImageList, LinearProgress, useScrollTrigger, Fab, Zoom, Toolbar, Alert, Snackbar, Typography } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useAniMangaSearch from './useAniMangaSearch';
 import Card from '../../components/Card';
@@ -11,14 +11,14 @@ import { useParams } from "react-router-dom";
 
 export default function SearchPage() {
   const [pageNumber, setPageNumber] = useState(1)
-  const {loading, hasNextPage, aniMangas} = useAniMangaSearch(pageNumber);
+  const {loading, hasNextPage, aniMangas, isAdult} = useAniMangaSearch(pageNumber);
   const [alert, setAlert] = useState("");
   const loggedUser = useSelector((state) => state.user);
   const mode = useSelector((state) => state.mode);
   const params = useParams();
   const type = params.media;
-  
-  //console.log(aniMangas);
+  console.log(isAdult);
+  console.log(aniMangas);
   //console.log(hasNextPage);
   //console.log(pageNumber);
 
@@ -69,7 +69,6 @@ export default function SearchPage() {
       }, [])
 
   //console.log(array);
-
   return (
     <Box>
       <NavBar />
@@ -115,9 +114,28 @@ export default function SearchPage() {
         <Box margin="0 2rem 2rem">
             <BrowseFilter />
         </Box>
-
-        <Box sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
-          <ImageList 
+        <Box id="main-content" sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
+          {isAdult ?
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Typography fontWeight="bold">FOR ADULT CONTENT. PLEASE LOG IN AND GO TO THE SETTING PAGE</Typography>
+            </Box>
+          
+          :
+          
+          aniMangas.length === 0 ?
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Typography fontWeight="bold">NO RESULTS</Typography>
+            </Box>
+            :
+            <ImageList 
             sx={{
               overflowY: "visible !important",
               textAlign: "center", 
@@ -149,7 +167,8 @@ export default function SearchPage() {
                 </div>)
               }
             })}
-          </ImageList>
+          </ImageList>    
+        }
         </Box>
       <div>{loading && <LinearProgress />}</div>
 

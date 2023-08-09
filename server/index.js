@@ -55,6 +55,10 @@ app.use("/auth", authRouter);
 app.use("/anime", animeRouter);
 app.use("/manga", mangaRouter);
 
+app.get("/", (req, res) => {
+  res.send({ message: "Hello World!" });
+});
+
 //MONGOOSE SET UP
 const PORT = process.env.PORT || 5001;
 mongoose.set("strictQuery", false);

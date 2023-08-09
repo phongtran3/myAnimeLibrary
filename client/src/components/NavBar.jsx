@@ -184,6 +184,7 @@ export default function NavBar() {
               {/* BROWSE MENU */}
               <PopupState variant="popper" popupId="browsePopper" >
                   {(popupState) => ( 
+                    <>
                       <Typography 
                         component={Link} 
                         {...bindHover(popupState)} 
@@ -193,6 +194,7 @@ export default function NavBar() {
                         }}
                       >
                         Browse
+                      </Typography>
                       <Popper 
                         {...bindPopper(popupState)} 
                         transition 
@@ -299,7 +301,7 @@ export default function NavBar() {
                           </Fade>
                         )}
                       </Popper>
-                    </Typography>
+                    </>
                   )}
                 </PopupState>
               </Box>

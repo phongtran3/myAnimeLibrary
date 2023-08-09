@@ -339,7 +339,7 @@ export default function NavBar() {
                         size='small'
                         onInputChange={(event) => {handleChange(event.target.value)}}
                         onChange={(event, option) =>{
-                          window.location.href = `https://myanimelibrary.onrender.com/user/${option.userName}`
+                          navigate(`/user/${option.userName}`);
                         }}
                         renderInput={(params) => <TextField variant="outlined" {...params} label="Search Users..." />}
                         PaperComponent={CustomPaper}
@@ -537,7 +537,7 @@ export default function NavBar() {
                 size='small'
                 onInputChange={(event) => {handleChange(event.target.value)}}
                 onChange={(event, option) =>{
-                  window.location.href = `https://myanimelibrary.onrender.com/user/${option.userName}`
+                  navigate(`/user/${option.userName}`);
                 }}
                 PaperComponent={CustomPaper}
                 renderInput={(params) => 

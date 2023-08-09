@@ -45,31 +45,6 @@ export default function SettingPage() {
   const handleShowNewPassword = () => setShowNewPassword(!showNewPassword);
   const handleShowNewConfirmPassword = () => setShowNewConfirmPassword(!showNewConfirmPassword);
 
-  
-
-  
-
-
-  // async function getUser(){
-  //   await axios.get(
-  //     `https://myanimelibrary.onrender.com/users/${userName}`,
-  //     {headers: { Authorization: `${token}` }}
-  //   ).then(res =>{
-  //     console.log(res.data);
-  //     setUser(res.data);
-  //     setNewUserName(res.data.userName);
-  //     setNewFirstName(res.data.firstName);
-  //     setNewLastName(res.data.lastName);
-  //     setNewEmail(res.data.email);
-  //     setNewSocialMedia(res.data.socialMediaHandles)
-  //   }).catch(err => {
-  //     if (err.response){
-  //       console.log(err.response.data);
-  //     }
-  //     console.log(err);
-  //   }) 
-  // }
-
   useEffect(() => {
     //getUser();
     setUser(loggedUser);

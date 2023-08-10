@@ -29,7 +29,7 @@ async function addManga(req, res) {
         userStatus,
         status,
       };
-      user.mangas.push(animeObj);
+      user.mangas.push(mangaObj);
     } else {
       //manga is in the list and userStatus needs to updated
       user.mangas[index].userStatus = userStatus;

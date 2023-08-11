@@ -7,11 +7,14 @@ import axios from 'axios';
 import { setSiteUser } from '../states';
 import Follow from './Follow';
 
-export default function ProfileCard({user, setUser, loggedUser, followersArr, followingArr, desktopScreen}) {
-    const [openAlert, setOpenAlert] = useState(false);
-    const [openFollows, setOpenFollows] = useState(false);
-    const [type, setType] = useState("");
+export default function ProfileCard({openFollows, setOpenFollows, user, setUser, loggedUser, followersArr, followingArr, desktopScreen}) {
+    const { firstName, lastName, animes, mangas, picturePath, socialMediaHandles, following, followers, _id } = user;
+    const { userName } = loggedUser || {}; // This assumes loggedUser might be null or undefined at times
 
+    const [openAlert, setOpenAlert] = useState(false);
+    //const [openFollows, setOpenFollows] = useState(false);
+    const [type, setType] = useState("");
+    
     const token = useSelector((state) => state.token);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -101,8 +104,8 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                         }
                     }}
                 >
-                    <Avatar sx={{ width: 150, height: 150, margin: "1em auto 0" }} src={`https://myanimelibrary.onrender.com/assets/${user.picturePath}`}/>
-                    <Typography variant='h5' mt="0.5em" fontWeight="bold" >{`${user.firstName} ${user.lastName}`}</Typography>
+                    <Avatar sx={{ width: 150, height: 150, margin: "1em auto 0" }} src={`https://myanimelibrary.onrender.com/assets/${picturePath}`}/>
+                    <Typography variant='h5' mt="0.5em" fontWeight="bold" >{`${firstName} ${lastName}`}</Typography>
                     <Typography variant='subtitle1'>{`@${user.userName}`}</Typography>
                 </CardContent>
 
@@ -184,12 +187,12 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                 >   
                 {/* borderTop:"1px solid #9e9e9e"*/}
                     <Box component={Link} to={`/user/${user.userName}/animelist`} sx={{borderRight:"1px solid #9e9e9e", }}>
-                        <Typography variant='h6'>{user.animes.length}</Typography>
+                        <Typography variant='h6'>{animes.length}</Typography>
                         <Typography variant='subtitle1'>Animes</Typography>
                     </Box>
 
                     <Box component={Link} to={`/user/${user.userName}/mangalist`} sx={{}}>
-                        <Typography  variant='h6'>{user.mangas.length}</Typography>
+                        <Typography  variant='h6'>{mangas.length}</Typography>
                         <Typography variant='subtitle1'>Mangas</Typography>
                     </Box>
                     <ButtonBase component="div" sx={{borderRight:"1px solid #9e9e9e"}} 
@@ -285,13 +288,13 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                     }
                 }}
             >
-                <Avatar sx={{ width: 150, height: 150, margin: "0 auto" }} src={`https://myanimelibrary.onrender.com/assets/${user.picturePath}`}/>
+                <Avatar sx={{ width: 150, height: 150, margin: "0 auto" }} src={`https://myanimelibrary.onrender.com/assets/${picturePath}`}/>
                 {loggedUser && loggedUser.userName  === user.userName ? 
                     <Button onClick={() => {navigate('/settings')}}>Edit Profile</Button> 
                     : 
                     <Button onClick={(e) => handleFollowUnfollow(user._id)}>{isFollowing ? "Unfollow" : "Follow"}</Button>
                 }
-                <Typography variant='h5' mt="1rem" fontWeight="bold" >{`${user.firstName} ${user.lastName}`}</Typography>
+                <Typography variant='h5' mt="1rem" fontWeight="bold" >{`${firstName} ${lastName}`}</Typography>
                 <Typography variant='subtitle1'>{`@${user.userName}`}</Typography>
 
                 <Box 
@@ -392,12 +395,12 @@ export default function ProfileCard({user, setUser, loggedUser, followersArr, fo
                     }}
                 >
                     <Box component={Link} to={`/user/${user.userName}/animelist`} sx={{borderLeft: "1px solid #9e9e9e", borderRight:"1px solid #9e9e9e", borderTop:"1px solid #9e9e9e"}}>
-                        <Typography variant='h6'>{user.animes.length}</Typography>
+                        <Typography variant='h6'>{animes.length}</Typography>
                         <Typography variant='subtitle1'>Animes</Typography>
                     </Box>
 
                     <Box component={Link} to={`/user/${user.userName}/mangalist`} sx={{borderRight:"1px solid #9e9e9e", borderTop:"1px solid #9e9e9e"}}>
-                        <Typography  variant='h6'>{user.mangas.length}</Typography>
+                        <Typography  variant='h6'>{mangas.length}</Typography>
                         <Typography variant='subtitle1'>Mangas</Typography>
                     </Box>
                     <ButtonBase component="div" sx={{borderLeft: "1px solid #9e9e9e", borderRight:"1px solid #9e9e9e"}} 

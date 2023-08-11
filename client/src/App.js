@@ -69,11 +69,13 @@ export default function App() {
               path="/settings"
               element={!user ? <Navigate to="/" /> : <SettingPage />}
             />
-            <Route path="user/:userName" element={<ProfilePage />} />
+            <Route
+              path="user/:userName"
+              element={<ProfilePage key={window.location.pathname} />}
+            />
             <Route path="user/:userName/:list" element={<ListPage />} />
             <Route
               path="/search/:media/:sort?/:page?"
-              exact
               element={<SearchPage />}
             />
             {/* <Route path="user/:userName/animelist" element={<ProfilePage />} /> */}

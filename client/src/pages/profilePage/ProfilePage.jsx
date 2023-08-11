@@ -1,20 +1,26 @@
 //Profile page for other users
-import React, {useState, useEffect} from 'react'
-import NavBar from '../../components/NavBar'
-import ProfileCard from '../../components/ProfileCard'
-import Footer from '../../components/Footer';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import axios from 'axios';
-import { Box, Typography, useMediaQuery, useTheme} from "@mui/material";
+import { 
+    Box, 
+    Typography, 
+    useMediaQuery, 
+    useTheme 
+} from "@mui/material";
+
+import NavBar from '../../components/NavBar';
+import ProfileCard from '../../components/ProfileCard';
+import Footer from '../../components/Footer';
 import PreviewList from '../../components/PreviewList';
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
   const [followersArr, setFollowersArr] = useState([]);
   const [followingArr, setFollowingArr] = useState([]);
+  const [openFollows, setOpenFollows] = useState(false);
 
-  //const tabletScreen = useMediaQuery("(min-width: 630px)");
   const desktopScreen = useMediaQuery("(min-width: 1100px)");
 
   const { userName } = useParams();
@@ -23,44 +29,46 @@ export default function ProfilePage() {
   const { palette } = useTheme();
 
   async function getUser(){
-    await axios.get(
-      `https://myanimelibrary.onrender.com/users/${userName}`,
-      {headers: { Authorization: `${token}` }}
-    ).then(res =>{
-      if(loggedUser){
-        axios.get(`https://myanimelibrary.onrender.com/users/${res.data._id}/follower`)
-          .then(res =>{
-              //Move logged in user to the top of the list
-              let tempFollowingArr = res.data[1];
-              let tempFollowerArr = res.data[0]
-              let index = tempFollowingArr.findIndex(item => item._id === loggedUser._id);
-              if(index !== -1){
+    try {
+        // Fetch user details
+        const userResponse = await axios.get(
+            `https://myanimelibrary.onrender.com/users/${userName}`,
+            {headers: { Authorization: `${token}` }}
+        );
+        // If the loggedUser exists, fetch followers and following details
+        if(loggedUser){
+            const followersResponse = await axios.get(
+                `https://myanimelibrary.onrender.com/users/${userResponse.data._id}/follower`
+            );
+            let tempFollowingArr = followersResponse.data[1];
+            let tempFollowerArr = followersResponse.data[0];
+            let index = tempFollowingArr.findIndex(item => item._id === loggedUser._id);
+            if(index !== -1){
                 tempFollowingArr.unshift(tempFollowingArr.splice(index, 1)[0]);
-              }
-              index = tempFollowerArr.findIndex(item => item._id === loggedUser._id);
-              if(index !== -1){
+            }
+            index = tempFollowerArr.findIndex(item => item._id === loggedUser._id);
+            if(index !== -1){
                 tempFollowerArr.unshift(tempFollowerArr.splice(index, 1)[0]);
-              }
-              setFollowersArr(tempFollowerArr);
-              setFollowingArr(tempFollowingArr);
-            
-            }).catch(err => {
-              if (err.response){
-                console.log(err.response.data);
-              }
-            }) 
+            }
+            setFollowersArr(tempFollowerArr);
+            setFollowingArr(tempFollowingArr);
         }
-      setUser(res.data);
-    }).catch(err => {
-      if (err.response){
-        console.log(err.response.data);
-      }
-    }) 
+        setUser(userResponse.data);
+    } catch (err) {
+        if (err.response){
+            console.log(err.response.data);
+        } else {
+            // Log general errors not related to API response, for example network issues
+            console.log(err);
+        }
+    }
   }
 
   useEffect(() => {
+    console.log("Profile Page useEffect")
+    setOpenFollows(false)
     getUser();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userName]); 
 
   if (!user) {
     return null;
@@ -102,8 +110,7 @@ export default function ProfilePage() {
           gridTemplateColumns= "calc(40% - 30px) 60%"
           gap="30px"
         >
-          <Box id="section-1"> 
-            {/* will rename id later */}
+          <Box id="profile-card"> 
               <ProfileCard 
                 user={user}
                 setUser={setUser}
@@ -111,12 +118,14 @@ export default function ProfilePage() {
                 followersArr={followersArr}
                 followingArr={followingArr}
                 desktopScreen={desktopScreen}
+                openFollows={openFollows}
+                setOpenFollows={setOpenFollows}
               />
 
           </Box>
           {/* grid-auto-columns: minmax(8rem, auto);
           grid-auto-flow: column; */}
-          <Box id="section-2" 
+          <Box id="users-lists"
             sx={{
               marginTop: desktopScreen ? null : "1rem",
               "div:not(:first-of-type) > a":{

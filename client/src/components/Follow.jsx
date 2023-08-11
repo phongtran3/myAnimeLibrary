@@ -58,7 +58,7 @@ export default function Follow({open, handleClose, type, loggedUser, handleFollo
                       >
                         {/* onClick={(e) => handleFollowUnfollow(e.target.textContent)} */}
                         
-                        <ListItemButton component={Link} to={`/user/${user.userName}`} onClick={()=>{navigate(`/user/${user.userName}`); navigate(0)}}>
+                        <ListItemButton component={Link} to={`/user/${user.userName}`} >
                           <ListItemAvatar>
                             <Avatar alt="profile picture" src={`https://myanimelibrary.onrender.com/assets/${user.picturePath}`}/>
                           </ListItemAvatar>

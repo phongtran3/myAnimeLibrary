@@ -48,7 +48,6 @@ export default function QuickAction({title, genres, format, coverImage, siteUrl,
       "userStatus": value,
       "status": status
     }
-    
     await axios.post(url, {data: body}, {headers: { Authorization: `${token}` }},)
     .then(res => {
         setAlert(`${title} added to ${list} list`)

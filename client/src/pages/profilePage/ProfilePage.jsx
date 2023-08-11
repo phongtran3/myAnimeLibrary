@@ -78,14 +78,22 @@ export default function ProfilePage() {
       
   }
   return (
-    <Box sx={{height:"100%", width:"100%"}}>
+    <>
+    <Box id="page-content"
+      sx={{
+        //height:"100%", 
+        minHeight:"100vh",
+        width:"100%"
+      }}
+    >
       <NavBar />
       <Box 
         id="content-container" 
         sx={{
-          margin:"3em auto 0",
+          margin:"2em auto 0",
           maxWidth:"1520px",
-          height:"100%",
+          //height:"100%",
+          //minHeight:"100vh",
         }}
       >
         <Box 
@@ -167,7 +175,8 @@ export default function ProfilePage() {
           </Box>
         </Box>
       </Box>
-      <Footer/>
     </Box>
+    <Footer/>
+    </>
   )
 }

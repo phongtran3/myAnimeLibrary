@@ -8,6 +8,7 @@ export default function Footer() {
     <Box 
         id="footer" 
         sx={{
+            marginTop:"1rem",
             backgroundColor:"#424242",
             textAlign:"center",
             padding:"1rem 0",

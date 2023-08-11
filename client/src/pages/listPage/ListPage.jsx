@@ -76,13 +76,21 @@ export default function ListPage() {
   const completedArr = returnFilterArray(completed);
   const planningArr = returnFilterArray(planning);
   return (
-    <Box sx={{height:"100%"}}>
+    <>
+    <Box 
+      id="page-content"
+      sx={{
+        //height:"100%", 
+        minHeight:"100vh",
+        width:"100%"
+      }}
+    >
       <NavBar />
       <Box id="content-container" 
         sx={{
           maxWidth:"1520px",
-          margin:"3rem auto 0 ",
-          height:"100%",
+          margin:"2rem auto 0 ",
+          //height:"100%",
         }}
       >
         <Box id="content" 
@@ -185,8 +193,10 @@ export default function ListPage() {
           </Box>
         </Box>
       </Box>
-      <Footer/>
     </Box>
+    <Footer/>
+
+  </>
   )
 }
 

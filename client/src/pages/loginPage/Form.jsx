@@ -104,6 +104,7 @@ const registerSchema = yup.object().shape({
     async function handleFormSubmit (values, onSubmitProps) {
         if(isLogin) await login(values, onSubmitProps);
         if(!isLogin) await register(values, onSubmitProps);
+        setError("");
     }
     return (
         <>

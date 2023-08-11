@@ -1,24 +1,56 @@
-//Navagation bar
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import {setSiteTheme, setLogout } from '../states/index';
+import { setSiteTheme, setLogout } from '../states/index';
+import { useNavigate, Link } from 'react-router-dom';
 import { 
-  AppBar, Box, Typography, Toolbar, Avatar, IconButton, Button, useScrollTrigger, Slide, MenuList, Popper,
-  useTheme, MenuItem, Autocomplete, TextField, useMediaQuery, Paper, Fade, Grow, ClickAwayListener,
-  Dialog, DialogContent, InputAdornment
+  AppBar, 
+  Avatar,
+  Autocomplete,
+  Box,
+  Button,
+  ClickAwayListener,
+  Dialog,
+  DialogContent,
+  Fade,
+  Grow,
+  IconButton,
+  InputAdornment,
+  MenuList,
+  MenuItem,
+  Paper,
+  Popper,
+  Slide,
+  TextField,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+  useScrollTrigger,
+  useTheme 
 } from '@mui/material';
-import {Search, Menu, PlayArrow, AutoStories, Logout, Login, Settings, Person, LightMode, Nightlight, Home, Close } from "@mui/icons-material";
-import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
+
+import {
+  AutoStories,
+  Close,
+  Home,
+  LightMode,
+  Login,
+  Logout,
+  Menu,
+  Nightlight,
+  Person,
+  PlayArrow,
+  Search,
+  Settings
+} from "@mui/icons-material";
+
+import PopupState, { bindHover, bindPopper } from "material-ui-popup-state";
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 export default function NavBar() {
   const [users, setUsers] = useState([]); //Hold searched users
   const [openMenu, setOpenMenu] = useState(false) ;
   const [openDialog, setOpenDialog] = useState(false);
 
-  //const mobileScreen = useMediaQuery("(min-width: 320px)");
   const tabletScreen = useMediaQuery("(min-width: 630px)");
   const desktopScreen = useMediaQuery("(min-width: 1100px)");
   const dispatch = useDispatch();
@@ -27,12 +59,6 @@ export default function NavBar() {
   const trigger = useScrollTrigger();
 
   const { palette } = useTheme();
-  const neutralLight = palette.neutral.light;
-  const dark = palette.neutral.dark;
-  const background = palette.background.default;
-  const primaryLight = palette.primary.light;
-  const alt = palette.background.alt;
-  const primaryMain = palette.primary.main
 
   const anchorRef = useRef(null);
   function handleOpenMenu(){
@@ -64,13 +90,12 @@ export default function NavBar() {
   }
 
   useEffect(()=>{
-    //console.log("useEffect");
+    console.log("useEffect");
     window.addEventListener("resize", handleResize)
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  })
+  },[])
 
   const prevOpen = useRef(openMenu);
   useEffect(() => {
@@ -111,13 +136,12 @@ export default function NavBar() {
     })
   }
 
-
   //Drop down menu for search bar (desktop)
   const CustomPaper = (props) => {
     return (
     <Paper 
       sx={{
-        backgroundColor: background,
+        backgroundColor: palette.background.default,
         "& li:hover":{
           backgroundColor: '#673ab7',
         }
@@ -147,7 +171,7 @@ export default function NavBar() {
                 textDecoration:"none",
               }}
               to={"/"}
-              onClick={() => navigate("/")}
+              //onClick={() => navigate("/")}
             > 
               myAnimeLibrary
             </Typography>

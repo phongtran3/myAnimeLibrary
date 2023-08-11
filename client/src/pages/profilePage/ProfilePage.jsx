@@ -98,7 +98,7 @@ export default function ProfilePage() {
       <Box 
         id="content-container" 
         sx={{
-          margin:"2em auto 0",
+          margin: desktopScreen ? "2rem auto 0" : "2rem",
           maxWidth:"1520px",
           //height:"100%",
           //minHeight:"100vh",

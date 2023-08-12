@@ -122,19 +122,24 @@ export default function NavBar() {
     setOpenDialog(false);
   }
 
-  async function handleChange(search){
-    await axios.get(
-      `https://myanimelibrary.onrender.com/users/`,
-      {params: {"search": search},
-      headers: {"Content-Type": "application/json", 'Accept': 'application/json',}},
-    ).then(res =>{
-      //console.log(res.data);
-      setUsers(res.data);
-    }).catch(err => {
-      if (err.response){
-      }
-    })
-  }
+  async function handleChange(search) {
+    try {
+        const response = await axios.get('https://myanimelibrary.onrender.com/users/', {
+            params: { "search": search },
+            headers: { 
+                "Content-Type": "application/json", 
+                'Accept': 'application/json' 
+            },
+        });
+        setUsers(response.data);
+    } catch (err) {
+        if (err.response) {
+            // Handle error here, e.g.:
+            console.error(err.response.data);
+        }
+    }
+}
+
 
   //Drop down menu for search bar (desktop)
   const CustomPaper = (props) => {
@@ -200,8 +205,8 @@ export default function NavBar() {
             > 
               {user && tabletScreen && (
                 <>
-                <Typography component={Link} to={`/user/${user.userName}/animelist`} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}} >Anime List</Typography>
-                <Typography component={Link} to={`/user/${user.userName}/mangalist`} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}} >Manga List</Typography>
+                <Typography component={Link} to={`/user/${user.userName}/animelist`}>Anime List</Typography>
+                <Typography component={Link} to={`/user/${user.userName}/mangalist`}>Manga List</Typography>
                 </>
               )}
                 
@@ -214,10 +219,6 @@ export default function NavBar() {
                         component={Link} 
                         {...bindHover(popupState)} 
                         to={"/search/anime"}
-                        onClick={() => {
-                          navigate("/search/anime"); 
-                          navigate(0);
-                        }}
                       >
                         Browse
                       </Typography>

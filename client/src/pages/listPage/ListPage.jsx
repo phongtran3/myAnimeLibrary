@@ -27,31 +27,28 @@ export default function ListPage() {
   const type = list === 'animelist' ? 'anime' : 'manga'
   const desktopScreen = useMediaQuery("(min-width: 1100px)");
 
-  async function getUser(){
-    await axios.get(
-      `https://myanimelibrary.onrender.com/users/${userName}`,
-      {headers: { Authorization: `${token}` }}
-    ).then(res =>{
-      setUser(res.data);
-      if (type === 'anime'){
-        setWatching(res.data.animes.filter(anime => anime.userStatus === 'WATCHING'))
-        setCompleted(res.data.animes.filter(anime => anime.userStatus === 'COMPLETED'))
-        setPlanning(res.data.animes.filter(anime => anime.userStatus === 'PLANNING'))
-      }else{
-        setWatching(res.data.mangas.filter(manga => manga.userStatus === 'READING'))
-        setCompleted(res.data.mangas.filter(manga => manga.userStatus === 'COMPLETED'))
-        setPlanning(res.data.mangas.filter(manga => manga.userStatus === 'PLANNING'))
-      }
-      //setUserList(type === 'anime' ? res.data.animes : res.data.mangas);
-    }).catch(err => {
-      if (err.response){
-        console.log(err.response.data);
-      }
-    }) 
-  }
+  async function getUser() {
+    try {
+        const response = await axios.get(
+            `https://myanimelibrary.onrender.com/users/${userName}`,
+            { headers: { Authorization: token } }
+        );
+        setUser(response.data);
+        const array = type === 'anime' ? response.data.animes : response.data.mangas;
+        setWatching(array.filter(item => item.userStatus === (type === 'anime' ? 'WATCHING' : 'READING')));
+        setCompleted(array.filter(item => item.userStatus === 'COMPLETED'));
+        setPlanning(array.filter(item => item.userStatus === 'PLANNING'));
+    } catch (err) {
+        if (err.response) {
+            console.error(err.response.data);
+        }
+    }
+}
+
+
   useEffect(() => {
     getUser();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [list]);
 
   if (!user) {
     return null;

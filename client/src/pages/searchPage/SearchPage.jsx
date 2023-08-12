@@ -17,14 +17,8 @@ export default function SearchPage() {
   const mode = useSelector((state) => state.mode);
   const params = useParams();
   const type = params.media;
-  //console.log(isAdult);
-  //console.log(aniMangas);
-  //console.log(hasNextPage);
-  //console.log(pageNumber);
 
   const observer = useRef()
-  //console.log(observer);
-
   const lastAniMangaEleRef = useCallback(node => {
     if (loading) return
     if (observer.current) observer.current.disconnect()

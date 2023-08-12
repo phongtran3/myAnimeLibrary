@@ -40,7 +40,6 @@ export default function useAniMangaSearch(pageNumber) {
   const [hasNextPage, sethasNextPage] = useState(false);
   const [aniMangas, setAniMangas] = useState([]);
   const [isAdult, setIsAdult] = useState(false);
-  const [header, setHeader] = useState("");
 
   const variables = {
     page: pageNumber,
@@ -101,24 +100,22 @@ export default function useAniMangaSearch(pageNumber) {
     `;
     //console.log(query);
     const fetchData = async () => {
-      //console.log("fetch data");
-      await axios
-        .post("https://graphql.anilist.co", { query, variables })
-        .then((res) => {
-          //console.log(res);
-          //console.log(res.data.data.Page.pageInfo.hasNextPage);
-          setAniMangas((prevAniMangas) => {
-            return [
-              ...new Set([...prevAniMangas, ...res.data.data.Page.media]),
-            ];
-          });
-          sethasNextPage(res.data.data.Page.pageInfo.hasNextPage);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
+      try {
+        const response = await axios.post("https://graphql.anilist.co", {
+          query,
+          variables,
         });
+        const newAniMangas = response.data.data.Page.media;
+        setAniMangas((prevAniMangas) => [
+          ...new Set([...prevAniMangas, ...newAniMangas]),
+        ]);
+        sethasNextPage(response.data.data.Page.pageInfo.hasNextPage);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
     };
+
     fetchData();
   }, [queryParam, pageNumber]);
 

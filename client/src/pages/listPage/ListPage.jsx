@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-import { Box, Typography, ImageList, useMediaQuery, Avatar} from "@mui/material";
+import { Box, Typography, ImageList, useMediaQuery, Avatar, LinearProgress} from "@mui/material";
 import axios from 'axios';
 import NavBar from '../../components/NavBar'
 import ListsFilter from '../../components/ListsFilter';
@@ -13,6 +13,7 @@ export default function ListPage() {
   const [watching, setWatching] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [planning, setPlanning] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [filters, setFilters] = useState({
     query: '',
@@ -21,6 +22,7 @@ export default function ListPage() {
     genres: [],
     sort: ''
   });
+
   //const [userList, setUserList] = useState([]);
   const { userName, list } = useParams();
   const token = useSelector((state) => state.token);
@@ -38,6 +40,8 @@ export default function ListPage() {
         setWatching(array.filter(item => item.userStatus === (type === 'anime' ? 'WATCHING' : 'READING')));
         setCompleted(array.filter(item => item.userStatus === 'COMPLETED'));
         setPlanning(array.filter(item => item.userStatus === 'PLANNING'));
+        setLoading(false);
+
     } catch (err) {
         if (err.response) {
             console.error(err.response.data);
@@ -47,13 +51,18 @@ export default function ListPage() {
 
 
   useEffect(() => {
+    setLoading(true);
     getUser();
+    setFilters({
+      query: '',
+      format:'',
+      status: '',
+      genres: [],
+      sort: ''
+    })
   }, [list]);
 
-  if (!user) {
-    return null;
-  }
-
+ 
   function returnFilterArray(array){
     return array.filter(item => (
       (filters.status === "" ? true : item.status === filters.status.toUpperCase()) && 
@@ -72,6 +81,10 @@ export default function ListPage() {
   const watchingArr = returnFilterArray(watching);
   const completedArr = returnFilterArray(completed);
   const planningArr = returnFilterArray(planning);
+
+  if (!user) {
+    return null;
+  }
   return (
     <>
     <Box 
@@ -83,7 +96,10 @@ export default function ListPage() {
       }}
     >
       <NavBar />
-      <Box id="content-container" 
+      {loading ? (
+            <LinearProgress sx={{marginTop:"1rem"}}></LinearProgress>
+        ) : (
+        <Box id="content-container" 
         sx={{
           maxWidth:"1520px",
           margin:"2rem auto 0 ",
@@ -112,9 +128,6 @@ export default function ListPage() {
               type={type} 
               filters={filters} 
               setFilters={setFilters} 
-              setCompleted={setCompleted} 
-              setWatching={setWatching} 
-              setPlanning={setPlanning}
             />
           </Box>
 
@@ -189,7 +202,7 @@ export default function ListPage() {
 
           </Box>
         </Box>
-      </Box>
+      </Box>)}
     </Box>
     <Footer/>
 

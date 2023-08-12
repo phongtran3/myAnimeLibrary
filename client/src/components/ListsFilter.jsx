@@ -66,6 +66,7 @@ export default function ListsFilter({type, filters, setFilters}) {
         id="checkboxes-genres" 
         options={genreCollection} 
         //value={searchGenre} 
+        value={filters.genres ? filters.genres : null} 
         onChange={(e, newValue) => {setFilters(prevState => ({
             ...prevState,
             genres: newValue
@@ -73,23 +74,12 @@ export default function ListsFilter({type, filters, setFilters}) {
         }}
         disableCloseOnSelect
         getOptionLabel={(option) => option}
-        // renderOption={(props, option, { selected }) => (
-        //   <li {...props}>
-        //     <Checkbox
-        //       icon={icon}
-        //       checkedIcon={checkedIcon}
-        //       style={{ marginRight: 4 }}
-        //       checked={selected}
-        //     />
-        //     {option}
-        //   </li>
-        // )}
         renderInput={(params) => (
             <TextField {...params} label={`Select Genre`}/>
         )}
         renderTags={(value, getTagProps) => {
           const numTags = value.length;
-          const limitTags = 3;
+          const limitTags = 2;
           return (
             <>
             {value.slice(0, limitTags).map((option, index) => (
@@ -103,17 +93,19 @@ export default function ListsFilter({type, filters, setFilters}) {
             </>
           );
         }}
+        sx={{
+          "div > .MuiInputBase-root":{
+            paddingRight:"39px !important",
+          },
+        }}
       />    
 
       {/*FORMAT */}
       <Autocomplete
           options={type === 'anime' ? animeFormat : mangaFormat}
           getOptionLabel={(option) => option}
-          //defaultValue=""
-          //value={filters.format ? filters.format : null} 
-          //inputValue={filters.format ? filters.format : ""}
+          value={filters.format ? filters.format : null} 
           onInputChange={handleNewFormatInput}
-          //isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
           renderInput={(params) => 
@@ -131,14 +123,11 @@ export default function ListsFilter({type, filters, setFilters}) {
       <Autocomplete
           options={status}
           getOptionLabel={(option) => option}
-          //defaultValue=""
-          //value={filters.format ? filters.format : null} 
-          //inputValue={filters.format ? filters.format : ""}
+          value={filters.status ? filters.status : null} 
           onInputChange={(event, newInputValue) => {setFilters(prevState =>({
             ...prevState,
             status: newInputValue
           }))}}
-          //isOptionEqualToValue={(option, value) => option === value}
           disablePortal
           id="combo-box-demo"
           renderInput={(params) => 
@@ -156,9 +145,7 @@ export default function ListsFilter({type, filters, setFilters}) {
       <Autocomplete
           options={sortCollection}
           getOptionLabel={(option) => option}
-          //defaultValue=""
-          //value={filters.format ? filters.format : null} 
-          //inputValue={filters.format ? filters.format : ""}
+          value={filters.sort ? filters.sort : null} 
           onInputChange={(event, newInputValue) => {setFilters(prevState =>({
             ...prevState,
             sort: newInputValue

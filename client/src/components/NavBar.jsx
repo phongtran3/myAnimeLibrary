@@ -64,7 +64,7 @@ export default function NavBar() {
   const anchorRef = useRef(null);
   
   const source = axios.CancelToken.source();  // Source for axios request cancellation
-  
+
   function handleOpenMenu(){
     setOpenMenu((prevOpen) => !prevOpen);
   };
@@ -204,9 +204,6 @@ export default function NavBar() {
     )
   };
 
-  useEffect(()=>{
-    console.log("navbar");
-  })
   return (
     <>
       <Slide appear={false} direction="down" in={!trigger}>

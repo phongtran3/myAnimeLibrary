@@ -1,17 +1,40 @@
-import React, {useState} from 'react'
-import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
-import {Box, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade, useMediaQuery, useTheme } from '@mui/material';
-import QuickAction from './QuickAction';
+import React, { useState } from 'react';
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import PopupState, { bindHover, bindPopper } from "material-ui-popup-state";
+import { 
+    Box, 
+    ImageListItem, 
+    ImageListItemBar, 
+    Typography, 
+    Paper, 
+    Popper, 
+    Fade, 
+    useMediaQuery, 
+    useTheme 
+} from '@mui/material';
+
+import QuickAction from './QuickAction';
+
 
 export default function Card({item, setAlert, type}) {
+  const {
+      id,
+      siteUrl,
+      coverImage,
+      title,
+      genres,
+      format,
+      status,
+      averageScore,
+      episodes,
+      duration
+    } = item;
+    const titleText = title.english || title.romaji;
     const [displayQuickAction, setDisplayQuickAction] = useState(false);
     const tabletScreen = useMediaQuery("(min-width: 630px)");
     const user = useSelector((state) => state.user);
     const { palette } = useTheme();
-    const navigate = useNavigate();
 
     function showBtn(e){
         e.preventDefault();
@@ -21,31 +44,47 @@ export default function Card({item, setAlert, type}) {
         e.preventDefault();
         setDisplayQuickAction(false);
     }
+
+    const RenderGenres = () => {
+      return genres.length > 0 ? 
+        genres.map(genre => (
+          <Typography 
+              component={Link} 
+              key={genre} 
+              to={`/search/${type}?genres=${genre}`} 
+              sx={{textDecoration: 'none', color: palette.primary.dark}}
+          >
+              {genre}
+          </Typography>
+        )).reduce((prev, curr) => [prev, ', ', curr]) 
+        : null;
+      };
+
     return (  
         <PopupState 
-            key={item.id} 
+            key={id} 
             variant="popper" 
-            popupId="demoPopper"
+            popupId="dataPopper"
         >
             {(popupState) => (
                 <ImageListItem 
                     onMouseEnter={(e) => showBtn(e)}
                     onMouseLeave={(e) => hideBtn(e)}
-                    key={item.id}
+                    key={id}
                     {...bindHover(popupState)} 
                     component={Link} 
-                    to={item.siteUrl}
+                    to={siteUrl}
                     target="_blank" rel="noopener noreferrer" 
                 >
                     <img
-                        src={item.coverImage.extraLarge}
-                        srcSet={item.coverImage.extraLarge}
-                        alt={item.title.english === null ? item.title.romaji : item.title.english}
+                        src={coverImage.extraLarge}
+                        srcSet={coverImage.extraLarge}
+                        alt={titleText}
                         loading="lazy"
                         style={{borderRadius: "0.375rem", width: "100%", height: "100%"}}
                     />
                 <ImageListItemBar 
-                    title={item.title.english === null ? item.title.romaji : item.title.english} 
+                    title={titleText} 
                 />
                 {user && displayQuickAction &&
                     <Popper 
@@ -59,15 +98,15 @@ export default function Card({item, setAlert, type}) {
                       ]}
                       {...bindPopper(popupState)} 
                     >
-                            <QuickAction 
-                                setAlert={setAlert}
-                                title={item.title.english === null ? item.title.romaji : item.title.english}
-                                genres={item.genres}
-                                format={item.format}
-                                coverImage={item.coverImage.large}
-                                siteUrl={item.siteUrl}
-                                status={item.status}
-                            />
+                      <QuickAction 
+                          setAlert={setAlert}
+                          title={titleText}
+                          genres={genres}
+                          format={format}
+                          coverImage={coverImage.large}
+                          siteUrl={siteUrl}
+                          status={status}
+                      />
                     </Popper>
                 
                 }
@@ -97,8 +136,8 @@ export default function Card({item, setAlert, type}) {
                                 fontSize: "0.875rem",
                               }
                             },
-                            "& div:not(:first-of-type)":{
-                              ".MuiTypography-root ":{
+                            "& > div:not(:first-of-type)":{
+                              "& > .MuiTypography-root ":{
                                 color: palette.mode === "dark" ? palette.neutral.medium : "#212121",
                               },
                               "span":{
@@ -116,53 +155,41 @@ export default function Card({item, setAlert, type}) {
                         }}
                       >
                         <Box id="title" >
-                          <Typography sx={{color: palette.primary.dark, fontWeight: "600"}}>{item.title.english === null ? item.title.romaji : item.title.english}</Typography>
+                          <Typography sx={{color: palette.primary.dark, fontWeight: "600"}}>{titleText}</Typography>
                         </Box>
 
-                        {item.averageScore &&
+                        {averageScore &&
                         <Box id="score">
-                           <Typography variant='body2'> Average Score: </Typography> <span>{item.averageScore}%</span>
+                           <Typography variant='body2'> Average Score: </Typography> <span>{averageScore}%</span>
                         </Box>
                         }
 
                         <Box id="format">
-                          <Typography variant='body2' >Format: </Typography> <span>{item.format === 'TV' ? "TV Show" : item.format}</span>
+                          <Typography variant='body2' >Format: </Typography> <span>{format === 'TV' ? "TV Show" : format}</span>
                         </Box>
                         
-                        {item.episodes && 
+                        {episodes && 
                           <Box id="episodes">
-                            <Typography variant='body2'>Episodes: </Typography> <span>{item.episodes} Episodes</span>
+                            <Typography variant='body2'>Episodes: </Typography> <span>{episodes} Episodes</span>
                           </Box>
                         }
 
-                        {item.duration &&
+                        {duration &&
                         <Box id="duration">
-                          <Typography variant='body2'>Duration: </Typography> <span>{item.duration} Minutes</span>
+                          <Typography variant='body2'>Duration: </Typography> <span>{duration} Minutes</span>
                         </Box>
                         }
 
                         <Box id="status">
-                          <Typography variant='body2'>Status: </Typography> <span>{item.status[0] + item.status.slice(1).toLowerCase()}</span>
+                          <Typography variant='body2'>Status: </Typography> <span>{status[0] + status.slice(1).toLowerCase()}</span>
                         </Box>
 
                         <Box id="genre">
-                          {item.genres.length > 0 ? 
-                            (<Typography variant="body2">
-                            Genre: <span>
-                              {item.genres.map(genre => <Typography 
-                                component={Link} 
-                                key={genre} 
-                                onClick={() => {
-                                  navigate(`/search/${type}?genres=${genre}`); 
-                                  navigate(0);
-                                }} to={`/search/${type}?genres=${genre}`} 
-                              style={{textDecoration: 'none', color: palette.primary.dark}}>{genre}</Typography> ).reduce((prev,curr) => [prev, ', ', curr])}
-                            </span>
-                            </Typography>
-                            
-                            ) : null
-                          }
+                          <Typography variant="body2">
+                              Genre: <span><RenderGenres /></span>
+                          </Typography>
                         </Box>
+
                       </Paper>
                     </Fade>
                   )}

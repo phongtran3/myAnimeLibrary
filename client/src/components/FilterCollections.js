@@ -31,7 +31,7 @@ const animeFormat = [
 ];
 
 const mangaFormat = ["Manga", "Light Novel", "One Shot"];
-const status = ["Releasing", "Finished"];
+const statusArr = ["Releasing", "Finished"];
 const sortCollection = [
   "Average Score",
   "Popularity",
@@ -40,4 +40,4 @@ const sortCollection = [
   "Date Added",
 ];
 
-export { genreCollection, animeFormat, status, mangaFormat, sortCollection };
+export { genreCollection, animeFormat, statusArr, mangaFormat, sortCollection };

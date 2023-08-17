@@ -1,5 +1,4 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom";
 import { Avatar, Dialog, DialogContent, DialogTitle, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Button, 
   Divider, useMediaQuery, IconButton, } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -7,7 +6,6 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 
 export default function Follow({open, handleClose, type, loggedUser, handleFollowUnfollow, arr}) {
-    const navigate = useNavigate(); 
     const mode = useSelector((state) => state.mode);
     const fullScreen = useMediaQuery('(max-width:500px)');
     return (

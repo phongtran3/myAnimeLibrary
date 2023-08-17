@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSiteTheme, setLogout } from '../states/index';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { 
   AppBar, 
   Avatar,
@@ -47,20 +47,24 @@ import PopupState, { bindHover, bindPopper } from "material-ui-popup-state";
 import axios from 'axios';
 
 export default function NavBar() {
-  const [users, setUsers] = useState([]); //Hold searched users
-  const [openMenu, setOpenMenu] = useState(false) ;
-  const [openDialog, setOpenDialog] = useState(false);
-
-  const tabletScreen = useMediaQuery("(min-width: 630px)");
-  const desktopScreen = useMediaQuery("(min-width: 1100px)");
+  const [users, setUsers] = useState([]); // Users fetched based on search
+  const [timeoutId, setTimeoutId] = useState(null); // ID for debounce timeout
+  const [searchUser, setSearchUser] = useState(""); // Current value for the user search
+  const [openMenu, setOpenMenu] = useState(false);  // Toggle for opening menu
+  const [openDialog, setOpenDialog] = useState(false); // Toggle for opening dialog
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user);
-  const trigger = useScrollTrigger();
-
+  const location = useLocation();
   const { palette } = useTheme();
-
+  const user = useSelector((state) => state.user);
+  const tabletScreen = useMediaQuery("(min-width: 630px)");
+  const desktopScreen = useMediaQuery("(min-width: 1100px)");
+  const trigger = useScrollTrigger();
   const anchorRef = useRef(null);
+  
+  const source = axios.CancelToken.source();  // Source for axios request cancellation
+  
   function handleOpenMenu(){
     setOpenMenu((prevOpen) => !prevOpen);
   };
@@ -90,12 +94,12 @@ export default function NavBar() {
   }
 
   useEffect(()=>{
-    console.log("useEffect");
     window.addEventListener("resize", handleResize)
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   },[])
+
 
   const prevOpen = useRef(openMenu);
   useEffect(() => {
@@ -105,24 +109,45 @@ export default function NavBar() {
     prevOpen.current = openMenu;
   }, [openMenu]);
 
-
   function handleLogOut(){
-    //console.log("Logging Out");
     setOpenMenu(false);
     dispatch(setLogout())
     navigate("/")
   }
   
-  function handleOpenDialog(){
-    //console.log("open");
-    setOpenDialog(true);
-  }
+  function handleOpenDialog(){setOpenDialog(true);}
 
-  function handleCloseDialog(){
-    setOpenDialog(false);
-  }
+  function handleCloseDialog(){setOpenDialog(false);}
 
-  async function handleChange(search) {
+  useEffect(()=>{
+    handleCloseDialog();
+  },[location])
+
+
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
+
+  
+  function debounce(func, wait) {
+    return function executedFunction(...args) {
+      function later(){
+        setTimeoutId(null); // Clear the timeout ID
+        func(...args);
+      };
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      const id = setTimeout(later, wait);
+      setTimeoutId(id); // Store the timeout ID
+    };
+  }
+  
+  const debouncedHandleChange = debounce(async (search) => {
     try {
         const response = await axios.get('https://myanimelibrary.onrender.com/users/', {
             params: { "search": search },
@@ -130,16 +155,38 @@ export default function NavBar() {
                 "Content-Type": "application/json", 
                 'Accept': 'application/json' 
             },
+            cancelToken: source.token
         });
         setUsers(response.data);
     } catch (err) {
-        if (err.response) {
-            // Handle error here, e.g.:
+        if (axios.isCancel(err)) {
+            console.log('Request canceled', err.message);
+        } else {
             console.error(err.response.data);
         }
     }
-}
+  }, 300);
 
+  // async function handleChange(search) {
+  //     try {
+  //         const response = await axios.get('https://myanimelibrary.onrender.com/users/', {
+  //             params: { "search": search },
+  //             headers: { 
+  //                 "Content-Type": "application/json", 
+  //                 'Accept': 'application/json' 
+  //             },
+  //             cancelToken: source.token
+  //         });
+  //         setUsers(response.data);
+  //     } catch (err) {
+  //         if (axios.isCancel(err)) {
+  //             console.log('Request canceled', err.message);
+  //         } else {
+  //             // Handle error here, e.g.:
+  //             console.error(err.response.data);
+  //         }
+  //     }
+  // }
 
   //Drop down menu for search bar (desktop)
   const CustomPaper = (props) => {
@@ -157,6 +204,9 @@ export default function NavBar() {
     )
   };
 
+  useEffect(()=>{
+    console.log("navbar");
+  })
   return (
     <>
       <Slide appear={false} direction="down" in={!trigger}>
@@ -176,7 +226,6 @@ export default function NavBar() {
                 textDecoration:"none",
               }}
               to={"/"}
-              //onClick={() => navigate("/")}
             > 
               myAnimeLibrary
             </Typography>
@@ -222,6 +271,7 @@ export default function NavBar() {
                       >
                         Browse
                       </Typography>
+                      
                       <Popper 
                         {...bindPopper(popupState)} 
                         transition 
@@ -273,32 +323,22 @@ export default function NavBar() {
                                   <Typography 
                                     component={Link} 
                                     to={"/search/anime"}
-                                    onClick={() => {
-                                      navigate("/search/anime"); 
-                                      navigate(0);
-                                    }}
                                   >
                                     <PlayArrow sx={{fontSize:"2rem"}}/><span>Anime Search</span>
                                   </Typography>
+
                                   <Box id="secondary-anime-links">
                                     <Typography 
                                       component={Link} 
                                       fontSize={".75rem"} 
                                       to={"/search/anime/trending"}
-                                      onClick={() => {
-                                        navigate('/search/anime/trending'); 
-                                        navigate(0);
-                                      }} 
                                     > Trending
                                     </Typography>
+
                                     <Typography 
                                       component={Link} 
                                       to={"/search/anime/popularity"}
                                       fontSize={".75rem"} 
-                                      onClick={() => {
-                                        navigate('/search/anime/popularity'); 
-                                        navigate(0);
-                                      }} 
                                     > Popular
                                     </Typography>
                                   </Box>
@@ -308,34 +348,25 @@ export default function NavBar() {
                                   <Typography 
                                     to={"/search/manga"}
                                     component={Link} 
-                                    onClick={() => {
-                                      navigate("/search/manga"); 
-                                      navigate(0);
-                                    }}
                                   >
                                     <AutoStories sx={{fontSize:"2rem"}}/><span>Manga Search</span>
                                   </Typography>
+
                                   <Box id="secondary-manga-links">
                                     <Typography 
                                       to={'/search/manga/trending'}
                                       component={Link} 
                                       fontSize={".75rem"} 
-                                      onClick={() => {
-                                        navigate('/search/manga/trending'); 
-                                        navigate(0);
-                                      }} 
                                     > Trending
                                     </Typography>
+                                    
                                     <Typography 
                                       to={'/search/manga/popularity'}
                                       component={Link} 
                                       fontSize={".75rem"} 
-                                      onClick={() => {
-                                        navigate('/search/manga/popularity'); 
-                                        navigate(0);
-                                      }} 
                                     > Popular
                                     </Typography>
+
                                   </Box>
                                 </Box>
                               </Box>
@@ -370,19 +401,25 @@ export default function NavBar() {
                     {desktopScreen ?
                       // SEARCH BAR
                       <Autocomplete 
+                        size='small'
                         autoHighlight
+                        inputValue={searchUser}
                         options={users || []}
-                        getOptionLabel={(option) => option.userName}
+                        getOptionLabel={(option) => option.userName || ''}
+                        isOptionEqualToValue={(option, value) => option._id === value._id}
                         renderOption={(props, option) => (
                           <Box component="li" {...props}>
                             <Avatar sx={{marginRight: "1rem"}} src={`https://myanimelibrary.onrender.com/assets/${option.picturePath}`}/>&nbsp;{option.userName}
                           </Box>
                         )}
-                        size='small'
-                        onInputChange={(event) => {handleChange(event.target.value)}}
+                        onInputChange={(event, newInputValue) => {
+                          debouncedHandleChange(newInputValue);
+                          setSearchUser(newInputValue);
+                        }}
                         onChange={(event, option) =>{
-                          navigate(`/user/${option.userName}`);
-                          navigate(0);
+                          if(option && option.userName) {
+                            navigate(`/user/${option.userName}`);
+                          }
                         }}
                         renderInput={(params) => <TextField variant="outlined" {...params} label="Search Users..." />}
                         PaperComponent={CustomPaper}
@@ -400,8 +437,10 @@ export default function NavBar() {
                             color: '#e0e0e0', 
                           },                       
                         }}
-                        
-                      /> : 
+                      /> 
+                      
+                      : 
+
                       <IconButton onClick={handleOpenDialog}>
                         <Search sx={{color: '#e0e0e0', fontSize: "30px" }}/>
                       </IconButton>
@@ -505,9 +544,9 @@ export default function NavBar() {
                                 {user ? 
                                   <>
                                     {!desktopScreen && 
-                                    <MenuItem component={Link} to={`/`} onClick={() => {navigate(`/`); navigate(0);}}><Home/><span>Home</span></MenuItem>}
-                                    <MenuItem component={Link} to={`/user/${user.userName}`} onClick={() => {navigate(`/user/${user.userName}`); navigate(0) }}><Person/><span>Profile</span></MenuItem>
-                                    <MenuItem component={Link} to={'/settings'} onClick={() => {navigate('/settings'); navigate(0)}}><Settings/><span>Edit Profile</span></MenuItem>
+                                    <MenuItem component={Link} to={`/`}><Home/><span>Home</span></MenuItem>}
+                                    <MenuItem component={Link} to={`/user/${user.userName}`}><Person/><span>Profile</span></MenuItem>
+                                    <MenuItem component={Link} to={'/settings'}><Settings/><span>Edit Profile</span></MenuItem>
                                     {!tabletScreen && (
                                       <>
                                         <MenuItem onClick={handleOpenDialog}><Search /><span>Search</span></MenuItem>
@@ -516,16 +555,17 @@ export default function NavBar() {
                                         :
                                         <MenuItem onClick={() => dispatch(setSiteTheme())}><Nightlight/><span>Dark Mode</span></MenuItem>
                                         }
-                                        <MenuItem component={Link} to={`/user/${user.userName}/animelist`} onClick={() => {navigate(`/user/${user.userName}/animelist`); navigate(0);}}><PlayArrow/><span>Anime List</span></MenuItem>
-                                        <MenuItem component={Link} to={`/user/${user.userName}/mangalist`} onClick={() => {navigate(`/user/${user.userName}/mangalist`); navigate(0);}}><AutoStories/><span>Manga List</span></MenuItem>
+                                        <MenuItem component={Link} to={`/user/${user.userName}/animelist`}><PlayArrow/><span>Anime List</span></MenuItem>
+                                        <MenuItem component={Link} to={`/user/${user.userName}/mangalist`}><AutoStories/><span>Manga List</span></MenuItem>
                                       </>
                                     )}
                                     <MenuItem onClick={handleLogOut}><Logout/><span>Logout</span></MenuItem>
                                   </>
                                   :
                                   <>
-                                    {!desktopScreen && <MenuItem onClick={() => {navigate(`/`); navigate(0);}}><Home/><span>Home</span></MenuItem>}
-                                    <MenuItem component={Link} to={'/auth'} onClick={() => {navigate('/auth');}}><Login/><span>Login</span></MenuItem>
+                                    {!desktopScreen && 
+                                    <MenuItem component={Link} to={'/'}><Home/><span>Home</span></MenuItem>}
+                                    <MenuItem component={Link} to={'/auth'}><Login/><span>Login</span></MenuItem>
                                     {!tabletScreen && (
                                       <>
                                       <MenuItem onClick={handleOpenDialog}><Search /><span>Search</span></MenuItem>
@@ -570,19 +610,25 @@ export default function NavBar() {
               }}
             >
               <Autocomplete 
-                options={users || []}
+                size='small'
                 autoHighlight
-                getOptionLabel={(option) => option.userName}
+                options={users || []}
+                getOptionLabel={(option) => option.userName || ''}
+                isOptionEqualToValue={(option, value) => option._id === value._id}
                 renderOption={(props, option) => (
                   <Box component="li" {...props}>
                     <Avatar sx={{marginRight: "1rem"}} src={`https://myanimelibrary.onrender.com/assets/${option.picturePath}`}/>&nbsp;{option.userName}
                   </Box>
                 )}
-                size='small'
-                onInputChange={(event) => {handleChange(event.target.value)}}
+                inputValue={searchUser}
+                onInputChange={(event, newInputValue) => {
+                  debouncedHandleChange(newInputValue);
+                  setSearchUser(newInputValue);
+                }}
                 onChange={(event, option) =>{
-                  navigate(`/user/${option.userName}`);
-                  navigate(0);
+                  if(option && option.userName) {
+                    navigate(`/user/${option.userName}`);
+                  }
                 }}
                 PaperComponent={CustomPaper}
                 renderInput={(params) => 
@@ -622,6 +668,7 @@ export default function NavBar() {
               />
             </DialogContent>
           </Dialog>
+          
         </AppBar>
       </Slide>
       <Toolbar />

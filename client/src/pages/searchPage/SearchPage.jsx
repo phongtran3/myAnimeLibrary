@@ -1,24 +1,26 @@
-import React, { useState, useRef, useCallback } from 'react'
-import PropTypes from "prop-types";
-import BrowseFilter from '../../components/BrowseFilter';
-import NavBar from '../../components/NavBar'
+import React, { useState, useRef, useCallback } from 'react';
 import { Box, ImageList, LinearProgress, useScrollTrigger, Fab, Zoom, Toolbar, Alert, Snackbar, Typography } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import useAniMangaSearch from './useAniMangaSearch';
-import Card from '../../components/Card';
+import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams} from "react-router-dom";
+
+import BrowseFilter from '../../components/BrowseFilter';
+import NavBar from '../../components/NavBar';
+import Card from '../../components/Card';
+import useAniMangaSearch from './useAniMangaSearch';
+
 
 export default function SearchPage() {
   const [pageNumber, setPageNumber] = useState(1)
-  const {loading, hasNextPage, aniMangas, isAdult} = useAniMangaSearch(pageNumber);
+  const {loading, hasNextPage, aniMangas, isAdult, queryParam} = useAniMangaSearch(pageNumber, setPageNumber);
   const [alert, setAlert] = useState("");
   const loggedUser = useSelector((state) => state.user);
-  const mode = useSelector((state) => state.mode);
   const params = useParams();
   const type = params.media;
 
   const observer = useRef()
+
   const lastAniMangaEleRef = useCallback(node => {
     if (loading) return
     if (observer.current) observer.current.disconnect()
@@ -28,9 +30,7 @@ export default function SearchPage() {
       }
     })
     if (node) observer.current.observe(node)
-    //console.log(node);
   }, [loading, hasNextPage])
-
 
   function ScrollToTop(props){
     const {children} = props;
@@ -60,9 +60,12 @@ export default function SearchPage() {
           filtered.push(item)
         }
         return filtered
-      }, [])
-    
-  //console.log(array);
+      }, []);
+
+  // useEffect(() => {
+  //   console.log('Component rendered');
+  // });  
+
   return (
     <Box>
       <NavBar />
@@ -78,7 +81,7 @@ export default function SearchPage() {
       >
         <Snackbar 
           id="snackbar"
-          open={alert != "" ? true : false} 
+          open={alert !== "" ? true : false} 
           autoHideDuration={3000}
           sx={{
             top:"5rem !important",
@@ -106,8 +109,9 @@ export default function SearchPage() {
         </Snackbar>
         
         <Box margin="0 2rem 2rem">
-            <BrowseFilter />
+            <BrowseFilter queryParam={queryParam} />
         </Box>
+        {loading ? <LinearProgress /> :
         <Box id="main-content" sx={{ width: 'auto', margin: '0rem 2rem 3rem 2rem'}}>
           {isAdult ?
             <Box
@@ -130,37 +134,37 @@ export default function SearchPage() {
             </Box>
             :
             <ImageList 
-            sx={{
-              overflowY: "visible !important",
-              textAlign: "center", 
-              gap:"3rem 2rem !important",
-              gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr)) !important",
-              '@media (max-width: 500px)': {
-                gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))!important',
-              },
-              "& > div":{
-                display:"flex",
-              }
-            }}
-          >
-            {array.map((item, index) => {
-              if (array.length - 10 === index + 1) {
-                return (
-                  <div ref={lastAniMangaEleRef} key={item.id}>
-                    <Card type={type} mode={mode} item={item} setAlert={setAlert} />
-                  </div>
-                )
-              } else {
-                return (
-                <div key={item.id}>
-                  <Card type={type} mode={mode} item={item} setAlert={setAlert} />
-                </div>)
-              }
-            })}
-          </ImageList>    
-        }
+              sx={{
+                overflowY: "visible !important",
+                textAlign: "center", 
+                gap:"3rem 2rem !important",
+                gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr)) !important",
+                '@media (max-width: 500px)': {
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))!important',
+                },
+                "& > div":{
+                  display:"flex",
+                }
+              }}
+            >
+              {array.map((item, index) => {
+                if (array.length - 10 === index + 1) {
+                  return (
+                    <div ref={lastAniMangaEleRef} key={item.id}>
+                      <Card type={type} item={item} setAlert={setAlert} />
+                    </div>
+                  )
+                } else {
+                  return (
+                  <div key={item.id}>
+                    <Card type={type} item={item} setAlert={setAlert} />
+                  </div>)
+                }
+              })}
+            </ImageList>    
+          }
         </Box>
-      <div>{loading && <LinearProgress />}</div>
+      }
 
       </Box>
 

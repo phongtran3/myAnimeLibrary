@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, TextField, Autocomplete, Chip, useTheme} from "@mui/material";
-import { genreCollection, animeFormat, status, mangaFormat } from './FilterCollections';
+import { genreCollection, animeFormat, statusArr, mangaFormat } from './FilterCollections';
 
 export default function ListsFilter({type, filters, setFilters}) {
   const sortCollection = ["Title", "Last Added"]
@@ -121,7 +121,7 @@ export default function ListsFilter({type, filters, setFilters}) {
 
       {/*STATUS */}
       <Autocomplete
-          options={status}
+          options={statusArr}
           getOptionLabel={(option) => option}
           value={filters.status ? filters.status : null} 
           onInputChange={(event, newInputValue) => {setFilters(prevState =>({

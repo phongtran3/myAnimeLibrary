@@ -7,7 +7,15 @@ import Footer from '../../components/Footer';
 import BrowseFilter from '../../components/BrowseFilter';
 import Card from '../../components/Card';
 import {Link} from 'react-router-dom';
-import { useSelector } from "react-redux";
+
+const queryParam = {
+  search: "",
+  format: "",
+  status: "",
+  genres: [],
+  sort: "",
+  type: "",
+};
 
 export default function IndexPage() {
   const [trendingAnime, setTrendingAnime] = useState([]);
@@ -15,35 +23,35 @@ export default function IndexPage() {
   const [trendingManga, setTrendingManga] = useState([]);
   const [popularManga, setpopularManga] = useState([]);
   const [alert, setAlert] = useState("");
-
   const { palette } = useTheme();
-  const mode = useSelector((state) => state.mode);
 
   const variables = {
     page: 1,
     perPage: 6,
   };
- 
-  useEffect(() => {
-    try{
-        const fetchData = async () => {
+
+ useEffect(() => {
+  const fetchData = async () => {
+      try {
           //All requests made to the AniList GraphQL API must be made as a POST request to 'https://graphql.anilist.co'.
-          const getTrendingAnime = await axios.post('https://graphql.anilist.co', { query: trendingAnimeQuery, variables })
-          const getPopularAnime = await axios.post('https://graphql.anilist.co', { query: popularAnimeQuery, variables })
-          const getTrendingManga = await axios.post('https://graphql.anilist.co', { query: trendingMangaQuery, variables })
-          const getPopularManga = await axios.post('https://graphql.anilist.co', { query: popularMangaQuery, variables })
-          
+          const getTrendingAnime = axios.post('https://graphql.anilist.co', { query: trendingAnimeQuery, variables });
+          const getPopularAnime = axios.post('https://graphql.anilist.co', { query: popularAnimeQuery, variables });
+          const getTrendingManga = axios.post('https://graphql.anilist.co', { query: trendingMangaQuery, variables });
+          const getPopularManga = axios.post('https://graphql.anilist.co', { query: popularMangaQuery, variables });
+
           const results = await Promise.all([getTrendingAnime, getPopularAnime, getTrendingManga, getPopularManga]);
-            setTrendingAnime(results[0].data.data.Page.media);
-            setpopularAnime(results[1].data.data.Page.media);
-            setTrendingManga(results[2].data.data.Page.media);
-            setpopularManga(results[3].data.data.Page.media);
-          }
-        fetchData();
-    }catch(error){
-      console.log("error: " + error.message);
-    }
-  }, [])
+
+          setTrendingAnime(results[0].data.data.Page.media);
+          setpopularAnime(results[1].data.data.Page.media);
+          setTrendingManga(results[2].data.data.Page.media);
+          setpopularManga(results[3].data.data.Page.media);
+      } catch (error) {
+          console.error("Error fetching data:", error.message);
+      }
+  };
+  fetchData();
+}, []);
+
 
   const isLoading = !trendingAnime.length && !popularAnime.length && !trendingManga.length && !popularManga.length
   
@@ -85,7 +93,6 @@ export default function IndexPage() {
         sx={{
           maxWidth:"1520px",
           margin:"2rem auto",
-          //paddingBottom:"1rem",
           "& .MuiTypography-root":{
             display:"flex",
             alignItems:"center",
@@ -101,11 +108,10 @@ export default function IndexPage() {
               marginLeft: "auto",
             }
           }
-
         }}
       > 
         <Box id="filter-wrapper" margin="0 2rem 2rem">
-          <BrowseFilter />
+          <BrowseFilter queryParam={queryParam}/>
         </Box>
 
         {(isLoading) ? <LinearProgress /> : 
@@ -122,8 +128,8 @@ export default function IndexPage() {
                 }
               }
             },
+            //MuiImageList-root
             "& div > ul":{
-              //background:"red" //test
               overflowY: "visible !important",
               textAlign: "center",
               marginTop: "0.5rem",
@@ -150,10 +156,9 @@ export default function IndexPage() {
               <span>Trending Anime</span>
               <div>View All</div>
             </Typography>
-            {/* <MediaList setAlert={setAlert} media={trendingAnime} /> */}
             <ImageList>
               {trendingAnime.map(anime => {
-                return <Card key={anime.id} type={"anime"} mode={mode} setAlert={setAlert} item={anime} />
+                return <Card key={anime.id} type={"anime"} setAlert={setAlert} item={anime} />
               })}
             </ImageList>
           </Box>
@@ -163,10 +168,9 @@ export default function IndexPage() {
               <span>All Time Popular Anime</span>
               <div>View All</div>
             </Typography>
-            {/* <MediaList setAlert={setAlert} media={trendingAnime} /> */}
             <ImageList>
               {popularAnime.map(anime => {
-                return <Card key={anime.id} type={"anime"} mode={mode} setAlert={setAlert} item={anime} />
+                return <Card key={anime.id} type={"anime"} setAlert={setAlert} item={anime} />
               })}
             </ImageList>
           </Box>
@@ -176,10 +180,9 @@ export default function IndexPage() {
               <span>Trending Manga</span>
               <div>View All</div>
             </Typography>
-            {/* <MediaList setAlert={setAlert} media={trendingAnime} /> */}
             <ImageList>
               {trendingManga.map(anime => {
-                return <Card key={anime.id} type={"manga"} mode={mode} setAlert={setAlert} item={anime} />
+                return <Card key={anime.id} type={"manga"} setAlert={setAlert} item={anime} />
               })}
             </ImageList>
           </Box>
@@ -189,13 +192,13 @@ export default function IndexPage() {
               <span>All Time Popular Manga</span>
               <div>View All</div>
             </Typography>
-            {/* <MediaList setAlert={setAlert} media={trendingAnime} /> */}
             <ImageList>
               {popularManga.map(anime => {
-                return <Card key={anime.id} type={"manga"} mode={mode} setAlert={setAlert} item={anime} />
+                return <Card key={anime.id} type={"manga"} setAlert={setAlert} item={anime} />
               })}
             </ImageList>
           </Box>
+
         </Box>
         }
       </Box>

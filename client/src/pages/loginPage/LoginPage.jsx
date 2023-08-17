@@ -1,22 +1,22 @@
 //Login and Registration page for user
 import React from 'react'
-import {Box, useMediaQuery, Typography, Paper } from '@mui/material';
+import {Box, useMediaQuery, Typography} from '@mui/material';
 import Form from './Form';
-import {Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 //Array of images for background. 
 //No copyright intended. All right goes to the orginal owner.
 //May save into folder
-const Images =[
-    'https://i.pinimg.com/originals/bf/16/a6/bf16a658662656209bcaacaa76ca771a.jpg',
-    'https://wallpaperaccess.com/full/4752377.jpg',
-    'https://i.redd.it/1zw15t9s64r91.jpg',
-    'https://rare-gallery.com/uploads/posts/4562780-anime-tokyo-ghoul-kaneki-ken.jpg',
-  ]
+// const Images =[
+//     'https://i.pinimg.com/originals/bf/16/a6/bf16a658662656209bcaacaa76ca771a.jpg',
+//     'https://wallpaperaccess.com/full/4752377.jpg',
+//     'https://i.redd.it/1zw15t9s64r91.jpg',
+//     'https://rare-gallery.com/uploads/posts/4562780-anime-tokyo-ghoul-kaneki-ken.jpg',
+//   ]
 
 
 export default function LoginPage() {
-  const backgroundImgs= Images[Math.floor(Math.random() * Images.length)];
+  //const backgroundImgs= Images[Math.floor(Math.random() * Images.length)];
   const tabletScreen = useMediaQuery("(min-width: 630px)");
   const desktopScreen = useMediaQuery("(min-width: 1040px)");
   return (

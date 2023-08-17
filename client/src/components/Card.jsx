@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export default function Card({item, setAlert, mode, type}) {
+export default function Card({item, setAlert, type}) {
     const [displayQuickAction, setDisplayQuickAction] = useState(false);
     const tabletScreen = useMediaQuery("(min-width: 630px)");
     const user = useSelector((state) => state.user);
@@ -99,7 +99,7 @@ export default function Card({item, setAlert, mode, type}) {
                             },
                             "& div:not(:first-of-type)":{
                               ".MuiTypography-root ":{
-                                color: mode === "dark" ? palette.neutral.medium : "#212121",
+                                color: palette.mode === "dark" ? palette.neutral.medium : "#212121",
                               },
                               "span":{
                                 color: palette.neutral.dark,
@@ -109,7 +109,7 @@ export default function Card({item, setAlert, mode, type}) {
                             "div:last-child":{
                               "& a":{
                                 "&:hover":{
-                                  color:`${mode === "dark" ? "#d1c4e9" : "#b39ddb"} !important`,
+                                  color:`${palette.mode === "dark" ? "#d1c4e9" : "#b39ddb"} !important`,
                                 }
                               }
                             }

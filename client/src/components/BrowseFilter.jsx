@@ -1,70 +1,52 @@
 import React, {useState, useEffect} from 'react'
-import { useParams, useSearchParams, useNavigate} from 'react-router-dom';
-import { Box, Button, TextField, Autocomplete, Chip, Checkbox, useMediaQuery, useTheme} from '@mui/material'
-import { genreCollection, animeFormat, status, mangaFormat, sortCollection } from './FilterCollections';
+import { useParams, useSearchParams, useNavigate, useLocation} from 'react-router-dom';
+import { Box, Button, TextField, Autocomplete, Chip, useMediaQuery, useTheme} from '@mui/material'
+import { genreCollection, animeFormat, statusArr, mangaFormat, sortCollection } from './FilterCollections';
 
-// import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-// import CheckBoxIcon from '@mui/icons-material/CheckBox';
-// const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-// const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
-export default function Filter() {
-  const [searchTitle, setSearchTitle] = useState('');
-  const [searchFormat, setSearchFormat] = useState('');
-  const [searchStatus, setSearchStatus] = useState('');
-  const [searchGenre, setSearchGenre] = useState([]);
-  const [searchSort, setSearchSort] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const navigate  = useNavigate();
+export default function Filter({queryParam}) {
   const params = useParams()
+  const navigate  = useNavigate();
+  const location = useLocation();
   const { palette } = useTheme();
   const tabletScreen = useMediaQuery("(min-width: 630px)");
   const desktopScreen = useMediaQuery("(min-width: 1150px)");
   
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  const { search, status, genres } = queryParam;
+  const type =  params.media ? params.media : 'anime';
+  const sort = params.sort ? params.sort.charAt(0).toUpperCase() + params.sort.slice(1) : searchParams.get('sort');
 
-  //console.log(sort);
-  const type = params.media ? params.media : 'anime';
-  const paramSearch = searchParams.get('search');
-  const paramFormat = searchParams.get('format');
-  const paramStatus = searchParams.get("status");
-  const paramGenres = searchParams.getAll('genres');
+  const initialState ={
+    search: search || '',
+    format: searchParams.get('format') || '',
+    status: status || '',
+    genres: Array.isArray(genres) && genres[0] !== "" ? genres : [],
+    sort: sort ||'',
+  }
 
-  useEffect(() => {
-    //console.log("Filter useEffect");
-    if (paramSearch) setSearchTitle(paramSearch)
-    if (paramFormat) setSearchFormat(paramFormat)
-    if (paramStatus) setSearchStatus(paramStatus)
-    if (paramGenres[0] !== "") setSearchGenre(paramGenres)
-    let sort;
-    if (params.sort){
-      sort = params.sort.charAt(0).toUpperCase() + params.sort.slice(1);
-      setSearchSort(sort);
-    } else if (searchParams.get('sort')){
-      sort = searchParams.get('sort');
-      setSearchSort(sort);
-    }
-
-  },[])
-
+  const [searchFilters, setSearchFilters] = useState(initialState);
 
   function searchMedia(){
-    if(searchTitle.trim() || searchSort.trim() || searchFormat.trim() || searchStatus.trim() || searchGenre.length > 0){
-      //console.log("Search Media");
-      //console.log(searchTitle);
-      //console.log(searchFormat);
-      //console.log(searchStatus);
-      //console.log(searchGenre);
-      console.log(searchSort);
-
-      navigate(
-        `/search/${type}?genres=${searchGenre.join('&genres=')}&format=${searchFormat}&status=${searchStatus}&search=${searchTitle}&sort=${searchSort}`,
-      )
-      navigate(0)
+    let {search, genres, format, status, sort } = searchFilters
+    if(search.trim() || sort.trim() || format.trim() || status.trim() || genres.length > 0){
+      let url = `/search/${type.toLowerCase()}?genres=${genres.join('&genres=')}&format=${format}&status=${status}&search=${search}&sort=${sort}`;
+      let fullPath = decodeURIComponent(`${location.pathname}${location.search}`)
+      if(fullPath === url)
+        return
+      else 
+        navigate(url);
     }else{
-      navigate('/');
+      if(location.pathname === '/')
+        return
+      else
+        navigate('/');
     }
   }
+
+  useEffect(()=>{
+    setSearchFilters(initialState);
+  }, [location.search, location.pathname])
 
   return (
     <>
@@ -76,25 +58,19 @@ export default function Filter() {
         "& > div":{
           flex:"1 0 250px",
           maxWidth: desktopScreen ? "250px" : null,
-          //background: palette.neutral.light,
           borderRadius:"8px",
         },
         "& .MuiInputBase-input, .MuiInputBase-root ":{
           cursor:"pointer",
         },
         "& .MuiOutlinedInput-notchedOutline":{
-          //boxShadow:"rgba(100, 100, 111, 0.2) 0px 3px 4px 0px",
           borderRadius:"8px",
           borderWidth:"2px",
-          //borderColor:"rgba(255, 255, 255, 0.5)",
-          //borderColor:"transparent",
         },
         "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-          //borderColor: "#e0e0e0"
           borderColor: palette.neutral.dark,
         },
         "& .MuiFormLabel-root, .MuiInputBase-root, .MuiInputLabel-root.Mui-focused": {
-          //color: '#e0e0e0', 
           color: palette.neutral.dark,
         }
       }}
@@ -103,13 +79,14 @@ export default function Filter() {
           placeholder='Search...'
           label="Search"
           variant="outlined"
-          value={searchTitle}
+          value={searchFilters.search}
           onKeyDown={(e) => {if(e.key === 'Enter') searchMedia();}}
-          onChange={(e) => {setSearchTitle(e.target.value)}}
-          // sx={{
-          // boxShadow:"rgba(100, 100, 111, 0.2) 0px 3px 4px 0px",
-          //   borderRadius:"8px",
-          // }}
+          onChange={(e) => {
+            setSearchFilters(prevFilters => ({
+              ...prevFilters,
+              search: e.target.value
+            }));
+          }}
         />
 
         {/* GENRES */}
@@ -117,11 +94,14 @@ export default function Filter() {
           disablePortal
           multiple 
           limitTags={2} 
-          id="checkboxes-genres" 
+          id="genre" 
           options={genreCollection} 
-          value={searchGenre} 
+          value={searchFilters.genres} 
           onChange={(e, newValue) => {
-            setSearchGenre(newValue);
+            setSearchFilters(prevFilters => ({
+              ...prevFilters,
+              genres: newValue
+            }));
           }}
           disableCloseOnSelect
           getOptionLabel={(option) => option}
@@ -130,18 +110,6 @@ export default function Filter() {
               paddingRight:"39px !important",
             },
           }}
-          // renderOption={(props, option, { selected }) => (
-          //   <li {...props}>
-          //     <Checkbox
-          //       id="checkbox-popper"
-          //       icon={icon}
-          //       checkedIcon={checkedIcon}
-          //       style={{ marginRight: 4 }}
-          //       checked={selected}
-          //     />
-          //     {option}
-          //   </li>
-          // )}
           renderInput={(params) => (
               <TextField {...params} label={`Select Genre`}/>
           )}
@@ -153,7 +121,7 @@ export default function Filter() {
               {value.slice(0, limitTags).map((option, index) => (
                   <Chip
                   {...getTagProps({ index })}
-                  key={index}
+                  key={option}
                   label={option}
                   />
               ))}
@@ -167,19 +135,17 @@ export default function Filter() {
         <Autocomplete
           options={type === 'anime' ? animeFormat : mangaFormat}
           getOptionLabel={(option) => option}
-          //freeSolo
           defaultValue=""
-          value={searchFormat ? searchFormat : null} 
-          // onChange={(e, newValue) => {
-          //   setSearchFormat(newValue);
-          // }}
-          inputValue={searchFormat ? searchFormat : ""}
+          value={searchFilters.format ? searchFilters.format : null} 
+          inputValue={searchFilters.format ? searchFilters.format : ""}
           onInputChange={(event, newInputValue) => {
-            setSearchFormat(newInputValue);
+            setSearchFilters(prevFilters => ({
+              ...prevFilters,
+              format: newInputValue
+            }));
           }}
-          isOptionEqualToValue={(option, value) => option === value}
           disablePortal
-          id="combo-box-demo"
+          id="format"
           renderInput={(params) => 
             <TextField 
               {...params} 
@@ -191,39 +157,22 @@ export default function Filter() {
             />
         }
         />
-        {/* <TextField
-          value={searchFormat}
-          onChange={(e) => setSearchFormat(e.target.value)}
-          id="outlined-select-format"
-          select
-          label="Select Format"
-          defaultValue=""
-        >
-          {animeFormat.map((option) => (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </TextField> */}
 
         {/*AIRING STATUS */}
         <Autocomplete
-          options={status}
+          options={statusArr}
           getOptionLabel={(option) => option}
-          //freeSolo
           defaultValue=""
-          value={searchStatus ? searchStatus : null} 
-          // onChange={(e, newValue) => {
-          //   setSearchStatus(newValue);
-          // }}
-          inputValue={searchStatus ? searchStatus : ""}
+          value={searchFilters.status ? searchFilters.status : null} 
+          inputValue={searchFilters.status ? searchFilters.status : ""}
           onInputChange={(event, newInputValue) => {
-            setSearchStatus(newInputValue);
+            setSearchFilters(prevFilters => ({
+              ...prevFilters,
+              status: newInputValue
+            }));
           }}
-
-          isOptionEqualToValue={(option, value) => option === value}
           disablePortal
-          id="combo-box-demo"
+          id="status"
           renderInput={(params) => 
             <TextField 
             {...params} 
@@ -235,36 +184,23 @@ export default function Filter() {
             />
           }
         />
-        {/* <TextField
-          value={searchStatus} 
-          onChange={(e) => setSearchStatus(e.target.value)}
-          id="outlined-select-status"
-          select
-          label="Select Status"
-          defaultValue=""
-
-        >
-          <MenuItem value="">Any</MenuItem>
-          {status.map((option) => (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </TextField> */}
 
         {/*Sort */}
         <Autocomplete
           options={sortCollection}
           getOptionLabel={(option) => option}
           defaultValue=""
-          value={searchSort ? searchSort : null} 
-          inputValue={searchSort ? searchSort : ""}
+          value={searchFilters.sort ? searchFilters.sort : null} 
+          inputValue={searchFilters.sort ? searchFilters.sort : ""}
           onInputChange={(event, newInputValue) => {
-            setSearchSort(newInputValue);
+            setSearchFilters(prevFilters => ({
+              ...prevFilters,
+              sort: newInputValue
+            }));
           }}
           isOptionEqualToValue={(option, value) => option === value}
           disablePortal
-          id="combo-box-demo"
+          id="sort"
           renderInput={(params) => 
             <TextField 
               {...params} 
@@ -277,6 +213,7 @@ export default function Filter() {
           }
         />
     </Box>
+
     <Button 
       sx={{
         backgroundColor: palette.primary.main,

@@ -25,7 +25,7 @@ export default function LoginPage() {
         //backgroundColor: "#edf1f5", 
         background:"radial-gradient(circle at 10% 20%, rgb(186, 190, 245) 0%, rgb(192, 192, 245) 33.1%, rgb(218, 203, 246) 90%)",
         width:"100%", 
-        height:"100%",
+        height:"100vh",
         overflow:"auto",
       }}
     >

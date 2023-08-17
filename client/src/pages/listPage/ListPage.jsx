@@ -49,7 +49,6 @@ export default function ListPage() {
     }
 }
 
-
   useEffect(() => {
     setLoading(true);
     getUser();
@@ -97,6 +96,9 @@ export default function ListPage() {
   if (!user) {
     return null;
   }
+
+
+  
   return (
     <>
     <Box 

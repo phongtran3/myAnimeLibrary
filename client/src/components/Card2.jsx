@@ -1,27 +1,21 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 import { useSelector } from "react-redux";
-
 import {  
-    ImageListItem, ImageListItemBar, IconButton , Link, Autocomplete, 
-    ClickAwayListener, Button, Dialog, DialogActions, DialogContent, DialogTitle, 
-    DialogContentText, TextField, Alert, useTheme 
+    ImageListItem, ImageListItemBar, IconButton, Link, Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Alert, useTheme 
 } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import axios from 'axios';
 
-const mangaFormat = ["MANGA", "ONE_SHOT", "NOVEL"];
+const MANGA_FORMATS = ["MANGA", "ONE_SHOT", "NOVEL"];
 
-export default function Card2({item, user}) {
+export default function Card2({ item: { format, _id, coverImage, title, userStatus, siteUrl }, user, setUser }) {
     const { palette } = useTheme();
-    const type = mangaFormat.indexOf(item.format) > -1 ? "manga" : "anime";
-    const userStatuses = [
-        mangaFormat.indexOf(item.format) > -1 ? "READING" : "WATCHING",
-        "COMPLETED",
-        "PLANNING"
-    ]
+    const type = MANGA_FORMATS.includes(format) ? "manga" : "anime";
+    const userStatuses = MANGA_FORMATS.includes(format) ? ["READING", "COMPLETED", "PLANNING"] : ["WATCHING", "COMPLETED", "PLANNING"];
+
     const [displayEditBtn, setDisplayEditBtn] = useState(false);
     const [open, setOpen] = useState(false);
-    const [userStatus, setUserStatus] = useState(item.userStatus)
+    const [currentStatus, setCurrentStatus] = useState(userStatus)
 
     const loggedUser = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
@@ -40,25 +34,35 @@ export default function Card2({item, user}) {
     }
     function handleClose(){
         setOpen(false);
-        setUserStatus(item.userStatus);
+        setCurrentStatus(userStatus);
         setDisplayEditBtn(false);
     }
 
     async function handleDelete(){
         const body = {
-            "itemId": item._id
+            "itemId": _id
         }
         await axios.patch(
             `https://myanimelibrary.onrender.com/${type}/${user._id}/remove`,
             {data: body},
             {headers: { Authorization: `${token}`}}
         ).then(res =>{
-            console.log(res);
-
             setOpen(false);
-            window.location.reload();
+            const updatedArr = res.data.map(el => el.id === _id ? {...el,userStatus: currentStatus } : el)
+            if(type === 'anime'){
+                setUser(prev => ({
+                    ...prev,
+                    animes: updatedArr
+                }))
+            }else{
+                setUser(prev => ({
+                    ...prev,
+                    mangas: updatedArr
+                }))
+            }
         }).catch(err =>{
             if (err.response){
+                console.log(err.response.data.message);
                 //setError(err.response.data.message);
               }
         })
@@ -66,8 +70,8 @@ export default function Card2({item, user}) {
 
     async function handleUpdate(){
         const body = {
-            "userStatus": userStatus,
-            "itemId": item._id
+            "userStatus": currentStatus,
+            "itemId": _id
         }
         await axios.patch(
             `https://myanimelibrary.onrender.com/${type}/${user._id}/update`,
@@ -75,11 +79,22 @@ export default function Card2({item, user}) {
             {headers: { Authorization: `${token}`}}
         ).then(res =>{
             setOpen(false);
-            window.location.reload();
-
+            const updatedArr = res.data.map(el => el.id === _id ? {...el,userStatus: currentStatus } : el)
+            if(type === 'anime'){
+                setUser(prev => ({
+                    ...prev,
+                    animes: updatedArr
+                }))
+            }else{
+                setUser(prev => ({
+                    ...prev,
+                    mangas: updatedArr
+                }))
+            }
         }).catch(err =>{
             if (err.response){
                 //setError(err.response.data.message);
+                console.log(err.response.data.message);
               }
         })
     }
@@ -91,9 +106,8 @@ export default function Card2({item, user}) {
             onMouseLeave={(e) => hideBtn(e)}
         >
             <img
-                src={`${item.coverImage}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${item.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                alt={item.title}
+                src={`${coverImage}?w=164&h=164&fit=crop&auto=format`}
+                alt={title}
                 loading="lazy"
             />
             <Link
@@ -101,14 +115,15 @@ export default function Card2({item, user}) {
                 target="_blank"
                 underline="none"
                 variant="body2"
-                href={item.siteUrl}
+                href={siteUrl}
             >
                 <ImageListItemBar 
-                    title={item.title} 
+                    title={title} 
                     sx={{"& .MuiImageListItemBar-title": {fontSize: ".8rem", whiteSpace: "normal"}}}
                 />
             </Link>
-            {displayEditBtn && (loggedUser && loggedUser._id === user._id) ? 
+
+            {displayEditBtn && (loggedUser && loggedUser._id === user._id) && (
                 <IconButton 
                     sx={{
                         position: "absolute",
@@ -117,14 +132,15 @@ export default function Card2({item, user}) {
                         backgroundColor: "#673ab7",
                         right: "10px",
                         top: "10px",
-                        '&:hover':{
+                        '&:hover': {
                             backgroundColor: "#9575cd"
                         }                    
                     }}
                     onClick={handleOpen}
                 >
                     <MoreHorizIcon />
-                </IconButton > : ""}
+                </IconButton>
+            )}
 
                     <Dialog open={open} onClose={handleClose} id="edit"
                         sx={{
@@ -155,9 +171,8 @@ export default function Card2({item, user}) {
                     >
                         <DialogContent sx={{flex:"0 0 auto"}}>
                             <img 
-                                src={`${item.coverImage}?w=164&h=164&fit=crop&auto=format`}
-                                srcSet={`${item.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                alt={item.title}
+                                src={`${coverImage}?w=164&h=164&fit=crop&auto=format`}
+                                alt={title}
                             />
                         </DialogContent>
                         <DialogContent 
@@ -178,15 +193,15 @@ export default function Card2({item, user}) {
                                 }
                             }}
                         >
-                            <DialogTitle sx={{padding: "0 0 24px 0"}}>{item.title}</DialogTitle>
+                            <DialogTitle sx={{padding: "0 0 24px 0"}}>{title}</DialogTitle>
                             <Autocomplete
                                 options={userStatuses}
                                 getOptionLabel={(option) => option}
                                 defaultValue=""
-                                value={userStatus ? userStatus : null} 
-                                inputValue={userStatus ? userStatus : ""}
+                                value={currentStatus ? currentStatus : null} 
+                                inputValue={currentStatus ? currentStatus : ""}
                                 onInputChange={(event, newInputValue) => {
-                                    setUserStatus(newInputValue);
+                                    setCurrentStatus(newInputValue);
                                 }}
                                 disablePortal
                                 id="user-status"
@@ -220,6 +235,7 @@ export default function Card2({item, user}) {
                             </DialogActions>
                         </DialogContent>
                     </Dialog>
+
         </ImageListItem>
     )
 }

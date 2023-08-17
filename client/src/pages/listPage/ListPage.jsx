@@ -62,6 +62,18 @@ export default function ListPage() {
     })
   }, [list]);
 
+  useEffect(() =>{
+    console.log("listPage Render")
+  })
+
+  useEffect(()=>{
+    if(user){
+      const array = type === 'anime' ? user.animes : user.mangas;
+      setWatching(array.filter(item => item.userStatus === (type === 'anime' ? 'WATCHING' : 'READING')));
+      setCompleted(array.filter(item => item.userStatus === 'COMPLETED'));
+      setPlanning(array.filter(item => item.userStatus === 'PLANNING'));
+    }
+  }, [user])
  
   function returnFilterArray(array){
     return array.filter(item => (
@@ -162,7 +174,7 @@ export default function ListPage() {
                     
                   }}
                 >
-                  {watchingArr.map(item =>  <Card2 user={user} key={item._id} item={item}/>)}
+                  {watchingArr.map(item =>  <Card2 setUser={setUser} user={user} key={item._id} item={item}/>)}
                   </ImageList>
               </>
             </Box>
@@ -178,7 +190,7 @@ export default function ListPage() {
                       gap:"20px !important"
                     }}
                   >
-                    {completedArr.map(item =>  <Card2 user={user} key={item._id} item={item}/>)}
+                    {completedArr.map(item =>  <Card2 setUser={setUser} user={user} key={item._id} item={item}/>)}
                     </ImageList>
                 </>
               </Box>
@@ -194,7 +206,7 @@ export default function ListPage() {
                       gap:"20px !important"
                     }}
                   >
-                    {planningArr.map(item =>  <Card2 user={user} key={item._id} item={item}/>)}
+                    {planningArr.map(item =>  <Card2 setUser={setUser} user={user} key={item._id} item={item}/>)}
                     </ImageList>
                 </>
               </Box>
@@ -209,15 +221,3 @@ export default function ListPage() {
   </>
   )
 }
-
-// Alphabetical
-// if (a.title < b.title) {
-//   return -1;
-// }
-// if (a.title > b.title) {
-//   return 1;
-// }
-// return 0;
-
-// Last added at top
-// return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();

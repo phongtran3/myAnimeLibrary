@@ -98,10 +98,8 @@ export default function ProfilePage() {
       <Box 
         id="content-container" 
         sx={{
-          margin: desktopScreen ? "2rem auto 0" : "2rem",
+          margin: "2rem",
           maxWidth:"1520px",
-          //height:"100%",
-          //minHeight:"100vh",
         }}
       >
         <Box 
@@ -123,8 +121,7 @@ export default function ProfilePage() {
               />
 
           </Box>
-          {/* grid-auto-columns: minmax(8rem, auto);
-          grid-auto-flow: column; */}
+
           <Box id="users-lists"
             sx={{
               marginTop: desktopScreen ? null : "1rem",
@@ -132,14 +129,12 @@ export default function ProfilePage() {
                 display:"flex",
                 alignItems:"center",
                 "& > h3:hover":{
-                    //color: '#673ab7',
                     color: palette.primary.dark
                 },
                 "& > div":{
                   marginLeft: "auto",
                   fontSize:"1rem",
                   "&:hover": {
-                    //color: '#673ab7',
                     color: palette.primary.dark,
                     fontWeight: "600",
                   },

@@ -23,21 +23,11 @@ export default function PreviewList({medium}) {
                     <a href={media.siteUrl} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>
                         <img
                             src={`${media.coverImage}?w=164&h=164&fit=crop&auto=format`}
-                            srcSet={`${media.coverImage}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                             alt={media.title}
                             loading="lazy"
                             style={{borderRadius: "0.375rem", width: "100%", height: "100%"}}
                         />
                     </a>
-                    {/* <Popper {...bindPopper(popupState)} transition placement="right-start">
-                    {({ TransitionProps }) => (
-                        <Fade {...TransitionProps} >
-                            <Paper elevation={6} sx={{padding: ".5em"}}>
-                                <Typography variant='subtitle2'>{media.title}</Typography>
-                            </Paper>
-                        </Fade>
-                    )}
-                    </Popper> */}
                     <Link
                         rel="noopener noreferrer" 
                         target="_blank"

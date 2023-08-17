@@ -55,57 +55,54 @@ const registerSchema = yup.object().shape({
     const tabletScreen = useMediaQuery("(min-width: 630px)");
     const desktopScreen = useMediaQuery("(min-width: 1040px)");
 
-    async function login (values, onSubmitProps) {
-        await axios.post(
-            "https://myanimelibrary.onrender.com/auth/login",
-            JSON.stringify(values), 
-            {headers: { 
-                "Content-Type": "application/json",
-            }}
-        )   
-        .then(res => {
-            onSubmitProps.resetForm();
-            dispatch(
-                setLogin({
-                    user: res.data.user,
-                    token: res.data.token,
-                })
+    async function login(values, onSubmitProps) {
+        try {
+            const response = await axios.post(
+                "https://myanimelibrary.onrender.com/auth/login",
+                JSON.stringify(values), 
+                {
+                    headers: { 
+                        "Content-Type": "application/json",
+                    }
+                }
             );
+            onSubmitProps.resetForm();
+            dispatch(setLogin({
+                user: response.data.user,
+                token: response.data.token,
+            }));
             navigate("/");
-        })
-        .catch(err => {
-            if (err.response){
+        } catch (err) {
+            if (err.response) {
                 setError(err.response.data.message);
             }
-        })
+        }
     }
+    
 
-    async function register (values, onSubmitProps) {
-        const formData = new FormData(); //Allows sending data with image
+    async function register(values, onSubmitProps) {
+        const formData = new FormData();
         for (let value in values) {
             formData.append(value, values[value]);
         }
         formData.append('picturePath', values.picture.name);
-        await axios.post("https://myanimelibrary.onrender.com/auth/register", formData)
-            .then(res => {
-                onSubmitProps.resetForm();
-                setIsLogin("false");
-
-            }).catch(err => {
-                if (err.response){
-                    setError(err.response.data.message);
-                }
-            })
+        try {
+            await axios.post("https://myanimelibrary.onrender.com/auth/register", formData);
+            onSubmitProps.resetForm();
+            setIsLogin("false");
+        } catch (err) {
+            if (err.response) {
+                setError(err.response.data.message);
+            }
+        }
     }
-
-
-
-
+    
     async function handleFormSubmit (values, onSubmitProps) {
         if(isLogin) await login(values, onSubmitProps);
         if(!isLogin) await register(values, onSubmitProps);
         setError("");
     }
+
     return (
         <>
         <Box id="img" 
@@ -189,7 +186,6 @@ const registerSchema = yup.object().shape({
                         </Alert> 
                         : null 
                     }
-                    {/* <Alert severity="error">{error ? error : ""}</Alert> */}
                     <form onSubmit={handleSubmit}>
                         <Box
                             id='form-field-wrapper'
@@ -218,10 +214,6 @@ const registerSchema = yup.object().shape({
                                 "& .MuiFormHelperText-root":{
                                     marginTop: "0px",
                                 },
-                                // "& .MuiInputBase-root:hover": {
-                                //     background: "none",                             
-                                // },
-                                //"& .MuiFilledInput-root.Mui-focused": {backgroundColor: `rgb(255,255,255, .94)`},
                                 "& .MuiSvgIcon-root" :{
                                     color: 'black'
                                 },
@@ -233,7 +225,6 @@ const registerSchema = yup.object().shape({
                             columnGap="10px"
                             rowGap="5px"
                             gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                            //background: rgb(255,255,255, .94)
                         >
                             {!isLogin && (
                                 <>
@@ -460,7 +451,6 @@ const registerSchema = yup.object().shape({
                                     backgroundColor: '#673ab7',
                                     color: "#111111",
                                     "&:hover": { 
-                                        //color: palette.primary.dark, 
                                         backgroundColor: '#9575cd',
                                     },
                                 }}

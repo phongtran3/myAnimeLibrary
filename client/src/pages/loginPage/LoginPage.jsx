@@ -49,7 +49,6 @@ export default function LoginPage() {
          </Typography>
       </Box>
 
-
       <Box id="form-card"
         sx={{
           display:"grid",
@@ -62,12 +61,8 @@ export default function LoginPage() {
           boxShadow: tabletScreen ? "4px 4px 12px 2px rgba(0, 0, 0, 0.6)" : null
         }}
       >
-      
         <Form/>
       </Box >
-
-
-
     </Box>
   )
 }

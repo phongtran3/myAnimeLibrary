@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import axios from 'axios';
 import {
@@ -20,7 +19,6 @@ export default function SettingPage() {
     // Theme, Redux Selectors, and Utilities
     const { palette  } = useTheme();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const token = useSelector((state) => state.token);
     const loggedUser = useSelector((state) => state.user);
     const desktopScreen = useMediaQuery("(min-width: 1100px)");
@@ -174,7 +172,7 @@ export default function SettingPage() {
 
         }}
       >
-        
+
         <Box id="content" 
           sx={{
             display: desktopScreen ? "grid" : "block",

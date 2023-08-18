@@ -1,9 +1,12 @@
-import React, {useState} from 'react'
-import {Box, ImageList, ImageListItem , ImageListItemBar, Typography, Paper, Popper, Fade, useMediaQuery } from '@mui/material';
-import PopupState, {bindHover, bindPopper} from "material-ui-popup-state";
-import QuickAction from './QuickAction';
+import React, { useState } from 'react';
+import { 
+  Box, ImageList, ImageListItem, ImageListItemBar, 
+  Typography, Paper, Popper, Fade, useMediaQuery 
+} from '@mui/material';
+import PopupState, { bindHover, bindPopper } from "material-ui-popup-state";
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
+import QuickAction from './QuickAction';
 
 export default function MediaList({media, setAlert}) {
   const user = useSelector((state) => state.user);
@@ -20,18 +23,11 @@ export default function MediaList({media, setAlert}) {
   }
 
   return (
-    // Large screen gap 72 / small screen 48
     <ImageList 
       sx={{
         overflowY: "visible !important",
         textAlign: "center",
         marginTop: "0.5rem",
-        // '& > a':{
-        //   transition: "transform 250ms"
-        // },
-        // '& > a:hover':{
-        //       transform: "scale(1.05)"
-        // },
         gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))!important',
         '@media (max-width: 545px)': {
           gridTemplateColumns: 'repeat(auto-fill, minmax(185px, 1fr))!important',
@@ -49,44 +45,43 @@ export default function MediaList({media, setAlert}) {
         },
       }}
       >
-      {media.map(anime => (
-        <PopupState key={anime.id} variant="popper" popupId="demoPopper" >
+      {media.map(item => {
+      const { id, coverImage, title, format, genres, siteUrl, status, averageScore, episodes, duration } = item;
+      const displayTitle = displayTitle;
+      return (
+        <PopupState key={id} variant="popper" popupId="demoPopper" >
           {(popupState) => (
             <ImageListItem 
             onMouseEnter={(e) => showBtn(e)}
             onMouseLeave={(e) => hideBtn(e)}
               sx={{ 
-                //width: "225px", 
                 minHeight: "320px !important" 
               }}
-              key={anime.id} 
+              key={id} 
               {...bindHover(popupState)} 
               component={Link} 
-              to={anime.siteUrl} target="_blank" rel="noopener noreferrer" 
+              to={siteUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
             >
                 <img
-                    src={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format`}
-                    srcSet={`${anime.coverImage.large}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                    alt={anime.title.english === null ? anime.title.romaji : anime.title.english}
+                    src={`${coverImage.large}?w=164&h=164&fit=crop&auto=format`}
+                    alt={displayTitle}
                     loading="lazy"
                     style={{borderRadius: "0.375rem", width: "100%", height: "100%"}}
                 />
-              <ImageListItemBar 
-                title={anime.title.english === null ? anime.title.romaji : anime.title.english} 
-                //position="below" 
-                //subtitle={anime.title.english === null ? anime.title.romaji : anime.title.english}
-                //sx={{ maxWidth: "230px"}}
-              />
+              <ImageListItemBar title={displayTitle} />
+        
               {user && displayQuickAction && 
                 <Popper placement="bottom-end" {...bindPopper(popupState)} >
                   <QuickAction 
                     setAlert={setAlert}
-                    title={anime.title.english === null ? anime.title.romaji : anime.title.english}
-                    genres={anime.genres}
-                    format={anime.format}
-                    coverImage={anime.coverImage.large}
-                    siteUrl={anime.siteUrl}
-                    status={anime.status}
+                    title={displayTitle}
+                    genres={genres}
+                    format={format}
+                    coverImage={coverImage.large}
+                    siteUrl={siteUrl}
+                    status={status}
                   />
                 </Popper>
               }
@@ -97,8 +92,7 @@ export default function MediaList({media, setAlert}) {
                 transition 
                 placement="right-start" 
                 sx={{
-                  //margin:"0 1rem !important",
-                  maxWidth:'300px', 
+                  maxWidth:'320px', 
                 }}
               >
                   {({ TransitionProps }) => (
@@ -117,40 +111,40 @@ export default function MediaList({media, setAlert}) {
                         }}
                       >
                         <Box id="title" >
-                          <Typography sx={{color: "#673ab7", fontWeight: "600"}}>{anime.title.english === null ? anime.title.romaji : anime.title.english}</Typography>
+                          <Typography sx={{color: "#673ab7", fontWeight: "600"}}>{displayTitle}</Typography>
                         </Box>
 
-                        {anime.averageScore &&
+                        {averageScore &&
                         <Box id="score">
-                           <Typography variant='body2'> Average Score: </Typography> <span>{anime.averageScore}%</span>
+                           <Typography variant='body2'> Average Score: </Typography> <span>{averageScore}%</span>
                         </Box>
                         }
 
                         <Box id="format">
-                          <Typography variant='body2' sx={{display:"inline-block"}}>Format: </Typography> <span>{anime.format === 'TV' ? "TV Show" : anime.format}</span>
+                          <Typography variant='body2' sx={{display:"inline-block"}}>Format: </Typography> <span>{format === 'TV' ? "TV Show" : format}</span>
                         </Box>
                         
-                        {anime.episodes && 
+                        {episodes && 
                           <Box id="episodes">
-                            <Typography variant='body2'>Episodes: </Typography> <span>{anime.episodes} Episodes</span>
+                            <Typography variant='body2'>Episodes: </Typography> <span>{episodes} Episodes</span>
                           </Box>
                         }
 
-                        {anime.duration &&
+                        {duration &&
                         <Box id="duration">
-                          <Typography variant='body2'>Duration: </Typography> <span>{anime.duration} Minutes</span>
+                          <Typography variant='body2'>Duration: </Typography> <span>{duration} Minutes</span>
                         </Box>
                         }
 
                         <Box id="status">
-                          <Typography variant='body2'>Status: </Typography> <span>{anime.status[0] + anime.status.slice(1).toLowerCase()}</span>
+                          <Typography variant='body2'>Status: </Typography> <span>{status[0] + status.slice(1).toLowerCase()}</span>
                         </Box>
 
                         <Box id="genre">
-                          {anime.genres.length > 0 ? 
+                          {genres.length > 0 ? 
                             (<Typography variant="body2">
                             Genre: <span>
-                              {anime.genres.map(genre => <a key={genre} href={`https://myanimelibrary.onrender.com/search/anime?genres=${genre}`} 
+                              {genres.map(genre => <a key={genre} href={`https://myanimelibrary.onrender.com/search/anime?genres=${genre}`} 
                               style={{textDecoration: 'none', color: "#673ab7"}}>{genre}</a>).reduce((prev,curr) => [prev, ', ', curr])}
                             </span>
                             </Typography>
@@ -166,7 +160,7 @@ export default function MediaList({media, setAlert}) {
           </ImageListItem>
          )}
       </PopupState>
-      ))}
+      )})}
     </ImageList>
   )
 }

@@ -174,6 +174,7 @@ export default function SettingPage() {
 
         }}
       >
+        
         <Box id="content" 
           sx={{
             display: desktopScreen ? "grid" : "block",
@@ -636,6 +637,7 @@ export default function SettingPage() {
               handleSave={handleSave}
               palette={palette}
             />
+
           </Box>
         </Box>
       </Box>

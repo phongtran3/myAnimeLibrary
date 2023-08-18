@@ -3,11 +3,11 @@ import {ImageList, ImageListItem, Link, ImageListItemBar} from "@mui/material";
 import PopupState, {bindHover} from "material-ui-popup-state";
 
 export default function PreviewList({medium}) {
+
   return (
     <ImageList 
         gap={20} 
         sx={{
-            //backgroundColor: "lightblue", 
             textAlign: "center", 
             padding:"1rem 0", 
             gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr)) !important",

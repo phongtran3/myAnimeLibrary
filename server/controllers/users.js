@@ -19,14 +19,10 @@ async function getAllUser(req, res) {
   try {
     let query = User.find({}, { userName: 1, picturePath: 1 });
     let users;
-    console.log(req.query.search);
     if (req.query.search != null && req.query.search != "") {
       query.regex("userName", new RegExp(req.query.search), "i");
       users = await query.exec();
     }
-    //const users = await query.exec();
-
-    //console.log(users);
     res.status(200).json(users);
   } catch (error) {
     res.status(404).json({ message: error.message });

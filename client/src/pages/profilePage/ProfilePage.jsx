@@ -65,7 +65,6 @@ export default function ProfilePage() {
   }
 
   useEffect(() => {
-    console.log("Profile Page useEffect")
     setOpenFollows(false)
     getUser();
   }, [userName]); 

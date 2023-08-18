@@ -1,4 +1,3 @@
-//const UserAnime = require("../models/anime.js");
 const User = require("../models/user.js");
 
 async function addAnime(req, res) {
@@ -14,9 +13,6 @@ async function addAnime(req, res) {
       status,
     } = req.body.data;
     const user = await User.findById(userId); //May have to change
-    //console.log(req.body.data);
-    //console.log(genres);
-    // console.log(user);
     let index = user.animes.findIndex((anime) => anime.title === title);
     if (index <= -1) {
       //anime is not in the list and needs to be added
@@ -44,13 +40,9 @@ async function addAnime(req, res) {
 
 async function removeAnime(req, res) {
   try {
-    console.log("Removing Anime");
     const { id } = req.params;
     const { itemId } = req.body.data;
     const user = await User.findById(id);
-    //console.log(itemId);
-    //const animeToDelete = user.animes.find((x) => x.id === itemId);
-    //console.log(animeToDelete);
 
     user.animes.splice(
       user.animes.findIndex((el) => el.id === itemId),

@@ -123,7 +123,6 @@ export default function SettingPage() {
           }
         }
       );
-      console.log(response.data);
       setUserDetails(response.data);
       dispatch(setSiteUser({
         user: response.data,

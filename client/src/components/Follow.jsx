@@ -17,7 +17,7 @@ export default function Follow({open, handleClose, type, loggedUser, handleFollo
           sx={{
             "& .MuiPaper-root": {
               alignItems: "center",
-              overflowY:"visable",
+              overflowY: "visable !imporant"
             },
           }}
         >

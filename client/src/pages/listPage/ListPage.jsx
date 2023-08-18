@@ -61,9 +61,9 @@ export default function ListPage() {
     })
   }, [list]);
 
-  useEffect(() =>{
-    console.log("listPage Render")
-  })
+  // useEffect(() =>{
+  //   console.log("listPage Render")
+  // })
 
   useEffect(()=>{
     if(user){

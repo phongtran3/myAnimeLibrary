@@ -133,6 +133,7 @@ export default function useAniMangaSearch(pageNumber, setPageNumber) {
       location.search !== lastLocation.search ||
       location.pathname !== lastLocation.pathname
     ) {
+      setIsAdult(false);
       setLoading(true);
     }
     fetchData();

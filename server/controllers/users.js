@@ -63,9 +63,6 @@ async function updateProfile(req, res) {
   try {
     const { id } = req.params;
     const { attribute, value, currentPassword } = req.body;
-    console.log(attribute);
-    console.log(value);
-    console.log(req.file.location);
 
     if (!Object.values(ATTRIBUTES).includes(attribute)) {
       return res.status(400).json({ message: "Invalid attribute" });

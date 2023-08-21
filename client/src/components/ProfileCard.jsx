@@ -128,7 +128,7 @@ export default function ProfileCard({openFollows, setOpenFollows, user, setUser,
                         }
                     }}
                 >
-                    <Avatar sx={{ width: 150, height: 150, margin: "1em auto 0" }} src={`https://myanimelibrary.onrender.com/assets/${picturePath}`}/>
+                    <Avatar sx={{ width: 150, height: 150, margin: "1em auto 0" }} src={`${picturePath}`}/>
                     <Typography variant='h5' mt="0.5em" fontWeight="bold" >{`${firstName} ${lastName}`}</Typography>
                     <Typography variant='subtitle1'>{`@${user.userName}`}</Typography>
                 </CardContent>
@@ -267,7 +267,7 @@ export default function ProfileCard({openFollows, setOpenFollows, user, setUser,
                     }
                 }}
             >
-                <Avatar sx={{ width: 150, height: 150, margin: "0 auto" }} src={`https://myanimelibrary.onrender.com/assets/${picturePath}`}/>
+                <Avatar sx={{ width: 150, height: 150, margin: "0 auto" }} src={`${picturePath}`}/>
                 {loggedUser && loggedUser.userName  === user.userName ? 
                     <Button onClick={() => {navigate('/settings')}}>Edit Profile</Button> 
                     : 

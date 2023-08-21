@@ -1,7 +1,6 @@
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 
 async function uploadToS3(req, res, next) {
-  console.log("upload to s3");
   if (!req.file) {
     return res.status(400).send("File missing");
   }

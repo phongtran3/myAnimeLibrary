@@ -406,7 +406,7 @@ export default function NavBar() {
                         isOptionEqualToValue={(option, value) => option._id === value._id}
                         renderOption={(props, option) => (
                           <Box component="li" {...props}>
-                            <Avatar sx={{marginRight: "1rem"}} src={`https://myanimelibrary.onrender.com/assets/${option.picturePath}`}/>&nbsp;{option.userName}
+                            <Avatar sx={{marginRight: "1rem"}} src={`${option.picturePath}`}/>&nbsp;{option.userName}
                           </Box>
                         )}
                         onInputChange={(event, newInputValue) => {
@@ -457,7 +457,7 @@ export default function NavBar() {
                       aria-expanded={openMenu ? 'true' : undefined}
                       aria-haspopup="true"
                     >
-                      <Avatar sx={{ width: 56, height: 56 }} src={`https://myanimelibrary.onrender.com/assets/${user.picturePath}`}/>
+                      <Avatar sx={{ width: 56, height: 56 }} src={`${user.picturePath}`}/>
                     </IconButton>
                   :
                     <>
@@ -614,7 +614,7 @@ export default function NavBar() {
                 isOptionEqualToValue={(option, value) => option._id === value._id}
                 renderOption={(props, option) => (
                   <Box component="li" {...props}>
-                    <Avatar sx={{marginRight: "1rem"}} src={`https://myanimelibrary.onrender.com/assets/${option.picturePath}`}/>&nbsp;{option.userName}
+                    <Avatar sx={{marginRight: "1rem"}} src={`${option.picturePath}`}/>&nbsp;{option.userName}
                   </Box>
                 )}
                 inputValue={searchUser}

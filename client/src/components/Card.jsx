@@ -78,7 +78,6 @@ export default function Card({item, setAlert, type}) {
                 >
                     <img
                         src={coverImage.extraLarge}
-                        srcSet={coverImage.extraLarge}
                         alt={titleText}
                         loading="lazy"
                         style={{borderRadius: "0.375rem", width: "100%", height: "100%"}}

@@ -49,17 +49,10 @@ export default function Follow({open, handleClose, type, loggedUser, handleFollo
                       <ListItem 
                         id="item"
                         key={user._id} 
-                        // secondaryAction={
-                        //   <Button variant="contained"  size="small" aria-label={type === "following" ? "Following" : "Unfollow"}>
-                        //     {type === "following" ? "Following" : "Unfollow"}
-                        //   </Button>
-                        // }
                       >
-                        {/* onClick={(e) => handleFollowUnfollow(e.target.textContent)} */}
-                        
                         <ListItemButton component={Link} to={`/user/${user.userName}`} >
                           <ListItemAvatar>
-                            <Avatar alt="profile picture" src={`https://myanimelibrary.onrender.com/assets/${user.picturePath}`}/>
+                            <Avatar alt="profile picture" src={`${user.picturePath}`}/>
                           </ListItemAvatar>
                           <ListItemText primary={user.userName} secondary={`${user.firstName} ${user.lastName}`}/>
                         </ListItemButton>
@@ -72,7 +65,6 @@ export default function Follow({open, handleClose, type, loggedUser, handleFollo
                             onClick={(e) => handleFollowUnfollow(user._id)}
                           >
                               {type === "following" && loggedUser.following.includes(user._id) ? "Unfollow" :  loggedUser.following.includes(user._id) ? "Following" : "Follow"}
-                          
                           </Button>
                         } 
                       </ListItem>

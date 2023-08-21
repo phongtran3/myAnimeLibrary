@@ -14,8 +14,8 @@ async function uploadToS3(req, res, next) {
   const s3 = new S3Client({
     region: process.env.AWS_REGION,
     credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID_LOCAL,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_LOCAL,
     },
   });
 
@@ -43,6 +43,7 @@ async function uploadToS3(req, res, next) {
     req.file.location = `https://${uploadParams.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadParams.Key}`;
     next();
   } catch (error) {
+    console.log(error.message);
     res.status(500).send(`Failed to upload file to S3: ${error.message}`);
   }
 }

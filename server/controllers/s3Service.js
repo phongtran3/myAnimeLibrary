@@ -30,7 +30,7 @@ async function uploadToS3(req, res, next) {
     const user = await User.findById(id);
     const imageName = user.picturePath.split("/").pop();
     //If user exist, delete the existing object in s3
-    if (user && user.picturePath) {
+    if (user) {
       const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: imageName,

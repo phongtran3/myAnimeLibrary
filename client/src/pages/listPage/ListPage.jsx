@@ -137,7 +137,7 @@ export default function ListPage() {
              
             }}
           > 
-            <a href={`/user/${user.userName}`}><Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`https://myanimelibrary.onrender.com/assets/${user.picturePath}`}/></a>
+            <a href={`/user/${user.userName}`}><Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`${user.picturePath}`}/></a>
             <ListsFilter 
               type={type} 
               filters={filters} 

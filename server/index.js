@@ -1,16 +1,24 @@
-const express = require("express");
-const bodyParser = require("body-parser"); //Process request body
-const mongoose = require("mongoose");
-const cors = require("cors"); //Cross origin request
-const morgan = require("morgan"); //Request Logger
-require("dotenv").config();
-const helmet = require("helmet"); //Request safety (hide tech stack)
-const multer = require("multer"); //File storage locally
+// Core Node.js modules
 const path = require("path");
 
+// Third-party modules
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const morgan = require("morgan");
+const helmet = require("helmet");
+require("dotenv").config();
+
+const multer = require("multer");
+
+// Local modules and controllers
 const { register } = require("./controllers/auth.js");
 const { updateProfile } = require("./controllers/users.js");
 const verifyToken = require("./middleware/auth.js");
+const { uploadToS3 } = require("./controllers/s3Service.js");
+
+// Express app setup
 const app = express();
 
 // ROUTES
@@ -30,22 +38,30 @@ app.use(morgan("common"));
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 //FILE STORAGE
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/assets");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
+const storage = multer.memoryStorage();
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.split("/")[0] === "image") {
+    cb(null, true);
+  } else {
+    cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE"), false);
+  }
+};
+
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 1000000000, files: 1 },
 });
-const upload = multer({ storage });
 
 //ROUTES WITH FILE
-app.post("/auth/register", upload.single("picture"), register); //Register new user
+app.post("/auth/register", upload.single("picture"), uploadToS3, register); //Register new user
+
 app.patch(
   "/users/:id/update",
   upload.single("picture"),
   verifyToken,
+  uploadToS3,
   updateProfile
 );
 

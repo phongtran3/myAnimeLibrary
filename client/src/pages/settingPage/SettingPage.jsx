@@ -114,7 +114,7 @@ export default function SettingPage() {
       }
       const formData = createFormData(body, newPicturePath);
       const response = await axios.patch(
-        `https://myanimelibrary.onrender.com/users/${loggedUser._id}/update`,
+        `http://localhost:5000/users/${loggedUser._id}/update`,
         formData,
         {
           headers: {
@@ -159,7 +159,7 @@ export default function SettingPage() {
   if (!userDetails) {
     return null;
   }
-
+  
   return (
     <Box>
       <NavBar />
@@ -189,7 +189,7 @@ export default function SettingPage() {
               margin:"0 1.5rem",
             }}
           > 
-            <a href={`/user/${loggedUser.userName}`}><Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`https://myanimelibrary.onrender.com/assets/${loggedUser.picturePath}`}/></a>
+            <a href={`/user/${loggedUser.userName}`}><Avatar sx={{ width: 250, height: 250, marginBottom:"1rem"}} src={`${loggedUser.picturePath}`}/></a>
             <Tabs  
               id="tab-nav"
               orientation= {desktopScreen ? "vertical" : null}

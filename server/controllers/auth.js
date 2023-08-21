@@ -5,10 +5,10 @@ const User = require("../models/user.js");
 //User Registration.
 async function register(req, res) {
   try {
-    const { firstName, lastName, email, userName, password, picturePath } =
-      req.body;
-    const oldUser = await User.findOne({ email: email });
+    const { firstName, lastName, email, userName, password } = req.body;
+    const picturePath = req.file.location; // Use the S3 URL from the multer middleware
 
+    const oldUser = await User.findOne({ email: email });
     if (oldUser)
       return res
         .status(400)
@@ -36,9 +36,7 @@ async function register(req, res) {
       isAdult: false,
     });
 
-    //user.socialMediaHandles.set("github", "phongtran3");
     const newUser = await user.save(); // Save new user to database
-
     user.password = undefined;
     res.status(201).json(newUser);
   } catch (error) {
@@ -50,7 +48,6 @@ async function register(req, res) {
 async function login(req, res) {
   try {
     const { email, password } = req.body;
-    //console.log("email: " + email + " password: " + password);
     const user = await User.findOne({ email: email });
     if (!user) return res.status(400).json({ message: "User does not exist" });
 

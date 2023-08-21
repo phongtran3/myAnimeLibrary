@@ -87,7 +87,7 @@ const registerSchema = yup.object().shape({
         }
         formData.append('picturePath', values.picture.name);
         try {
-            await axios.post("https://myanimelibrary.onrender.com/auth/register", formData);
+            await axios.post("http://localhost:5000/auth/register", formData);
             onSubmitProps.resetForm();
             setIsLogin("false");
         } catch (err) {

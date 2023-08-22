@@ -4,7 +4,7 @@ import Dropzone from "react-dropzone";
 import axios from 'axios';
 import {
   Box, useTheme, Typography, TextField, InputAdornment, Switch,
-  IconButton, Button, Avatar, Tab, Tabs, useMediaQuery
+  IconButton, Button, Avatar, Tab, Tabs, useMediaQuery, Alert, Snackbar
 } from '@mui/material';
 
 import {
@@ -29,7 +29,7 @@ export default function SettingPage() {
       value:"",
       currentPassword: "",
     });
-
+    const [alert, setAlert] = useState("");
     const [userDetails, setUserDetails] = useState({
       newUserName: '',
       newFirstName: '',
@@ -130,7 +130,7 @@ export default function SettingPage() {
       }));
       setOpen(false);
       resetBody();
-  
+      setAlert("Profile Updated");
     } catch (error) {
       if (error.response) {
         console.error(error.response.data);
@@ -163,6 +163,35 @@ export default function SettingPage() {
   return (
     <Box>
       <NavBar />
+      <Snackbar 
+          id="snackbar"
+          open={alert !== "" ? true : false} 
+          autoHideDuration={3000}
+          sx={{
+            top:"5rem !important",
+          }}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          onClose={(e,reason) => {
+            if (reason === 'clickaway') {
+              return;
+            }
+            setAlert("")
+          }}
+        >
+          <Alert 
+            onClose={(e,reason) => {
+              if (reason === 'clickaway') {
+                return;
+              }
+              setAlert("")
+            }} 
+            severity="success" 
+            sx={{ width: '100%' }}
+        >
+          {alert}
+        </Alert>
+        </Snackbar>
+
       <Box
         sx={{
           maxWidth:"1520px",

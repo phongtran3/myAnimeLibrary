@@ -9,7 +9,6 @@ async function uploadToS3(req, res, next) {
   if (!req.file) {
     return res.status(400).send("File missing");
   }
-  const { id } = req.params;
 
   const s3 = new S3Client({
     region: process.env.AWS_REGION,
@@ -27,10 +26,12 @@ async function uploadToS3(req, res, next) {
   };
 
   try {
+    const { id } = req.params;
     const user = await User.findById(id);
     //If user exist, delete the existing object in s3
     if (user) {
       const imageName = user.picturePath.split("/").pop();
+      console.log(imageName);
       const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: imageName,

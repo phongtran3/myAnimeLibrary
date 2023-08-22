@@ -66,6 +66,15 @@ export default function Footer() {
 
             </Box>
         </Box>
+        <Typography
+          sx={{
+            margin: "0 1rem",
+            color:"#fafafa",
+          }}
+        >
+          Disclosure: This application was mainly created as a learning/educational project for myself. It uses Render's free web service which results in the server going offline after 15 minutes of inactivity.
+          If you are attempting to search users, please give it a moment for the server to spin back up. Thank You!
+        </Typography>
     </Box>
   )
 }

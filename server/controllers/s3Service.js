@@ -8,7 +8,8 @@ const bcrypt = require("bcrypt");
 
 async function uploadToS3(req, res, next) {
   if (!req.file) {
-    return res.status(400).send("File missing");
+    //return res.status(400).send("File missing");
+    next();
   }
 
   const s3 = new S3Client({

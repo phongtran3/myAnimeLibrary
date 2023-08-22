@@ -64,9 +64,9 @@ async function updateProfile(req, res) {
     const { id } = req.params;
     const { attribute, value, currentPassword } = req.body;
 
-    if (!Object.values(ATTRIBUTES).includes(attribute)) {
-      return res.status(400).json({ message: "Invalid attribute" });
-    }
+    // if (!Object.values(ATTRIBUTES).includes(attribute)) {
+    //   return res.status(400).json({ message: "Invalid attribute" });
+    // }
 
     const user = await User.findById(id);
     const matchPassword = await bcrypt.compare(currentPassword, user.password);

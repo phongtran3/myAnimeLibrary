@@ -4,6 +4,7 @@ const {
   DeleteObjectCommand,
 } = require("@aws-sdk/client-s3");
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 async function uploadToS3(req, res, next) {
   if (!req.file) {
@@ -32,6 +33,14 @@ async function uploadToS3(req, res, next) {
     //If user exist, delete the existing object in s3
     if (user) {
       console.log("start deleting");
+
+      const matchPassword = await bcrypt.compare(
+        req.body.currentPassword,
+        user.password
+      );
+      if (!matchPassword)
+        return res.status(400).json({ message: "Incorrect Password" });
+
       const imageName = user.picturePath.split("/").pop();
       console.log(imageName);
       const params = {

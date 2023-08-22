@@ -133,7 +133,7 @@ export default function SettingPage() {
   
     } catch (error) {
       if (error.response) {
-        //console.error(error.response.data);
+        console.error(error.response.data);
         setError(error.response.data.message);
       }
     }

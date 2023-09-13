@@ -21,7 +21,6 @@ Nodejs Express.js Mongodb JWT Mongoose
 - Dark mode (x)
 - Infinite Scrolling (x)
 
-## Disclaimer
-
+## Disclaimer/Disclosure 
 myAnimeLibrary is a no-profit project. This project was mainly created as a learning/educational project for myself. I am not affiliated with [Anilist](https://anilist.co/) and do not host illegal files.
 If there's any issues, please reach out to me.

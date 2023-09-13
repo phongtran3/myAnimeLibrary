@@ -54,11 +54,11 @@ const registerSchema = yup.object().shape({
 
     const tabletScreen = useMediaQuery("(min-width: 630px)");
     const desktopScreen = useMediaQuery("(min-width: 1040px)");
-
+    //localhost
     async function login(values, onSubmitProps) {
         try {
             const response = await axios.post(
-                "https://myanimelibrary.onrender.com/auth/login",
+                "http://localhost:5000/auth/login",
                 JSON.stringify(values), 
                 {
                     headers: { 
@@ -87,20 +87,22 @@ const registerSchema = yup.object().shape({
         }
         formData.append('picturePath', values.picture.name);
         try {
-            await axios.post("https://myanimelibrary.onrender.com/auth/register", formData);
+            await axios.post("http://localhost:5000/auth/register", formData);
             onSubmitProps.resetForm();
             setIsLogin("false");
         } catch (err) {
+            console.log(err);
             if (err.response) {
                 setError(err.response.data.message);
+                console.log(err.response.data.message)
             }
         }
     }
     
     async function handleFormSubmit (values, onSubmitProps) {
+        setError("");
         if(isLogin) await login(values, onSubmitProps);
         if(!isLogin) await register(values, onSubmitProps);
-        setError("");
     }
 
     return (
